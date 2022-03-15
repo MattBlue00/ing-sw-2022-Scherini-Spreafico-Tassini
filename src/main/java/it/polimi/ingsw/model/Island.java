@@ -3,17 +3,14 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class Island {
-    private boolean hasMotherNature;
     private Player isOwned;
     private final int islandID;
     private int numOfTowers;
-    private final Game game;
     private ArrayList<Student> studentsOnTheIsland;
 
 
-    public Island(int islandID, Game game) {
+    public Island(int islandID) {
         this.islandID = islandID;
-        this.game = game;
     }
 
     public void setIsOwned(Player isOwned) {
