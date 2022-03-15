@@ -6,14 +6,18 @@ import java.util.List;
 public class Player {
     private final Wizard wizardID;
     private final String nickname;
-    private final AssistantCard[] deck;
+    private List<AssistantCard> deck;
+    private School school;
 
 
     public Player(Wizard wizardID, String nickname) {
         this.wizardID = wizardID;
         this.nickname = nickname;
-        this.deck = new AssistantCard[10];
+        this.deck = new ArrayList<>(10);
+        this.school = new School();
     }
+
+
 
     public Wizard getWizardID() {
         return wizardID;
@@ -23,7 +27,7 @@ public class Player {
         return nickname;
     }
 
-    public AssistantCard[] getDeck() {
+    public List<AssistantCard> getDeck() {
         return deck;
     }
 }
