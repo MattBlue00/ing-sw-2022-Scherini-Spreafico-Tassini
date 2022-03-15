@@ -9,7 +9,8 @@ public class Game {
     private final Player players[];
     private List<Island> islands;
     private List<Student> students;
-    private Cloud clouds[];
+    private final Cloud clouds[];
+    private int motherNaturePosition;
 
 
     public Game(int playersNumber, boolean isFinished) {
