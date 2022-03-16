@@ -1,15 +1,25 @@
 package it.polimi.ingsw.model;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Table {
+
     private final Color color;
     private boolean hasProfessor;
-    private final School school;
-    private ArrayList<Student> studentsInTheTable;
+    private List<Student> students;
 
-    public Table(Color color, School school) {
+    public Table(Color color) {
         this.color = color;
-        this.school = school;
+        this.students = new ArrayList<>(10);
+        this.hasProfessor = false;
+    }
+
+    public boolean isHasProfessor() {
+        return hasProfessor;
+    }
+
+    public void setHasProfessor(boolean hasProfessor) {
+        this.hasProfessor = hasProfessor;
     }
 }

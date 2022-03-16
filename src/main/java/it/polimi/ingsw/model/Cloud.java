@@ -3,13 +3,12 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class Cloud {
+
     private final int capacity;
     private boolean hasBeenChosen;
-    private final Game game;
-    private ArrayList<Student> studentsOnTheCloud;
+    private ArrayList<Student> students;
 
-    public Cloud(int capacity, Game game) {
+    public Cloud(int capacity) {
         this.capacity = capacity;
-        this.game = game;
     }
 }
