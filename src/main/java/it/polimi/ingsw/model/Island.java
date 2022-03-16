@@ -3,22 +3,26 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class Island {
-    private Player isOwned;
-    private final int islandID;
+    private Player owner;
+    private final int id;
     private int numOfTowers;
-    private ArrayList<Student> studentsOnTheIsland;
+    private ArrayList<Student> students;
 
 
-    public Island(int islandID) {
-        this.islandID = islandID;
+    public Island(int id) {
+        this.id = id;
     }
 
-    public void setIsOwned(Player isOwned) {
-        this.isOwned = isOwned;
+    public int getId() {
+        return id;
     }
 
-    public Player getIsOwned() {
-        return isOwned;
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     public int getNumOfTowers() {

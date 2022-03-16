@@ -14,7 +14,8 @@ public class Player {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.deck = new ArrayList<>(10);
-        this.school = new School();
+        this.school = new School(2);    // TODO: School depends on numberOfPlayers,
+                                                        // which is set to be decided after Players' creations
     }
 
 
