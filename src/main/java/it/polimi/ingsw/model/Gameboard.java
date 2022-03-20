@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class Gameboard {
 
-    // gameboard varaibles
-    private int motherNaturePos; // rapresent the current position of motherNature in the ilsand array
+    // gameboard variables
+    private int motherNaturePos; // represent the current position of motherNature in the ilsand array
     private final Cloud clouds[];
     private Island islands[];
     private List<Student> studentsBag;

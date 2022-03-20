@@ -42,8 +42,6 @@ public class App
         System.out.println("numero di stud sulla nuvola 0: "+g1.getBoard().getCloud(0).getStudents().size());
         System.out.println("numero di stud nel sacchetto : "+g1.getBoard().getStudentsBag().size());
 
-
-
         System.out.println( "---------END---------" );
     }
 }
