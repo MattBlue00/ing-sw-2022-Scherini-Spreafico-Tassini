@@ -13,6 +13,7 @@ public class School {
         for(int i = 0; i < NUM_TABLES; i++){
             tables[i] = new Table(colors[i]);
         }
+        // not a scalable solution, need to find a better way
         if(numberOfPlayers == 3){
             this.towerRoom = new TowerRoom(6);
             this.hall = new Hall(9);
@@ -23,7 +24,18 @@ public class School {
         }
     }
 
-    public void moveToTable(Student student){}
+    // getter and setter
+    public Hall getHall() {
+        return hall;
+    }
 
-    public void moveToIsland(Island island){}
+    // methods
+    public void moveStudentToIsland(int islandID, String color){
+        this.hall.removeStudent(color).ifPresent(student -> student.moveToIsland(islandID));
+    }
+
+    public void moveStudentToTable(Player player, String color){
+        this.hall.removeStudent(color).ifPresent(student -> student.moveToTable(color));
+    }
+
 }
