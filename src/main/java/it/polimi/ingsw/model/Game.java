@@ -152,4 +152,16 @@ public class Game {
     public GameBoard getBoard() {
         return board;
     }
+
+    //for debugging
+    // adding players to the game
+    //implemented for two players
+    public void addPlayer(Player player){
+        if(this.players[0] == null){
+            this.players[0] = player;
+        }
+        else {
+            this.players[1] = player;
+        }
+    }
 }

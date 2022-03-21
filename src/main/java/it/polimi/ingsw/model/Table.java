@@ -31,6 +31,10 @@ public class Table {
         return students.size();
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public boolean getHasProfessor() {
         return hasProfessor;
     }
@@ -61,5 +65,15 @@ public class Table {
         else return 0;
     }
 
+    //for debugging
+    public void showTable(){
+        System.out.println(this.color + " table");
+        System.out.println("Numero studenti (in questa table): " + this.students.size());
+    }
+
+    //for debugging
+    public void addStudentForDebug(Student student){
+        this.students.add(student);
+    }
 
 }
