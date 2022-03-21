@@ -5,9 +5,8 @@ import it.polimi.ingsw.model.exceptions.EmptyCloudException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class Gameboard {
+public class GameBoard {
 
     // gameboard variables
     private int motherNaturePos; // represent the current position of motherNature in the ilsand array
@@ -16,7 +15,7 @@ public class Gameboard {
     private List<Student> studentsBag;
 
 
-    public Gameboard(int playerNum){
+    public GameBoard(int playerNum){
         this.clouds = new Cloud[playerNum];
         this.studentsBag = new ArrayList<>();
         this.islands = new Island[12];

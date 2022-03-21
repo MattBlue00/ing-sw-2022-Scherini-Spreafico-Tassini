@@ -38,6 +38,14 @@ public class Player {
         return deck;
     }
 
+    public int getCoinsWallet() {
+        return coinsWallet;
+    }
+
+    public void setCoinsWallet(int coinsWallet) {
+        this.coinsWallet = coinsWallet;
+    }
+
     // methods
 
     public void moveStudent(){
@@ -58,6 +66,8 @@ public class Player {
             ioe.printStackTrace();
         }
     }
+
+    public void playCharacterCard(){}
 
     // For debugging
     public School getSchool() {

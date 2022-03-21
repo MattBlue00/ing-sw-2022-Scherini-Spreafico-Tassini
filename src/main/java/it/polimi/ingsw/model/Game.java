@@ -2,31 +2,30 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-
-import java.util.ArrayList;
-import java.util.List;
+import it.polimi.ingsw.model.exceptions.NonExistentTableException;
 
 public class Game {
 
     // game variables
 
     private final int playersNumber;
-    private boolean isFinished;
+    private GameState state;
     private final Player players[];
     private int roundNumber;
-    private Gameboard board;
+    private GameBoard board;
     private Player currentPlayer;
     private final int CHARACTER_NUM;
     private final CharacterCard characters[];
     private final int PLAYER_MOVES; // defines how many students you can normally move in a turn from your hall
-
+    private final int NUM_COLORS = 5;
 
     public Game(int playersNumber) {
+        this.state = GameState.INIT;
         this.CHARACTER_NUM = 3;
         this.playersNumber = playersNumber;
         players = new Player[playersNumber];
         characters = new CharacterCard[CHARACTER_NUM];
-        board = new Gameboard(playersNumber);
+        board = new GameBoard(playersNumber);
         this.PLAYER_MOVES = 3;
     }
 
@@ -34,10 +33,6 @@ public class Game {
 
     public int getPlayersNumber() {
         return playersNumber;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
     }
 
     public Player[] getPlayers() {
@@ -70,13 +65,72 @@ public class Game {
         for(int i=0; i<PLAYER_MOVES; i++){
             currentPlayer.moveStudent();
         }
+        profCheck();
     }
 
-    public void coinCheck(){} // coinCheck may be a Table method, need to discuss the solution
+    public void profCheck(){
 
-    public void profCheck(){} // similar to coinCheck
+        boolean hasProfessor[] = new boolean[NUM_COLORS];   // contains which professor each player has
+        for(int i = 0; i < NUM_COLORS; i++){		// init
+            hasProfessor[i] = false;
+        }
 
-    public void playerPlaysCharacterCard(){}
+        Color colors[] = Color.values();
+
+        try {
+            for (Color color : colors) {
+
+                int dimBiggestTable = -1;   // number of students to beat in order to claim a professor
+                int playerWithProf = -1;    // index of the player who currently has this color's professor
+                int playerWhoLostProf = -1; // index of the player whose prof has been claimed
+
+                // true if this color's professor was already claimed by a player during one of the previous rounds
+                boolean professorAssigned = false;
+
+                // for each color, stores how many students each player has
+                int numOfStudents[] = new int[playersNumber];
+
+                for (int i = 0; i < playersNumber; i++) {
+                    numOfStudents[i] =
+                            players[i].getSchool().getTable(color.toString()).getNumOfStudents();
+                    if (players[i].getSchool().getTable(color.toString()).getHasProfessor()) {
+                        playerWithProf = i;
+                        professorAssigned = true;
+                    }
+                }
+
+                // if this color's professor was already assigned, profCheck rules vary
+                if (professorAssigned) {
+                    dimBiggestTable = numOfStudents[playerWithProf];
+                }
+
+                for (int i = 0; i < playersNumber; i++) {
+                    if (numOfStudents[i] > dimBiggestTable) {
+                        // if clause needed to store which player's table will have its "hasProfessor" flag
+                        // set to false, in case a player actually claimed that prof before
+                        if (professorAssigned)
+                            playerWhoLostProf = playerWithProf;
+                        dimBiggestTable = numOfStudents[i];
+                        playerWithProf = i;
+                    }
+                }
+
+                // sets the "hasProfessor" flags accordingly
+                players[playerWithProf].getSchool().getTable(color.toString()).setHasProfessor(true);
+                // if the professor was already assigned and its owner did change
+                if (professorAssigned && playerWhoLostProf != -1) {
+                    players[playerWhoLostProf].getSchool().getTable(color.toString()).setHasProfessor(false);
+                }
+            }
+        }
+        catch(NonExistentTableException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void playerPlaysCharacterCard(){
+        currentPlayer.playCharacterCard();
+    }
 
     public void moveMothernature(){}
 
@@ -95,7 +149,7 @@ public class Game {
 
     // For debugging
 
-    public Gameboard getBoard() {
+    public GameBoard getBoard() {
         return board;
     }
 }
