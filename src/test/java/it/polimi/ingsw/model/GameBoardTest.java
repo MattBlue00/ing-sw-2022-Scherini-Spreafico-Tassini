@@ -5,11 +5,11 @@ import it.polimi.ingsw.model.exceptions.EmptyCloudException;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-public class GameboardTest extends TestCase {
+public class GameBoardTest extends TestCase {
 
     @Test
     public void testRefillClouds() {
-        Gameboard gameboard = new Gameboard(2);
+        GameBoard gameboard = new GameBoard(2);
         Player player = new Player(Wizard.PINK_WIZARD, "Ludo");
 
         try {
@@ -28,7 +28,7 @@ public class GameboardTest extends TestCase {
 
     @Test
     public void testTakeStudentsFromCloud() {
-        Gameboard gameboard = new Gameboard(2);
+        GameBoard gameboard = new GameBoard(2);
         Player player = new Player(Wizard.PINK_WIZARD, "Ludo");
 
         try {

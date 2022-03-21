@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+
 public class Student {
 
     private final Color color;
@@ -12,7 +14,6 @@ public class Student {
         return color;
     }
 
-
     // methods
 
     public void moveToHall(Player curr){
@@ -23,7 +24,13 @@ public class Student {
         // TODO: we need to implement islands first
     }
 
-    public void moveToTable(String color){
-        // TODO: need to be implemented
+    public void moveToTable(Player player, String color){
+
+        try{
+            player.getSchool().getTable(color).addStudent(this, player);
+        }
+        catch(NonExistentTableException e){
+            e.printStackTrace();
+        }
     }
 }
