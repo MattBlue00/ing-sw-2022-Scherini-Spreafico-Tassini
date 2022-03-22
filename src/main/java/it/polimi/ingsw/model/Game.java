@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyBagException;
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.*;
 
 public class Game {
 
@@ -128,8 +126,15 @@ public class Game {
         }
     }
 
-    public void playerPlaysCharacterCard(){
-        currentPlayer.playCharacterCard();
+    public void playerPlaysCharacterCard(int id){
+
+        try {
+            currentPlayer.playCharacterCard(id);
+        }
+        catch(CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void moveMothernature(){}
