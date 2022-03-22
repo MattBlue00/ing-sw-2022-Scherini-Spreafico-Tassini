@@ -31,8 +31,19 @@ public class GameBoard {
             clouds[i] = cloud;
             for(int j=0; j<cloud.getCapacity(); j++)
                 cloud.addStudent(studentsBag.remove(studentsBag.size()-1));
-            }
         }
+    }
+
+
+    // getter and setter
+
+    public int getMotherNaturePos() {
+        return motherNaturePos;
+    }
+
+    public void setMotherNaturePos(int motherNaturePos) {
+        this.motherNaturePos = motherNaturePos;
+    }
 
 
     // methods
@@ -53,13 +64,17 @@ public class GameBoard {
         }
     }
 
+    // TODO: need to change the max number when we implement the islands
+    public void moveMotherNature(int steps){
+        setMotherNaturePos(getMotherNaturePos() + steps);
+    }
 
     /*
         When called by the Game this method call the remove from the single cloud,
         gets a List of students as a response and then move all the students, one at a time,
         to the current player's Hall
      */
-    public void takeStudentsFromCloud(int cloudID, final Player curr) throws EmptyCloudException {
+    public void takeStudentsFromCloud(int cloudID, Player curr) throws EmptyCloudException {
         clouds[cloudID].removeStudents().forEach(student -> student.moveToHall(curr));
     }
 

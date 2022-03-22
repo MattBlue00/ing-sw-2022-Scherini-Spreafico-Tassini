@@ -7,8 +7,8 @@ public class MotherNaturePlusTwoStrategy implements CharacterCardStrategy {
 
     @Override
     public void doEffect(Player player) {
-        player.setMotherNatureStepsLeft(
-                player.getMotherNatureStepsLeft()
+        player.getLastCardPlayed().setMotherNatureSteps(
+                player.getLastCardPlayed().getMotherNatureSteps()
                 + 2
         );
     }

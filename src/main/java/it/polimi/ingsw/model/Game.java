@@ -2,18 +2,22 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Game {
 
     // game variables
 
     private final int playersNumber;
-    private GameState state;
-    private final Player players[];
+    private final GameState state;
+    private final List<Player> players;
     private int roundNumber;
-    private GameBoard board;
+    private final GameBoard board;
     private Player currentPlayer;
     private final int CHARACTER_NUM;
-    private final CharacterCard characters[];
+    private final CharacterCard[] characters;
     private final int PLAYER_MOVES; // defines how many students you can normally move in a turn from your hall
     private final int NUM_COLORS = 5;
 
@@ -21,7 +25,7 @@ public class Game {
         this.state = GameState.INIT;
         this.CHARACTER_NUM = 3;
         this.playersNumber = playersNumber;
-        players = new Player[playersNumber];
+        players = new ArrayList<>();
         characters = new CharacterCard[CHARACTER_NUM];
         board = new GameBoard(playersNumber);
         this.PLAYER_MOVES = 3;
@@ -33,7 +37,7 @@ public class Game {
         return playersNumber;
     }
 
-    public Player[] getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -54,10 +58,14 @@ public class Game {
         board.refillClouds();
     }
 
-    public void playersPlayAssistantCard(){}
+    // TODO: check if the card has already been played
+    public void playersPlayAssistantCard(int cardID) throws CardAlreadyPlayedException {
+        players.forEach(player -> player.playAssistantCard(cardID));
+    }
 
     /*
-
+        A player can move 3 students from their Halls each turn
+        At the end of the movement phase profCheck() is called
      */
     public void playerMovesStudent(){
         for(int i=0; i<PLAYER_MOVES; i++){
@@ -68,12 +76,12 @@ public class Game {
 
     public void profCheck(){
 
-        boolean hasProfessor[] = new boolean[NUM_COLORS];   // contains which professor each player has
+        boolean[] hasProfessor = new boolean[NUM_COLORS];   // contains which professor each player has
         for(int i = 0; i < NUM_COLORS; i++){		// init
             hasProfessor[i] = false;
         }
 
-        Color colors[] = Color.values();
+        Color[] colors = Color.values();
 
         try {
             for (Color color : colors) {
@@ -86,12 +94,12 @@ public class Game {
                 boolean professorAssigned = false;
 
                 // for each color, stores how many students each player has
-                int numOfStudents[] = new int[playersNumber];
+                int[] numOfStudents = new int[playersNumber];
 
                 for (int i = 0; i < playersNumber; i++) {
                     numOfStudents[i] =
-                            players[i].getSchool().getTable(color.toString()).getNumOfStudents();
-                    if (players[i].getSchool().getTable(color.toString()).getHasProfessor()) {
+                            players.get(i).getSchool().getTable(color.toString()).getNumOfStudents();
+                    if (players.get(i).getSchool().getTable(color.toString()).getHasProfessor()) {
                         playerWithProf = i;
                         professorAssigned = true;
                     }
@@ -114,10 +122,10 @@ public class Game {
                 }
 
                 // sets the "hasProfessor" flags accordingly
-                players[playerWithProf].getSchool().getTable(color.toString()).setHasProfessor(true);
+                players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(true);
                 // if the professor was already assigned and its owner did change
                 if (professorAssigned && playerWhoLostProf != -1) {
-                    players[playerWhoLostProf].getSchool().getTable(color.toString()).setHasProfessor(false);
+                    players.get(playerWhoLostProf).getSchool().getTable(color.toString()).setHasProfessor(false);
                 }
             }
         }
@@ -126,6 +134,8 @@ public class Game {
         }
     }
 
+
+    // TODO: comment code
     public void playerPlaysCharacterCard(int id){
 
         try {
@@ -137,7 +147,12 @@ public class Game {
 
     }
 
-    public void moveMothernature(){}
+    // TODO: comment code
+    public void moveMotherNature(int steps) throws InvalideNumberOfStepsException{
+        int max_steps = currentPlayer.getLastCardPlayed().getMotherNatureSteps();
+        if(steps > max_steps || steps<1) throw new InvalideNumberOfStepsException("The number of steps selected is not valid");
+        board.moveMotherNature(steps);
+    }
 
     public void islandConquerCheck(){}
 
@@ -161,12 +176,12 @@ public class Game {
     //for debugging
     // adding players to the game
     //implemented for two players
-    public void addPlayer(Player player){
-        if(this.players[0] == null){
-            this.players[0] = player;
+    /*public void addPlayer(Player player){
+        if(this.players.get(0) == null){
+            this.players.get(0).add(player);
         }
         else {
-            this.players[1] = player;
+            this.players.get(1) = player;
         }
-    }
+    }*/
 }

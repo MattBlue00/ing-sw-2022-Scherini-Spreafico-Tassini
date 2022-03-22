@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Island {
     private Player owner;
     private final int id;
-    private int numOfTowers;
     private ArrayList<Student> students;
 
 
@@ -25,17 +24,9 @@ public class Island {
         this.owner = owner;
     }
 
-    public int getNumOfTowers() {
-        return numOfTowers;
+
+    // TODO: island methods
+    public int influenceCalc(){
+        return 0;
     }
-
-    public void setNumOfTowers(int numOfTowers) {
-        this.numOfTowers = numOfTowers;
-    }
-
-    public void ownCheck(){}
-
-    public void conquerCheck(){}
-
-    public void mergeCheck(){}
 }

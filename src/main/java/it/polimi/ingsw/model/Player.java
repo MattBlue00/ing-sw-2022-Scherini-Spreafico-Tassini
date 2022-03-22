@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,8 @@ public class Player {
     private List<AssistantCard> deck;
     private School school;
     private int coinsWallet;
+    private AssistantCard lastCardPlayed;
+
     private boolean characterCardPlayed;
     private int motherNatureStepsLeft;
 
@@ -26,12 +29,13 @@ public class Player {
         this.nickname = nickname;
         this.coinsWallet = 1;
         this.deck = new ArrayList<>(10);
+        this.school = new School(2);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
+        this.lastCardPlayed = null;
         this.school = new School(2);    // TODO: School depends on numberOfPlayers,
                                                      // which is set to be decided after Players' creations
         this.motherNatureStepsLeft = 0;
         this.characterCardPlayed = false;
     }
-
 
     // getter and setter
     public Wizard getWizardID() {
@@ -54,6 +58,9 @@ public class Player {
         this.coinsWallet = coinsWallet;
     }
 
+    public AssistantCard getLastCardPlayed() {
+        return lastCardPlayed;
+    }
     public School getSchool() {
         return school;
     }
@@ -75,6 +82,11 @@ public class Player {
     }
 
     // methods
+
+    public AssistantCard playAssistantCard(int cardID) {
+        this.lastCardPlayed = getDeck().remove(cardID);
+        return lastCardPlayed;
+    }
 
     public void moveStudent(){
         // in the final version the view will be responsible to get the choice from the player
@@ -112,5 +124,4 @@ public class Player {
             }
         }
     }
-
 }
