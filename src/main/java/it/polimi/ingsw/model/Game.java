@@ -5,18 +5,19 @@ import it.polimi.ingsw.model.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Game {
 
     // game variables
 
     private final int playersNumber;
-    private GameState state;
-    private List<Player> players;
+    private final GameState state;
+    private final List<Player> players;
     private int roundNumber;
-    private GameBoard board;
+    private final GameBoard board;
     private Player currentPlayer;
     private final int CHARACTER_NUM;
-    private final CharacterCard characters[];
+    private final CharacterCard[] characters;
     private final int PLAYER_MOVES; // defines how many students you can normally move in a turn from your hall
     private final int NUM_COLORS = 5;
 
@@ -75,12 +76,12 @@ public class Game {
 
     public void profCheck(){
 
-        boolean hasProfessor[] = new boolean[NUM_COLORS];   // contains which professor each player has
+        boolean[] hasProfessor = new boolean[NUM_COLORS];   // contains which professor each player has
         for(int i = 0; i < NUM_COLORS; i++){		// init
             hasProfessor[i] = false;
         }
 
-        Color colors[] = Color.values();
+        Color[] colors = Color.values();
 
         try {
             for (Color color : colors) {
@@ -93,7 +94,7 @@ public class Game {
                 boolean professorAssigned = false;
 
                 // for each color, stores how many students each player has
-                int numOfStudents[] = new int[playersNumber];
+                int[] numOfStudents = new int[playersNumber];
 
                 for (int i = 0; i < playersNumber; i++) {
                     numOfStudents[i] =
@@ -133,14 +134,22 @@ public class Game {
         }
     }
 
-    public void playerPlaysCharacterCard(){
-        currentPlayer.playCharacterCard();
+
+    // TODO: comment code
+    public void playerPlaysCharacterCard(int id){
+
+        try {
+            currentPlayer.playCharacterCard(id);
+        }
+        catch(CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e){
+            e.printStackTrace();
+        }
+
     }
 
-    public void moveMotherNature() throws InvalideNumberOfStepsException{
+    // TODO: comment code
+    public void moveMotherNature(int steps) throws InvalideNumberOfStepsException{
         int max_steps = currentPlayer.getLastCardPlayed().getMotherNatureSteps();
-        // The view will decide how many steps
-        int steps = 2;
         if(steps > max_steps || steps<1) throw new InvalideNumberOfStepsException("The number of steps selected is not valid");
         board.moveMotherNature(steps);
     }
@@ -163,4 +172,16 @@ public class Game {
     public GameBoard getBoard() {
         return board;
     }
+
+    //for debugging
+    // adding players to the game
+    //implemented for two players
+    /*public void addPlayer(Player player){
+        if(this.players.get(0) == null){
+            this.players.get(0).add(player);
+        }
+        else {
+            this.players.get(1) = player;
+        }
+    }*/
 }

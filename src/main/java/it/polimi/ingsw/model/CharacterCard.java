@@ -1,11 +1,18 @@
 package it.polimi.ingsw.model;
 
 public class CharacterCard {
-    private int cost;
-    private final int id;
 
-    public CharacterCard(int id) {
+    private final int id;
+    private int cost;
+    private CharacterCardStrategy strategy;
+
+    public CharacterCard(int id, CharacterCardStrategy strategy) {
         this.id = id;
+        this.strategy = strategy;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getCost() {
@@ -16,7 +23,7 @@ public class CharacterCard {
         this.cost = cost;
     }
 
-    public int getId() {
-        return id;
+    public CharacterCardStrategy getStrategy() {
+        return strategy;
     }
 }
