@@ -3,8 +3,10 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 public class Island {
+
     private Player owner;
     private final int id;
+    private int numOfTowers;
     private ArrayList<Student> students;
 
 

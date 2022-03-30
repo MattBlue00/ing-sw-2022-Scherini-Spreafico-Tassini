@@ -8,17 +8,14 @@ public class Table {
     private final Color color;
     private boolean hasProfessor;
     private List<Student> students;
-    private final int MAX_TABLE_LENGTH = 10; // is used to see if we throw a FullTableException
-    private final int COINS_AVAILABLE_PER_TABLE = 3;
-    private final int OFFSET_COINS = 3; // constant offset between the coins on the table
-    private boolean coinsAvailable[] = new boolean[COINS_AVAILABLE_PER_TABLE];
+    private boolean coinsAvailable[] = new boolean[Constants.COINS_AVAILABLE_PER_TABLE];
 
 
     public Table(Color color) {
         this.color = color;
         this.students = new ArrayList<>();
         this.hasProfessor = false;
-        for(int i=0; i<COINS_AVAILABLE_PER_TABLE; i++){
+        for(int i=0; i<Constants.COINS_AVAILABLE_PER_TABLE; i++){
             coinsAvailable[i]=true;
         }
     }
@@ -54,8 +51,8 @@ public class Table {
     public int coinCheck(){
 
         int size = this.students.size();
-        if(size % OFFSET_COINS == 0 && size != 0){
-            int pos = size/OFFSET_COINS;
+        if(size % Constants.OFFSET_COINS == 0 && size != 0){
+            int pos = size/Constants.OFFSET_COINS;
             if(coinsAvailable[pos-1]){
                 coinsAvailable[pos-1] = false;
                 return 1;
