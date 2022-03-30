@@ -24,10 +24,10 @@ public class Student {
         // TODO: we need to implement islands first
     }
 
-    public void moveToTable(Player player, String color){
+    public void moveToTable(Player player){
 
         try{
-            player.getSchool().getTable(color).addStudent(this, player);
+            player.getSchool().getTable(this.color.toString()).addStudent(this, player);
         }
         catch(NonExistentTableException e){
             e.printStackTrace();

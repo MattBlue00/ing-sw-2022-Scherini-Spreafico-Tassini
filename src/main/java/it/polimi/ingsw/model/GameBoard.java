@@ -8,8 +8,8 @@ import java.util.List;
 
 public class GameBoard {
 
-    // gameboard variables
-    private int motherNaturePos; // represent the current position of motherNature in the ilsand array
+    // GameBoard variables
+    private int motherNaturePos; // represent the current position of motherNature in the island array
     private final Cloud clouds[];
     private Island islands[];
     private List<Student> studentsBag;

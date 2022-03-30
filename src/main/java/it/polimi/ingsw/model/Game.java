@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
+import jdk.jfr.events.ContainerConfigurationEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +17,12 @@ public class Game {
     private int roundNumber;
     private final GameBoard board;
     private Player currentPlayer;
-    private final int CHARACTER_NUM;
-    private final CharacterCard[] characters;
-    private final int PLAYER_MOVES; // defines how many students you can normally move in a turn from your hall
-    private final int NUM_COLORS = 5;
 
     public Game(int playersNumber) {
         this.state = GameState.INIT;
-        this.CHARACTER_NUM = 3;
         this.playersNumber = playersNumber;
         players = new ArrayList<>();
-        characters = new CharacterCard[CHARACTER_NUM];
         board = new GameBoard(playersNumber);
-        this.PLAYER_MOVES = 3;
     }
 
     //Getter and setter section
@@ -68,7 +62,7 @@ public class Game {
         At the end of the movement phase profCheck() is called
      */
     public void playerMovesStudent(){
-        for(int i=0; i<PLAYER_MOVES; i++){
+        for(int i = 0; i< Constants.CHARACTERS_NUM; i++){
             currentPlayer.moveStudent();
         }
         profCheck();
@@ -76,8 +70,8 @@ public class Game {
 
     public void profCheck(){
 
-        boolean[] hasProfessor = new boolean[NUM_COLORS];   // contains which professor each player has
-        for(int i = 0; i < NUM_COLORS; i++){		// init
+        boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
+        for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init
             hasProfessor[i] = false;
         }
 
@@ -136,21 +130,9 @@ public class Game {
 
 
     // TODO: comment code
-    public void playerPlaysCharacterCard(int id){
-
-        try {
-            currentPlayer.playCharacterCard(id);
-        }
-        catch(CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e){
-            e.printStackTrace();
-        }
-
-    }
-
-    // TODO: comment code
-    public void moveMotherNature(int steps) throws InvalideNumberOfStepsException{
+    public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
         int max_steps = currentPlayer.getLastCardPlayed().getMotherNatureSteps();
-        if(steps > max_steps || steps<1) throw new InvalideNumberOfStepsException("The number of steps selected is not valid");
+        if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS) throw new InvalidNumberOfStepsException("The number of steps selected is not valid");
         board.moveMotherNature(steps);
     }
 

@@ -4,15 +4,14 @@ import it.polimi.ingsw.model.exceptions.NonExistentTableException;
 
 public class School {
 
-    private final int NUM_TABLES = 5;
     private Table tables[];
     private TowerRoom towerRoom;
     private Hall hall;
 
     public School(int numberOfPlayers){
-        this.tables = new Table[5];
+        this.tables = new Table[Constants.NUM_COLORS];
         Color colors[] = Color.values();
-        for(int i = 0; i < NUM_TABLES; i++){
+        for(int i = 0; i < Constants.NUM_TABLES; i++){
             tables[i] = new Table(colors[i]);
         }
         // not a scalable solution, need to find a better way
@@ -47,7 +46,7 @@ public class School {
     }
 
     public void moveStudentToTable(Player player, String color){
-        this.hall.removeStudent(color).ifPresent(student -> student.moveToTable(player, color));
+        this.hall.removeStudent(color).ifPresent(student -> student.moveToTable(player));
     }
 
 }
