@@ -78,6 +78,35 @@ public class GameBoard {
         clouds[cloudID].removeStudents().forEach(student -> student.moveToHall(curr));
     }
 
+    /*
+        When called islandConquerCheck checks if the owner of the island is different
+        from the current owner. If it is a different Player the method calls influenceCalc()
+        and if the influence of the current player is higher than the owner influence
+        we swap the ownership of the Island.
+        In the end the method calls mergeCheck() to see if it is possible to merge the current
+        Island with the near islands.
+    */
+
+    public void islandConquerCheck(Player currentPlayer, int islandID) {
+        if(!islands[islandID].getOwner().equals(currentPlayer)) {
+            int calc = islands[islandID].influenceCalc(currentPlayer);
+            if(calc > islands[islandID].getOwnerInfluence()){
+                islands[islandID].setOwner(currentPlayer);
+                islands[islandID].setOwnerInfluence(calc);
+                mergeCheck(islandID);
+            }
+        }
+    }
+
+    // TODO: write mergeCheck
+    public void mergeCheck(int currentIslandID){
+        Island prev = islands[currentIslandID-1];
+        Island next = islands[currentIslandID+1];
+        if(prev.getOwner().equals(islands[currentIslandID].getOwner())){
+            //TODO: need to discuss the data structure for islands before continuing...
+        }
+    }
+
     // For debugging
 
     public Cloud getCloud(int i) {
@@ -87,4 +116,6 @@ public class GameBoard {
     public List<Student> getStudentsBag() {
         return studentsBag;
     }
+
+
 }
