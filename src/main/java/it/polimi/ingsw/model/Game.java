@@ -136,7 +136,9 @@ public class Game {
         board.moveMotherNature(steps);
     }
 
-    public void islandConquerCheck(){}
+    public void islandConquerCheck(int islandID){
+        board.islandConquerCheck(currentPlayer, islandID);
+    }
 
     public void mergeCheck(){} // may be a Gameboard method called inside the conquerCheck chain of methods
 

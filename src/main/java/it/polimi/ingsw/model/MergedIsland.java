@@ -6,9 +6,8 @@ public class MergedIsland extends Island{
         super(id);
     }
 
-    // TODO:
     @Override
-    public int influenceCalc() {
-        return super.influenceCalc();
+    public int influenceCalc(Player currentPlayer) {
+        return super.influenceCalc(currentPlayer);
     }
 }
