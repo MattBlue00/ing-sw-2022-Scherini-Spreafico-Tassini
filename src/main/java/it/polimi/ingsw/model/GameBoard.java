@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
+import it.polimi.ingsw.model.exceptions.InvalidIslandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,14 @@ public class GameBoard {
     // GameBoard variables
     private int motherNaturePos; // represent the current position of motherNature in the island array
     private final Cloud clouds[];
-    private Island islands[];
+    private DoublyLinkedList islands;
     private List<Student> studentsBag;
 
 
     public GameBoard(int playerNum){
         this.clouds = new Cloud[playerNum];
         this.studentsBag = new ArrayList<>();
-        this.islands = new Island[12];
+        this.islands = new DoublyLinkedList();
 
 
         // just to fill the bag with something
@@ -64,9 +65,14 @@ public class GameBoard {
         }
     }
 
-    // TODO: need to change the max number when we implement the islands
+    // TODO: moveMotherNature will activate islandConquerCheck()?
+    /*
+        Move motherNature in a new island.
+        It receives an integer steps, then set motherNature position to the new position.
+        Since islands is a circular array
+     */
     public void moveMotherNature(int steps){
-        setMotherNaturePos(getMotherNaturePos() + steps);
+        setMotherNaturePos((getMotherNaturePos() + steps)%(islands.getSize()));
     }
 
     /*
@@ -79,31 +85,27 @@ public class GameBoard {
     }
 
     /*
-        When called islandConquerCheck checks if the owner of the island is different
-        from the current owner. If it is a different Player the method calls influenceCalc()
+        When called it checks if the owner of the island is different from the current player.
+        If it is a different Player the method calls influenceCalc()
         and if the influence of the current player is higher than the owner influence
-        we swap the ownership of the Island.
-        In the end the method calls mergeCheck() to see if it is possible to merge the current
+        we change the ownership of the Island.
+        In the end the method calls mergeIslands() to see if it is possible to merge the current
         Island with the near islands.
     */
 
     public void islandConquerCheck(Player currentPlayer, int islandID) {
-        if(!islands[islandID].getOwner().equals(currentPlayer)) {
-            int calc = islands[islandID].influenceCalc(currentPlayer);
-            if(calc > islands[islandID].getOwnerInfluence()){
-                islands[islandID].setOwner(currentPlayer);
-                islands[islandID].setOwnerInfluence(calc);
-                mergeCheck(islandID);
+        try {
+            Island selectedIsland = islands.getIslandFromID(islandID);
+            if(!selectedIsland.getOwner().equals(currentPlayer)) {
+                int calc = selectedIsland.influenceCalc(currentPlayer);
+                if(calc > selectedIsland.getOwnerInfluence()){
+                    selectedIsland.setOwner(currentPlayer);
+                    selectedIsland.setOwnerInfluence(calc);
+                    islands.mergeIslands(selectedIsland);
+                }
             }
-        }
-    }
-
-    // TODO: write mergeCheck
-    public void mergeCheck(int currentIslandID){
-        Island prev = islands[currentIslandID-1];
-        Island next = islands[currentIslandID+1];
-        if(prev.getOwner().equals(islands[currentIslandID].getOwner())){
-            //TODO: need to discuss the data structure for islands before continuing...
+        } catch (InvalidIslandException e) {
+            e.printStackTrace();
         }
     }
 
@@ -116,6 +118,5 @@ public class GameBoard {
     public List<Student> getStudentsBag() {
         return studentsBag;
     }
-
 
 }

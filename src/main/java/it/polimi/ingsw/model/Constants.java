@@ -10,5 +10,6 @@ class Constants {
     public static final int COINS_AVAILABLE_PER_TABLE = 3;
     public static final int OFFSET_COINS = 3;
     public static final int MIN_NUM_OF_STEPS = 1;
+    public static final int MAX_NUM_OF_ISLANDS = 12;
 
 }
