@@ -3,8 +3,11 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.exceptions.CharacterCardAlreadyPlayedException;
 import it.polimi.ingsw.model.exceptions.InvalidNumberOfStepsException;
 import it.polimi.ingsw.model.exceptions.NonExistentCharacterCardException;
+import it.polimi.ingsw.model.exceptions.NonExistentTableException;
 
-public class GameExpertMode extends Game{
+import java.util.List;
+
+public class GameExpertMode extends Game {
 
     private final CharacterCard[] characters;
 
@@ -14,29 +17,28 @@ public class GameExpertMode extends Game{
     }
 
     // TODO: at the end of player's turn, set the card's status to false
-    public void playerPlaysCharacterCard(int id){
+    public void playerPlaysCharacterCard(int id) {
 
         try {
-            if(getCurrentPlayer().getCharacterCardAlreadyPlayed())
+            if (getCurrentPlayer().getCharacterCardAlreadyPlayed())
                 throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
             else
                 getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
 
             boolean found = false;
-            for(CharacterCard card : characters){
-                if(card.getId() == id) {
+            for (CharacterCard card : characters) {
+                if (card.getId() == id) {
                     card.setIsActive(true);
                     found = true;
                 }
             }
 
-            if(!found)
+            if (!found)
                 throw new NonExistentCharacterCardException("No character card with id " + id + " exists.");
             else
                 getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
 
-        }
-        catch(CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e){
+        } catch (CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e) {
             e.printStackTrace();
         }
 
@@ -45,15 +47,25 @@ public class GameExpertMode extends Game{
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
         setMaxSteps(getCurrentPlayer().getLastCardPlayed().getMotherNatureSteps());
-        for(CharacterCard card : characters){
-            if(card.getId() == 4 && card.getIsActive()) {
+        for (CharacterCard card : characters) {
+            if (card.getId() == 4 && card.getIsActive()) {
                 card.doEffect(this);
-                card.setIsActive(false);
             }
         }
-        if(steps > getMaxSteps() || steps < Constants.MIN_NUM_OF_STEPS)
+        if (steps > getMaxSteps() || steps < Constants.MIN_NUM_OF_STEPS)
             throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
         getBoard().moveMotherNature(steps);
     }
 
+    @Override
+    public void profCheck() {
+
+        for (CharacterCard card : characters) {
+            if (card.getId() == 2 && card.getIsActive()) {
+                card.doEffect(this);
+            } else {
+                Game.profCheckAlgorithm(getPlayersNumber(), getPlayers());
+            }
+        }
+    }
 }
