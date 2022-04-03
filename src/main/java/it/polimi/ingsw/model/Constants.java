@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-class Constants {
+public class Constants {
 
     public static final int CHARACTERS_NUM = 3;
     public static final int NUM_COLORS = 5;

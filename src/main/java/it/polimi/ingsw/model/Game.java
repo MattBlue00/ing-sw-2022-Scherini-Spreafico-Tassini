@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
@@ -78,6 +79,10 @@ public class Game {
 
     public void profCheck(){
 
+        profCheckAlgorithm(playersNumber, players);
+    }
+
+    public static void profCheckAlgorithm(int playersNumber, List<Player> players) {
         boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
         for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init
             hasProfessor[i] = false;
