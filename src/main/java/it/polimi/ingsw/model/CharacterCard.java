@@ -1,15 +1,14 @@
 package it.polimi.ingsw.model;
 
-public class CharacterCard {
+public abstract class CharacterCard {
 
     private final int id;
     private int cost;
-    private CharacterCardStrategy strategy;
     private boolean isActive;
 
-    public CharacterCard(int id, CharacterCardStrategy strategy) {
+    public CharacterCard(int id, int initialCost) {
         this.id = id;
-        this.strategy = strategy;
+        this.cost = initialCost;
         this.isActive = false;
     }
 
@@ -25,10 +24,6 @@ public class CharacterCard {
         this.cost = cost;
     }
 
-    public CharacterCardStrategy getStrategy() {
-        return strategy;
-    }
-
     public boolean getIsActive(){
         return isActive;
     }
@@ -36,4 +31,7 @@ public class CharacterCard {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    public abstract void doEffect(GameExpertMode game);
+
 }

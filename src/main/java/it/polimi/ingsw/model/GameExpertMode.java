@@ -17,7 +17,11 @@ public class GameExpertMode extends Game{
     public void playerPlaysCharacterCard(int id){
 
         try {
-            getCurrentPlayer().playCharacterCard();
+            if(getCurrentPlayer().getCharacterCardAlreadyPlayed())
+                throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
+            else
+                getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
+
             boolean found = false;
             for(CharacterCard card : characters){
                 if(card.getId() == id) {
@@ -25,10 +29,12 @@ public class GameExpertMode extends Game{
                     found = true;
                 }
             }
-            if(found == false)
+
+            if(!found)
                 throw new NonExistentCharacterCardException("No character card with id " + id + " exists.");
             else
                 getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
+
         }
         catch(CharacterCardAlreadyPlayedException | NonExistentCharacterCardException e){
             e.printStackTrace();
@@ -38,12 +44,14 @@ public class GameExpertMode extends Game{
 
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
-        int max_steps = getCurrentPlayer().getLastCardPlayed().getMotherNatureSteps();
+        setMaxSteps(getCurrentPlayer().getLastCardPlayed().getMotherNatureSteps());
         for(CharacterCard card : characters){
-            if(card.getId() == 1 && card.getIsActive())       // TODO: check the correct id for this card
-                max_steps += 2;
+            if(card.getId() == 4 && card.getIsActive()) {
+                card.doEffect(this);
+                card.setIsActive(false);
+            }
         }
-        if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
+        if(steps > getMaxSteps() || steps < Constants.MIN_NUM_OF_STEPS)
             throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
         getBoard().moveMotherNature(steps);
     }
