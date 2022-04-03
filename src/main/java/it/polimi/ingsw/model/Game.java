@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
-import jdk.jfr.events.ContainerConfigurationEvent;
 
 import java.util.ArrayList;
 import java.util.List;
