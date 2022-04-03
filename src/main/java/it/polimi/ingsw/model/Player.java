@@ -93,12 +93,4 @@ public class Player {
         }
     }
 
-    public void playCharacterCard() throws CharacterCardAlreadyPlayedException{
-
-        if(characterCardAlreadyPlayed)
-            throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
-        else
-            this.characterCardAlreadyPlayed = true;
-
-    }
 }

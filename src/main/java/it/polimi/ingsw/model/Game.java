@@ -16,6 +16,7 @@ public class Game {
     private int roundNumber;
     private final GameBoard board;
     private Player currentPlayer;
+    private int maxSteps;
 
     public Game(int playersNumber) {
         this.state = GameState.INIT;
@@ -40,6 +41,14 @@ public class Game {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public int getMaxSteps() {
+        return maxSteps;
+    }
+
+    public void setMaxSteps(int maxSteps) {
+        this.maxSteps = maxSteps;
     }
 
     // methods
