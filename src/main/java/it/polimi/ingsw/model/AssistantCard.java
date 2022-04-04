@@ -12,6 +12,8 @@ public class AssistantCard {
         this.motherNatureSteps = motherNatureSteps;
     }
 
+    // Getter and setter methods
+
     public int getId() {
         return id;
     }

@@ -6,7 +6,13 @@ import it.polimi.ingsw.model.GameExpertMode;
 
 public class Villager extends CharacterCard {
 
-    public Villager(/* debug */ Color colorToExclude) {
+    /*
+        CHARACTER CARD DESCRIPTION:
+        The villager allows the player to call a special version of the islandConquerCheck method, which allows the
+        player to take a chosen color out of the regular influenceCalc algorithm.
+    */
+
+    public Villager() {
         super(9, 3);
     }
 

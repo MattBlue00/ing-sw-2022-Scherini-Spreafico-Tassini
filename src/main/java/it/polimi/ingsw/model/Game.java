@@ -30,7 +30,7 @@ public class Game {
         support = new PropertyChangeSupport(this);
     }
 
-    //Getter and setter section
+    // Getter and setter methods
 
     public int getPlayersNumber() {
         return playersNumber;
@@ -65,6 +65,10 @@ public class Game {
         this.roundNumber = roundNumber;
     }
 
+    public GameBoard getBoard() {
+        return board;
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
@@ -73,9 +77,10 @@ public class Game {
         support.removePropertyChangeListener(pcl);
     }
 
-    // methods
+    // Game methods
+
     /*
-        this method starts the chain of event that take a certain number of students, equal to the max number of students
+        This method starts the chain of events that take a certain number of students, equal to the max number of students
         the cloud can have, from the studentBag and puts them on the clouds, one at a time
      */
     public void refillClouds() throws EmptyBagException {
@@ -92,18 +97,25 @@ public class Game {
         At the end of the movement phase profCheck() is called
      */
     public void playerMovesStudent(){
-        for(int i = 0; i< Constants.CHARACTERS_NUM; i++){
+        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
             currentPlayer.moveStudent();
         }
         profCheck();
     }
 
+    /*
+        This method trigger the profCheck algorithm. This "double call" allows the reuse of the algorithm (made static)
+        in other classes) and the possibility to override it in the GameExpertMode class.
+     */
     public void profCheck(){
 
         profCheckAlgorithm(playersNumber, players);
 
     }
 
+    /*
+        This method reassigns the professors if the necessary conditions are reached.
+     */
     public static void profCheckAlgorithm(int playersNumber, List<Player> players) {
         boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
         for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init
@@ -163,44 +175,29 @@ public class Game {
         }
     }
 
-
-    // TODO: comment code
+    /*
+        This method allows Mother Nature to move of up to the given steps.
+     */
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
         int max_steps = currentPlayer.getLastCardPlayed().getMotherNatureSteps();
         if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS) throw new InvalidNumberOfStepsException("The number of steps selected is not valid");
         board.moveMotherNature(steps);
     }
 
+    /*
+        This method triggers the chain of methods which decides whether the island where Mother Nature is will be
+        conquered by a player.
+     */
     public void islandConquerCheck(int islandID) throws InvalidIslandException {
         board.islandConquerCheck(currentPlayer, islandID);
     }
 
-    public void mergeCheck(){} // may be a Gameboard method called inside the conquerCheck chain of methods
-
     /*
-        this method starts the chain of event that take all the students from
+        This method starts the chain of event that take all the students from
         a chosen cloud and put them into the hall of the current player
      */
     public void takeStudentsFromCloud(int cloudID) throws EmptyCloudException {
         board.takeStudentsFromCloud(cloudID, currentPlayer);
     }
 
-
-    // For debugging
-
-    public GameBoard getBoard() {
-        return board;
-    }
-
-    //for debugging
-    // adding players to the game
-    //implemented for two players
-    /*public void addPlayer(Player player){
-        if(this.players.get(0) == null){
-            this.players.get(0).add(player);
-        }
-        else {
-            this.players.get(1) = player;
-        }
-    }*/
 }

@@ -17,9 +17,13 @@ public class Cloud {
         this.students = new ArrayList<>();
     }
 
+    // Getter method
+
     public int getCapacity() {
         return capacity;
     }
+
+    // Cloud methods
 
     public void addStudent(Student student){
         students.add(student);

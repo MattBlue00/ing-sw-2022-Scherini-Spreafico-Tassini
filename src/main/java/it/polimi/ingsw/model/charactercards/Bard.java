@@ -9,18 +9,23 @@ import java.util.Optional;
 
 public class Bard extends CharacterCard {
 
-    //TODO: need to decide where to call the "doEffect" method
+    /*
+        CHARACTER CARD DESCRIPTION:
+        The bard allows the player to switch up to 2 students between the hall and the dining room.
+    */
 
-    private int maxNumOfChanges;
+    //TODO: need to decide where to call the "doEffect" method
 
     public Bard() {
         super(10, 1);
-        this.maxNumOfChanges = 2;
     }
 
     public void doEffect(GameExpertMode game) {
 
+        int maxNumOfChanges = 2;
+
         while(maxNumOfChanges >= 0){
+
             //TODO: the view will ask the player which students to change
 
             Color color1 = Color.BLUE; // PLACEHOLDER for the hall student

@@ -14,7 +14,6 @@ public class Hall {
         students = new ArrayList<>();
     }
 
-
     public void addStudent(Student addedStudent){
         students.add(addedStudent);
     }

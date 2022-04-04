@@ -7,6 +7,13 @@ import java.util.List;
 
 public class Innkeeper extends CharacterCard {
 
+    /*
+        CHARACTER CARD DESCRIPTION:
+        The innkeeper allows the player to call a special version of the method profCheck, which reassigns the
+        professor even if the current player has the same amount of students of the same color of the current owner
+        of the professor.
+    */
+
     public Innkeeper() {
         super(2, 2);
     }
@@ -17,7 +24,6 @@ public class Innkeeper extends CharacterCard {
         //playersNumber and players were not accessible as attributes
         int playersNumber = game.getPlayersNumber();
         final List<Player> players = game.getPlayers();
-
 
         boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
         for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init

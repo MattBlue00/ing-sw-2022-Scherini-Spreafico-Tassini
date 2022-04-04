@@ -12,6 +12,8 @@ public abstract class CharacterCard {
         this.isActive = false;
     }
 
+    // Getter and setter methods
+
     public int getId() {
         return id;
     }
@@ -31,6 +33,8 @@ public abstract class CharacterCard {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    // Character card methods
 
     public abstract void doEffect(GameExpertMode game);
 

@@ -61,12 +61,10 @@ public class DoublyLinkedList {
         Island prev = island.getPrev();
         Island next = island.getNext();
         if(prev.getOwner().equals(island.getOwner())){
-            island.setOwnerInfluence(island.getOwnerInfluence() + prev.getOwnerInfluence());
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
             removeIsland(prev);
         }
         if(next.getOwner().equals(island.getOwner())){
-            island.setOwnerInfluence(island.getOwnerInfluence()+ next.getOwnerInfluence());
             island.setNumOfTowers(island.getNumOfTowers() + next.getNumOfTowers());
             removeIsland(next);
         }
@@ -108,10 +106,10 @@ public class DoublyLinkedList {
         Island temp = head;
         System.out.println("From head to tail: ");
         while(!temp.getNext().equals(head)){
-            System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.getOwnerInfluence());
+            System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner()));
             temp = temp.getNext();
         }
-        System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.getOwnerInfluence());
+        System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner()));
 
         /*System.out.println("From tail to head: ");
         Island tail = head.getPrev();

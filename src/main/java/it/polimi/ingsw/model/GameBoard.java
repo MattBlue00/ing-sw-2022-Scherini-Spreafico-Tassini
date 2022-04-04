@@ -102,7 +102,7 @@ public class GameBoard {
 
     public void islandConquerCheck(Player currentPlayer, int islandID) {
         try {
-            if(getIslands().getIslandFromID(islandID).isVeto()) {
+            if(getIslands().getIslandFromID(islandID).hasVeto()) {
                 getIslands().getIslandFromID(islandID).setVeto(false);
                 numOfVetos++;
                 return;
@@ -110,9 +110,10 @@ public class GameBoard {
             Island selectedIsland = islands.getIslandFromID(islandID);
             if(!selectedIsland.getOwner().equals(currentPlayer)) {
                 int calc = selectedIsland.influenceCalc(currentPlayer);
-                if(calc > selectedIsland.getOwnerInfluence()){
+                if(calc > selectedIsland.influenceCalc(selectedIsland.getOwner())){
                     selectedIsland.setOwner(currentPlayer);
-                    selectedIsland.setOwnerInfluence(calc);
+                    if(selectedIsland.getNumOfTowers() == 0)
+                        selectedIsland.setNumOfTowers(1);
                     islands.mergeIslands(selectedIsland);
                 }
             }
@@ -123,7 +124,7 @@ public class GameBoard {
 
     public void islandConquerCheck(Player currentPlayer, int islandID, Color color) {
         try {
-            if(getIslands().getIslandFromID(islandID).isVeto()) {
+            if(getIslands().getIslandFromID(islandID).hasVeto()) {
                 getIslands().getIslandFromID(islandID).setVeto(false);
                 numOfVetos++;
                 return;
@@ -131,9 +132,17 @@ public class GameBoard {
             Island selectedIsland = islands.getIslandFromID(islandID);
             if(!selectedIsland.getOwner().equals(currentPlayer)) {
                 int calc = selectedIsland.influenceCalc(currentPlayer, color);
-                if(calc > selectedIsland.getOwnerInfluence()){
+                if(calc > selectedIsland.influenceCalc(selectedIsland.getOwner(), color)){
                     selectedIsland.setOwner(currentPlayer);
-                    selectedIsland.setOwnerInfluence(calc);
+                    if(selectedIsland.getNumOfTowers() == 0)
+                        selectedIsland.setNumOfTowers(1);
+                    islands.mergeIslands(selectedIsland);
+                }
+            }
+        } catch (InvalidIslandException e) {
+            e.printStackTrace();
+        }
+    }
                   
     //Punti critici:
     // 1- cosa succede se Owner è null (l'isola non è ancora stata conquistata)
@@ -143,7 +152,7 @@ public class GameBoard {
     //checks if an island can be conquered without counting the towers number
     public void islandConquerCheckWithoutTowers(Player currentPlayer, int islandID) {
         try {
-            if(getIslands().getIslandFromID(islandID).isVeto()) {
+            if(getIslands().getIslandFromID(islandID).hasVeto()) {
                 getIslands().getIslandFromID(islandID).setVeto(false);
                 numOfVetos++;
                 return;
@@ -155,7 +164,6 @@ public class GameBoard {
                     selectedIsland.setOwner(currentPlayer);
                     if(selectedIsland.getNumOfTowers() == 0)
                         selectedIsland.setNumOfTowers(1);
-                    selectedIsland.setOwnerInfluence(calc + selectedIsland.getNumOfTowers());
                     islands.mergeIslands(selectedIsland);
                 }
             }
@@ -167,7 +175,7 @@ public class GameBoard {
     //implemented for the card where the current player gets a plus two on top of his influence
     public void islandConquerCheckPlusTwoInfluence(Player currentPlayer, int islandID) {
         try {
-            if(getIslands().getIslandFromID(islandID).isVeto()) {
+            if(getIslands().getIslandFromID(islandID).hasVeto()) {
                 getIslands().getIslandFromID(islandID).setVeto(false);
                 numOfVetos++;
                 return;
@@ -179,8 +187,6 @@ public class GameBoard {
                     selectedIsland.setOwner(currentPlayer);
                     if(selectedIsland.getNumOfTowers() == 0)
                         selectedIsland.setNumOfTowers(1);
-                    selectedIsland.setOwnerInfluence(calc + selectedIsland.getNumOfTowers());
-
                     islands.mergeIslands(selectedIsland);
                 }
             }

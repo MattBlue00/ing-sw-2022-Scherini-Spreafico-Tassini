@@ -21,6 +21,8 @@ public class Table {
         }
     }
 
+    // Getter and setter methods
+
     public Color getColor() {
         return color;
     }
@@ -41,6 +43,8 @@ public class Table {
         this.hasProfessor = hasProfessor;
     }
 
+    // Table methods
+
     public void addStudent(Student addedStudent, Player player){
         students.add(addedStudent);
         player.setCoinsWallet(
@@ -49,6 +53,9 @@ public class Table {
         );
     }
 
+    /*
+        This method assign a player a coin if the required condition is respected.
+     */
     public int coinCheck(){
 
         int size = this.students.size();
@@ -61,6 +68,7 @@ public class Table {
             else return 0;
         }
         else return 0;
+
     }
 
     public Optional<Student> removeStudent(){
