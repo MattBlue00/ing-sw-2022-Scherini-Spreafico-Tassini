@@ -76,8 +76,6 @@ public class Innkeeper extends CharacterCard {
             e.printStackTrace();
         }
 
-        setCost(getCost() + 1);
-        setIsActive(false);
     }
 }
 

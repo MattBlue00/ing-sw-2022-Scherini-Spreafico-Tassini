@@ -46,6 +46,9 @@ public class GameBoard {
         this.motherNaturePos = motherNaturePos;
     }
 
+    public DoublyLinkedList getIslands() {
+        return islands;
+    }
 
     // methods
 
@@ -98,6 +101,22 @@ public class GameBoard {
             Island selectedIsland = islands.getIslandFromID(islandID);
             if(!selectedIsland.getOwner().equals(currentPlayer)) {
                 int calc = selectedIsland.influenceCalc(currentPlayer);
+                if(calc > selectedIsland.getOwnerInfluence()){
+                    selectedIsland.setOwner(currentPlayer);
+                    selectedIsland.setOwnerInfluence(calc);
+                    islands.mergeIslands(selectedIsland);
+                }
+            }
+        } catch (InvalidIslandException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void islandConquerCheck(Player currentPlayer, int islandID, Color color) {
+        try {
+            Island selectedIsland = islands.getIslandFromID(islandID);
+            if(!selectedIsland.getOwner().equals(currentPlayer)) {
+                int calc = selectedIsland.influenceCalc(currentPlayer, color);
                 if(calc > selectedIsland.getOwnerInfluence()){
                     selectedIsland.setOwner(currentPlayer);
                     selectedIsland.setOwnerInfluence(calc);
