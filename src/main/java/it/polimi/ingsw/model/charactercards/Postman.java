@@ -12,8 +12,7 @@ public class Postman extends CharacterCard {
     public void doEffect(GameExpertMode game){
 
         game.setMaxSteps(game.getMaxSteps() + 2);
-        setCost(getCost() + 1);
-        setIsActive(false);
+
     }
 
 }

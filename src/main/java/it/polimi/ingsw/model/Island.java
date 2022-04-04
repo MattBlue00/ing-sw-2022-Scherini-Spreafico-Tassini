@@ -82,8 +82,8 @@ public class Island {
         with the same color as the professors in the player's school
      */
     public int influenceCalc(Player currentPlayer){
-        int currentPlayerInfluence = 0;
         int validStudents = 0;
+        int currentPlayerInfluence = numOfTowers;
         currentPlayerInfluence = currentPlayerInfluence + numOfTowers;
         return influenceCalcAlgorithm(currentPlayer, currentPlayerInfluence, validStudents);
     }
@@ -108,4 +108,29 @@ public class Island {
         currentPlayerInfluence = currentPlayerInfluence + validStudents;
         return currentPlayerInfluence;
     }
+
+    /*
+    This special version of the influenceCalc method excludes one specific color out of the influence calculation.
+     */
+    public int influenceCalc(Player currentPlayer, Color color){
+        int validStudents = 0;
+        int currentPlayerInfluence = numOfTowers;
+        for(Student student : students){
+            try {
+
+                // skips the desired color
+                if(student.getColor().equals(color)) continue;
+
+                // check if the professor (with the same color of the student) is present in the player's school
+                if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
+                    validStudents++;
+                }
+            } catch (NonExistentTableException e) {
+                e.printStackTrace();
+            }
+        }
+        currentPlayerInfluence = currentPlayerInfluence + validStudents;
+        return currentPlayerInfluence;
+    }
+
 }

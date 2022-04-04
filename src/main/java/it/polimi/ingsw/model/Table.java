@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Table {
 
@@ -60,6 +61,10 @@ public class Table {
             else return 0;
         }
         else return 0;
+    }
+
+    public Optional<Student> removeStudent(){
+        return this.students.stream().findFirst();
     }
 
     //for debugging

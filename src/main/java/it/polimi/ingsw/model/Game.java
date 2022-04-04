@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,14 @@ public class Game {
     private Player currentPlayer;
     private int maxSteps;
 
+    private PropertyChangeSupport support;
+
     public Game(int playersNumber) {
         this.state = GameState.INIT;
         this.playersNumber = playersNumber;
         players = new ArrayList<>();
         board = new GameBoard(playersNumber);
+        support = new PropertyChangeSupport(this);
     }
 
     //Getter and setter section
@@ -50,6 +54,23 @@ public class Game {
 
     public void setMaxSteps(int maxSteps) {
         this.maxSteps = maxSteps;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        support.firePropertyChange("roundNumber", getRoundNumber(), getRoundNumber() + 1);
+        this.roundNumber = roundNumber;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 
     // methods
@@ -80,6 +101,7 @@ public class Game {
     public void profCheck(){
 
         profCheckAlgorithm(playersNumber, players);
+
     }
 
     public static void profCheckAlgorithm(int playersNumber, List<Player> players) {

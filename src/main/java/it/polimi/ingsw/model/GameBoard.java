@@ -121,6 +121,20 @@ public class GameBoard {
         }
     }
 
+    public void islandConquerCheck(Player currentPlayer, int islandID, Color color) {
+        try {
+            if(getIslands().getIslandFromID(islandID).isVeto()) {
+                getIslands().getIslandFromID(islandID).setVeto(false);
+                numOfVetos++;
+                return;
+            }
+            Island selectedIsland = islands.getIslandFromID(islandID);
+            if(!selectedIsland.getOwner().equals(currentPlayer)) {
+                int calc = selectedIsland.influenceCalc(currentPlayer, color);
+                if(calc > selectedIsland.getOwnerInfluence()){
+                    selectedIsland.setOwner(currentPlayer);
+                    selectedIsland.setOwnerInfluence(calc);
+                  
     //Punti critici:
     // 1- cosa succede se Owner è null (l'isola non è ancora stata conquistata)
     // 2- corretta gestione del numero di torri (quando si conquista l'isola per la prima volta
@@ -166,6 +180,7 @@ public class GameBoard {
                     if(selectedIsland.getNumOfTowers() == 0)
                         selectedIsland.setNumOfTowers(1);
                     selectedIsland.setOwnerInfluence(calc + selectedIsland.getNumOfTowers());
+
                     islands.mergeIslands(selectedIsland);
                 }
             }

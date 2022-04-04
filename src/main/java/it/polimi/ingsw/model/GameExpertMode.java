@@ -19,8 +19,6 @@ public class GameExpertMode extends Game {
         try {
             if (getCurrentPlayer().getCharacterCardAlreadyPlayed())
                 throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
-            else
-                getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
 
             boolean found = false;
             for (CharacterCard card : characters) {
@@ -47,6 +45,7 @@ public class GameExpertMode extends Game {
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
                 card.doEffect(this);
+                card.setUpCard();
             }
         }
         if (steps > getMaxSteps() || steps < Constants.MIN_NUM_OF_STEPS)
@@ -57,17 +56,23 @@ public class GameExpertMode extends Game {
     @Override
     public void profCheck() {
 
+        boolean done = false;
         for (CharacterCard card : characters) {
             if (card.getId() == 2 && card.getIsActive()) {
                 card.doEffect(this);
-            } else {
-                Game.profCheckAlgorithm(getPlayersNumber(), getPlayers());
+                card.setUpCard();
+                done = true;
             }
         }
+
+        if(!done)
+            Game.profCheckAlgorithm(getPlayersNumber(), getPlayers());
+
     }
 
     @Override
     public void islandConquerCheck(int islandID) {
+      
         boolean done = false;
         for (CharacterCard card : characters) {
             if (card.getIsActive()) {
@@ -77,5 +82,6 @@ public class GameExpertMode extends Game {
         }
         if (!done)
             getBoard().islandConquerCheck(getCurrentPlayer(), islandID);
+      
     }
 }
