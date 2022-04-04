@@ -13,11 +13,14 @@ public class Island {
     private ArrayList<Student> students;
     private Island prev; // to iterate the DoublyLinkedList islands
     private Island next; // to iterate the DoublyLinkedList islands
+    private boolean veto; // when the flag is true it's not possible to conquer the island
+                              // influenceCalc isn't calculated
 
 
     public Island(int id) {
         this.id = id;
         this.ownerInfluence = 0;
+        this.veto = false;
     }
 
     public int getId() {
@@ -68,7 +71,11 @@ public class Island {
         this.numOfTowers = numOfTowers;
     }
 
-    // TODO: need a lot of testing
+    public boolean isVeto() { return veto; }
+
+    public void setVeto(boolean veto) { this.veto = veto; }
+
+    // TODO: needs a lot of testing
     /*
         The method counts the number of towers and the number of students of a
         player (passed as parameter), the only students counted are the students
@@ -77,6 +84,17 @@ public class Island {
     public int influenceCalc(Player currentPlayer){
         int validStudents = 0;
         int currentPlayerInfluence = numOfTowers;
+        currentPlayerInfluence = currentPlayerInfluence + numOfTowers;
+        return influenceCalcAlgorithm(currentPlayer, currentPlayerInfluence, validStudents);
+    }
+
+    public int influenceCalcWithoutTowers(Player currentPlayer){
+        int currentPlayerInfluence = 0;
+        int validStudents = 0;
+        return influenceCalcAlgorithm(currentPlayer, currentPlayerInfluence, validStudents);
+    }
+
+    private int influenceCalcAlgorithm(Player currentPlayer, int currentPlayerInfluence, int validStudents) {
         for(Student student : students){
             try {
                 // check if the professor (with the same color of the student) is present in the player's school
