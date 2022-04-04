@@ -10,11 +10,13 @@ public class Student {
         this.color = color;
     }
 
+    // Getter method
+
     public Color getColor() {
         return color;
     }
 
-    // methods
+    // Student methods
 
     public void moveToHall(Player curr){
         curr.getSchool().getHall().addStudent(this);
@@ -33,4 +35,5 @@ public class Student {
             e.printStackTrace();
         }
     }
+
 }

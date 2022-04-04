@@ -8,7 +8,6 @@ public class Island {
 
     private Player owner;
     private final int id;
-    private int ownerInfluence;
     private int numOfTowers;
     private ArrayList<Student> students;
     private Island prev; // to iterate the DoublyLinkedList islands
@@ -19,9 +18,10 @@ public class Island {
 
     public Island(int id) {
         this.id = id;
-        this.ownerInfluence = 0;
         this.veto = false;
     }
+
+    // Getter and setter methods
 
     public int getId() {
         return id;
@@ -33,14 +33,6 @@ public class Island {
 
     public void setOwner(Player owner) {
         this.owner = owner;
-    }
-
-    public int getOwnerInfluence() {
-        return ownerInfluence;
-    }
-
-    public void setOwnerInfluence(int ownerInfluence) {
-        this.ownerInfluence = ownerInfluence;
     }
 
     public void addStudent(Student student){
@@ -71,9 +63,11 @@ public class Island {
         this.numOfTowers = numOfTowers;
     }
 
-    public boolean isVeto() { return veto; }
+    public boolean hasVeto() { return veto; }
 
     public void setVeto(boolean veto) { this.veto = veto; }
+
+    // Island methods
 
     // TODO: needs a lot of testing
     /*
@@ -82,55 +76,101 @@ public class Island {
         with the same color as the professors in the player's school
      */
     public int influenceCalc(Player currentPlayer){
-        int validStudents = 0;
-        int currentPlayerInfluence = numOfTowers;
-        currentPlayerInfluence = currentPlayerInfluence + numOfTowers;
-        return influenceCalcAlgorithm(currentPlayer, currentPlayerInfluence, validStudents);
-    }
 
-    public int influenceCalcWithoutTowers(Player currentPlayer){
-        int currentPlayerInfluence = 0;
-        int validStudents = 0;
-        return influenceCalcAlgorithm(currentPlayer, currentPlayerInfluence, validStudents);
-    }
+        int influencePoints = 0;
 
-    private int influenceCalcAlgorithm(Player currentPlayer, int currentPlayerInfluence, int validStudents) {
-        for(Student student : students){
-            try {
-                // check if the professor (with the same color of the student) is present in the player's school
-                if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
-                    validStudents++;
-                }
-            } catch (NonExistentTableException e) {
-                e.printStackTrace();
-            }
+        try {
+
+            influencePoints += influenceCalcStudents(currentPlayer);
+
+            if(owner.equals(currentPlayer))
+                influencePoints += numOfTowers;
+
+        } catch (NonExistentTableException e) {
+            e.printStackTrace();
         }
-        currentPlayerInfluence = currentPlayerInfluence + validStudents;
-        return currentPlayerInfluence;
+
+        return influencePoints;
     }
 
     /*
-    This special version of the influenceCalc method excludes one specific color out of the influence calculation.
+        This special version of the influenceCalc method excludes one specific color out of the influence calculation.
      */
     public int influenceCalc(Player currentPlayer, Color color){
+
+        int influencePoints = 0;
+
+        try {
+
+            influencePoints += influenceCalcStudents(currentPlayer, color);
+
+            if(owner.equals(currentPlayer))
+                influencePoints += numOfTowers;
+
+        } catch (NonExistentTableException e) {
+            e.printStackTrace();
+        }
+        return influencePoints;
+
+    }
+
+    /*
+        This special version of the influenceCalc method excludes the towers out of the influence calculation.
+     */
+    public int influenceCalcWithoutTowers(Player currentPlayer){
+        int influencePoints = 0;
+
+        try {
+
+            influencePoints += influenceCalcStudents(currentPlayer);
+
+        } catch (NonExistentTableException e) {
+            e.printStackTrace();
+        }
+
+        return influencePoints;
+    }
+
+    /*
+        This method contains the algorithms which returns the correct number of students that assign influence points
+        to a player.
+     */
+    public int influenceCalcStudents(Player currentPlayer) throws NonExistentTableException{
+
         int validStudents = 0;
-        int currentPlayerInfluence = numOfTowers;
+
         for(Student student : students){
-            try {
-
-                // skips the desired color
-                if(student.getColor().equals(color)) continue;
-
-                // check if the professor (with the same color of the student) is present in the player's school
-                if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
-                    validStudents++;
-                }
-            } catch (NonExistentTableException e) {
-                e.printStackTrace();
+            // check if the professor (with the same color of the student) is present in the player's school
+            if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
+                validStudents++;
             }
         }
-        currentPlayerInfluence = currentPlayerInfluence + validStudents;
-        return currentPlayerInfluence;
+
+        return validStudents;
+    }
+
+    /*
+        This method contains the algorithms which returns the correct number of students that assign influence points
+        to a player, without considering the students of a specific color.
+     */
+    public int influenceCalcStudents(Player currentPlayer, Color color) throws NonExistentTableException{
+
+        int validStudents = 0;
+
+        for(Student student : students){
+
+            // skips the desired color
+            if(student.getColor().equals(color)) continue;
+
+            // check if the professor (with the same color of the student) is present in the player's school
+            if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
+                validStudents++;
+            }
+
+        }
+
+        return validStudents;
+
     }
 
 }

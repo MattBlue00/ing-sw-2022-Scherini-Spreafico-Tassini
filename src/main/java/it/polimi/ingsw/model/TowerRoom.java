@@ -10,6 +10,8 @@ public class TowerRoom {
         this.towersLeft = capacity;
     }
 
+    // Getter and setter methods
+
     public int getTowersLeft() {
         return towersLeft;
     }

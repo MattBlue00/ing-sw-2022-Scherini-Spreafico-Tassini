@@ -8,6 +8,12 @@ import it.polimi.ingsw.model.exceptions.InvalidIslandException;
 
 public class Centaur extends CharacterCard {
 
+    /*
+        CHARACTER CARD DESCRIPTION:
+        The centaur allows the player to trigger a special version of the islandConquerCheck method, which
+        does not count into the influence the towers' effect.
+    */
+
     public Centaur() {
         super(6, 3);
     }
@@ -15,7 +21,6 @@ public class Centaur extends CharacterCard {
     public void doEffect(GameExpertMode game){
 
         game.getBoard().islandConquerCheckWithoutTowers(game.getCurrentPlayer(), game.getBoard().getMotherNaturePos());
-        setCost(getCost() + 1);
-        setIsActive(false);
+
     }
 }

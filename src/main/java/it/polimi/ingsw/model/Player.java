@@ -31,7 +31,8 @@ public class Player {
         this.characterCardAlreadyPlayed = false;
     }
 
-    // getter and setter
+    // Getter and setter methods
+
     public Wizard getWizardID() {
         return wizardID;
     }
@@ -55,6 +56,7 @@ public class Player {
     public AssistantCard getLastCardPlayed() {
         return lastAssistantCardPlayed;
     }
+
     public School getSchool() {
         return school;
     }
@@ -67,7 +69,7 @@ public class Player {
         this.characterCardAlreadyPlayed = characterCardAlreadyPlayed;
     }
 
-    // methods
+    // Player methods
 
     public AssistantCard playAssistantCard(int cardID) {
         this.lastAssistantCardPlayed = getDeck().remove(cardID);

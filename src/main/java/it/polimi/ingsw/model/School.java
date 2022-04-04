@@ -25,7 +25,8 @@ public class School {
         }
     }
 
-    // getter
+    // Getter methods
+
     public Hall getHall() {
         return hall;
     }
@@ -40,7 +41,8 @@ public class School {
 
     }
 
-    // methods
+    // School methods
+
     public void moveStudentToIsland(int islandID, String color){
         this.hall.removeStudent(color).ifPresent(student -> student.moveToIsland(islandID));
     }
