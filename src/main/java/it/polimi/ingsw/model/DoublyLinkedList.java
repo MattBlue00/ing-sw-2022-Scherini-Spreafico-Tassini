@@ -62,10 +62,12 @@ public class DoublyLinkedList {
         Island next = island.getNext();
         if(prev.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
+            prev.getStudents().stream().forEach(student -> island.addStudent(student));
             removeIsland(prev);
         }
         if(next.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + next.getNumOfTowers());
+            next.getStudents().stream().forEach(student -> island.addStudent(student));
             removeIsland(next);
         }
         // TODO : WinCheck after merging

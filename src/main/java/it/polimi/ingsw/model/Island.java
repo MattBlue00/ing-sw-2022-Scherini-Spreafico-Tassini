@@ -67,6 +67,8 @@ public class Island {
 
     public void setVeto(boolean veto) { this.veto = veto; }
 
+    public ArrayList<Student> getStudents() { return students; }
+
     // Island methods
 
     // TODO: needs a lot of testing
