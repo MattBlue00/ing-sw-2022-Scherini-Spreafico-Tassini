@@ -149,7 +149,7 @@ public class Game {
         board.moveMotherNature(steps);
     }
 
-    public void islandConquerCheck(int islandID){
+    public void islandConquerCheck(int islandID) throws InvalidIslandException {
         board.islandConquerCheck(currentPlayer, islandID);
     }
 
