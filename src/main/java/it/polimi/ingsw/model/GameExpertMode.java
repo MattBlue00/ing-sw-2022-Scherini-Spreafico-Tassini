@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.CharacterCardAlreadyPlayedException;
-import it.polimi.ingsw.model.exceptions.InvalidNumberOfStepsException;
-import it.polimi.ingsw.model.exceptions.NonExistentCharacterCardException;
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ public class GameExpertMode extends Game {
         this.characters = new CharacterCard[Constants.CHARACTERS_NUM];
     }
 
-    // TODO: at the end of player's turn, set the card's status to false
+        // TODO: at the end of player's turn, set the card's status to false
     public void playerPlaysCharacterCard(int id) {
 
         try {
@@ -67,5 +64,18 @@ public class GameExpertMode extends Game {
                 Game.profCheckAlgorithm(getPlayersNumber(), getPlayers());
             }
         }
+    }
+
+    @Override
+    public void islandConquerCheck(int islandID) {
+        boolean done = false;
+        for (CharacterCard card : characters) {
+            if (card.getIsActive()) {
+                card.doEffect(this);
+                done = true;
+            }
+        }
+        if (!done)
+            getBoard().islandConquerCheck(getCurrentPlayer(), islandID);
     }
 }
