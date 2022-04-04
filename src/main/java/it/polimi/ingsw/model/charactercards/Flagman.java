@@ -13,6 +13,7 @@ public class Flagman extends CharacterCard {
 
     @Override
     public void doEffect(GameExpertMode game) {
+        // TODO: parsing input from the view
         int islandID = 1; // placeholder
         game.getBoard().islandConquerCheck(game.getCurrentPlayer(), game.getBoard().getMotherNaturePos());
     }

@@ -35,7 +35,7 @@ public class GameExpertMode extends Game {
                     card.setIsActive(true);
                     found = true;
                     getCurrentPlayer().setCoinsWallet(getCurrentPlayer().getCoinsWallet() - card.getCost());
-                    if(card.getId() == 5 || card.getId() == 10){
+                    if(card.getId() == 5 || card.getId() == 10 || card.getId() == 3){
                         card.doEffect(this);
                         card.setUpCard();
                     }
