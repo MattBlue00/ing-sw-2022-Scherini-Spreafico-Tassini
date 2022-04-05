@@ -20,14 +20,11 @@ public class Game {
     private Player currentPlayer;
     private int maxSteps;
 
-    private PropertyChangeSupport support;
-
     public Game(int playersNumber) {
         this.state = GameState.INIT;
         this.playersNumber = playersNumber;
         players = new ArrayList<>();
         board = new GameBoard(playersNumber);
-        support = new PropertyChangeSupport(this);
     }
 
     // Getter and setter methods
@@ -61,20 +58,11 @@ public class Game {
     }
 
     public void setRoundNumber(int roundNumber) {
-        support.firePropertyChange("roundNumber", getRoundNumber(), getRoundNumber() + 1);
         this.roundNumber = roundNumber;
     }
 
     public GameBoard getBoard() {
         return board;
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
     }
 
     // Game methods
@@ -97,15 +85,19 @@ public class Game {
         At the end of the movement phase profCheck() is called
      */
     public void playerMovesStudent(){
+
+        // TODO: the view will be responsible for choices
+
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            currentPlayer.moveStudent();
+            currentPlayer.moveStudent(0, Color.BLUE.toString()); // PLACEHOLDERS
         }
         profCheck();
+
     }
 
     /*
         This method trigger the profCheck algorithm. This "double call" allows the reuse of the algorithm (made static)
-        in other classes) and the possibility to override it in the GameExpertMode class.
+        in other classes and the possibility to override it in the GameExpertMode class.
      */
     public void profCheck(){
 
@@ -198,6 +190,12 @@ public class Game {
      */
     public void takeStudentsFromCloud(int cloudID) throws EmptyCloudException {
         board.takeStudentsFromCloud(cloudID, currentPlayer);
+    }
+
+    // Debug methods
+
+    public void addPlayer(Player player){
+        players.add(player);
     }
 
 }

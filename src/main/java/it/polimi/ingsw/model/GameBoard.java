@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.exceptions.InvalidIslandException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GameBoard {
 
@@ -23,7 +24,6 @@ public class GameBoard {
         this.islands = new DoublyLinkedList();
         this.numOfVetos = 4;
 
-
         // just to fill the bag with something
         for(int i=0; i<15; i++){
             studentsBag.add(new Student(Color.RED));
@@ -33,7 +33,7 @@ public class GameBoard {
             Cloud cloud = new Cloud(3); // not scalable, need to find a better solution then if/else
             clouds[i] = cloud;
             for(int j=0; j<cloud.getCapacity(); j++)
-                cloud.addStudent(studentsBag.remove(studentsBag.size()-1));
+                cloud.addStudent(studentsBag.remove(studentsBag.size() - 1));
         }
     }
 
@@ -108,14 +108,17 @@ public class GameBoard {
                 return;
             }
             Island selectedIsland = islands.getIslandFromID(islandID);
-            if(!selectedIsland.getOwner().equals(currentPlayer)) {
-                int calc = selectedIsland.influenceCalc(currentPlayer);
-                if(calc > selectedIsland.influenceCalc(selectedIsland.getOwner())){
-                    selectedIsland.setOwner(currentPlayer);
-                    if(selectedIsland.getNumOfTowers() == 0)
-                        selectedIsland.setNumOfTowers(1);
-                    islands.mergeIslands(selectedIsland);
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
+                    int calcOwner = selectedIsland.influenceCalc(owner.get());
+                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
                 }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
             }
         } catch (InvalidIslandException e) {
             e.printStackTrace();
@@ -130,14 +133,17 @@ public class GameBoard {
                 return;
             }
             Island selectedIsland = islands.getIslandFromID(islandID);
-            if(!selectedIsland.getOwner().equals(currentPlayer)) {
-                int calc = selectedIsland.influenceCalc(currentPlayer, color);
-                if(calc > selectedIsland.influenceCalc(selectedIsland.getOwner(), color)){
-                    selectedIsland.setOwner(currentPlayer);
-                    if(selectedIsland.getNumOfTowers() == 0)
-                        selectedIsland.setNumOfTowers(1);
-                    islands.mergeIslands(selectedIsland);
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer, color);
+                    int calcOwner = selectedIsland.influenceCalc(owner.get(), color);
+                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
                 }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer, color);
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
             }
         } catch (InvalidIslandException e) {
             e.printStackTrace();
@@ -158,14 +164,17 @@ public class GameBoard {
                 return;
             }
             Island selectedIsland = islands.getIslandFromID(islandID);
-            if(!selectedIsland.getOwner().equals(currentPlayer)) {
-                int calc = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                if(calc > selectedIsland.influenceCalcWithoutTowers(selectedIsland.getOwner())){
-                    selectedIsland.setOwner(currentPlayer);
-                    if(selectedIsland.getNumOfTowers() == 0)
-                        selectedIsland.setNumOfTowers(1);
-                    islands.mergeIslands(selectedIsland);
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
+                    int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner.get());
+                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
                 }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
             }
         } catch (InvalidIslandException e) {
             e.printStackTrace();
@@ -181,18 +190,38 @@ public class GameBoard {
                 return;
             }
             Island selectedIsland = islands.getIslandFromID(islandID);
-            if(!selectedIsland.getOwner().equals(currentPlayer)) {
-                int calc = selectedIsland.influenceCalcWithoutTowers(currentPlayer) + 2;
-                if(calc > selectedIsland.influenceCalc(selectedIsland.getOwner())){
-                    selectedIsland.setOwner(currentPlayer);
-                    if(selectedIsland.getNumOfTowers() == 0)
-                        selectedIsland.setNumOfTowers(1);
-                    islands.mergeIslands(selectedIsland);
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
+                    int calcOwner = selectedIsland.influenceCalc(owner.get());
+                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
                 }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
             }
         } catch (InvalidIslandException e) {
             e.printStackTrace();
         }
+    }
+
+    public void islandConquerAlgorithm(Player currentPlayer, Island selectedIsland, int calcCurrent, int calcOwner) {
+
+        if(selectedIsland.getOwner().isPresent()) {
+            if (calcCurrent > calcOwner && calcCurrent > 0) {
+                selectedIsland.setOwner(currentPlayer);
+            }
+        }
+        else{
+            if(calcCurrent > 0){
+                selectedIsland.setOwner(currentPlayer);
+                selectedIsland.setNumOfTowers(1);
+            }
+        }
+        islands.mergeIslands(selectedIsland);
+
     }
 
     // For debugging
