@@ -108,10 +108,10 @@ public class DoublyLinkedList {
         Island temp = head;
         System.out.println("From head to tail: ");
         while(!temp.getNext().equals(head)){
-            System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner()));
+            System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().get().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner().get()));
             temp = temp.getNext();
         }
-        System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner()));
+        System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().get().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner().get()));
 
         /*System.out.println("From tail to head: ");
         Island tail = head.getPrev();

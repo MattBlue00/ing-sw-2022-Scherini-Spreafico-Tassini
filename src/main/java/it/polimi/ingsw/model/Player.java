@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Player {
 
@@ -23,7 +24,15 @@ public class Player {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.coinsWallet = 1;
+
         this.deck = new ArrayList<>(10);
+        int j = 0;
+        for(int i = 1; i <= 10; i++){
+            if(!(i%2==0))
+                j++;
+            this.deck.add(new AssistantCard(i, i, j));
+        }
+
         this.school = new School(2);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
         this.lastAssistantCardPlayed = null;
         this.school = new School(2);    // TODO: School depends on numberOfPlayers,
@@ -61,6 +70,14 @@ public class Player {
         return school;
     }
 
+    public AssistantCard getLastAssistantCardPlayed() {
+        return lastAssistantCardPlayed;
+    }
+
+    public void setLastAssistantCardPlayed(AssistantCard lastAssistantCardPlayed) {
+        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
+    }
+
     public boolean getCharacterCardAlreadyPlayed() {
         return characterCardAlreadyPlayed;
     }
@@ -76,23 +93,12 @@ public class Player {
         return lastAssistantCardPlayed;
     }
 
-    public void moveStudent(){
-        // in the final version the view will be responsible to get the choice from the player
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String choice = br.readLine().toUpperCase(Locale.ROOT);
-            String color = br.readLine().toUpperCase(Locale.ROOT);
-            if(choice.equals("ISLAND")){
-                int islandID = Integer.parseInt(br.readLine());
-                this.school.moveStudentToIsland(islandID, color);
-            }
-            else{
-                this.school.moveStudentToTable(this, color);
-            }
+    public void moveStudent(int islandID, String color){
+        this.school.moveStudentToIsland(islandID, color);
+    }
 
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+    public void moveStudent(String color){
+        this.school.moveStudentToTable(this, color);
     }
 
 }

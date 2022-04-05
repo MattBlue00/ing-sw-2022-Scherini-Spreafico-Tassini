@@ -10,12 +10,14 @@ public class HallTest extends TestCase {
     @Test
     public void testAddStudent() {
 
-        Hall hall = new Hall(6);
-        Student student = new Student(Color.PINK);
+        Hall hall = new Hall(7);
+        Student s1 = new Student(Color.PINK);
 
-        hall.addStudent(student);
+        hall.addStudent(s1);
 
-        assertEquals(student, hall.getStudents().get(0));
+        assertEquals(s1, hall.getStudents().get(0));
+        assertEquals(1, hall.getStudents().size());
+
     }
 
     @Test
@@ -28,12 +30,13 @@ public class HallTest extends TestCase {
 
         hall.addStudent(s1);
         hall.addStudent(s2);
-        hall.addStudent(s1);
+        hall.addStudent(s3);
 
         Student s4 = hall.removeStudent("PINK").get();
 
         //making sure that the removed student is the first one of its color
         assertEquals(s1, s4);
         assertNotSame(s3, s4);
+
     }
 }

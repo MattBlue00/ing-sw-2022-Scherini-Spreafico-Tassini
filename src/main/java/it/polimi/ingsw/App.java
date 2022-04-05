@@ -61,19 +61,19 @@ public class App
         islands.addIsland(i5);
 
         i1.setNumOfTowers(1);
-        i1.setOwnerInfluence(3);
+        //i1.setOwnerInfluence(3);
         i1.setOwner(p1);
         i2.setNumOfTowers(1);
-        i2.setOwnerInfluence(4);
+        //i2.setOwnerInfluence(4);
         i2.setOwner(p1);
         i3.setNumOfTowers(2);
-        i3.setOwnerInfluence(10);
+        //i3.setOwnerInfluence(10);
         i3.setOwner(p2);
         i4.setNumOfTowers(1);
-        i4.setOwnerInfluence(3);
+        //i4.setOwnerInfluence(3);
         i4.setOwner(p3);
         i5.setNumOfTowers(1);
-        i5.setOwnerInfluence(5);
+        //i5.setOwnerInfluence(5);
         i5.setOwner(p1);
         islands.printList();
 
