@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model;
 
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class CharacterCardTest extends TestCase {
+public class CharacterCardTest{
 
     /* @Test
     public void testGetCost() {

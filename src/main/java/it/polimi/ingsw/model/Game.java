@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 

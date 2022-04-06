@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.NonExistentTableException;
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class StudentTest extends TestCase {
+public class StudentTest{
 
     @Test
     public void testMoveToHall() {
@@ -16,8 +16,8 @@ public class StudentTest extends TestCase {
         s1.moveToHall(p1);
         s2.moveToHall(p1);
 
-        assertEquals(true, p1.getSchool().getHall().getStudents().contains(s1));
-        assertEquals(true, p1.getSchool().getHall().getStudents().contains(s2));
+        assertTrue(p1.getSchool().getHall().getStudents().contains(s1));
+        assertTrue(p1.getSchool().getHall().getStudents().contains(s2));
 
     }
 

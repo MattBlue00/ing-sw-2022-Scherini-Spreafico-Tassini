@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.NonExistentTableException;
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SchoolTest extends TestCase {
+public class SchoolTest{
 
     //TODO: support methods need to be implemented
     @Test
