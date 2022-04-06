@@ -10,8 +10,7 @@ public class Game {
 
     // game variables
 
-    private final int playersNumber;
-    private final GameState state;
+    private int playersNumber;
     private final List<Player> players;
     private int roundNumber;
     private final GameBoard board;
@@ -19,7 +18,6 @@ public class Game {
     private int maxSteps;
 
     public Game(int playersNumber) {
-        this.state = GameState.INIT;
         this.playersNumber = playersNumber;
         players = new ArrayList<>();
         board = new GameBoard(playersNumber);
@@ -61,6 +59,10 @@ public class Game {
 
     public GameBoard getBoard() {
         return board;
+    }
+
+    public void setPlayersNumber(int playersNumber) {
+        this.playersNumber = playersNumber;
     }
 
     // Game methods
