@@ -1,15 +1,13 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import junit.framework.TestCase;
-import org.junit.Test;
-import org.junit.runners.model.TestClass;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CloudTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CloudTest{
 
     @Test
     public void testAddStudent() {

@@ -67,15 +67,11 @@ public class Island {
         this.numOfTowers = numOfTowers;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
     public boolean hasVeto() { return veto; }
 
     public void setVeto(boolean veto) { this.veto = veto; }
 
-    public ArrayList<Student> getStudents() { return students; }
+    public List<Student> getStudents() { return students; }
 
     // Island methods
 

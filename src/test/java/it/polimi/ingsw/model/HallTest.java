@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
-
-public class HallTest extends TestCase {
+public class HallTest {
 
     @Test
     public void testAddStudent() {

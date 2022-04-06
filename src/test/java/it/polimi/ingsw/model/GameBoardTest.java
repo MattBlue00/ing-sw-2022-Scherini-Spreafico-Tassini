@@ -2,10 +2,10 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class GameBoardTest extends TestCase {
+public class GameBoardTest{
 
     @Test
     public void testRefillClouds() {
