@@ -113,37 +113,12 @@ public class GameBoard {
                 if (!owner.get().equals(currentPlayer)) {
                     int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
                     int calcOwner = selectedIsland.influenceCalc(owner.get());
-                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
+                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner, islands);
                 }
             }
             else{
                 int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
-                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
-            }
-        } catch (InvalidIslandException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void islandConquerCheck(Player currentPlayer, int islandID, Color color) {
-        try {
-            if(getIslands().getIslandFromID(islandID).hasVeto()) {
-                getIslands().getIslandFromID(islandID).setVeto(false);
-                numOfVetos++;
-                return;
-            }
-            Island selectedIsland = islands.getIslandFromID(islandID);
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer, color);
-                    int calcOwner = selectedIsland.influenceCalc(owner.get(), color);
-                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
-                }
-            }
-            else{
-                int calcCurrent = selectedIsland.influenceCalc(currentPlayer, color);
-                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0, islands);
             }
         } catch (InvalidIslandException e) {
             e.printStackTrace();
@@ -155,59 +130,8 @@ public class GameBoard {
     // 2- corretta gestione del numero di torri (quando si conquista l'isola per la prima volta
     //    numOfTowers va a uno)
 
-    //checks if an island can be conquered without counting the towers number
-    public void islandConquerCheckWithoutTowers(Player currentPlayer, int islandID) {
-        try {
-            if(getIslands().getIslandFromID(islandID).hasVeto()) {
-                getIslands().getIslandFromID(islandID).setVeto(false);
-                numOfVetos++;
-                return;
-            }
-            Island selectedIsland = islands.getIslandFromID(islandID);
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                    int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner.get());
-                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
-                }
-            }
-            else{
-                int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
-            }
-        } catch (InvalidIslandException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //implemented for the card where the current player gets a plus two on top of his influence
-    public void islandConquerCheckPlusTwoInfluence(Player currentPlayer, int islandID) {
-        try {
-            if(getIslands().getIslandFromID(islandID).hasVeto()) {
-                getIslands().getIslandFromID(islandID).setVeto(false);
-                numOfVetos++;
-                return;
-            }
-            Island selectedIsland = islands.getIslandFromID(islandID);
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
-                    int calcOwner = selectedIsland.influenceCalc(owner.get());
-                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner);
-                }
-            }
-            else{
-                int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
-                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0);
-            }
-        } catch (InvalidIslandException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void islandConquerAlgorithm(Player currentPlayer, Island selectedIsland, int calcCurrent, int calcOwner) {
+    public static void islandConquerAlgorithm
+            (Player currentPlayer, Island selectedIsland, int calcCurrent, int calcOwner, DoublyLinkedList islands) {
 
         if(selectedIsland.getOwner().isPresent()) {
             if (calcCurrent > calcOwner && calcCurrent > 0) {

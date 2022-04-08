@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+
+import java.util.Optional;
 
 public class Knight extends CharacterCard {
 
@@ -20,7 +22,31 @@ public class Knight extends CharacterCard {
         // TODO: parsing input from the view
         int islandID = 1;
 
-        game.getBoard().islandConquerCheckPlusTwoInfluence(game.getCurrentPlayer(), islandID);
+        try {
+            Island selectedIsland = game.getBoard().getIslands().getIslandFromID(islandID);
+            if(selectedIsland.hasVeto()) {
+                selectedIsland.setVeto(false);
+                game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+                return;
+            }
+            Player currentPlayer = game.getCurrentPlayer();
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
+                    int calcOwner = selectedIsland.influenceCalc(owner.get());
+                    GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
+                            game.getBoard().getIslands());
+                }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
+                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                        game.getBoard().getIslands());
+            }
+        } catch (InvalidIslandException e) {
+            e.printStackTrace();
+        }
 
     }
 }

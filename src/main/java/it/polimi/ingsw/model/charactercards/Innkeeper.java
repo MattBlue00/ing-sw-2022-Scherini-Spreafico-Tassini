@@ -25,11 +25,6 @@ public class Innkeeper extends CharacterCard {
         int playersNumber = game.getPlayersNumber();
         final List<Player> players = game.getPlayers();
 
-        boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
-        for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init
-            hasProfessor[i] = false;
-        }
-
         Color[] colors = Color.values();
 
         try {
