@@ -14,8 +14,6 @@ public class Bard extends CharacterCard {
         The bard allows the player to switch up to 2 students between the hall and the dining room.
     */
 
-    //TODO: need to decide where to call the "doEffect" method
-
     public Bard() {
         super(10, 1);
     }
