@@ -6,13 +6,13 @@ import it.polimi.ingsw.observers.Observable;
 import java.util.ArrayList;
 import java.util.List;
 
+public class Game{
 
-public class Game extends Observable {
 
     // game variables
 
     private int playersNumber;
-    private final List<Player> players;
+    private List<Player> players;
     private int roundNumber;
     private final GameBoard board;
     private Player currentPlayer;
@@ -32,6 +32,10 @@ public class Game extends Observable {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     public Player getCurrentPlayer() {

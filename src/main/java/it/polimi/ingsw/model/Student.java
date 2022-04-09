@@ -24,10 +24,10 @@ public class Student {
 
     public void moveToIsland(int islandID){
         // TODO: we need to implement islands first
+        
     }
 
     public void moveToTable(Player player){
-
         try{
             player.getSchool().getTable(this.color.toString()).addStudent(this, player);
         }
