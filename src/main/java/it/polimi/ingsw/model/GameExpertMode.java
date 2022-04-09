@@ -2,6 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.List;
+
 public class GameExpertMode extends Game {
 
     private final CharacterCard[] characters;
@@ -117,4 +119,5 @@ public class GameExpertMode extends Game {
             getBoard().islandConquerCheck(getCurrentPlayer(), islandID);
       
     }
+
 }

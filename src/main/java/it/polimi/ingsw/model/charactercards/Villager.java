@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+
+import java.util.Optional;
 
 public class Villager extends CharacterCard {
 
@@ -22,9 +23,31 @@ public class Villager extends CharacterCard {
 
         Color colorToExclude = Color.BLUE; // PLACEHOLDER
 
-        game.getBoard().islandConquerCheck(game.getCurrentPlayer(), game.getBoard().getMotherNaturePos(), colorToExclude);
-
-        setUpCard();
+        try {
+            Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
+            if(selectedIsland.hasVeto()) {
+                selectedIsland.setVeto(false);
+                game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+                return;
+            }
+            Player currentPlayer = game.getCurrentPlayer();
+            Optional<Player> owner = selectedIsland.getOwner();
+            if(owner.isPresent()) {
+                if (!owner.get().equals(currentPlayer)) {
+                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
+                    int calcOwner = selectedIsland.influenceCalc(owner.get(), colorToExclude);
+                    GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
+                            game.getBoard().getIslands());
+                }
+            }
+            else{
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
+                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                        game.getBoard().getIslands());
+            }
+        } catch (InvalidIslandException e) {
+            e.printStackTrace();
+        }
 
     }
 

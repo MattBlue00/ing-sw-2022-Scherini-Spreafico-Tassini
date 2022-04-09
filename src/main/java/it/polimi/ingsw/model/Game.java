@@ -1,14 +1,13 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.observers.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Game{
+
 
     // game variables
 
@@ -95,30 +94,24 @@ public class Game{
         // TODO: the view will be responsible for choices
 
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            currentPlayer.moveStudent(0, Color.BLUE.toString()); // PLACEHOLDERS
+            currentPlayer.moveStudent(1, Color.BLUE.toString()); // PLACEHOLDERS
         }
         profCheck();
 
     }
 
     /*
-        This method trigger the profCheck algorithm. This "double call" allows the reuse of the algorithm (made static)
-        in other classes and the possibility to override it in the GameExpertMode class.
+        This method is needed to make overriding possible in GameExpertMode.
+        If the game is played with the basic rules, it just calls the profCheckAlgorithm method.
      */
     public void profCheck(){
-
-        profCheckAlgorithm(playersNumber, players);
-
+        profCheckAlgorithm(getPlayersNumber(), getPlayers());
     }
 
     /*
         This method reassigns the professors if the necessary conditions are reached.
      */
     public static void profCheckAlgorithm(int playersNumber, List<Player> players) {
-        boolean[] hasProfessor = new boolean[Constants.NUM_COLORS];     // contains which professor each player has
-        for(int i = 0; i < Constants.NUM_COLORS; i++){		            // init
-            hasProfessor[i] = false;
-        }
 
         Color[] colors = Color.values();
 
