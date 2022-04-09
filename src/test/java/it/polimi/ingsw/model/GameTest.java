@@ -37,8 +37,7 @@ public class GameTest{
     public void testPlayersPlayAssistantCard() {
     }
 
-    //TODO
-    //waiting for the support methods to be implemented
+    /*TODO: waiting for the support methods to be implemented
     @Test
     public void testPlayerMovesStudent() {
 
@@ -49,7 +48,7 @@ public class GameTest{
         g1.playerMovesStudent();
 
         //incomplete
-    }
+    }*/
 
     @Test
     public void testProfCheck() throws NonExistentTableException {
@@ -138,7 +137,7 @@ public class GameTest{
 
         g1.getBoard().setMotherNaturePos(1);
         g1.setCurrentPlayer(p1);
-        p1.setLastAssistantCardPlayed(new AssistantCard(7, 7, 4));
+        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OCTOPUS));
 
         try{
             g1.moveMotherNature(3); // from island 1 to 4
@@ -149,7 +148,7 @@ public class GameTest{
 
         assertEquals(4, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(10, 10, 5));
+        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
 
         try{
             g1.moveMotherNature(5); // from island 4 to 9
@@ -160,7 +159,7 @@ public class GameTest{
 
         assertEquals(9, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(9, 9, 5));
+        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.ELEPHANT));
 
         try{
             g1.moveMotherNature(1); // from island 9 to 10
@@ -171,7 +170,7 @@ public class GameTest{
 
         assertEquals(10, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(8, 8, 4));
+        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.DOG));
 
         try{
             g1.moveMotherNature(3); // from island 10 to 1
@@ -182,7 +181,7 @@ public class GameTest{
 
         assertEquals(1, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(2, 2, 1));
+        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OSTRICH));
 
         try{
             g1.moveMotherNature(1); // from island 1 to 2
@@ -228,7 +227,7 @@ public class GameTest{
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(Optional.empty(), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(InvalidIslandException e){
             e.printStackTrace();

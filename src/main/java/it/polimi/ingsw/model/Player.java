@@ -26,12 +26,18 @@ public class Player {
         this.coinsWallet = 1;
 
         this.deck = new ArrayList<>(10);
-        int j = 0;
-        for(int i = 1; i <= 10; i++){
-            if(!(i%2==0))
-                j++;
-            this.deck.add(new AssistantCard(i, i, j));
-        }
+        this.deck.add(new AssistantCard(AssistantType.CHEETAH));
+        this.deck.add(new AssistantCard(AssistantType.OSTRICH));
+        this.deck.add(new AssistantCard(AssistantType.CAT));
+        this.deck.add(new AssistantCard(AssistantType.EAGLE));
+        this.deck.add(new AssistantCard(AssistantType.FOX));
+        this.deck.add(new AssistantCard(AssistantType.SNAKE));
+        this.deck.add(new AssistantCard(AssistantType.OCTOPUS));
+        this.deck.add(new AssistantCard(AssistantType.DOG));
+        this.deck.add(new AssistantCard(AssistantType.ELEPHANT));
+        this.deck.add(new AssistantCard(AssistantType.TURTLE));
+
+
 
         this.school = new School(2);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
         this.lastAssistantCardPlayed = null;
