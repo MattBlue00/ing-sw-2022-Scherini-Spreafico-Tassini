@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class GameBoard {
         for(Cloud c : clouds){
             for(int i=0; i< c.getCapacity(); i++) {
                 if(studentsBag.size()==0)
-                    throw new EmptyBagException("The bag is now empty");
+                    throw new EmptyBagException("The student bag is empty!");
                 Student tempStudent = studentsBag.remove(studentsBag.size()-1);
                 c.addStudent(tempStudent);
             }
@@ -100,35 +100,28 @@ public class GameBoard {
         Island with the near islands.
     */
 
-    public void islandConquerCheck(Player currentPlayer, int islandID) {
-        try {
-            if(getIslands().getIslandFromID(islandID).hasVeto()) {
-                getIslands().getIslandFromID(islandID).setVeto(false);
-                numOfVetos++;
-                return;
-            }
-            Island selectedIsland = islands.getIslandFromID(islandID);
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
-                    int calcOwner = selectedIsland.influenceCalc(owner.get());
-                    islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner, islands);
-                }
-            }
-            else{
-                int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
-                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0, islands);
-            }
-        } catch (InvalidIslandException e) {
-            e.printStackTrace();
+    public void islandConquerCheck(Player currentPlayer, int islandID) throws IslandNotFoundException{
+
+        if(getIslands().getIslandFromID(islandID).hasVeto()) {
+            getIslands().getIslandFromID(islandID).setVeto(false);
+            numOfVetos++;
+            return;
         }
+        Island selectedIsland = islands.getIslandFromID(islandID);
+        Optional<Player> owner = selectedIsland.getOwner();
+        if(owner.isPresent()) {
+            if (!owner.get().equals(currentPlayer)) {
+                int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
+                int calcOwner = selectedIsland.influenceCalc(owner.get());
+                islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner, islands);
+            }
+        }
+        else{
+            int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
+            islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0, islands);
+        }
+
     }
-                  
-    //Punti critici:
-    // 1- cosa succede se Owner è null (l'isola non è ancora stata conquistata)
-    // 2- corretta gestione del numero di torri (quando si conquista l'isola per la prima volta
-    //    numOfTowers va a uno)
 
     public static void islandConquerAlgorithm
             (Player currentPlayer, Island selectedIsland, int calcCurrent, int calcOwner, DoublyLinkedList islands) {
@@ -144,7 +137,9 @@ public class GameBoard {
                 selectedIsland.setNumOfTowers(1);
             }
         }
-        islands.mergeIslands(selectedIsland);
+
+        if(selectedIsland.getOwner().isPresent())
+            islands.mergeIslands(selectedIsland);
 
     }
 
@@ -156,6 +151,10 @@ public class GameBoard {
 
     public List<Student> getStudentsBag() {
         return studentsBag;
+    }
+
+    public void setStudentsBag(List<Student> bag){
+        this.studentsBag = bag;
     }
 
 }

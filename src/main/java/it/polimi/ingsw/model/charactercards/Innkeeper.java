@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
 
 import java.util.List;
 
@@ -21,8 +21,6 @@ public class Innkeeper extends CharacterCard {
     @Override
     public void doEffect(GameExpertMode game) {
 
-        //playersNumber and players were not accessible as attributes
-        int playersNumber = game.getPlayersNumber();
         final List<Player> players = game.getPlayers();
 
         Color[] colors = Color.values();
@@ -30,7 +28,7 @@ public class Innkeeper extends CharacterCard {
         try {
             for (Color color : colors) {
 
-                int dimBiggestTable = -1;   // number of students to beat in order to claim a professor
+                int dimBiggestTable = 0;   // number of students to beat in order to claim a professor
                 int playerWithProf = -1;    // index of the player who currently has this color's professor
                 int playerWhoLostProf = -1; // index of the player whose prof has been claimed
 
@@ -38,9 +36,9 @@ public class Innkeeper extends CharacterCard {
                 boolean professorAssigned = false;
 
                 // for each color, stores how many students each player has
-                int[] numOfStudents = new int[playersNumber];
+                int[] numOfStudents = new int[players.size()];
 
-                for (int i = 0; i < playersNumber; i++) {
+                for (int i = 0; i < players.size(); i++) {
                     numOfStudents[i] =
                             players.get(i).getSchool().getTable(color.toString()).getNumOfStudents();
                     if (players.get(i).getSchool().getTable(color.toString()).getHasProfessor()) {
@@ -54,7 +52,7 @@ public class Innkeeper extends CharacterCard {
                     dimBiggestTable = numOfStudents[playerWithProf];
                 }
 
-                for (int i = 0; i < playersNumber; i++) {
+                for (int i = 0; i < players.size(); i++) {
                     if (numOfStudents[i] >=  dimBiggestTable) {
                         // if clause needed to store which player's table will have its "hasProfessor" flag
                         // set to false, in case a player actually claimed that prof before
@@ -66,14 +64,16 @@ public class Innkeeper extends CharacterCard {
                 }
 
                 // sets the "hasProfessor" flags accordingly
-                players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(true);
+                if(playerWithProf != -1)
+                    players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(true);
+
                 // if the professor was already assigned and its owner did change
-                if (professorAssigned && playerWhoLostProf != -1) {
+                if (playerWhoLostProf != -1)
                     players.get(playerWhoLostProf).getSchool().getTable(color.toString()).setHasProfessor(false);
-                }
+
             }
         }
-        catch(NonExistentTableException e){
+        catch(NonExistentColorException e){
             e.printStackTrace();
         }
 

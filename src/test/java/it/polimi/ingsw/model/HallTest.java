@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,11 +31,13 @@ public class HallTest {
         hall.addStudent(s2);
         hall.addStudent(s3);
 
-        Student s4 = hall.removeStudent("PINK").get();
-
-        //making sure that the removed student is the first one of its color
-        assertEquals(s1, s4);
-        assertNotSame(s3, s4);
+        try{
+            Student s4 = hall.removeStudent("PINK");
+            //making sure that the removed student is the first one of its color
+            assertEquals(s1, s4);
+            assertNotSame(s3, s4);
+        }
+        catch(StudentNotFoundException e){}
 
     }
 }

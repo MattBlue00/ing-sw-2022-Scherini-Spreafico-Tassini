@@ -2,10 +2,8 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
-
-import java.util.Optional;
 
 public class Bard extends CharacterCard {
 
@@ -35,30 +33,24 @@ public class Bard extends CharacterCard {
 
             try {
 
-                Optional<Student> hallStudent =
+                Student hallStudent =
                         game.getCurrentPlayer().getSchool().getHall().removeStudent(color1.toString());
 
-                if (!hallStudent.isPresent())
-                    throw new StudentNotFoundException("No such student was found in the hall.");
-
-                Optional<Student> tableStudent =
+                Student tableStudent =
                         game.getCurrentPlayer().getSchool().getTable(color2.toString()).removeStudent();
-
-                if(!tableStudent.isPresent())
-                    throw new StudentNotFoundException("No such student was found on the " + color2 + " table.");
 
                 if(game.getCurrentPlayer().getSchool().getTable(color1.toString()).getNumOfStudents()
                     >= Constants.TABLE_LENGTH)
                     throw new FullTableException("The " + color1 + " table is full!");
 
-                game.getCurrentPlayer().getSchool().getHall().addStudent(tableStudent.get());
-                game.getCurrentPlayer().getSchool().getTable(hallStudent.get().getColor().toString())
-                        .addStudent(hallStudent.get(), game.getCurrentPlayer());
+                game.getCurrentPlayer().getSchool().getHall().addStudent(tableStudent);
+                game.getCurrentPlayer().getSchool().getTable(hallStudent.getColor().toString())
+                        .addStudent(hallStudent, game.getCurrentPlayer());
 
                 maxNumOfChanges--;
 
             }
-            catch(StudentNotFoundException | NonExistentTableException | FullTableException e){
+            catch(StudentNotFoundException | NonExistentColorException | FullTableException e){
                 e.printStackTrace();
             }
 

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.observers.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,7 @@ public class Game{
     }
 
     // TODO: check if the card has already been played
-    public void playersPlayAssistantCard(int cardID) throws CardAlreadyPlayedException {
+    public void playersPlayAssistantCard(int cardID) throws AssistantCardAlreadyPlayedException {
         players.forEach(player -> player.playAssistantCard(cardID));
     }
 
@@ -93,10 +92,16 @@ public class Game{
 
         // TODO: the view will be responsible for choices
 
-        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            currentPlayer.moveStudent(1, Color.BLUE.toString()); // PLACEHOLDERS
+        try {
+            for (int i = 0; i < Constants.PLAYER_MOVES; i++) {
+                currentPlayer.moveStudent(1, Color.BLUE.toString()); // PLACEHOLDERS
+                currentPlayer.moveStudent(Color.BLUE.toString()); // PLACEHOLDERS
+                profCheck();
+            }
         }
-        profCheck();
+        catch(StudentNotFoundException | NonExistentColorException | FullTableException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -104,82 +109,85 @@ public class Game{
         This method is needed to make overriding possible in GameExpertMode.
         If the game is played with the basic rules, it just calls the profCheckAlgorithm method.
      */
-    public void profCheck(){
-        profCheckAlgorithm(getPlayersNumber(), getPlayers());
+    public void profCheck() throws NonExistentColorException{
+        profCheckAlgorithm(getPlayers());
     }
 
     /*
         This method reassigns the professors if the necessary conditions are reached.
      */
-    public static void profCheckAlgorithm(int playersNumber, List<Player> players) {
+    public static void profCheckAlgorithm(List<Player> players) throws NonExistentColorException{
 
         Color[] colors = Color.values();
 
-        try {
-            for (Color color : colors) {
+        for (Color color : colors) {
 
-                int dimBiggestTable = -1;   // number of students to beat in order to claim a professor
-                int playerWithProf = -1;    // index of the player who currently has this color's professor
-                int playerWhoLostProf = -1; // index of the player whose prof has been claimed
+            int dimBiggestTable = 0;   // number of students to beat in order to claim a professor
+            int playerWithProf = -1;    // index of the player who currently has this color's professor
+            int playerWhoLostProf = -1; // index of the player whose prof has been claimed
 
-                // true if this color's professor was already claimed by a player during one of the previous rounds
-                boolean professorAssigned = false;
+            // true if this color's professor was already claimed by a player during one of the previous rounds
+            boolean professorAssigned = false;
 
-                // for each color, stores how many students each player has
-                int[] numOfStudents = new int[playersNumber];
+            // for each color, stores how many students each player has
+            int[] numOfStudents = new int[players.size()];
 
-                for (int i = 0; i < playersNumber; i++) {
-                    numOfStudents[i] =
-                            players.get(i).getSchool().getTable(color.toString()).getNumOfStudents();
-                    if (players.get(i).getSchool().getTable(color.toString()).getHasProfessor()) {
-                        playerWithProf = i;
-                        professorAssigned = true;
-                    }
-                }
-
-                // if this color's professor was already assigned, profCheck rules vary
-                if (professorAssigned) {
-                    dimBiggestTable = numOfStudents[playerWithProf];
-                }
-
-                for (int i = 0; i < playersNumber; i++) {
-                    if (numOfStudents[i] > dimBiggestTable) {
-                        // if clause needed to store which player's table will have its "hasProfessor" flag
-                        // set to false, in case a player actually claimed that prof before
-                        if (professorAssigned)
-                            playerWhoLostProf = playerWithProf;
-                        dimBiggestTable = numOfStudents[i];
-                        playerWithProf = i;
-                    }
-                }
-
-                // sets the "hasProfessor" flags accordingly
-                players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(true);
-                // if the professor was already assigned and its owner did change
-                if (professorAssigned && playerWhoLostProf != -1) {
-                    players.get(playerWhoLostProf).getSchool().getTable(color.toString()).setHasProfessor(false);
+            for (int i = 0; i < players.size(); i++) {
+                numOfStudents[i] =
+                        players.get(i).getSchool().getTable(color.toString()).getNumOfStudents();
+                if (players.get(i).getSchool().getTable(color.toString()).getHasProfessor()) {
+                    playerWithProf = i;
+                    professorAssigned = true;
                 }
             }
+
+            // if this color's professor was already assigned, profCheck rules vary
+            if (professorAssigned) {
+                dimBiggestTable = numOfStudents[playerWithProf];
+            }
+
+            for (int i = 0; i < players.size(); i++) {
+                if (numOfStudents[i] > dimBiggestTable) {
+                    // if clause needed to store which player's table will have its "hasProfessor" flag
+                    // set to false, in case a player actually claimed that prof before
+                    if (professorAssigned)
+                        playerWhoLostProf = playerWithProf;
+                    dimBiggestTable = numOfStudents[i];
+                    playerWithProf = i;
+                }
+            }
+
+            // sets the "hasProfessor" flags accordingly
+            if(playerWithProf != -1)
+                players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(true);
+
+            // if the professor was already assigned and its owner did change
+            if (playerWhoLostProf != -1)
+                players.get(playerWhoLostProf).getSchool().getTable(color.toString()).setHasProfessor(false);
+
         }
-        catch(NonExistentTableException e){
-            e.printStackTrace();
-        }
+
     }
 
     /*
         This method allows Mother Nature to move of up to the given steps.
      */
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
-        int max_steps = currentPlayer.getLastCardPlayed().getMotherNatureSteps();
-        if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS) throw new InvalidNumberOfStepsException("The number of steps selected is not valid");
+
+        int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
+
+        if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
+            throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
+
         board.moveMotherNature(steps);
+
     }
 
     /*
         This method triggers the chain of methods which decides whether the island where Mother Nature is will be
         conquered by a player.
      */
-    public void islandConquerCheck(int islandID) throws InvalidIslandException {
+    public void islandConquerCheck(int islandID) throws IslandNotFoundException {
         board.islandConquerCheck(currentPlayer, islandID);
     }
 

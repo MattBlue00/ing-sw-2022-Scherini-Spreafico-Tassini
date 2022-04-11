@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.FullTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
 
 public class Student {
 
@@ -27,13 +28,8 @@ public class Student {
         
     }
 
-    public void moveToTable(Player player){
-        try{
-            player.getSchool().getTable(this.color.toString()).addStudent(this, player);
-        }
-        catch(NonExistentTableException e){
-            e.printStackTrace();
-        }
+    public void moveToTable(Player player) throws NonExistentColorException, FullTableException {
+        player.getSchool().getTable(this.color.toString()).addStudent(this, player);
     }
 
 }

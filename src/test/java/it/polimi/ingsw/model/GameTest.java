@@ -51,7 +51,7 @@ public class GameTest{
     }*/
 
     @Test
-    public void testProfCheck() throws NonExistentTableException {
+    public void testProfCheck() throws NonExistentColorException {
 
         /*
             This test verifies that:
@@ -75,11 +75,13 @@ public class GameTest{
         g1.addPlayer(p2);
 
         // All hasProfessor flags are false, so far
-
-        s1.moveToTable(p1);
-        s2.moveToTable(p1);
-        s3.moveToTable(p2);
-        s4.moveToTable(p2);
+        try {
+            s1.moveToTable(p1);
+            s2.moveToTable(p1);
+            s3.moveToTable(p2);
+            s4.moveToTable(p2);
+        }
+        catch(NonExistentColorException | FullTableException e){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p2 has 2 yellow students and should have green professor
@@ -94,8 +96,11 @@ public class GameTest{
         Student s5 = new Student(Color.GREEN);
         Student s6 = new Student(Color.GREEN);
 
-        s5.moveToTable(p1);
-        s6.moveToTable(p1);
+        try {
+            s5.moveToTable(p1);
+            s6.moveToTable(p1);
+        }
+        catch(NonExistentColorException | FullTableException e){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p1 has 2 green students and should NOT have green professor
@@ -110,7 +115,10 @@ public class GameTest{
 
         Student s7 = new Student(Color.GREEN);
 
-        s7.moveToTable(p1);
+        try{
+            s7.moveToTable(p1);
+        }
+        catch(NonExistentColorException | FullTableException e){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p1 has 3 green students and should have green professor
@@ -194,16 +202,20 @@ public class GameTest{
 
     }
 
-    //TODO
-    //waiting for the method to be implemented
     @Test
     public void testIslandConquerCheck() {
 
         /*
             This test verifies that:
             1. if a player arrives in an island in which has 0 influence points, the island, even if
-              unconquered, does not change its status
+               unconquered, does not change its status
             2. once a player arrives in an island in which has at least 1 influence point, it becomes his
+            3. once a player arrives in an island in which the owner has the same amount of influence as him,
+               considering only the students, the owner remains the same
+            4. once a player arrives in an island in which he has 1 more influence points than the owner,
+               he still doesn't conquer the island because of the tower presence
+            5. once a player arrives in an island in which he has at least two more influence points than the owner,
+               he conquers the island
          */
 
         Game g1 = new Game(2);
@@ -217,36 +229,88 @@ public class GameTest{
         Student s1 = new Student(Color.BLUE);
         Student s2 = new Student(Color.GREEN);
 
-        s1.moveToTable(p1);
-        g1.profCheck();
+        try {
+            s1.moveToTable(p1);
+            g1.profCheck();
+        }
+        catch(NonExistentColorException | FullTableException e){}
+
 
         // Test 1
 
-        // TODO: this test fails, fixes are needed
+        // p1 has 1 blue student, island 1 has 1 green student
 
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(Optional.empty(), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
-        catch(InvalidIslandException e){
+        catch(IslandNotFoundException e){
             e.printStackTrace();
         }
-
-        Student s3 = new Student(Color.BLUE);
-
-        g1.profCheck();
 
         // Test 2
 
-        /*try {
+        // island 1 gets 1 blue student
+
+        try {
+            Student s3 = new Student(Color.BLUE);
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s3);
-            g1.getBoard().getIslands().getIslandFromID(1).influenceCalc(p1);
+            g1.islandConquerCheck(1);
             assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
-        catch(InvalidIslandException e){
+        catch(IslandNotFoundException e){
             e.printStackTrace();
-        }*/
+        }
+
+        g1.setCurrentPlayer(p2);
+
+        // Test 3
+
+        // p2 has 1 pink student, island 1 gets 1 pink student
+
+        try {
+            Student s4 = new Student(Color.PINK);
+            Student s5 = new Student(Color.PINK);
+            s4.moveToTable(p2);
+            g1.profCheck();
+            g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
+            g1.islandConquerCheck(1);
+            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+        }
+        catch(NonExistentColorException | FullTableException | IslandNotFoundException e){
+            e.printStackTrace();
+        }
+
+        Student s6 = new Student(Color.PINK);
+
+        // Test 4
+
+        // island 1 gets 1 more pink student
+
+        try {
+            g1.getBoard().getIslands().getIslandFromID(1).addStudent(s6);
+            g1.islandConquerCheck(1);
+            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+        }
+        catch(IslandNotFoundException e){
+            e.printStackTrace();
+        }
+
+        Student s7 = new Student(Color.PINK);
+
+        // Test 5
+
+        // island 1 gets 1 more pink student
+
+        try {
+            g1.getBoard().getIslands().getIslandFromID(1).addStudent(s7);
+            g1.islandConquerCheck(1);
+            assertEquals(Optional.of(p2), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+        }
+        catch(IslandNotFoundException e){
+            e.printStackTrace();
+        }
 
     }
 

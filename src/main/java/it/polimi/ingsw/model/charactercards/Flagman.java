@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 public class Flagman extends CharacterCard {
 
@@ -16,9 +17,13 @@ public class Flagman extends CharacterCard {
     }
 
     @Override
-    public void doEffect(GameExpertMode game) {
+    public void doEffect(GameExpertMode game){
         // TODO: parsing input from the view
         int islandID = 1; // placeholder
-        game.getBoard().islandConquerCheck(game.getCurrentPlayer(), islandID);
+        try {
+            game.getBoard().islandConquerCheck(game.getCurrentPlayer(), islandID);
+        }
+        // the view/controller will be responsible to send the method a valid island ID
+        catch(IslandNotFoundException ignored){}
     }
 }

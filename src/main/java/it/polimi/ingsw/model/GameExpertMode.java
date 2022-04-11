@@ -2,8 +2,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
 
-import java.util.List;
-
 public class GameExpertMode extends Game {
 
     private final CharacterCard[] characters;
@@ -21,37 +19,33 @@ public class GameExpertMode extends Game {
         instantly triggered.
      */
 
-    public void playerPlaysCharacterCard(int id) {
+    public void playerPlaysCharacterCard(int id) throws
+            CharacterCardAlreadyPlayedException, NotEnoughCoinsException, CharacterCardNotFoundException {
 
-        try {
-            if (getCurrentPlayer().getCharacterCardAlreadyPlayed())
-                throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
+        if (getCurrentPlayer().getCharacterCardAlreadyPlayed())
+            throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
 
-            boolean found = false;
-            for (CharacterCard card : characters) {
-                if (card.getId() == id) {
-                    if(!(getCurrentPlayer().getCoinsWallet() >= card.getCost()))
-                        throw new NotEnoughCoinsException("You need " +
-                                (card.getCost() - getCurrentPlayer().getCoinsWallet())
-                                + " more money to use this card!");
-                    card.setIsActive(true);
-                    found = true;
-                    getCurrentPlayer().setCoinsWallet(getCurrentPlayer().getCoinsWallet() - card.getCost());
-                    if(card.getId() == 5 || card.getId() == 10 || card.getId() == 3){
-                        card.doEffect(this);
-                        card.setUpCard();
-                    }
+        boolean found = false;
+        for (CharacterCard card : characters) {
+            if (card.getId() == id) {
+                if(!(getCurrentPlayer().getCoinsWallet() >= card.getCost()))
+                    throw new NotEnoughCoinsException("You need " +
+                            (card.getCost() - getCurrentPlayer().getCoinsWallet())
+                            + " more money to use this card!");
+                card.setIsActive(true);
+                found = true;
+                getCurrentPlayer().setCoinsWallet(getCurrentPlayer().getCoinsWallet() - card.getCost());
+                if(card.getId() == 5 || card.getId() == 10 || card.getId() == 3){
+                    card.doEffect(this);
+                    card.setUpCard();
                 }
             }
-
-            if (!found)
-                throw new NonExistentCharacterCardException("No character card with id " + id + " exists.");
-            else
-                getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
-
-        } catch (CharacterCardAlreadyPlayedException | NonExistentCharacterCardException | NotEnoughCoinsException e) {
-            e.printStackTrace();
         }
+
+        if (!found)
+            throw new CharacterCardNotFoundException("No character card with id " + id + " exists.");
+        else
+            getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
 
     }
 
@@ -63,7 +57,7 @@ public class GameExpertMode extends Game {
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
-        setMaxSteps(getCurrentPlayer().getLastCardPlayed().getMotherNatureSteps());
+        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
                 card.doEffect(this);
@@ -82,7 +76,7 @@ public class GameExpertMode extends Game {
      */
 
     @Override
-    public void profCheck() {
+    public void profCheck() throws NonExistentColorException {
 
         boolean done = false;
         for (CharacterCard card : characters) {
@@ -94,7 +88,7 @@ public class GameExpertMode extends Game {
         }
 
         if(!done)
-            Game.profCheckAlgorithm(getPlayersNumber(), getPlayers());
+            Game.profCheckAlgorithm(getPlayers());
 
     }
 
@@ -104,7 +98,7 @@ public class GameExpertMode extends Game {
      */
 
     @Override
-    public void islandConquerCheck(int islandID) {
+    public void islandConquerCheck(int islandID) throws IslandNotFoundException {
       
         boolean done = false;
         for (CharacterCard card : characters) {
@@ -118,6 +112,14 @@ public class GameExpertMode extends Game {
         if (!done)
             getBoard().islandConquerCheck(getCurrentPlayer(), islandID);
       
+    }
+
+    public void addCharacterCards(CharacterCard[] cards){
+
+        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
+            this.characters[i] = cards[i];
+        }
+
     }
 
 }

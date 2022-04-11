@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
-import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 public class Healer extends CharacterCard {
 
@@ -23,7 +23,7 @@ public class Healer extends CharacterCard {
         try{
             game.getBoard().getIslands().getIslandFromID(islandID).setVeto(true);
             game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() - 1);
-        }catch(InvalidIslandException e) {
+        }catch(IslandNotFoundException e) {
             e.printStackTrace();
         }
 
