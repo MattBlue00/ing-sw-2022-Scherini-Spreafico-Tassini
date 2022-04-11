@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ public class Island {
         this.veto = false;
         this.students = new ArrayList<>();
         this.owner = Optional.empty();
+        this.numOfTowers = 0;
     }
 
     // Getter and setter methods
@@ -75,7 +76,6 @@ public class Island {
 
     // Island methods
 
-    // TODO: needs a lot of testing
     /*
         The method counts the number of towers and the number of students of a
         player (passed as parameter), the only students counted are the students
@@ -92,7 +92,7 @@ public class Island {
             if(owner.isPresent() && owner.get().equals(currentPlayer))
                 influencePoints += numOfTowers;
 
-        } catch (NonExistentTableException e) {
+        } catch (NonExistentColorException e) {
             e.printStackTrace();
         }
 
@@ -113,7 +113,7 @@ public class Island {
             if(owner.isPresent() && owner.get().equals(currentPlayer))
                 influencePoints += numOfTowers;
 
-        } catch (NonExistentTableException e) {
+        } catch (NonExistentColorException e) {
             e.printStackTrace();
         }
         return influencePoints;
@@ -130,7 +130,7 @@ public class Island {
 
             influencePoints += influenceCalcStudents(currentPlayer);
 
-        } catch (NonExistentTableException e) {
+        } catch (NonExistentColorException e) {
             e.printStackTrace();
         }
 
@@ -141,7 +141,7 @@ public class Island {
         This method contains the algorithms which returns the correct number of students that assign influence points
         to a player.
      */
-    public int influenceCalcStudents(Player currentPlayer) throws NonExistentTableException{
+    public int influenceCalcStudents(Player currentPlayer) throws NonExistentColorException {
 
         int validStudents = 0;
 
@@ -159,7 +159,7 @@ public class Island {
         This method contains the algorithms which returns the correct number of students that assign influence points
         to a player, without considering the students of a specific color.
      */
-    public int influenceCalcStudents(Player currentPlayer, Color color) throws NonExistentTableException{
+    public int influenceCalcStudents(Player currentPlayer, Color color) throws NonExistentColorException {
 
         int validStudents = 0;
 

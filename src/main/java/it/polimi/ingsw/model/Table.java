@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.FullTableException;
+import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -45,12 +48,18 @@ public class Table {
 
     // Table methods
 
-    public void addStudent(Student addedStudent, Player player){
+    public void addStudent(Student addedStudent, Player player) throws
+            FullTableException {
+
+        if(students.size() >= Constants.TABLE_LENGTH)
+            throw new FullTableException("The " + addedStudent.getColor() + " table is full!");
+
         students.add(addedStudent);
         player.setCoinsWallet(
                 player.getCoinsWallet() +
                 coinCheck()
         );
+
     }
 
     /*
@@ -71,19 +80,23 @@ public class Table {
 
     }
 
-    public Optional<Student> removeStudent(){
-        return this.students.stream().findFirst();
+    public Student removeStudent() throws StudentNotFoundException {
+
+        Optional<Student> studentToRemove = this.students.stream().findFirst();
+
+        if(studentToRemove.isPresent()) {
+            students.remove(studentToRemove.get());
+            return studentToRemove.get();
+        }
+        else
+            throw new StudentNotFoundException("No such student is present in the table.");
+
     }
 
     //for debugging
     public void showTable(){
         System.out.println(this.color + " table");
         System.out.println("Numero studenti (in questa table): " + this.students.size());
-    }
-
-    //for debugging
-    public void addStudentForDebug(Student student){
-        this.students.add(student);
     }
 
 }

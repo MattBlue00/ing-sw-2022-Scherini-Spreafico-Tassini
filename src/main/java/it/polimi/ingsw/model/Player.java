@@ -1,14 +1,11 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.CharacterCardAlreadyPlayedException;
+import it.polimi.ingsw.model.exceptions.FullTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class Player {
 
@@ -68,10 +65,6 @@ public class Player {
         this.coinsWallet = coinsWallet;
     }
 
-    public AssistantCard getLastCardPlayed() {
-        return lastAssistantCardPlayed;
-    }
-
     public School getSchool() {
         return school;
     }
@@ -113,11 +106,12 @@ public class Player {
         return (AssistantCard) getDeck().stream().filter(card -> card.getName().equals(cardName));
     }
 
-    public void moveStudent(int islandID, String color){
+    public void moveStudent(int islandID, String color) throws StudentNotFoundException {
         this.school.moveStudentToIsland(islandID, color);
     }
 
-    public void moveStudent(String color){
+    public void moveStudent(String color) throws
+            StudentNotFoundException, NonExistentColorException, FullTableException {
         this.school.moveStudentToTable(this, color);
     }
 

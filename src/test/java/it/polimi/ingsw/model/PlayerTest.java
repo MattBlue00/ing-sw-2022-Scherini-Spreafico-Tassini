@@ -1,9 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.InvalidIslandException;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 public class PlayerTest{
 
     /*@Test

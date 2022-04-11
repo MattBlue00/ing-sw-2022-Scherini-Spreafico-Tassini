@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public class Centaur extends CharacterCard {
                 GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
                         game.getBoard().getIslands());
             }
-        } catch (InvalidIslandException e) {
+        } catch (IslandNotFoundException e) {
             e.printStackTrace();
         }
 

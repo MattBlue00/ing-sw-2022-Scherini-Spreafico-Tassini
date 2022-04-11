@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NonExistentTableException;
+import it.polimi.ingsw.model.exceptions.FullTableException;
+import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 
 public class School {
 
@@ -31,13 +33,13 @@ public class School {
         return hall;
     }
 
-    public Table getTable(String color) throws NonExistentTableException{
+    public Table getTable(String color) throws NonExistentColorException {
 
         for (Table table : tables) {
             if (table.getColor().toString().equals(color))
                 return table;
         }
-        throw new NonExistentTableException("No " + color + " table was found.");
+        throw new NonExistentColorException("No " + color + " table was found.");
 
     }
 
@@ -47,12 +49,14 @@ public class School {
 
     // School methods
 
-    public void moveStudentToIsland(int islandID, String color){
-        this.hall.removeStudent(color).ifPresent(student -> student.moveToIsland(islandID));
+    public void moveStudentToIsland(int islandID, String color) throws StudentNotFoundException {
+        this.hall.removeStudent(color).moveToIsland(islandID);
     }
 
-    public void moveStudentToTable(Player player, String color){
-        this.hall.removeStudent(color).ifPresent(student -> student.moveToTable(player));
+    public void moveStudentToTable(Player player, String color) throws
+            StudentNotFoundException, NonExistentColorException, FullTableException {
+
+        this.hall.removeStudent(color).moveToTable(player);
     }
 
 }

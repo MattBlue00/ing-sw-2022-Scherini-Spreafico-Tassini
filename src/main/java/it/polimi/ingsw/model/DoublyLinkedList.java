@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.InvalidIslandException;
+import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 /*
     In this list, the last node of the doubly linked list contains the address of the first node and
@@ -94,12 +94,15 @@ public class DoublyLinkedList {
         Custom getter that take an integer islandID and return the Island with the same IslandID.
         If there isn't an Island with that ID it throws an InvalidIslandException
      */
-    public Island getIslandFromID(int islandID) throws InvalidIslandException {
-        Island temp = head;
-        while(!temp.getNext().equals(head)){
-            if(temp.getId()==islandID) return temp;
+    public Island getIslandFromID(int islandID) throws IslandNotFoundException {
+        Island island = head;
+        int islandsToCheck = size;
+        while(!island.getNext().equals(head) && islandsToCheck > 0){
+            if(island.getId()==islandID)
+                return island;
+            islandsToCheck--;
         }
-        throw new InvalidIslandException("no island found");
+        throw new IslandNotFoundException("No island found.");
     }
 
 
