@@ -41,6 +41,10 @@ public class School {
 
     }
 
+    public TowerRoom getTowerRoom() {
+        return towerRoom;
+    }
+
     // School methods
 
     public void moveStudentToIsland(int islandID, String color){
