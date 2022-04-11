@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Game{
 
-
     // game variables
 
     private int playersNumber;
@@ -72,6 +71,8 @@ public class Game{
 
     // Game methods
 
+    // TODO: WE WILL NEED A METHOD FOR RESET AT THE END OF A ROUND (LAST_CARD_PLAYED = NULL...)
+
     /*
         This method starts the chain of events that take a certain number of students, equal to the max number of students
         the cloud can have, from the studentBag and puts them on the clouds, one at a time
@@ -81,8 +82,8 @@ public class Game{
     }
 
     // TODO: check if the card has already been played
-    public void playersPlayAssistantCard(int cardID) throws CardAlreadyPlayedException {
-        players.forEach(player -> player.playAssistantCard(cardID));
+    public void playersPlayAssistantCard(String cardName) throws CardAlreadyPlayedException {
+        currentPlayer.playAssistantCard(cardName);
     }
 
     /*
