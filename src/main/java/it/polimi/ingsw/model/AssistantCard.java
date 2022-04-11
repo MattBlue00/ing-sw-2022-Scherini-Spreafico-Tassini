@@ -15,4 +15,6 @@ public class AssistantCard {
     public int getMotherNatureSteps() {
         return assistantType.getMotherNatureSteps();
     }
+
+    public String getName(){return assistantType.getName();}
 }

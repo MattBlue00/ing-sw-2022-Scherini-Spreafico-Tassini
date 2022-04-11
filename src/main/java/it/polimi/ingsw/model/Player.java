@@ -87,9 +87,23 @@ public class Player {
 
     // Player methods
 
-    public AssistantCard playAssistantCard(int cardID) {
-        this.lastAssistantCardPlayed = getDeck().remove(cardID);
-        return lastAssistantCardPlayed;
+    /*
+        Find the chosen card in the deck
+        set it as lastCardPlayed
+        remove it from player's deck
+     */
+    public void playAssistantCard(String cardName) {
+        AssistantCard chosenCard = getAssistantCardFromName(cardName);
+        this.lastAssistantCardPlayed = chosenCard;
+        getDeck().remove(chosenCard);
+    }
+
+    /*
+        Find all cards with the name equals to the parameter,
+        hypothesis: deck does not contain cards with same name.
+     */
+    public AssistantCard getAssistantCardFromName(String cardName){
+        return (AssistantCard) getDeck().stream().filter(card -> card.getName().equals(cardName));
     }
 
     public void moveStudent(int islandID, String color) throws StudentNotFoundException {
