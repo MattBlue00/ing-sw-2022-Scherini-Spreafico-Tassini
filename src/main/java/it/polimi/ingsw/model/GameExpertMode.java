@@ -114,11 +114,11 @@ public class GameExpertMode extends Game {
       
     }
 
+    // Debug methods
+
     public void addCharacterCards(CharacterCard[] cards){
 
-        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            this.characters[i] = cards[i];
-        }
+        System.arraycopy(cards, 0, this.characters, 0, Constants.CHARACTERS_NUM);
 
     }
 
