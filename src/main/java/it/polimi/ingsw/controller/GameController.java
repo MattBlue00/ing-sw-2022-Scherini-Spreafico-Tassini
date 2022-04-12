@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.AssistantCardAlreadyPlayedException;
 import it.polimi.ingsw.network.message.AssistantCardReply;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
@@ -22,7 +23,6 @@ public class GameController implements Observer<Message>{
     private GameState gameState;
     private static final String INVALID_STATE = "Invalid game state";
     private static final String END_STATE = "The game has ended, the winner is: ";
-
 
     /*
         Initialize GameController
@@ -80,7 +80,14 @@ public class GameController implements Observer<Message>{
 
     private void planningPhase(){
         // TODO: receive from the view a message with the Assistant card the player wants to play
-        //handleAssistantCardChoice();
+        /*
+        try{
+            handleAssistantCardChoice();
+        }
+        catch(AssistantCardAlreadyPlayed e){
+            e.printStackTrace();
+        }
+         */
         setOrder();
     }
 
@@ -91,11 +98,13 @@ public class GameController implements Observer<Message>{
         the String value (name) is assigned to chosenCard.
         If the chosen card hasn't already been played the player plays the chosenCard.
      */
-    private void handleAssistantCardChoice(Message receivedMessage){
+    private void handleAssistantCardChoice(Message receivedMessage) throws AssistantCardAlreadyPlayedException{
         if(receivedMessage.getMessageType() == MessageType.ASSISTANT_CARD_REPLY){
            String chosenCard = ((AssistantCardReply) receivedMessage).getCardName().toUpperCase();
-           if(!isCardAlreadyPlayed(chosenCard))game.getCurrentPlayer().playAssistantCard(chosenCard);
-           else System.out.println("Card has already been played");
+           if(!isCardAlreadyPlayed(chosenCard))
+               game.getCurrentPlayer().playAssistantCard(chosenCard);
+           else
+               throw new AssistantCardAlreadyPlayedException("This assistant card was already played!");
         }
     }
 

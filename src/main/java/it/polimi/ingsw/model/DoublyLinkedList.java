@@ -70,10 +70,6 @@ public class DoublyLinkedList {
             next.getStudents().forEach(student -> island.addStudent(student));
             removeIsland(next);
         }
-        // TODO : WinCheck after merging
-        if(getSize() <= 3){
-            System.out.println("GAME OVER");
-        }
     }
 
     /*

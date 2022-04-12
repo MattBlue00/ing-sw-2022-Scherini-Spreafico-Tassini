@@ -43,9 +43,8 @@ public class Centaur extends CharacterCard {
                 GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
                         game.getBoard().getIslands());
             }
-        } catch (IslandNotFoundException e) {
-            e.printStackTrace();
-        }
+        // it is guaranteed that IslandNotFound will never be called
+        } catch (IslandNotFoundException ignored) {}
 
     }
 }

@@ -128,7 +128,15 @@ public class GameBoard {
 
         if(selectedIsland.getOwner().isPresent()) {
             if (calcCurrent > calcOwner && calcCurrent > 0) {
+
+                int towersToMove = selectedIsland.getNumOfTowers();
+                TowerRoom towerRoomPreviousOwner = selectedIsland.getOwner().get().getSchool().getTowerRoom();
+                TowerRoom towerRoomNewOwner = currentPlayer.getSchool().getTowerRoom();
+
+                towerRoomPreviousOwner.setTowersLeft(towerRoomPreviousOwner.getTowersLeft() + towersToMove);
                 selectedIsland.setOwner(currentPlayer);
+                towerRoomNewOwner.setTowersLeft(towerRoomNewOwner.getTowersLeft() - towersToMove);
+
             }
         }
         else{
@@ -138,8 +146,7 @@ public class GameBoard {
             }
         }
 
-        if(selectedIsland.getOwner().isPresent())
-            islands.mergeIslands(selectedIsland);
+        islands.mergeIslands(selectedIsland);
 
     }
 

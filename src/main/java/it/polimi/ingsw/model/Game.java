@@ -80,12 +80,6 @@ public class Game{
         board.refillClouds();
     }
 
-    // TODO: check if the card has already been played
-
-    public void playerPlaysAssistantCard(String cardName) throws AssistantCardAlreadyPlayedException {
-        currentPlayer.playAssistantCard(cardName);
-    }
-
     /*
         A player can move 3 students from their Halls each turn
         At the end of the movement phase profCheck() is called

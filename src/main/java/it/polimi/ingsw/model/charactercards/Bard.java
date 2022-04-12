@@ -20,7 +20,7 @@ public class Bard extends CharacterCard {
 
         int maxNumOfChanges = 2;
 
-        while(maxNumOfChanges >= 0){
+        while(maxNumOfChanges > 0){
 
             //TODO: the view will ask the player which students to change
 
