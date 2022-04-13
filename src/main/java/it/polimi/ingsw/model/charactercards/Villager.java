@@ -21,7 +21,7 @@ public class Villager extends CharacterCard {
 
         //TODO: the view will ask the player which color to choose
 
-        Color colorToExclude = Color.BLUE; // PLACEHOLDER
+        Color colorToExclude = Color.GREEN; // PLACEHOLDER
 
         try {
             Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
