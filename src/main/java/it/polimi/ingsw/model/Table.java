@@ -94,9 +94,9 @@ public class Table {
     }
 
     //for debugging
-    public void showTable(){
+    /*public void showTable(){
         System.out.println(this.color + " table");
         System.out.println("Numero studenti (in questa table): " + this.students.size());
-    }
+    }*/
 
 }

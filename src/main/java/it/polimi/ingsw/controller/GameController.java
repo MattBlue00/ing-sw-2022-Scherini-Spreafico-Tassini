@@ -27,8 +27,9 @@ public class GameController implements Observer<Message>{
     /*
         Initialize GameController
      */
-    public void GameController(){
-        setGameState(GameState.LOGIN);
+    public GameController(){
+        this.gameState = GameState.LOGIN;
+        this.game = new Game(2); // PLACEHOLDER
     }
 
     public GameState getGameState() {
@@ -37,6 +38,10 @@ public class GameController implements Observer<Message>{
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public void getMessage(Message receivedMessage){

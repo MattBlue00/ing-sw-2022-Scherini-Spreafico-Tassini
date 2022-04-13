@@ -52,14 +52,6 @@ public class Game{
         this.maxSteps = maxSteps;
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
-    }
-
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
-    }
-
     public GameBoard getBoard() {
         return board;
     }
@@ -90,12 +82,13 @@ public class Game{
 
         try {
             for (int i = 0; i < Constants.PLAYER_MOVES; i++) {
-                currentPlayer.moveStudent(1, Color.BLUE.toString()); // PLACEHOLDERS
+                currentPlayer.moveStudent(board.getIslands().getIslandFromID(1), Color.BLUE.toString()); // PLACEHOLDERS
                 currentPlayer.moveStudent(Color.BLUE.toString()); // PLACEHOLDERS
                 profCheck();
             }
         }
-        catch(StudentNotFoundException | NonExistentColorException | FullTableException e){
+        catch(StudentNotFoundException | NonExistentColorException | FullTableException |
+                IslandNotFoundException e){
             e.printStackTrace();
         }
 

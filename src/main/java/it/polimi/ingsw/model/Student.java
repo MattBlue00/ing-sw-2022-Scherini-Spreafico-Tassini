@@ -23,9 +23,8 @@ public class Student {
         curr.getSchool().getHall().addStudent(this);
     }
 
-    public void moveToIsland(int islandID){
-        // TODO: we need to implement islands first
-        
+    public void moveToIsland(Island island){
+        island.addStudent(this);
     }
 
     public void moveToTable(Player player) throws NonExistentColorException, FullTableException {

@@ -45,14 +45,6 @@ public class Player {
 
     // Getter and setter methods
 
-    public Wizard getWizardID() {
-        return wizardID;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
     public List<AssistantCard> getDeck() {
         return deck;
     }
@@ -106,8 +98,8 @@ public class Player {
         return (AssistantCard) getDeck().stream().filter(card -> card.getName().equals(cardName));
     }
 
-    public void moveStudent(int islandID, String color) throws StudentNotFoundException {
-        this.school.moveStudentToIsland(islandID, color);
+    public void moveStudent(Island island, String color) throws StudentNotFoundException {
+        this.school.moveStudentToIsland(island, color);
     }
 
     public void moveStudent(String color) throws

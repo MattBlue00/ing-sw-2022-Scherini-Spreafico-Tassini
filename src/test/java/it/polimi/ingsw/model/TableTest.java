@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.FullTableException;
 import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,7 @@ public class TableTest{
             p1.getSchool().getTable("GREEN").addStudent(new Student(Color.GREEN), p1);
             p1.getSchool().getTable("PINK").addStudent(new Student(Color.PINK), p1);
         }
-        catch(FullTableException e){}
+        catch(FullTableException ignored){}
 
         assertEquals(1, p1.getCoinsWallet());
 
@@ -25,7 +26,7 @@ public class TableTest{
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
         }
-        catch(FullTableException e){}
+        catch(FullTableException ignored){}
 
         assertEquals(2, p1.getCoinsWallet());
 
@@ -44,7 +45,7 @@ public class TableTest{
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
         }
-        catch(FullTableException e){}
+        catch(FullTableException ignored){}
 
         //one coin should be added
         assertEquals(2, p1.getCoinsWallet());
@@ -52,9 +53,19 @@ public class TableTest{
         try {
             p1.getSchool().getTable("PINK").addStudent(new Student(Color.PINK), p1);
         }
-        catch(FullTableException e){}
+        catch(FullTableException ignored){}
 
         //no coin should be added
         assertEquals(2, p1.getCoinsWallet());
+
+        try {
+            p1.getSchool().getTable("YELLOW").removeStudent();
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+        }
+        catch(FullTableException | StudentNotFoundException ignored){}
+
+        //no coin should be added
+        assertEquals(2, p1.getCoinsWallet());
+
     }
 }

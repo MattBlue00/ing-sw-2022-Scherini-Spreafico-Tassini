@@ -29,8 +29,8 @@ class DoublyLinkedListTest {
             Student s2 = new Student(Color.PINK);
             Student s3 = new Student(Color.PINK);
             s1.moveToTable(p1);
-            s2.moveToIsland(1);
-            s3.moveToIsland(2);
+            s2.moveToIsland(g1.getBoard().getIslands().getIslandFromID(1));
+            s3.moveToIsland(g1.getBoard().getIslands().getIslandFromID(2));
             g1.profCheck();
             g1.islandConquerCheck(1);
             g1.islandConquerCheck(2);
