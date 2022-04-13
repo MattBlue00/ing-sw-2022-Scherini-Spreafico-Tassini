@@ -20,7 +20,7 @@ class GameExpertModeTest {
 
         /*
             This test verifies that:
-            - at round 1, whoever gets a student of a particular first, automatically gets the professor
+            - at round 1, whoever gets a student of a particular color first, automatically gets the professor
             - later on, if another player ties the number of students of that same color, that other player will
               NOT get the professor
             - later on, if that player eventually surpasses the opponent's number of students of the same color,

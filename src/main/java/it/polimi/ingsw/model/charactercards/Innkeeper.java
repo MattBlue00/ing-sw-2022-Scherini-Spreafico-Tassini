@@ -53,7 +53,8 @@ public class Innkeeper extends CharacterCard {
                 }
 
                 for (int i = 0; i < players.size(); i++) {
-                    if (numOfStudents[i] >=  dimBiggestTable) {
+                    if (numOfStudents[i] >=  dimBiggestTable && numOfStudents[i] > 0
+                            && i != playerWhoLostProf) {
                         // if clause needed to store which player's table will have its "hasProfessor" flag
                         // set to false, in case a player actually claimed that prof before
                         if (professorAssigned)
