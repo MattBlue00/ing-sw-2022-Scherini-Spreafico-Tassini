@@ -21,6 +21,9 @@ class StudentNotFoundExceptionTest {
         assertThrows(StudentNotFoundException.class,
                 () -> p1.getSchool().getTable(Color.BLUE.toString()).removeStudent());
 
+        assertThrows(StudentNotFoundException.class,
+                () -> p1.getSchool().getHall().removeStudent(Color.BLUE.toString()));
+
     }
 
 }

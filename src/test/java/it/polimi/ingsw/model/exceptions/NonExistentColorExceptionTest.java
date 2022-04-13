@@ -17,7 +17,8 @@ class NonExistentColorExceptionTest {
         g1.addPlayer(p1);
         g1.setCurrentPlayer(p1);
 
-        //TODO: this test needs parsing from the view in order to work
+        assertThrows(NonExistentColorException.class,
+                () -> p1.getSchool().getTable("BLACK"));
 
     }
 

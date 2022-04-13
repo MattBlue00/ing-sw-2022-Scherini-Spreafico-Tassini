@@ -16,10 +16,6 @@ public class DoublyLinkedList {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     /*
         Create the list with the initial number of islands
      */
@@ -103,7 +99,7 @@ public class DoublyLinkedList {
 
 
     // For debugging: print the list of islands and their info from head to tail and then from tail to head
-    public void printList(){
+    /*public void printList(){
         Island temp = head;
         System.out.println("From head to tail: ");
         while(!temp.getNext().equals(head)){
@@ -112,13 +108,13 @@ public class DoublyLinkedList {
         }
         System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().get().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner().get()));
 
-        /*System.out.println("From tail to head: ");
+        System.out.println("From tail to head: ");
         Island tail = head.getPrev();
         temp = tail;
         while(!temp.getPrev().equals(tail)){
             System.out.printf("%d ",temp.getId());
             temp = temp.getPrev();
         }
-        System.out.println(temp.getId());*/
-    }
+        System.out.println(temp.getId());
+    }*/
 }

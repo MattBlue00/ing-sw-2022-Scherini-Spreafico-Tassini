@@ -49,8 +49,8 @@ public class School {
 
     // School methods
 
-    public void moveStudentToIsland(int islandID, String color) throws StudentNotFoundException {
-        this.hall.removeStudent(color).moveToIsland(islandID);
+    public void moveStudentToIsland(Island island, String color) throws StudentNotFoundException {
+        this.hall.removeStudent(color).moveToIsland(island);
     }
 
     public void moveStudentToTable(Player player, String color) throws

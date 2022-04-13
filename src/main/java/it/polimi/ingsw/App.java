@@ -10,7 +10,7 @@ import it.polimi.ingsw.model.exceptions.EmptyCloudException;
  */
 public class App 
 {
-    public static void main( String[] args )
+    /*public static void main( String[] args )
     {
         System.out.println( "---------START---------" );
 
@@ -93,5 +93,5 @@ public class App
 
         System.out.println( "---------END---------" );
 
-    }
+    } */
 }
