@@ -76,23 +76,33 @@ public class Game{
         A player can move 3 students from their Halls each turn
         At the end of the movement phase profCheck() is called
      */
-    public void playerMovesStudent(){
-
-        // TODO: the view will be responsible for choices
-
+    public void playerMovesStudent(String color, int islandID){
         try {
-            for (int i = 0; i < Constants.PLAYER_MOVES; i++) {
-                currentPlayer.moveStudent(board.getIslands().getIslandFromID(1), Color.BLUE.toString()); // PLACEHOLDERS
-                currentPlayer.moveStudent(Color.BLUE.toString()); // PLACEHOLDERS
-                profCheck();
-            }
+            currentPlayer.moveStudent(board.getIslands().getIslandFromID(islandID), color);
         }
-        catch(StudentNotFoundException | NonExistentColorException | FullTableException |
-                IslandNotFoundException e){
+        catch(StudentNotFoundException | IslandNotFoundException e){
             e.printStackTrace();
         }
-
     }
+
+    public void playerMovesStudent(String color){
+        try{
+            currentPlayer.moveStudent(color);
+            profCheck();
+        }catch (NonExistentColorException | FullTableException | StudentNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    ----THIS METHOD IS NEEDED FOR THE THIEF CARD THAT WE DID NOT IMPLEMENT YET----
+    public void playerMovesStudentToHall(String color){
+        try{
+            currentPlayer.moveStudentToHall(color);
+        }catch (NonExistentColorException e){
+            e.printStackTrace();
+        }
+    }*/
 
     /*
         This method is needed to make overriding possible in GameExpertMode.

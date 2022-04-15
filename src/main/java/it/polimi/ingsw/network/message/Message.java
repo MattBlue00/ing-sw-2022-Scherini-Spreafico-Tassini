@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.message;
 
-public abstract class Message {
+import java.io.Serializable;
+
+public abstract class Message implements Serializable {
     private final String nickname;
     private final MessageType messageType;
 

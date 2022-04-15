@@ -59,4 +59,8 @@ public class School {
         this.hall.removeStudent(color).moveToTable(player);
     }
 
+    /*public void moveStudentToHall(Player player, String color) throws NonExistentColorException {
+        getTable(color).getStudents().get(tables.length-1).moveToHall(player);
+    }*/
+
 }

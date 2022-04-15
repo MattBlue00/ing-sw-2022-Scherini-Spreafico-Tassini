@@ -50,6 +50,12 @@ public class GameTest{
         //incomplete
     }*/
 
+
+    @Test
+    public void playerMovesStudent(){
+        // TODO: test playerMovesStudent (for islands and for tables)
+    }
+
     @Test
     public void testProfCheck() throws NonExistentColorException {
 

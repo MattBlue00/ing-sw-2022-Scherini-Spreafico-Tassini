@@ -107,4 +107,8 @@ public class Player {
         this.school.moveStudentToTable(this, color);
     }
 
+    /*public void moveStudentToHall(String color) throws NonExistentColorException {
+        this.school.moveStudentToHall(this, color);
+    }*/
+
 }
