@@ -2,16 +2,13 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.AssistantCardAlreadyPlayedException;
-import it.polimi.ingsw.network.message.AssistantCardReply;
-import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.network.message.MessageType;
-import it.polimi.ingsw.network.message.PlayerNumberReply;
+import it.polimi.ingsw.model.exceptions.EmptyCloudException;
+import it.polimi.ingsw.model.exceptions.InvalidNumberOfStepsException;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameController implements Observer<Message>{
 
@@ -120,7 +117,7 @@ public class GameController implements Observer<Message>{
      */
     private boolean isCardAlreadyPlayed(String cardName){
         List<Player> players = game.getPlayers();
-        if(game.getCurrentPlayer().getDeck().size() == 1)
+        if(game.getCurrentPlayer().getDeck().size() == 1)   //TODO: non basta nel caso di 3,4 player
             return false;
         for(Player player : players){
             if(player.getLastAssistantCardPlayed().getName().equals(cardName))
@@ -144,13 +141,48 @@ public class GameController implements Observer<Message>{
         game.setPlayers(players);
     }
 
-    private void handleStudentChoice(Message receivedMessage){}
+    /*
+        The method receive a message with the color of the student we want to move from
+        the player's Hall to an Island or a Table
+     */
+    private void handleStudentMovement(Message receivedMessage){
+        if(receivedMessage.getMessageType() == MessageType.MOVE_TO_TABLE_REPLY){
+            String color = ((MoveToTableReply) receivedMessage).getColor();
+            game.playerMovesStudent(color);
+        }
+        if(receivedMessage.getMessageType() == MessageType.MOVE_TO_ISLAND_REPLY){
+            String color = ((MoveToIslandReply) receivedMessage).getColor();
+            int islandID = ((MoveToIslandReply) receivedMessage).getIslandID();
+            game.playerMovesStudent(color, islandID);
+        }
+    }
 
-    private void handleMovement(Message receivedMessage){}
+    /*
+        The method receive a message with the number of steps chosen by the player.
+        Mother nature will move.
+     */
+    private void handleMotherNature(Message receivedMessage){
+        if(receivedMessage.getMessageType() == MessageType.MOTHER_NATURE_STEPS_REPLY){
+            try {
+                game.moveMotherNature(((MotherNatureStepsReply) receivedMessage).getSteps());
+            } catch (InvalidNumberOfStepsException e) {
+                e.printStackTrace();
+            };
+        }
+    }
 
-    private void handleMotherNature(Message receivedMessage){}
-
-    private void handleCloudChoice(Message receivedMessage){}
+    /*
+        The method handles the cloud choice at the end of the action phase.
+     */
+    private void handleCloudChoice(Message receivedMessage){
+        if(receivedMessage.getMessageType() == MessageType.CLOUD_CHOICE_REPLY){
+            try {
+                game.takeStudentsFromCloud(((CloudChoiceReply) receivedMessage).getCloudID());
+            } catch (EmptyCloudException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /*
         If one of the three game conditions is true the game is finished.
@@ -204,6 +236,7 @@ public class GameController implements Observer<Message>{
         TowerRoom.
         The method returns the winningPlayer.
      */
+
     private Player declareWinningPlayer(){
         List<Player> players = game.getPlayers();
         Player winningPlayer = players.get(0);
