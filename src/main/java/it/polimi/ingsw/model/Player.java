@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Player {
 
@@ -14,7 +15,7 @@ public class Player {
     private List<AssistantCard> deck;
     private School school;
     private int coinsWallet;
-    private AssistantCard lastAssistantCardPlayed;
+    private Optional<AssistantCard> lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
     public Player(Wizard wizardID, String nickname) {
@@ -37,7 +38,7 @@ public class Player {
 
 
         this.school = new School(2);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
-        this.lastAssistantCardPlayed = null;
+        this.lastAssistantCardPlayed = Optional.empty();
         this.school = new School(2);    // TODO: School depends on numberOfPlayers,
                                                      // which is set to be decided after Players' creations
         this.characterCardAlreadyPlayed = false;
@@ -61,12 +62,16 @@ public class Player {
         return school;
     }
 
-    public AssistantCard getLastAssistantCardPlayed() {
+    public Optional<AssistantCard> getLastAssistantCardPlayed() {
         return lastAssistantCardPlayed;
     }
 
     public void setLastAssistantCardPlayed(AssistantCard lastAssistantCardPlayed) {
-        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
+        this.lastAssistantCardPlayed = Optional.of(lastAssistantCardPlayed);
+    }
+
+    public void resetLastAssistantCardPlayed(){
+        this.lastAssistantCardPlayed = Optional.empty();
     }
 
     public boolean getCharacterCardAlreadyPlayed() {
@@ -86,7 +91,7 @@ public class Player {
      */
     public void playAssistantCard(String cardName) {
         AssistantCard chosenCard = getAssistantCardFromName(cardName);
-        this.lastAssistantCardPlayed = chosenCard;
+        this.lastAssistantCardPlayed = Optional.of(chosenCard);
         getDeck().remove(chosenCard);
     }
 

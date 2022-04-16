@@ -60,6 +60,14 @@ public class Game{
         this.playersNumber = playersNumber;
     }
 
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
     // Game methods
 
     // TODO: WE WILL NEED A METHOD FOR RESET AT THE END OF A ROUND (LAST_CARD_PLAYED = NULL...)
@@ -173,7 +181,7 @@ public class Game{
      */
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
-        int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
+        int max_steps = currentPlayer.getLastAssistantCardPlayed().get().getMotherNatureSteps();
 
         if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
             throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
