@@ -57,7 +57,7 @@ public class GameExpertMode extends Game {
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
-        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
+        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().get().getMotherNatureSteps());
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
                 card.doEffect(this);
