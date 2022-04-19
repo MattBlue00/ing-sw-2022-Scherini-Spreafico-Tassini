@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 public enum MessageType {
+    LOGIN_REQUEST,
     PLAYER_NUMBER_REPLY,
     ASSISTANT_CARD_REPLY,
     MOTHER_NATURE_STEPS_REPLY,

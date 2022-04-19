@@ -5,7 +5,7 @@ public class MoveToTableReply extends Message{
 
     private final String color;
 
-    MoveToTableReply(String nickname, String color) {
+    public MoveToTableReply(String nickname, String color) {
         super(nickname, MessageType.MOVE_TO_TABLE_REPLY);
         this.color = color;
     }
