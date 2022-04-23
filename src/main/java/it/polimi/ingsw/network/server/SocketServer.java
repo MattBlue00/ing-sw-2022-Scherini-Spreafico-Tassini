@@ -55,4 +55,8 @@ public class SocketServer implements Runnable{
         server.getMessage(message);
     }
 
+    public void onDisconnect(ClientHandler clientHandler){
+        server.onDisconnect(clientHandler);
+    }
+
 }

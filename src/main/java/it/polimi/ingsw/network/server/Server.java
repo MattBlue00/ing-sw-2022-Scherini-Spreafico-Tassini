@@ -51,4 +51,14 @@ public class Server{
                 .findFirst()
                 .orElse(null);
     }
+
+    public void onDisconnect(ClientHandler clientHandler){
+        synchronized (lock){
+            String nick = getNicknameFromClientHandler(clientHandler);
+
+            if(nick != null){
+                removeClient(nick);
+            }
+        }
+    }
 }

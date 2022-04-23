@@ -68,6 +68,8 @@ public class SocketClient extends Client{
     public void disconnect() {
         try {
             if (!socket.isClosed()) {
+                out.close();
+                in.close();
                 readExecutionQueue.shutdownNow();
                 socket.close();
             }

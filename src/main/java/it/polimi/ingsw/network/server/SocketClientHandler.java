@@ -57,7 +57,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
             while(!Thread.currentThread().isInterrupted()) {
                 synchronized (inputLock) {
                     Message message = (Message) in.readObject();
-                    if(message!= null) System.out.println(message.toString());
+                    System.out.println("Message:"+message);
                     if (message != null && message.getMessageType() == MessageType.LOGIN_REQUEST) {
                         socketServer.addClient(message.getNickname(), this);
                     } else {
@@ -91,6 +91,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
             }
             connected = false;
             Thread.currentThread().interrupt();
+            socketServer.onDisconnect(this);
         }
     }
 
@@ -107,5 +108,6 @@ public class SocketClientHandler implements ClientHandler, Runnable{
             disconnect();
         }
     }
+
 
 }

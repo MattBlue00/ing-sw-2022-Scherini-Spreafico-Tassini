@@ -1,31 +1,18 @@
 package it.polimi.ingsw.model;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 public class PlayerTest{
 
-    /*@Test
-    public void testMoveStudent() {
+    @Test
+    public void testPlayAssistantCard(){
+        Player player = new Player(Wizard.YELLOW_WIZARD, "Samuele");
 
         Game game = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo");
-        game.addPlayer(p1);
-        game.addPlayer(p2);
-        game.setCurrentPlayer(p1);
-        Student s1 = new Student(Color.BLUE);
+        game.setCurrentPlayer(player);
 
-        p1.getSchool().getHall().addStudent(s1);
-
-        p1.moveStudent(1, Color.BLUE.toString()); //TODO: method need to be implemented first
-
-        // The island with id 1 should have one blue student
-
-        try {
-            assertEquals(1, game.getBoard().getIslands().getIslandFromID(1).getStudents().size());
-            assertTrue(game.getBoard().getIslands().getIslandFromID(1).getStudents().contains(s1));
-        }
-        catch(InvalidIslandException e){
-            e.printStackTrace();
-        }
-
-    }*/
+        player.playAssistantCard("FOX");
+        assertEquals("FOX", game.getCurrentPlayer().getLastAssistantCardPlayed().get().getName());
+    }
 }
