@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.GameState;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.EmptyBagException;
 import it.polimi.ingsw.model.exceptions.EmptyCloudException;
@@ -19,6 +20,7 @@ public class App
 
         // For network debugging purpose only
         GameController g = new GameController();
+        g.setGameState(GameState.LOGIN);
         Server s1 = new Server(g);
 
         SocketServer socketServer = new SocketServer(s1, 12345);

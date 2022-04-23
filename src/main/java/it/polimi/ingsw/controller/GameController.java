@@ -31,7 +31,6 @@ public class GameController implements Observer<Message>{
         Initialize GameController
      */
     public GameController(){
-        this.gameState = GameState.LOGIN;
         if(this instanceof GameControllerExpertMode)
             this.game = new GameExpertMode(2); // PLACEHOLDER
         else
@@ -179,7 +178,6 @@ public class GameController implements Observer<Message>{
         catch(AssistantCardAlreadyPlayedException e){
             e.printStackTrace();
         }
-        setOrder();
     }
 
     /*
@@ -314,7 +312,7 @@ public class GameController implements Observer<Message>{
 
     public void setOrder(){
         List<Player> players = game.getPlayers();
-        for(int i=0; i<game.getPlayersNumber();i++){
+        for(int i=0; i<game.getPlayersNumber()-1;i++){
             if(players.get(i).getLastAssistantCardPlayed().get().getWeight() >
                     players.get(i+1).getLastAssistantCardPlayed().get().getWeight()) {
                 Collections.swap(players, i, i+1);

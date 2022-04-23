@@ -50,6 +50,10 @@ public class Player {
         return deck;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
     public int getCoinsWallet() {
         return coinsWallet;
     }
@@ -90,17 +94,17 @@ public class Player {
         remove it from player's deck
      */
     public void playAssistantCard(String cardName) {
-        AssistantCard chosenCard = getAssistantCardFromName(cardName);
-        this.lastAssistantCardPlayed = Optional.of(chosenCard);
-        getDeck().remove(chosenCard);
+        Optional<AssistantCard> chosenCard = getAssistantCardFromName(cardName);
+        this.lastAssistantCardPlayed = chosenCard;
+        getDeck().remove(chosenCard.get());
     }
 
     /*
         Find all cards with the name equals to the parameter,
         hypothesis: deck does not contain cards with same name.
      */
-    public AssistantCard getAssistantCardFromName(String cardName){
-        return (AssistantCard) getDeck().stream().filter(card -> card.getName().equals(cardName));
+    public Optional<AssistantCard> getAssistantCardFromName(String cardName){
+        return getDeck().stream().filter(card -> card.getName().equals(cardName)).findFirst();
     }
 
     public void moveStudent(Island island, String color) throws StudentNotFoundException {
