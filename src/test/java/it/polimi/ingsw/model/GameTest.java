@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.exceptions.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GameTest{
@@ -37,23 +39,34 @@ public class GameTest{
     public void testPlayersPlayAssistantCard() {
     }
 
-    /*TODO: waiting for the support methods to be implemented
-    @Test
-    public void testPlayerMovesStudent() {
 
+    @Test
+    public void playerMovesStudentToTable() throws NonExistentColorException {
+        // TODO: test playerMovesStudent (for islands and for tables)
         Game g1 = new Game(2);
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Student s1 = new Student(Color.YELLOW);
+
         g1.setCurrentPlayer(p1);
+        p1.getSchool().getHall().addStudent(s1);
+        g1.playerMovesStudent("YELLOW");
 
-        g1.playerMovesStudent();
+        assertEquals(s1, p1.getSchool().getTable("YELLOW").getStudents().get(0));
 
-        //incomplete
-    }*/
-
+    }
 
     @Test
-    public void playerMovesStudent(){
-        // TODO: test playerMovesStudent (for islands and for tables)
+    public void playerMovesStudentToIsland() throws NonExistentColorException, IslandNotFoundException {
+        Game g1 = new Game(2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Student s1 = new Student(Color.YELLOW);
+
+        g1.setCurrentPlayer(p1);
+        p1.getSchool().getHall().addStudent(s1);
+        g1.playerMovesStudent("YELLOW", 1);
+
+        assertEquals(s1, g1.getBoard().getIslands().getIslandFromID(1).getStudents().get(0));
+
     }
 
     @Test
@@ -264,6 +277,7 @@ public class GameTest{
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s3);
             g1.islandConquerCheck(1);
             assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(7, p1.getSchool().getTowerRoom().getTowersLeft());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();
@@ -283,6 +297,7 @@ public class GameTest{
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
             g1.islandConquerCheck(1);
             assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(7, p1.getSchool().getTowerRoom().getTowersLeft());
         }
         catch(NonExistentColorException | FullTableException | IslandNotFoundException e){
             e.printStackTrace();
@@ -298,6 +313,7 @@ public class GameTest{
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s6);
             g1.islandConquerCheck(1);
             assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(7, p1.getSchool().getTowerRoom().getTowersLeft());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();
@@ -313,6 +329,8 @@ public class GameTest{
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s7);
             g1.islandConquerCheck(1);
             assertEquals(Optional.of(p2), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(8, p1.getSchool().getTowerRoom().getTowersLeft());
+            assertEquals(7, p2.getSchool().getTowerRoom().getTowersLeft());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();
@@ -336,5 +354,54 @@ public class GameTest{
         assertEquals(0, g1.getBoard().getCloud(0).getStudents().size());     // the cloud should be empty
         assertEquals(3, p1.getSchool().getHall().getStudents().size());         // the hall should have 3 more students
 
+    }
+
+    @Test
+    void getPlayersNumberTest() {
+        Game g1 = new Game(2);
+        assertEquals(2, g1.getPlayersNumber());
+    }
+
+    @Test
+    void setPlayersNumberTest() {
+        Game g1 = new Game(2);
+        g1.setPlayersNumber(3);
+        assertEquals(3, g1.getPlayersNumber());
+    }
+
+    @Test
+    void getCurrentPlayerTest() {
+        Game g1 = new Game(2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+
+        g1.setCurrentPlayer(p1);
+        assertEquals(p1, g1.getCurrentPlayer());
+    }
+
+    @Test
+    void getRoundNumberTest() {
+        Game g1 = new Game(2);
+        assertEquals(0, g1.getRoundNumber());
+    }
+
+    @Test
+    void setRoundNumberTest() {
+        Game g1 = new Game(2);
+        g1.setRoundNumber(1);
+        assertEquals(1, g1.getRoundNumber());
+    }
+
+    @Test
+    void setPlayersTest(){
+        Game g1 = new Game(2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo");
+        List<Player> players = new ArrayList<>();
+
+        players.add(p1);
+        players.add(p2);
+        g1.setPlayers(players);
+
+        assertEquals(players, g1.getPlayers());
     }
 }
