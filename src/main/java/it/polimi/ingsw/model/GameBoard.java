@@ -132,17 +132,17 @@ public class GameBoard {
                 int towersToMove = selectedIsland.getNumOfTowers();
                 TowerRoom towerRoomPreviousOwner = selectedIsland.getOwner().get().getSchool().getTowerRoom();
                 TowerRoom towerRoomNewOwner = currentPlayer.getSchool().getTowerRoom();
-
                 towerRoomPreviousOwner.setTowersLeft(towerRoomPreviousOwner.getTowersLeft() + towersToMove);
                 selectedIsland.setOwner(currentPlayer);
                 towerRoomNewOwner.setTowersLeft(towerRoomNewOwner.getTowersLeft() - towersToMove);
-
             }
         }
         else{
             if(calcCurrent > 0){
                 selectedIsland.setOwner(currentPlayer);
                 selectedIsland.setNumOfTowers(1);
+                int numOfTowers = currentPlayer.getSchool().getTowerRoom().getTowersLeft();
+                currentPlayer.getSchool().getTowerRoom().setTowersLeft(numOfTowers - 1);
             }
         }
 

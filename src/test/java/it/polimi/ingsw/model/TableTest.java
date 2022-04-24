@@ -33,6 +33,28 @@ public class TableTest{
     }
 
     @Test
+    // Throws FullTableException
+    public void addStudentToAFullTableTest(){
+
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        try {
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+            p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
+        } catch(FullTableException | NonExistentColorException ignored){};
+
+        assertThrows(FullTableException.class, ()->{p1.getSchool().getTable("YELLOW").
+                addStudent(new Student(Color.YELLOW), p1);} );
+    }
+
+    @Test
     public void testCoinCheck() throws NonExistentColorException {
 
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
