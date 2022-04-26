@@ -12,4 +12,6 @@ public class Constants {
     public static final int MIN_NUM_OF_STEPS = 1;
     public static final int MAX_NUM_OF_ISLANDS = 12;
 
+    public static final int STUDENTS_PER_COLOR = 26;
+
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.Message;
 
 import java.util.Collections;
@@ -36,8 +37,13 @@ public class Server{
     /*
         Calls GameController.getMessage()
      */
-    public void getMessage(Message message) {
-        gameController.getMessage(message);
+    public void getMessage(Message message){
+        try {
+            gameController.getMessage(message);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /*

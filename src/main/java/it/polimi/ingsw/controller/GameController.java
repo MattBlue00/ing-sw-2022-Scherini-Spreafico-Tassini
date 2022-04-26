@@ -1,9 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.AssistantCardAlreadyPlayedException;
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import it.polimi.ingsw.model.exceptions.InvalidNumberOfStepsException;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
 
@@ -14,7 +12,6 @@ import java.util.List;
 public class GameController implements Observer<Message>{
 
     // TODO: Error handling will be changed for each method when we will implement the network & the view
-    // TODO: All methods in the controller need testing
 
     private Game game;
     private boolean planningPhaseDone;
@@ -24,8 +21,8 @@ public class GameController implements Observer<Message>{
     private boolean motherNatureMoved;
 
     private GameState gameState;
-    private static final String INVALID_STATE = "Invalid game state";
-    private static final String END_STATE = "The game has ended, the winner is: ";
+    protected static final String INVALID_STATE = "Invalid game state";
+    protected static final String END_STATE = "The game has ended, the winner is: ";
 
     /*
         Initialize GameController
@@ -38,7 +35,7 @@ public class GameController implements Observer<Message>{
         this.planningPhaseDone = false;
         this.playerActionPhaseDone = false;
         this.currentPlayerIndex = 0;
-        this.movesLeft = 3;
+        this.movesLeft = Constants.PLAYER_MOVES;
         this.motherNatureMoved = false;
     }
 
@@ -102,42 +99,49 @@ public class GameController implements Observer<Message>{
 
     // GameController methods
 
-    public void getMessage(Message receivedMessage){
+    public void getMessage(Message receivedMessage) throws
+            InvalidNumberOfStepsException, EmptyCloudException, AssistantCardAlreadyPlayedException,
+            WrongTurnException, WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
+            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
+            StudentNotFoundException, NonExistentColorException {
         // TODO: receive a message from the view
-        switch (gameState){
-            case LOGIN:
-                loginState(receivedMessage);
-                break;
-            case INIT:
-                //TODO: methods to initialize a new game
-                initGame();
-                startGame();
-                break;
-            case IN_GAME:
-                if(!planningPhaseDone) {
-                    planningPhase(receivedMessage);
-                    currentPlayerIndex++;
-                    if(currentPlayerIndex == game.getPlayersNumber()) {
-                        endPlanningPhase();
-                    }
-                    else
-                        game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-                }
-                else {
-                    actionPhase(receivedMessage);
-                    if(playerActionPhaseDone){
+        if(!receivedMessage.getNickname().equals(game.getCurrentPlayer().getNickname()))
+            throw new WrongTurnException("Another player is playing! Please wait.");
+        else {
+            switch (gameState) {
+                case LOGIN:
+                    loginState(receivedMessage);
+                    //TODO: initGame should start after all players' clients have connected
+                    initGame();
+                    break;
+                case INIT:
+                    //TODO: methods to initialize a new game
+                    startGame();
+                    break;
+                case IN_GAME:
+                    if (!planningPhaseDone) {
+                        planningPhase(receivedMessage);
                         currentPlayerIndex++;
-                        if(currentPlayerIndex == game.getPlayersNumber())
-                            nextRound();
-                        else {
-                            nextPlayerActionPhase();
+                        if (currentPlayerIndex == game.getPlayersNumber()) {
+                            endPlanningPhase();
+                        } else
+                            game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
+                    } else {
+                        actionPhase(receivedMessage);
+                        if (playerActionPhaseDone) {
+                            currentPlayerIndex++;
+                            if (currentPlayerIndex == game.getPlayersNumber())
+                                nextRound();
+                            else {
+                                nextPlayerActionPhase();
+                            }
                         }
                     }
-                }
-                break;
-            default:
-                System.out.println(INVALID_STATE);
-                break;
+                    break;
+                default:
+                    System.out.println(INVALID_STATE);
+                    break;
+            }
         }
     }
 
@@ -167,61 +171,53 @@ public class GameController implements Observer<Message>{
         This method allows the current player to play his planning phase properly.
      */
 
-    public void planningPhase(Message message){
-
-        try{
-            if (message.getMessageType() == MessageType.ASSISTANT_CARD_REPLY)
-                handleAssistantCardChoice(message);
-            else
-                System.out.println("Wrong message sent.");
-        }
-        catch(AssistantCardAlreadyPlayedException e){
-            e.printStackTrace();
-        }
+    public void planningPhase(Message message) throws AssistantCardAlreadyPlayedException{
+        if (message.getMessageType() == MessageType.ASSISTANT_CARD_REPLY)
+            handleAssistantCardChoice(message);
+        else
+            System.out.println("Wrong message sent.");
     }
 
     /*
         This method establishes the right flow of a player's action phase.
      */
 
-    public void actionPhase(Message message){
+    public void actionPhase(Message message) throws InvalidNumberOfStepsException, EmptyCloudException,
+            WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
+            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
+            StudentNotFoundException, NonExistentColorException {
 
-        try{
-            switch(message.getMessageType()){
-                case MOVE_TO_TABLE_REPLY:
-                case MOVE_TO_ISLAND_REPLY:
-                    if(movesLeft == 0){
-                        System.out.println("No moves left!");
-                    }
-                    else{
-                        handleStudentMovement(message);
-                        movesLeft--;
-                    }
-                    break;
-                case MOTHER_NATURE_STEPS_REPLY:
-                    if(movesLeft == 0 && !motherNatureMoved){
-                        handleMotherNature(message);
-                        motherNatureMoved = true;
-                    }
-                    else
-                        System.out.println("You need to move other " + movesLeft +
-                                " students before moving Mother Nature!");
-                    break;
-                case CLOUD_CHOICE_REPLY:
-                    if(motherNatureMoved) {
-                        handleCloudChoice(message);
-                        playerActionPhaseDone = true;
-                    }
-                    else
-                        System.out.println("You need to move mother nature first!");
-                    break;
-                default:
-                    System.out.println("Wrong message sent.");
-                    break;
-            }
-        }
-        catch(InvalidNumberOfStepsException | EmptyCloudException e){
-            e.printStackTrace();
+        switch(message.getMessageType()){
+            case MOVE_TO_TABLE_REPLY:
+            case MOVE_TO_ISLAND_REPLY:
+                if(movesLeft == 0){
+                    throw new WrongMessageSentException("No moves left!");
+                }
+                else{
+                    handleStudentMovement(message);
+                    movesLeft--;
+                }
+                break;
+            case MOTHER_NATURE_STEPS_REPLY:
+                if(movesLeft == 0 && !motherNatureMoved){
+                    handleMotherNature(message);
+                    motherNatureMoved = true;
+                    game.islandConquerCheck(game.getBoard().getMotherNaturePos());
+                }
+                else
+                    throw new WrongMessageSentException("You need to move other " + movesLeft +
+                            " students before moving Mother Nature!");
+                break;
+            case CLOUD_CHOICE_REPLY:
+                if(motherNatureMoved) {
+                    handleCloudChoice(message);
+                    playerActionPhaseDone = true;
+                }
+                else
+                    throw new WrongMessageSentException("You need to move mother nature first!");
+                break;
+            default:
+                throw new WrongMessageSentException("Wrong message sent.");
         }
 
     }
@@ -243,7 +239,7 @@ public class GameController implements Observer<Message>{
 
     public void nextPlayerActionPhase(){
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-        movesLeft = 3;
+        movesLeft = Constants.PLAYER_MOVES;
         playerActionPhaseDone = false;
         motherNatureMoved = false;
     }
@@ -255,7 +251,7 @@ public class GameController implements Observer<Message>{
     public void nextRound(){
         currentPlayerIndex = 0;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-        movesLeft = 3;
+        movesLeft = Constants.PLAYER_MOVES;
         planningPhaseDone = false;
         playerActionPhaseDone = false;
         motherNatureMoved = false;
@@ -275,7 +271,7 @@ public class GameController implements Observer<Message>{
        if(isAssistantCardPlayable(chosenCard))
            game.getCurrentPlayer().playAssistantCard(chosenCard);
        else
-           throw new AssistantCardAlreadyPlayedException("You have already played this assistant card!");
+           throw new AssistantCardAlreadyPlayedException("You can't play this assistant card!");
     }
 
     /*
@@ -283,6 +279,13 @@ public class GameController implements Observer<Message>{
      */
 
     public boolean isAssistantCardPlayable(String cardName){
+        boolean found = false;
+        for(AssistantCard card : game.getCurrentPlayer().getDeck()){
+            if(card.getName().equals(cardName))
+                found = true;
+        }
+        if(!found)
+            return false;
         List<Player> players = game.getPlayers();
         List<AssistantCard> cardsPlayed = new ArrayList<>(players.size());
         for(Player player : players){
@@ -291,7 +294,7 @@ public class GameController implements Observer<Message>{
         }
         for(AssistantCard card : cardsPlayed){
             if(card.getName().equals(cardName)){
-                List<AssistantCard> playerCards = game.getCurrentPlayer().getDeck();
+                List<AssistantCard> playerCards = new ArrayList<>(game.getCurrentPlayer().getDeck());
                 playerCards.remove(card);
                 for(AssistantCard playerCard : playerCards) {
                     for (AssistantCard cardToCheck : cardsPlayed) {
@@ -326,7 +329,8 @@ public class GameController implements Observer<Message>{
         the player's Hall to an Island or a Table
      */
 
-    public void handleStudentMovement(Message receivedMessage){
+    public void handleStudentMovement(Message receivedMessage) throws FullTableException, StudentNotFoundException,
+            NonExistentColorException, IslandNotFoundException {
         if(receivedMessage.getMessageType() == MessageType.MOVE_TO_TABLE_REPLY){
             String color = ((MoveToTableReply) receivedMessage).getColor();
             game.playerMovesStudent(color);
@@ -343,7 +347,8 @@ public class GameController implements Observer<Message>{
         Mother nature will move.
      */
 
-    public void handleMotherNature(Message receivedMessage) throws InvalidNumberOfStepsException{
+    public void handleMotherNature(Message receivedMessage) throws
+            InvalidNumberOfStepsException, IslandNotFoundException{
         game.moveMotherNature(((MotherNatureStepsReply) receivedMessage).getSteps());
     }
 

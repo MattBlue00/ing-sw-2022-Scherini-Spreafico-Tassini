@@ -12,51 +12,47 @@ public class GameControllerExpertMode extends GameController{
     }
 
     @Override
-    public void actionPhase(Message message){
+    public void actionPhase(Message message) throws IslandNotFoundException, WrongMessageSentException,
+            InvalidNumberOfStepsException, EmptyCloudException, NotEnoughCoinsException,
+            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
+            StudentNotFoundException, NonExistentColorException {
 
-        try{
-            switch(message.getMessageType()){
-                case MOVE_TO_TABLE_REPLY:
-                case MOVE_TO_ISLAND_REPLY:
-                    if(getMovesLeft() == 0){
-                        System.out.println("No moves left!");
-                    }
-                    else{
-                        handleStudentMovement(message);
-                        setMovesLeft(getMovesLeft() - 1);
-                    }
-                    break;
-                case MOTHER_NATURE_STEPS_REPLY:
-                    if(getMovesLeft() == 0 && !getMotherNatureMoved()){
-                        handleMotherNature(message);
-                        setMotherNatureMoved(true);
-                    }
-                    else
-                        System.out.println("You need to move other " + getMovesLeft() +
-                                " students before moving Mother Nature!");
-                    break;
-                case CLOUD_CHOICE_REPLY:
-                    if(getMotherNatureMoved()) {
-                        handleCloudChoice(message);
-                        setPlayerActionPhaseDone(true);
-                    }
-                    else
-                        System.out.println("You need to move mother nature first!");
-                    break;
-                case CHARACTER_CARD_REPLY:
-                    if(!getMotherNatureMoved())
-                        handleCharacterCardChoice(message);
-                    else
-                        System.out.println("You are no longer able to play a character card!");
-                    break;
-                default:
-                    System.out.println("Wrong message sent.");
-                    break;
-            }
-        }
-        catch(InvalidNumberOfStepsException | EmptyCloudException | CharacterCardAlreadyPlayedException |
-                NotEnoughCoinsException | CharacterCardNotFoundException e){
-            e.printStackTrace();
+        switch(message.getMessageType()){
+            case MOVE_TO_TABLE_REPLY:
+            case MOVE_TO_ISLAND_REPLY:
+                if(getMovesLeft() == 0){
+                    throw new WrongMessageSentException("No moves left!");
+                }
+                else{
+                    handleStudentMovement(message);
+                    setMovesLeft(getMovesLeft() - 1);
+                }
+                break;
+            case MOTHER_NATURE_STEPS_REPLY:
+                if(getMovesLeft() == 0 && !getMotherNatureMoved()){
+                    handleMotherNature(message);
+                    setMotherNatureMoved(true);
+                }
+                else
+                    throw new WrongMessageSentException("You need to move other " + getMovesLeft() +
+                            " students before moving Mother Nature!");
+                break;
+            case CLOUD_CHOICE_REPLY:
+                if(getMotherNatureMoved()) {
+                    handleCloudChoice(message);
+                    setPlayerActionPhaseDone(true);
+                }
+                else
+                    throw new WrongMessageSentException("You need to move mother nature first!");
+                break;
+            case CHARACTER_CARD_REPLY:
+                if(!getMotherNatureMoved())
+                    handleCharacterCardChoice(message);
+                else
+                    throw new WrongMessageSentException("You are no longer able to play a character card!");
+                break;
+            default:
+                throw new WrongMessageSentException("Wrong message sent.");
         }
 
     }
