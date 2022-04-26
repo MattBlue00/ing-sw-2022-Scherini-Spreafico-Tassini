@@ -49,21 +49,26 @@ public class GameTest{
 
         g1.setCurrentPlayer(p1);
         p1.getSchool().getHall().addStudent(s1);
-        g1.playerMovesStudent("YELLOW");
+        try {
+            g1.playerMovesStudent("YELLOW");
+        }catch(FullTableException | StudentNotFoundException ignored){}
 
         assertEquals(s1, p1.getSchool().getTable("YELLOW").getStudents().get(0));
 
     }
 
     @Test
-    public void playerMovesStudentToIsland() throws NonExistentColorException, IslandNotFoundException {
+    public void playerMovesStudentToIsland() throws IslandNotFoundException {
         Game g1 = new Game(2);
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
         Student s1 = new Student(Color.YELLOW);
 
         g1.setCurrentPlayer(p1);
         p1.getSchool().getHall().addStudent(s1);
-        g1.playerMovesStudent("YELLOW", 1);
+        try {
+            g1.playerMovesStudent("YELLOW", 1);
+        }
+        catch(StudentNotFoundException ignored){}
 
         assertEquals(s1, g1.getBoard().getIslands().getIslandFromID(1).getStudents().get(0));
 
@@ -168,56 +173,23 @@ public class GameTest{
 
         try{
             g1.moveMotherNature(3); // from island 1 to 4
-        }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
-
-        assertEquals(4, g1.getBoard().getMotherNaturePos());
-
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
-
-        try{
+            assertEquals(4, g1.getBoard().getMotherNaturePos());
+            p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
             g1.moveMotherNature(5); // from island 4 to 9
-        }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
-
-        assertEquals(9, g1.getBoard().getMotherNaturePos());
-
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.ELEPHANT));
-
-        try{
+            assertEquals(9, g1.getBoard().getMotherNaturePos());
+            p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.ELEPHANT));
             g1.moveMotherNature(1); // from island 9 to 10
-        }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
-
-        assertEquals(10, g1.getBoard().getMotherNaturePos());
-
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.DOG));
-
-        try{
+            assertEquals(10, g1.getBoard().getMotherNaturePos());
+            p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.DOG));
             g1.moveMotherNature(3); // from island 10 to 1
-        }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
-
-        assertEquals(1, g1.getBoard().getMotherNaturePos());
-
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OSTRICH));
-
-        try{
+            assertEquals(1, g1.getBoard().getMotherNaturePos());
+            p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OSTRICH));
             g1.moveMotherNature(1); // from island 1 to 2
+            assertEquals(2, g1.getBoard().getMotherNaturePos());
         }
-        catch(InvalidNumberOfStepsException e){
+        catch(InvalidNumberOfStepsException | IslandNotFoundException e){
             e.printStackTrace();
         }
-
-        assertEquals(2, g1.getBoard().getMotherNaturePos());
 
     }
 
@@ -381,7 +353,7 @@ public class GameTest{
     @Test
     void getRoundNumberTest() {
         Game g1 = new Game(2);
-        assertEquals(0, g1.getRoundNumber());
+        assertEquals(1, g1.getRoundNumber());
     }
 
     @Test

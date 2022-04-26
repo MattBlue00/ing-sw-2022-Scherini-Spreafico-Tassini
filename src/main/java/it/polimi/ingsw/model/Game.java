@@ -18,8 +18,9 @@ public class Game{
 
     public Game(int playersNumber) {
         this.playersNumber = playersNumber;
-        players = new ArrayList<>();
-        board = new GameBoard(playersNumber);
+        this.players = new ArrayList<>();
+        this.board = new GameBoard(playersNumber);
+        this.roundNumber = 1;
     }
 
     // Getter and setter methods
@@ -84,22 +85,14 @@ public class Game{
         A player can move 3 students from their Halls each turn
         At the end of the movement phase profCheck() is called
      */
-    public void playerMovesStudent(String color, int islandID){
-        try {
+    public void playerMovesStudent(String color, int islandID) throws IslandNotFoundException, StudentNotFoundException {
             currentPlayer.moveStudent(board.getIslands().getIslandFromID(islandID), color);
-        }
-        catch(StudentNotFoundException | IslandNotFoundException e){
-            e.printStackTrace();
-        }
     }
 
-    public void playerMovesStudent(String color){
-        try{
-            currentPlayer.moveStudent(color);
-            profCheck();
-        }catch (NonExistentColorException | FullTableException | StudentNotFoundException e){
-            e.printStackTrace();
-        }
+    public void playerMovesStudent(String color) throws FullTableException, StudentNotFoundException,
+            NonExistentColorException {
+        currentPlayer.moveStudent(color);
+        profCheck();
     }
 
     /*
@@ -179,7 +172,7 @@ public class Game{
     /*
         This method allows Mother Nature to move of up to the given steps.
      */
-    public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
+    public void moveMotherNature(int steps) throws InvalidNumberOfStepsException, IslandNotFoundException {
 
         int max_steps = currentPlayer.getLastAssistantCardPlayed().get().getMotherNatureSteps();
 

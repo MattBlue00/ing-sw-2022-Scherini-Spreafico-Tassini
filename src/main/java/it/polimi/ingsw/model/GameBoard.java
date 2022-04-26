@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.exceptions.EmptyCloudException;
 import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ public class GameBoard {
 
     // GameBoard variables
     private int motherNaturePos; // represent the current position of motherNature in the island array
-    private final Cloud clouds[];
+    private final Cloud[] clouds;
     private DoublyLinkedList islands;
     private List<Student> studentsBag;
     private int numOfVetos;
@@ -24,13 +25,26 @@ public class GameBoard {
         this.islands = new DoublyLinkedList();
         this.numOfVetos = 4;
 
-        // just to fill the bag with something
-        for(int i=0; i<15; i++){
+        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
             studentsBag.add(new Student(Color.RED));
         }
+        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
+            studentsBag.add(new Student(Color.YELLOW));
+        }
+        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
+            studentsBag.add(new Student(Color.BLUE));
+        }
+        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
+            studentsBag.add(new Student(Color.GREEN));
+        }
+        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
+            studentsBag.add(new Student(Color.PINK));
+        }
+
+        Collections.shuffle(studentsBag);
 
         for(int i = 0; i<playerNum; i++) {
-            Cloud cloud = new Cloud(3); // not scalable, need to find a better solution then if/else
+            Cloud cloud = new Cloud(3); // TODO: 3 is a placeholder
             clouds[i] = cloud;
             for(int j=0; j<cloud.getCapacity(); j++)
                 cloud.addStudent(studentsBag.remove(studentsBag.size() - 1));
