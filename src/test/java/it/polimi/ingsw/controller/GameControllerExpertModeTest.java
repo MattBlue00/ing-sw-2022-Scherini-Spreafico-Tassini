@@ -1,10 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.AssistantCardAlreadyPlayedException;
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import it.polimi.ingsw.model.exceptions.WrongMessageSentException;
-import it.polimi.ingsw.model.exceptions.WrongTurnException;
+import it.polimi.ingsw.model.charactercards.Flagman;
+import it.polimi.ingsw.model.charactercards.Healer;
+import it.polimi.ingsw.model.charactercards.Innkeeper;
+import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +28,12 @@ class GameControllerExpertModeTest {
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);
+        CharacterCard c1 = new Healer();
+        CharacterCard c2 = new Innkeeper();
+        CharacterCard c3 = new Flagman();
+        GameExpertMode g = (GameExpertMode) gc.getGame();
+        g.addCharacterCards(new CharacterCard[]{c1, c2, c3});
+        p1.setCoinsWallet(5);
 
         try {
             gc.getMessage(new AssistantCardReply("Matteo", "TURTLE"));
@@ -101,6 +107,12 @@ class GameControllerExpertModeTest {
             assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
             assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
 
+            gc.getMessage(new CharacterCardReply("Matteo", 5));
+            assertEquals(3, p1.getCoinsWallet());
+            assertEquals(3, g.getBoard().getNumOfVetos());
+            assertEquals(3, c1.getCost());
+            assertTrue(g.getBoard().getIslands().getIslandFromID(1).hasVeto());
+
             gc.getMessage(new MotherNatureStepsReply("Matteo", 2));
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().get());
@@ -110,6 +122,8 @@ class GameControllerExpertModeTest {
                     () -> gc.getMessage(new CloudChoiceReply("Matteo", 0)));
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberReply("Matteo", 2)));
+            assertThrows(CharacterCardAlreadyPlayedException.class,
+                    () -> gc.getMessage(new CharacterCardReply("Matteo", 8)));
             gc.getMessage(new CloudChoiceReply("Matteo", 1));
             assertEquals(0, gc.getGame().getBoard().getCloud(1).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
