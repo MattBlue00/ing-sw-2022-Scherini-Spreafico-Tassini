@@ -73,6 +73,7 @@ public class GameControllerExpertMode extends GameController{
 
     @Override
     public void nextPlayerActionPhase(){
+        winCheck();
         getGame().getCurrentPlayer().setCharacterCardAlreadyPlayed(false);
         getGame().setCurrentPlayer(getGame().getPlayers().get(getCurrentPlayerIndex()));
         setMovesLeft(3);

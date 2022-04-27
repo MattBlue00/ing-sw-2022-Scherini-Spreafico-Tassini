@@ -282,6 +282,7 @@ public class GameController implements Observer<Message>{
      */
 
     public void nextPlayerActionPhase(){
+        winCheck();
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
         movesLeft = Constants.PLAYER_MOVES;
         playerActionPhaseDone = false;
