@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.controller.GameControllerFactory;
+import it.polimi.ingsw.model.exceptions.WrongMessageSentException;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.MessageType;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,15 +12,20 @@ import java.util.Map;
 
 public class Server{
 
-    private final GameController gameController;
+    private GameControllerFactory gameControllerFactory;
+    private GameController gameController;
     private Object lock; //LOCK for synchronization
     private final Map<String, ClientHandler> clientHandlerMap;
 
 
-    public Server(GameController gameController) {
-        this.gameController = gameController;
+    public Server() {
         this.lock = new Object();
         this.clientHandlerMap = Collections.synchronizedMap(new HashMap<>());
+    }
+
+    public GameController initController(Message receivedMessage){
+        this.gameControllerFactory = new GameControllerFactory();
+         return gameControllerFactory.getGameController(receivedMessage);
     }
 
     /*
@@ -39,7 +46,13 @@ public class Server{
      */
     public void getMessage(Message message){
         try {
-            gameController.getMessage(message);
+            if(message.getMessageType()== MessageType.GAME_MODE_REPLY)
+                initController(message);
+            else{
+                if(gameController != null)
+                    gameController.getMessage(message);
+                else throw new WrongMessageSentException("Error");
+            }
         }
         catch(Exception e){
             e.printStackTrace();

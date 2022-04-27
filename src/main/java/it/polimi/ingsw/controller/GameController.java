@@ -19,7 +19,7 @@ public class GameController implements Observer<Message>{
     private int currentPlayerIndex;
     private int movesLeft;
     private boolean motherNatureMoved;
-
+    private String firstPlayer;
     private GameState gameState;
     protected static final String INVALID_STATE = "Invalid game state";
     protected static final String END_STATE = "The game has ended, the winner is: ";
@@ -28,10 +28,6 @@ public class GameController implements Observer<Message>{
         Initialize GameController
      */
     public GameController(){
-        if(this instanceof GameControllerExpertMode)
-            this.game = new GameExpertMode(2); // PLACEHOLDER
-        else
-            this.game = new Game(2); // PLACEHOLDER
         this.planningPhaseDone = false;
         this.playerActionPhaseDone = false;
         this.currentPlayerIndex = 0;
@@ -103,22 +99,27 @@ public class GameController implements Observer<Message>{
             InvalidNumberOfStepsException, EmptyCloudException, AssistantCardAlreadyPlayedException,
             WrongTurnException, WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
             CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException {
+            StudentNotFoundException, NonExistentColorException, LoginException {
         // TODO: receive a message from the view
-        if(!receivedMessage.getNickname().equals(game.getCurrentPlayer().getNickname()))
-            throw new WrongTurnException("Another player is playing! Please wait.");
-        else {
-            switch (gameState) {
-                case LOGIN:
-                    loginState(receivedMessage);
-                    //TODO: initGame should start after all players' clients have connected
-                    initGame();
-                    break;
-                case INIT:
-                    //TODO: methods to initialize a new game
+        switch (gameState) {
+            case INIT:
+                prepareGame(receivedMessage);
+                break;
+            case LOGIN:
+                if(firstPlayer.equals(receivedMessage.getNickname()))
+                    handlePlayerLogin(receivedMessage);
+                else{
+                    if(firstPlayer.equals(game.getPlayers().get(0).getNickname()))
+                        handlePlayerLogin(receivedMessage);
+                    else throw new LoginException("Waiting for the first player to join");
+                }
+                if(game.getPlayers().size() == game.getPlayersNumber())
                     startGame();
-                    break;
-                case IN_GAME:
+                break;
+            case IN_GAME:
+                if(!receivedMessage.getNickname().equals(game.getCurrentPlayer().getNickname()))
+                    throw new WrongTurnException("Another player is playing! Please wait.");
+                else {
                     if (!planningPhaseDone) {
                         planningPhase(receivedMessage);
                         currentPlayerIndex++;
@@ -137,24 +138,67 @@ public class GameController implements Observer<Message>{
                             }
                         }
                     }
-                    break;
-                default:
-                    System.out.println(INVALID_STATE);
-                    break;
-            }
+                }
+                break;
+            default:
+                System.out.println(INVALID_STATE);
+                break;
         }
     }
 
     /*
-        The received message contains the number of players.
-        Then set the playersNumber in the Game class.
+        If the received message contains the number of players,
+        then set the playersNumber in the Game class, otherwise if the received message
+        is a login request adds the player to the game.
      */
 
-    public void loginState(Message receivedMessage){
+    public void loginState(Message receivedMessage) throws WrongMessageSentException {
         if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY){
             game.setPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
         }
-        else System.out.println("Error");
+        else {
+            if(receivedMessage.getMessageType() == MessageType.PLAYER_LOGIN)
+                handlePlayerLogin(receivedMessage);
+            else throw new WrongMessageSentException("Error");
+        }
+    }
+
+    public void prepareGame(Message receivedMessage) throws WrongMessageSentException {
+        if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY) {
+            int playersNumber = ((PlayerNumberReply) receivedMessage).getPlayerNumber();
+            if (this instanceof GameControllerExpertMode)
+                this.game = new GameExpertMode(playersNumber);
+            else
+                this.game = new Game(playersNumber);
+            this.firstPlayer = receivedMessage.getNickname();
+            goToLogin();
+        }
+        else throw new WrongMessageSentException("Error");
+    }
+
+    // The method receive a message from a player, if it is a PlayerLogin
+    //        the player is added to the game
+
+    public void handlePlayerLogin(Message receivedMessage){
+        boolean wizardIdAlreadyUsed = false;
+        if(receivedMessage.getMessageType() == MessageType.PLAYER_LOGIN){
+            Player player = new Player(((PlayerLoginRequest) receivedMessage).getWizardID(),
+                    ((PlayerLoginRequest) receivedMessage).getNickname(), game.getPlayersNumber());
+            for(int i=0; i<game.getPlayers().size(); i++) {
+                if (((PlayerLoginRequest) receivedMessage).getWizardID().equals(game.getPlayers().get(i).
+                        getWizardID())) {
+                    System.out.println("Error, select another wizard");
+                    wizardIdAlreadyUsed = true;
+                }
+            }
+            if(!wizardIdAlreadyUsed)
+                game.addPlayer(player);
+        }
+    }
+
+    // To control when the login is initialized
+    public void goToLogin(){
+        setGameState(GameState.LOGIN);
     }
 
     // To control when the game is initialized
@@ -436,5 +480,4 @@ public class GameController implements Observer<Message>{
     public void update(Message message) {
         // TODO: implement update
     }
-
 }

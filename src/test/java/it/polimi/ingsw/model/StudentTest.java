@@ -10,7 +10,7 @@ public class StudentTest{
     @Test
     public void testMoveToHall() {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
 
@@ -31,7 +31,7 @@ public class StudentTest{
     @Test
     public void testMoveToTable() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
 
