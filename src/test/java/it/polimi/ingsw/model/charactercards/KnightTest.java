@@ -45,6 +45,8 @@ public class KnightTest {
             p2.getSchool().getTable(Color.GREEN.toString()).addStudent(s2, p2);
             p2.getSchool().getTable(Color.GREEN.toString()).addStudent(s3, p2);
 
+            g1.getBoard().setMotherNaturePos(1);
+
             assertEquals(1, p1.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
             assertEquals(2, p2.getSchool().getTable(Color.GREEN.toString()).getStudents().size());
 

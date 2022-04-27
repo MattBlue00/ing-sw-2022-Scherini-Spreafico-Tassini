@@ -16,6 +16,7 @@ public class Healer extends CharacterCard {
         super(5, 2);
     }
 
+    // Param: islandID
     @Override
     public void doEffect(GameExpertMode game) {
 

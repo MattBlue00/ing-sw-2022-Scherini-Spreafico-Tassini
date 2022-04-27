@@ -16,6 +16,7 @@ public class Flagman extends CharacterCard {
         super(3, 3);
     }
 
+    // Param: islandID
     @Override
     public void doEffect(GameExpertMode game){
         // TODO: parsing input from the view

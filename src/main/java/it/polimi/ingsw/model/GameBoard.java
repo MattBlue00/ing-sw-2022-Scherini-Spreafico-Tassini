@@ -44,7 +44,13 @@ public class GameBoard {
         Collections.shuffle(studentsBag);
 
         for(int i = 0; i<playerNum; i++) {
-            Cloud cloud = new Cloud(3); // TODO: 3 is a placeholder
+            Cloud cloud;
+            if(playerNum == 3){
+                cloud = new Cloud(4);
+            }
+            else {
+                cloud = new Cloud(3);
+            }
             clouds[i] = cloud;
             for(int j=0; j<cloud.getCapacity(); j++)
                 cloud.addStudent(studentsBag.remove(studentsBag.size() - 1));
