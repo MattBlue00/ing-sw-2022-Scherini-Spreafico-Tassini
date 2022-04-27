@@ -12,8 +12,8 @@ class BardTest {
     public void bardTest(){
 
         GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();

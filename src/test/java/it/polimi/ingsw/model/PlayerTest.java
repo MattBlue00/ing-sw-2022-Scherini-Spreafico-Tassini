@@ -14,7 +14,7 @@ public class PlayerTest{
 
     @Test
     public void testPlayAssistantCard(){
-        Player player = new Player(Wizard.YELLOW_WIZARD, "Samuele");
+        Player player = new Player(Wizard.YELLOW_WIZARD, "Samuele", 2);
 
         Game game = new Game(2);
         game.setCurrentPlayer(player);
@@ -26,7 +26,7 @@ public class PlayerTest{
     @Test
     void moveStudentToIslandTest() throws IslandNotFoundException {
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
         Student s1 = new Student(Color.YELLOW);
             Island island = g1.getBoard().getIslands().getIslandFromID(1);
 
@@ -42,7 +42,7 @@ public class PlayerTest{
     @Test
     void moveStudentToTableTest(){
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
         Student s1 = new Student(Color.YELLOW);
 
         g1.setCurrentPlayer(p1);
@@ -56,7 +56,7 @@ public class PlayerTest{
     @Test
     void getAssistantCardFromNameTest(){
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
         g1.setCurrentPlayer(p1);
 
         assertEquals("FOX", p1.getAssistantCardFromName("FOX").get().getName());

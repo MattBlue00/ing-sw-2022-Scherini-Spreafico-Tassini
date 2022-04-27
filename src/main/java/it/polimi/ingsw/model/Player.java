@@ -18,7 +18,7 @@ public class Player {
     private Optional<AssistantCard> lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
-    public Player(Wizard wizardID, String nickname) {
+    public Player(Wizard wizardID, String nickname, int playersNumber) {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.coinsWallet = 1;
@@ -37,10 +37,8 @@ public class Player {
 
 
 
-        this.school = new School(2);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
+        this.school = new School(playersNumber);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
         this.lastAssistantCardPlayed = Optional.empty();
-        this.school = new School(2);    // TODO: School depends on numberOfPlayers,
-                                                     // which is set to be decided after Players' creations
         this.characterCardAlreadyPlayed = false;
     }
 
@@ -65,6 +63,8 @@ public class Player {
     public School getSchool() {
         return school;
     }
+
+    public Wizard getWizardID() { return wizardID; }
 
     public Optional<AssistantCard> getLastAssistantCardPlayed() {
         return lastAssistantCardPlayed;

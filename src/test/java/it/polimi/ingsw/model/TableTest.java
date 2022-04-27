@@ -11,7 +11,7 @@ public class TableTest{
     @Test
     public void testAddStudent() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
 
         try {
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
@@ -36,7 +36,7 @@ public class TableTest{
     // Throws FullTableException
     public void addStudentToAFullTableTest(){
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
         try {
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
@@ -57,7 +57,7 @@ public class TableTest{
     @Test
     public void testCoinCheck() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
 
         //we should start with one coin
         assertEquals(1, p1.getCoinsWallet());

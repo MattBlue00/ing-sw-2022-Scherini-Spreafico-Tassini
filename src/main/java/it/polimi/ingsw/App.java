@@ -21,9 +21,9 @@ public class App
         // For network debugging purpose only
         GameController g = new GameController();
         g.setGameState(GameState.LOGIN);
-        Server s1 = new Server(g);
+        //Server s1 = new Server(g);
 
-        SocketServer socketServer = new SocketServer(s1, 12345);
-        socketServer.run();
+        //SocketServer socketServer = new SocketServer(s1, 12345);
+        //socketServer.run();
     }
 }

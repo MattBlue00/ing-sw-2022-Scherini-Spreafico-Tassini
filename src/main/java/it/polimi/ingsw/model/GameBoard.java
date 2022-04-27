@@ -45,12 +45,10 @@ public class GameBoard {
 
         for(int i = 0; i<playerNum; i++) {
             Cloud cloud;
-            if(playerNum == 3){
+            if(playerNum == 3)
                 cloud = new Cloud(4);
-            }
-            else {
+            else
                 cloud = new Cloud(3);
-            }
             clouds[i] = cloud;
             for(int j=0; j<cloud.getCapacity(); j++)
                 cloud.addStudent(studentsBag.remove(studentsBag.size() - 1));
