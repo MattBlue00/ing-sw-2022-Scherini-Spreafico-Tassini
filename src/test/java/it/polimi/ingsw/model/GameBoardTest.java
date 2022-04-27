@@ -10,7 +10,7 @@ public class GameBoardTest{
     @Test
     public void testRefillClouds() {
         GameBoard gameboard = new GameBoard(2);
-        Player player = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
 
         try {
             gameboard.takeStudentsFromCloud(0, player);
@@ -29,7 +29,7 @@ public class GameBoardTest{
     @Test
     public void testTakeStudentsFromCloud() {
         GameBoard gameboard = new GameBoard(2);
-        Player player = new Player(Wizard.PINK_WIZARD, "Ludo");
+        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
 
         try {
             gameboard.takeStudentsFromCloud(0, player);

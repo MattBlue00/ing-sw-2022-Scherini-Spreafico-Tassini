@@ -91,5 +91,4 @@ public class GameControllerExpertMode extends GameController{
         setMotherNatureMoved(false);
         getGame().setRoundNumber(getGame().getRoundNumber() + 1);
     }
-
 }
