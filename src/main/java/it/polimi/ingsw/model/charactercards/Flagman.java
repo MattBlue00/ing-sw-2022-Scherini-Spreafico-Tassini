@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
-public class Flagman extends CharacterCard {
+public class Flagman extends CharacterCard implements IntCard {
 
     /*
         CHARACTER CARD DESCRIPTION:
@@ -12,19 +12,26 @@ public class Flagman extends CharacterCard {
         doesn't prevent the player to call it another time during the normal round flow.
     */
 
+    int islandID;
+
     public Flagman() {
         super(3, 3);
+    }
+
+    @Override
+    public void doOnClick(int par) {
+        this.islandID = par;
     }
 
     // Param: islandID
     @Override
     public void doEffect(GameExpertMode game){
-        // TODO: parsing input from the view
-        int islandID = 1; // placeholder
         try {
-            game.getBoard().islandConquerCheck(game.getCurrentPlayer(), islandID);
+            game.getBoard().islandConquerCheck(game.getCurrentPlayer(), this.islandID);
         }
         // the view/controller will be responsible to send the method a valid island ID
         catch(IslandNotFoundException ignored){}
     }
+
+
 }

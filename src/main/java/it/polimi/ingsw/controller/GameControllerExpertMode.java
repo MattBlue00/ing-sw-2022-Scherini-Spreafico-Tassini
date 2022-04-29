@@ -1,9 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.charactercards.IntCard;
+import it.polimi.ingsw.model.charactercards.StringCard;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.network.message.CharacterCardReply;
-import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.*;
 
 public class GameControllerExpertMode extends GameController{
 
@@ -66,9 +67,17 @@ public class GameControllerExpertMode extends GameController{
 
         int chosenCardID = ((CharacterCardReply) receivedMessage).getCardID();
 
-        if(getGame() instanceof GameExpertMode)
-            ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);
+        if(getGame() instanceof GameExpertMode) {
 
+            if(receivedMessage instanceof CharacterCardReplyInt) {
+                ((IntCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardReplyInt) receivedMessage).getPar());
+            }
+            if(receivedMessage instanceof CharacterCardReplyString) {
+                ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardReplyString) receivedMessage).getPar());
+            }
+
+            ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);
+        }
     }
 
     @Override

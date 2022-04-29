@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 import java.util.Optional;
 
-public class Villager extends CharacterCard {
+public class Villager extends CharacterCard implements StringCard {
 
     /*
         CHARACTER CARD DESCRIPTION:
@@ -13,15 +13,24 @@ public class Villager extends CharacterCard {
         player to take a chosen color out of the regular influenceCalc algorithm.
     */
 
+    Color colorToExclude;
+
     public Villager() {
         super(9, 3);
     }
 
+
+    @Override
+    public void doOnClick(String par) {
+        setColorToExclude(Color.valueOf(par.toUpperCase()));
+    }
+
+    public void setColorToExclude(Color colorToExclude) {
+        this.colorToExclude = colorToExclude;
+    }
+
     public void doEffect(GameExpertMode game){
 
-        //TODO: the view will ask the player which color to choose
-
-        Color colorToExclude = Color.GREEN; // PLACEHOLDER
 
         try {
             Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
@@ -50,5 +59,6 @@ public class Villager extends CharacterCard {
         }
 
     }
+
 
 }

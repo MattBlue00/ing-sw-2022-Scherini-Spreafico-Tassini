@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.charactercards.Flagman;
 import it.polimi.ingsw.model.charactercards.Healer;
 import it.polimi.ingsw.model.charactercards.Innkeeper;
+import it.polimi.ingsw.model.charactercards.Villager;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
 import org.junit.jupiter.api.Test;
@@ -139,6 +140,38 @@ class GameControllerExpertModeTest {
         }
         catch(Exception ignored){}
 
+    }
+
+    @Test
+    public void testHandleCharacterCardChoice() throws WrongMessageSentException {
+        GameController gc = new GameControllerExpertMode();
+        PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
+        gc.prepareGame(message);
+        gc.setGameState(GameState.IN_GAME);
+        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
+        Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
+        gc.getGame().addPlayer(p1);
+        gc.getGame().addPlayer(p2);
+        gc.getGame().setCurrentPlayer(p1);
+        CharacterCard c1 = new Healer();
+        CharacterCard c2 = new Villager();
+        CharacterCard c3 = new Flagman();
+        GameExpertMode g = (GameExpertMode) gc.getGame();
+        g.addCharacterCards(new CharacterCard[]{c1, c2, c3});
+        p1.setCoinsWallet(5);
+
+        try {
+            ((GameControllerExpertMode) gc).handleCharacterCardChoice(new CharacterCardReplyString("Matteo", 9, "green"));
+            assertEquals(gc.getGame().getCurrentPlayer().getCoinsWallet(), 2);
+            assertEquals(gc.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed(), true);
+
+        } catch (CharacterCardAlreadyPlayedException e) {
+            e.printStackTrace();
+        } catch (NotEnoughCoinsException e) {
+            e.printStackTrace();
+        } catch (CharacterCardNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

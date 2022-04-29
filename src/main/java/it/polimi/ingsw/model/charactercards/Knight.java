@@ -19,7 +19,6 @@ public class Knight extends CharacterCard {
 
     public void doEffect(GameExpertMode game){
 
-        // TODO: parsing input from the view
         int islandID = game.getBoard().getMotherNaturePos();
 
         try {
