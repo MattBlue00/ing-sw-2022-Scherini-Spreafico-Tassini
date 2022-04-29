@@ -47,6 +47,7 @@ public class HealerTest {
             assertTrue(p2.getSchool().getTable(Color.YELLOW.toString()).getHasProfessor());
             assertTrue(p1.getSchool().getTable(Color.BLUE.toString()).getHasProfessor());
 
+            ((Healer) cards[0]).setIslandID(1);
             g1.playerPlaysCharacterCard(5);
 
             assertFalse(cards[0].getIsActive());

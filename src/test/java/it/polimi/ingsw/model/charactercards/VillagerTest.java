@@ -67,6 +67,8 @@ public class VillagerTest {
             g1.setCurrentPlayer(p1);
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
 
+            ((Villager) cards[0]).doOnClick("GREEN");
+
             g1.playerPlaysCharacterCard(9);
             assertTrue(cards[0].getIsActive());
 

@@ -18,6 +18,7 @@ public class Innkeeper extends CharacterCard {
         super(2, 2);
     }
 
+    // no parameters
     @Override
     public void doEffect(GameExpertMode game) {
 

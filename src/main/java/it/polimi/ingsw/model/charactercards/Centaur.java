@@ -17,6 +17,7 @@ public class Centaur extends CharacterCard {
         super(6, 3);
     }
 
+    // Does not need parameters
     public void doEffect(GameExpertMode game){
 
         //checks if an island can be conquered without counting the towers number

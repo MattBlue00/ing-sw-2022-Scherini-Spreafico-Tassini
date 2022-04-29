@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.*;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public class GameExpertMode extends Game {
 
     private final CharacterCard[] characters;
@@ -11,13 +14,16 @@ public class GameExpertMode extends Game {
         this.characters = new CharacterCard[Constants.CHARACTERS_NUM];
     }
 
-    // TODO: at the end of player's turn, need to set CharacterCardAlreadyPlayed to false
-
     /*
         This method lets a player play a chosen character card. If it involves a change in an already existent
         method, its effect will not be visible right after use; otherwise, the card's doEffect method will be
         instantly triggered.
      */
+
+
+    public CharacterCard getCharacterCardByID(int id){
+        return Arrays.stream(characters).filter(card -> card.getId()==id).findFirst().get();
+    }
 
     public void playerPlaysCharacterCard(int id) throws
             CharacterCardAlreadyPlayedException, NotEnoughCoinsException, CharacterCardNotFoundException {

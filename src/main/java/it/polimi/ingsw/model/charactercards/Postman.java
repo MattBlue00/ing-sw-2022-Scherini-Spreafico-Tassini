@@ -14,6 +14,7 @@ public class Postman extends CharacterCard {
         super(4, 1);
     }
 
+    // no parameters
     public void doEffect(GameExpertMode game){
 
         game.setMaxSteps(game.getMaxSteps() + 2);
