@@ -36,7 +36,7 @@ public abstract class CharacterCard {
 
     // Character card methods
 
-    public abstract void doEffect(GameExpertMode game);
+    public void doEffect(GameExpertMode game){}
 
     public void setUpCard(){
         this.setCost(getCost() + 1);

@@ -11,7 +11,7 @@ class FullTableExceptionTest {
     public void exceptionTest(){
 
         GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.BLUE.toString(), "Matteo", g1.getPlayersNumber());
         g1.setCurrentPlayer(p1);
 
         try{

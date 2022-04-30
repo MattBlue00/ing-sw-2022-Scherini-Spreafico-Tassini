@@ -38,7 +38,7 @@ class GameControllerTest {
 
         assertEquals(2, gameController.getGame().getPlayersNumber());
 
-        Player player = new Player(Wizard.BLUE_WIZARD, user, gameController.getGame().getPlayersNumber() );
+        Player player = new Player(Wizard.BLUE.toString(), user, gameController.getGame().getPlayersNumber() );
 
         gameController.getGame().setCurrentPlayer(player);
         try {
@@ -61,9 +61,9 @@ class GameControllerTest {
         gameController.prepareGame(message);
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player(Wizard.YELLOW_WIZARD, "Samuele", gameController.
+        players.add(new Player(Wizard.YELLOW.toString(), "Samuele", gameController.
                 getGame().getPlayersNumber()));
-        players.add(new Player(Wizard.BLUE_WIZARD, "Matteo", gameController.
+        players.add(new Player(Wizard.BLUE.toString(), "Matteo", gameController.
                 getGame().getPlayersNumber()));
         gameController.getGame().setPlayers(players);
 
@@ -85,7 +85,7 @@ class GameControllerTest {
         gameController.prepareGame(m);
 
         String user = "Samuele";
-        Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getPlayersNumber());
+        Player player = new Player(Wizard.GREEN.toString(), user, gameController.getGame().getPlayersNumber());
         Message message = new MoveToIslandReply(player.getNickname(), "BLUE", 1);
 
 
@@ -124,7 +124,7 @@ class GameControllerTest {
 
         gameController.prepareGame(m);
 
-        Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getPlayersNumber());
+        Player player = new Player(Wizard.GREEN.toString(), user, gameController.getGame().getPlayersNumber());
         Message message = new MotherNatureStepsReply(user,steps);
         gameController.getGame().setCurrentPlayer(player);
 
@@ -151,7 +151,7 @@ class GameControllerTest {
         PlayerNumberReply m = new PlayerNumberReply("Samuele", 2);
 
         gameController.prepareGame(m);
-        Player player = new Player(Wizard.PINK_WIZARD, user, gameController.getGame().getPlayersNumber());
+        Player player = new Player(Wizard.PINK.toString(), user, gameController.getGame().getPlayersNumber());
         gameController.getGame().setCurrentPlayer(player);
 
         try {
@@ -170,11 +170,11 @@ class GameControllerTest {
 
         gameController.prepareGame(message);
 
-        gameController.getGame().addPlayer(new Player(Wizard.YELLOW_WIZARD,"Samuele",
+        gameController.getGame().addPlayer(new Player(Wizard.YELLOW.toString(),"Samuele",
                 gameController.getGame().getPlayersNumber()));
-        gameController.getGame().addPlayer(new Player(Wizard.PINK_WIZARD,"Ludovica",
+        gameController.getGame().addPlayer(new Player(Wizard.PINK.toString(),"Ludovica",
                 gameController.getGame().getPlayersNumber()));
-        gameController.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD,"Matteo",
+        gameController.getGame().addPlayer(new Player(Wizard.BLUE.toString(),"Matteo",
                 gameController.getGame().getPlayersNumber()));
 
         gameController.getGame().getPlayers().get(0).getSchool().getTowerRoom().setTowersLeft(2);
@@ -194,11 +194,11 @@ class GameControllerTest {
         gameController.prepareGame(message);
         gameController.getGame().getBoard().setStudentsBag(new ArrayList<>());
 
-        gameController.getGame().addPlayer(new Player(Wizard.YELLOW_WIZARD,"Samuele",
+        gameController.getGame().addPlayer(new Player(Wizard.YELLOW.toString(),"Samuele",
                 gameController.getGame().getPlayersNumber()));
-        gameController.getGame().addPlayer(new Player(Wizard.PINK_WIZARD,"Ludovica",
+        gameController.getGame().addPlayer(new Player(Wizard.PINK.toString(),"Ludovica",
                 gameController.getGame().getPlayersNumber()));
-        gameController.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD,"Matteo",
+        gameController.getGame().addPlayer(new Player(Wizard.BLUE.toString(),"Matteo",
                 gameController.getGame().getPlayersNumber()));
 
         gameController.getGame().getPlayers().get(0).getSchool().getTowerRoom().setTowersLeft(2);
@@ -222,7 +222,7 @@ class GameControllerTest {
 
         gameController.prepareGame(message);
 
-        Player player = new Player(Wizard.YELLOW_WIZARD, user, gameController.getGame().getPlayersNumber());
+        Player player = new Player(Wizard.YELLOW.toString(), user, gameController.getGame().getPlayersNumber());
         gameController.getGame().setCurrentPlayer(player);
 
         gameController.getGame().getCurrentPlayer().getSchool().getTowerRoom().setTowersLeft(0);
@@ -239,8 +239,8 @@ class GameControllerTest {
 
         gc.prepareGame(message);
         gc.setGameState(GameState.LOGIN);
-        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
-        Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
+        Player p1 = new Player(Wizard.BLUE.toString(), "Matteo", gc.getGame().getPlayersNumber());
+        Player p2 = new Player(Wizard.PINK.toString(), "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);
@@ -258,8 +258,8 @@ class GameControllerTest {
 
         gc.prepareGame(message);
         gc.setGameState(GameState.IN_GAME);
-        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
-        Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
+        Player p1 = new Player(Wizard.BLUE.toString(), "Matteo", gc.getGame().getPlayersNumber());
+        Player p2 = new Player(Wizard.PINK.toString(), "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);
@@ -388,9 +388,9 @@ class GameControllerTest {
         String user2 = "Matteo";
         String user3 = "Samuele";
 
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE_WIZARD);
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m3 = new PlayerLoginRequest(user3, Wizard.GREEN_WIZARD);
+        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE.toString());
+        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK.toString());
+        PlayerLoginRequest m3 = new PlayerLoginRequest(user3, Wizard.GREEN.toString());
 
         gameController.handlePlayerLogin(m1);
         gameController.handlePlayerLogin(m2);
@@ -414,8 +414,8 @@ class GameControllerTest {
 
         String user2 = "Matteo";
 
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE_WIZARD);
+        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK.toString());
+        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE.toString());
 
         gameController.handlePlayerLogin(m1);
         gameController.handlePlayerLogin(m2);
@@ -438,8 +438,8 @@ class GameControllerTest {
         String user2 = "Matteo";
         gameController.setGameState(GameState.LOGIN);
 
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.GREEN_WIZARD);
+        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK.toString());
+        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.GREEN.toString());
 
         try {
             gameController.getMessage(m1);

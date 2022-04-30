@@ -14,8 +14,8 @@ public class HealerTest {
     public void healerTest(){
 
         GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE.toString(), "Matteo", g1.getPlayersNumber());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Healer();

@@ -18,6 +18,8 @@ public class Server{
     private Object lock; //LOCK for synchronization
     private final Map<String, ClientHandler> clientHandlerMap;
 
+    public static final String NICKNAME = "SERVER";
+
 
     public Server() {
         this.lock = new Object();

@@ -16,7 +16,7 @@ public class GameTest{
     public void testRefillCloudsWithTwoPlayers() {
 
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
         g1.setCurrentPlayer(p1);
 
         try {
@@ -44,7 +44,7 @@ public class GameTest{
     public void playerMovesStudentToTable() throws NonExistentColorException {
         // TODO: test playerMovesStudent (for islands and for tables)
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
         Student s1 = new Student(Color.YELLOW);
 
         g1.setCurrentPlayer(p1);
@@ -60,7 +60,7 @@ public class GameTest{
     @Test
     public void playerMovesStudentToIsland() throws IslandNotFoundException {
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
         Student s1 = new Student(Color.YELLOW);
 
         g1.setCurrentPlayer(p1);
@@ -87,8 +87,8 @@ public class GameTest{
          */
 
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE.toString(), "Matteo", g1.getPlayersNumber());
 
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.YELLOW);
@@ -165,7 +165,7 @@ public class GameTest{
          */
 
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
 
         g1.getBoard().setMotherNaturePos(1);
         g1.setCurrentPlayer(p1);
@@ -210,8 +210,8 @@ public class GameTest{
          */
 
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE.toString(), "Matteo", g1.getPlayersNumber());
 
         g1.addPlayer(p1);
         g1.addPlayer(p2);
@@ -314,7 +314,7 @@ public class GameTest{
     public void testTakeStudentsFromCloudWithTwoPlayers() {
 
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
         g1.setCurrentPlayer(p1);
 
         try {
@@ -344,7 +344,7 @@ public class GameTest{
     @Test
     void getCurrentPlayerTest() {
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
 
         g1.setCurrentPlayer(p1);
         assertEquals(p1, g1.getCurrentPlayer());
@@ -366,8 +366,8 @@ public class GameTest{
     @Test
     void setPlayersTest(){
         Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Player p1 = new Player(Wizard.PINK.toString(), "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE.toString(), "Matteo", g1.getPlayersNumber());
         List<Player> players = new ArrayList<>();
 
         players.add(p1);

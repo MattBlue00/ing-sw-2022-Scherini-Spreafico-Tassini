@@ -4,16 +4,17 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
+import it.polimi.ingsw.view.VirtualView;
+import org.junit.platform.commons.function.Try;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GameController implements Observer<Message>{
 
     // TODO: Error handling will be changed for each method when we will implement the network & the view
 
     private Game game;
+    private transient Map<String, VirtualView> virtualViewMap;
     private boolean planningPhaseDone;
     private boolean playerActionPhaseDone;
     private int currentPlayerIndex;
@@ -33,6 +34,7 @@ public class GameController implements Observer<Message>{
         this.currentPlayerIndex = 0;
         this.movesLeft = Constants.PLAYER_MOVES;
         this.motherNatureMoved = false;
+        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
     }
 
     // Getter and Setter methods
@@ -95,11 +97,7 @@ public class GameController implements Observer<Message>{
 
     // GameController methods
 
-    public void getMessage(Message receivedMessage) throws
-            InvalidNumberOfStepsException, EmptyCloudException, AssistantCardAlreadyPlayedException,
-            WrongTurnException, WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
-            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException, LoginException {
+    public void getMessage(Message receivedMessage) throws TryAgainException{
         // TODO: receive a message from the view
         switch (gameState) {
             case INIT:
@@ -226,10 +224,7 @@ public class GameController implements Observer<Message>{
         This method establishes the right flow of a player's action phase.
      */
 
-    public void actionPhase(Message message) throws InvalidNumberOfStepsException, EmptyCloudException,
-            WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
-            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException {
+    public void actionPhase(Message message) throws TryAgainException {
 
         switch(message.getMessageType()){
             case MOVE_TO_TABLE_REPLY:

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.network.message;
 
 public enum MessageType {
+    PING,
     LOGIN_REQUEST,
+    LOGIN_REPLY,
     PLAYER_NUMBER_REPLY,
     ASSISTANT_CARD_REPLY,
     MOTHER_NATURE_STEPS_REPLY,
@@ -12,5 +14,6 @@ public enum MessageType {
     CHARACTER_CARD_REPLY_INT,
     CHARACTER_CARD_REPLY_STRING,
     GAME_MODE_REPLY,
-    PLAYER_LOGIN
+    PLAYER_LOGIN,
+    ERROR
 }

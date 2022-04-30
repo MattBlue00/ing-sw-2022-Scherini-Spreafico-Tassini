@@ -24,8 +24,8 @@ class GameControllerExpertModeTest {
         PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
         gc.prepareGame(message);
         gc.setGameState(GameState.IN_GAME);
-        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
-        Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
+        Player p1 = new Player(Wizard.BLUE.toString(), "Matteo", gc.getGame().getPlayersNumber());
+        Player p2 = new Player(Wizard.PINK.toString(), "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);
@@ -148,8 +148,8 @@ class GameControllerExpertModeTest {
         PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
         gc.prepareGame(message);
         gc.setGameState(GameState.IN_GAME);
-        Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
-        Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
+        Player p1 = new Player(Wizard.BLUE.toString(), "Matteo", gc.getGame().getPlayersNumber());
+        Player p2 = new Player(Wizard.PINK.toString(), "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);

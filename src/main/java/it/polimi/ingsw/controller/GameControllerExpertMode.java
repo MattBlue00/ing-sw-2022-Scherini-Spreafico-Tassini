@@ -13,10 +13,7 @@ public class GameControllerExpertMode extends GameController{
     }
 
     @Override
-    public void actionPhase(Message message) throws IslandNotFoundException, WrongMessageSentException,
-            InvalidNumberOfStepsException, EmptyCloudException, NotEnoughCoinsException,
-            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException {
+    public void actionPhase(Message message) throws TryAgainException {
 
         switch(message.getMessageType()){
             case MOVE_TO_TABLE_REPLY:

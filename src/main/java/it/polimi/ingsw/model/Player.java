@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class Player {
 
-    private final Wizard wizardID;
+    private final String wizardID;
     private final String nickname;
     private List<AssistantCard> deck;
     private School school;
@@ -18,7 +18,7 @@ public class Player {
     private Optional<AssistantCard> lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
-    public Player(Wizard wizardID, String nickname, int playersNumber) {
+    public Player(String wizardID, String nickname, int playersNumber) {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.coinsWallet = 1;
@@ -64,7 +64,7 @@ public class Player {
         return school;
     }
 
-    public Wizard getWizardID() { return wizardID; }
+    public String getWizardID() { return wizardID; }
 
     public Optional<AssistantCard> getLastAssistantCardPlayed() {
         return lastAssistantCardPlayed;
