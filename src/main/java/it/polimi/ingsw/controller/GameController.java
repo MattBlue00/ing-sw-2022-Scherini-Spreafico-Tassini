@@ -154,7 +154,7 @@ public class GameController implements Observer<Message>{
 
     public void loginState(Message receivedMessage) throws WrongMessageSentException {
         if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY){
-            game.setPlayersNumber(((PlayerNumberReply) receivedMessage).getPlayerNumber());
+            game.setPlayersNumber(((PlayerNumberMessage) receivedMessage).getPlayerNumber());
         }
         else {
             if(receivedMessage.getMessageType() == MessageType.PLAYER_LOGIN)
@@ -165,7 +165,7 @@ public class GameController implements Observer<Message>{
 
     public void prepareGame(Message receivedMessage) throws WrongMessageSentException {
         if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY) {
-            int playersNumber = ((PlayerNumberReply) receivedMessage).getPlayerNumber();
+            int playersNumber = ((PlayerNumberMessage) receivedMessage).getPlayerNumber();
             if (this instanceof GameControllerExpertMode)
                 this.game = new GameExpertMode(playersNumber);
             else
@@ -312,7 +312,7 @@ public class GameController implements Observer<Message>{
      */
 
     public void handleAssistantCardChoice(Message receivedMessage) throws AssistantCardAlreadyPlayedException{
-       String chosenCard = ((AssistantCardReply) receivedMessage).getCardName().toUpperCase();
+       String chosenCard = ((AssistantCardMessage) receivedMessage).getCardName().toUpperCase();
        if(isAssistantCardPlayable(chosenCard))
            game.getCurrentPlayer().playAssistantCard(chosenCard);
        else
@@ -377,12 +377,12 @@ public class GameController implements Observer<Message>{
     public void handleStudentMovement(Message receivedMessage) throws FullTableException, StudentNotFoundException,
             NonExistentColorException, IslandNotFoundException {
         if(receivedMessage.getMessageType() == MessageType.MOVE_TO_TABLE_REPLY){
-            String color = ((MoveToTableReply) receivedMessage).getColor();
+            String color = ((MoveToTableMessage) receivedMessage).getColor();
             game.playerMovesStudent(color);
         }
         if(receivedMessage.getMessageType() == MessageType.MOVE_TO_ISLAND_REPLY){
-            String color = ((MoveToIslandReply) receivedMessage).getColor();
-            int islandID = ((MoveToIslandReply) receivedMessage).getIslandID();
+            String color = ((MoveToIslandMessage) receivedMessage).getColor();
+            int islandID = ((MoveToIslandMessage) receivedMessage).getIslandID();
             game.playerMovesStudent(color, islandID);
         }
     }
@@ -394,7 +394,7 @@ public class GameController implements Observer<Message>{
 
     public void handleMotherNature(Message receivedMessage) throws
             InvalidNumberOfStepsException, IslandNotFoundException{
-        game.moveMotherNature(((MotherNatureStepsReply) receivedMessage).getSteps());
+        game.moveMotherNature(((MotherNatureStepsMessage) receivedMessage).getSteps());
     }
 
     /*
@@ -402,7 +402,7 @@ public class GameController implements Observer<Message>{
      */
 
     public void handleCloudChoice(Message receivedMessage) throws EmptyCloudException{
-        game.takeStudentsFromCloud(((CloudChoiceReply) receivedMessage).getCloudID());
+        game.takeStudentsFromCloud(((CloudChoiceMessage) receivedMessage).getCloudID());
     }
 
     /*

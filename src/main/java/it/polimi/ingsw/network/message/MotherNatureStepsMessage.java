@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.message;
 
-public class MotherNatureStepsReply extends Message{
+public class MotherNatureStepsMessage extends Message{
 
     private final int steps;
 
-    public MotherNatureStepsReply(String nickname, int steps) {
+    public MotherNatureStepsMessage(String nickname, int steps) {
         super(nickname, MessageType.MOTHER_NATURE_STEPS_REPLY);
         this.steps = steps;
     }

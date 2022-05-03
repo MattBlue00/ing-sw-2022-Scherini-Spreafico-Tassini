@@ -17,7 +17,7 @@ class GameControllerTest {
     public void testLoginState() throws WrongMessageSentException {
         String user = "Samuele";
         int playersNumber = 3;
-        PlayerNumberReply message = new PlayerNumberReply(user, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user, playersNumber);
 
         GameController gameController = new GameController();
 
@@ -32,7 +32,7 @@ class GameControllerTest {
         String cardName = "FOX";
 
         GameController gameController = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply(user, 2);
+        PlayerNumberMessage message = new PlayerNumberMessage(user, 2);
 
         gameController.prepareGame(message);
 
@@ -42,7 +42,7 @@ class GameControllerTest {
 
         gameController.getGame().setCurrentPlayer(player);
         try {
-            gameController.handleAssistantCardChoice(new AssistantCardReply(user, cardName));
+            gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
         } catch (AssistantCardAlreadyPlayedException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ class GameControllerTest {
     @Test
     public void testSetOrder() throws WrongMessageSentException {
         GameController gameController = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Samuele", 2);
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 2);
 
         gameController.prepareGame(message);
 
@@ -80,13 +80,13 @@ class GameControllerTest {
     public void testHandleStudentMovement() throws FullTableException, IslandNotFoundException,
             StudentNotFoundException, NonExistentColorException, WrongMessageSentException {
         GameController gameController = new GameController();
-        PlayerNumberReply m = new PlayerNumberReply("Samuele", 2);
+        PlayerNumberMessage m = new PlayerNumberMessage("Samuele", 2);
 
         gameController.prepareGame(m);
 
         String user = "Samuele";
         Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getPlayersNumber());
-        Message message = new MoveToIslandReply(player.getNickname(), "BLUE", 1);
+        Message message = new MoveToIslandMessage(player.getNickname(), "BLUE", 1);
 
 
 
@@ -102,7 +102,7 @@ class GameControllerTest {
             e.printStackTrace();
         }
 
-        Message message1 = new MoveToTableReply(player.getNickname(), "RED");
+        Message message1 = new MoveToTableMessage(player.getNickname(), "RED");
         gameController.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.RED));
         gameController.handleStudentMovement(message1);
 
@@ -120,12 +120,12 @@ class GameControllerTest {
         int steps = 5;
 
         GameController gameController = new GameController();
-        PlayerNumberReply m = new PlayerNumberReply("Samuele", 2);
+        PlayerNumberMessage m = new PlayerNumberMessage("Samuele", 2);
 
         gameController.prepareGame(m);
 
         Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getPlayersNumber());
-        Message message = new MotherNatureStepsReply(user,steps);
+        Message message = new MotherNatureStepsMessage(user,steps);
         gameController.getGame().setCurrentPlayer(player);
 
         player.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
@@ -145,10 +145,10 @@ class GameControllerTest {
     public void testHandleCloudChoice() throws WrongMessageSentException {
         String user = "Samuele";
 
-        Message message = new CloudChoiceReply(user, 1);
+        Message message = new CloudChoiceMessage(user, 1);
 
         GameController gameController = new GameController(); // When game is created clouds are full
-        PlayerNumberReply m = new PlayerNumberReply("Samuele", 2);
+        PlayerNumberMessage m = new PlayerNumberMessage("Samuele", 2);
 
         gameController.prepareGame(m);
         Player player = new Player(Wizard.PINK_WIZARD, user, gameController.getGame().getPlayersNumber());
@@ -166,7 +166,7 @@ class GameControllerTest {
     @Test
     public void testDeclareWinningPlayer() throws WrongMessageSentException {
         GameController gameController = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Samuele", 3);
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
 
         gameController.prepareGame(message);
 
@@ -189,7 +189,7 @@ class GameControllerTest {
     @Test
     public void testIsStudentBagEmpty() throws WrongMessageSentException {
         GameController gameController = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Samuele", 3);
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
 
         gameController.prepareGame(message);
         gameController.getGame().getBoard().setStudentsBag(new ArrayList<>());
@@ -218,7 +218,7 @@ class GameControllerTest {
     public void testNoTowersLeftCheck() throws WrongMessageSentException {
         String user = "Samuele";
         GameController gameController = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Samuele", 2);
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 2);
 
         gameController.prepareGame(message);
 
@@ -235,7 +235,7 @@ class GameControllerTest {
     @Test
     public void testGetMessageCaseLogin() throws WrongMessageSentException {
         GameController gc = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
+        PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
 
         gc.prepareGame(message);
         gc.setGameState(GameState.LOGIN);
@@ -245,7 +245,7 @@ class GameControllerTest {
         gc.getGame().addPlayer(p2);
         gc.getGame().setCurrentPlayer(p1);
         try {
-            gc.getMessage(new PlayerNumberReply("Matteo", 2));
+            gc.getMessage(new PlayerNumberMessage("Matteo", 2));
         }
         catch(Exception ignored){}
         assertEquals(2, gc.getGame().getPlayersNumber());
@@ -254,7 +254,7 @@ class GameControllerTest {
     @Test
     public void testGetMessageCaseInGame() throws WrongMessageSentException {
         GameController gc = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
+        PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
 
         gc.prepareGame(message);
         gc.setGameState(GameState.IN_GAME);
@@ -265,16 +265,16 @@ class GameControllerTest {
         gc.getGame().setCurrentPlayer(p1);
 
         try {
-            gc.getMessage(new AssistantCardReply("Matteo", "TURTLE"));
+            gc.getMessage(new AssistantCardMessage("Matteo", "TURTLE"));
         }
         catch(Exception ignored){}
         assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
         assertThrows(AssistantCardAlreadyPlayedException.class,
-                () -> gc.getMessage(new AssistantCardReply("Ludo", "TURTLE")));
+                () -> gc.getMessage(new AssistantCardMessage("Ludo", "TURTLE")));
         assertThrows(WrongTurnException.class,
-                () -> gc.getMessage(new AssistantCardReply("Matteo", "FOX")));
+                () -> gc.getMessage(new AssistantCardMessage("Matteo", "FOX")));
         try {
-            gc.getMessage(new AssistantCardReply("Ludo", "FOX"));
+            gc.getMessage(new AssistantCardMessage("Ludo", "FOX"));
         }
         catch(Exception ignored){}
         assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
@@ -297,22 +297,22 @@ class GameControllerTest {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableReply("Ludo", "PINK"));
-            gc.getMessage(new MoveToTableReply("Ludo", "PINK"));
-            gc.getMessage(new MoveToIslandReply("Ludo", "PINK", 1));
+            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
+            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
+            gc.getMessage(new MoveToIslandMessage("Ludo", "PINK", 1));
             assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
             assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new MoveToIslandReply("Ludo", "PINK", 1)));
+                    () -> gc.getMessage(new MoveToIslandMessage("Ludo", "PINK", 1)));
 
-            gc.getMessage(new MotherNatureStepsReply("Ludo", 1));
+            gc.getMessage(new MotherNatureStepsMessage("Ludo", 1));
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().get());
             assertTrue(gc.getMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new MotherNatureStepsReply("Ludo", 1)));
+                    () -> gc.getMessage(new MotherNatureStepsMessage("Ludo", 1)));
 
-            gc.getMessage(new CloudChoiceReply("Ludo", 0));
+            gc.getMessage(new CloudChoiceMessage("Ludo", 0));
             assertEquals(0, gc.getGame().getBoard().getCloud(0).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
@@ -330,22 +330,22 @@ class GameControllerTest {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableReply("Matteo", "PINK"));
-            gc.getMessage(new MoveToTableReply("Matteo", "PINK"));
-            gc.getMessage(new MoveToIslandReply("Matteo", "PINK", 3));
+            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
+            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
+            gc.getMessage(new MoveToIslandMessage("Matteo", "PINK", 3));
             assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
             assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
 
-            gc.getMessage(new MotherNatureStepsReply("Matteo", 2));
+            gc.getMessage(new MotherNatureStepsMessage("Matteo", 2));
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().get());
             assertTrue(gc.getMotherNatureMoved());
 
             assertThrows(EmptyCloudException.class,
-                    () -> gc.getMessage(new CloudChoiceReply("Matteo", 0)));
+                    () -> gc.getMessage(new CloudChoiceMessage("Matteo", 0)));
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new PlayerNumberReply("Matteo", 2)));
-            gc.getMessage(new CloudChoiceReply("Matteo", 1));
+                    () -> gc.getMessage(new PlayerNumberMessage("Matteo", 2)));
+            gc.getMessage(new CloudChoiceMessage("Matteo", 1));
             assertEquals(0, gc.getGame().getBoard().getCloud(1).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
@@ -366,7 +366,7 @@ class GameControllerTest {
     public void testPrepareGame() throws WrongMessageSentException {
         String user = "Ludovica";
         int playersNumber = 2;
-        PlayerNumberReply message = new PlayerNumberReply(user, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user, playersNumber);
 
         GameController gameController = new GameController();
 
@@ -378,7 +378,7 @@ class GameControllerTest {
     public void testHandlePlayerLoginWithThreePlayers() throws WrongMessageSentException {
         String user1 = "Ludovica";
         int playersNumber = 3;
-        PlayerNumberReply message = new PlayerNumberReply(user1, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
 
         GameController gameController = new GameController();
 
@@ -405,7 +405,7 @@ class GameControllerTest {
     public void testHandlePlayerLoginWithTwoPlayers() throws WrongMessageSentException {
         String user1 = "Ludovica";
         int playersNumber = 2;
-        PlayerNumberReply message = new PlayerNumberReply(user1, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
 
         GameController gameController = new GameController();
 
@@ -428,7 +428,7 @@ class GameControllerTest {
     public void testGetMessageCaseLoginWithHandlePlayerLogin() throws WrongMessageSentException {
         String user1 = "Ludovica";
         int playersNumber = 2;
-        PlayerNumberReply message = new PlayerNumberReply(user1, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
 
         GameController gameController = new GameController();
 
@@ -460,7 +460,7 @@ class GameControllerTest {
     public void testGetMessageCaseInit() throws WrongMessageSentException {
         String user1 = "Ludovica";
         int playersNumber = 2;
-        PlayerNumberReply message = new PlayerNumberReply(user1, playersNumber);
+        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
         GameController gameController = new GameController();
 
         gameController.prepareGame(message);

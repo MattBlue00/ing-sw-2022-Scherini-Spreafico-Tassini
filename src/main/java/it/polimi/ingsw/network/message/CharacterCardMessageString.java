@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.message;
 
-public class CharacterCardReplyString extends CharacterCardReply{
+public class CharacterCardMessageString extends CharacterCardMessage {
 
     String par;
 
-    public CharacterCardReplyString(String nickname, int cardID, String par) {
+    public CharacterCardMessageString(String nickname, int cardID, String par) {
         super(nickname, cardID);
         this.par = par;
     }

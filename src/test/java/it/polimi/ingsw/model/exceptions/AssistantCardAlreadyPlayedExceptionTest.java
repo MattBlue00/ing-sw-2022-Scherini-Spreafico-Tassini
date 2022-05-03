@@ -3,10 +3,8 @@ package it.polimi.ingsw.model.exceptions;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Wizard;
-import it.polimi.ingsw.network.message.PlayerNumberReply;
+import it.polimi.ingsw.network.message.PlayerNumberMessage;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AssistantCardAlreadyPlayedExceptionTest {
 
@@ -14,7 +12,7 @@ class AssistantCardAlreadyPlayedExceptionTest {
     public void exceptionTest() throws WrongMessageSentException {
 
         GameController gc = new GameController();
-        PlayerNumberReply message = new PlayerNumberReply("Matteo", 2);
+        PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
         gc.prepareGame(message);
 
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());

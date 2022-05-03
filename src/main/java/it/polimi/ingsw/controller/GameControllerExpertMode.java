@@ -65,15 +65,15 @@ public class GameControllerExpertMode extends GameController{
     public void handleCharacterCardChoice(Message receivedMessage) throws
             CharacterCardAlreadyPlayedException, NotEnoughCoinsException, CharacterCardNotFoundException {
 
-        int chosenCardID = ((CharacterCardReply) receivedMessage).getCardID();
+        int chosenCardID = ((CharacterCardMessage) receivedMessage).getCardID();
 
         if(getGame() instanceof GameExpertMode) {
 
-            if(receivedMessage instanceof CharacterCardReplyInt) {
-                ((IntCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardReplyInt) receivedMessage).getPar());
+            if(receivedMessage instanceof CharacterCardMessageInt) {
+                ((IntCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageInt) receivedMessage).getPar());
             }
-            if(receivedMessage instanceof CharacterCardReplyString) {
-                ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardReplyString) receivedMessage).getPar());
+            if(receivedMessage instanceof CharacterCardMessageString) {
+                ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageString) receivedMessage).getPar());
             }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);

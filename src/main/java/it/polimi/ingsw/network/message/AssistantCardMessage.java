@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.message;
 
-public class AssistantCardReply extends Message{
+public class AssistantCardMessage extends Message{
 
     private String cardName;
 
-    public AssistantCardReply(String nickname, String cardName) {
+    public AssistantCardMessage(String nickname, String cardName) {
         super(nickname, MessageType.ASSISTANT_CARD_REPLY);
         this.cardName = cardName;
     }
