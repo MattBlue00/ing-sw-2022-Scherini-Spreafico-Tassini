@@ -1,10 +1,10 @@
 package it.polimi.ingsw.network.message;
 
-public class CloudChoiceReply extends Message{
+public class CloudChoiceMessage extends Message{
 
     private final int cloudID;
 
-    public CloudChoiceReply(String nickname, int cloudID) {
+    public CloudChoiceMessage(String nickname, int cloudID) {
         super(nickname, MessageType.CLOUD_CHOICE_REPLY);
         this.cloudID = cloudID;
     }

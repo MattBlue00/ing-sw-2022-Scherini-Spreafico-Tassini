@@ -1,9 +1,9 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.network.client.SocketClient;
-import it.polimi.ingsw.network.message.AssistantCardReply;
+import it.polimi.ingsw.network.message.AssistantCardMessage;
 import it.polimi.ingsw.network.message.LoginRequest;
-import it.polimi.ingsw.network.message.PlayerNumberReply;
+import it.polimi.ingsw.network.message.PlayerNumberMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,11 +15,11 @@ public class ClientMain {
         try {
             SocketClient c = new SocketClient("127.0.0.1", 12345);
             c.sendMessage(new LoginRequest("Samuele"));
-            c.sendMessage(new PlayerNumberReply("Samuele", 2));
+            c.sendMessage(new PlayerNumberMessage("Samuele", 2));
             String str = "";
             while (!str.equals("quit")){
                 str = reader.readLine();
-                c.sendMessage(new AssistantCardReply("Samuele", str));
+                c.sendMessage(new AssistantCardMessage("Samuele", str));
             }
             c.disconnect();
         } catch (IOException e) {
