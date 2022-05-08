@@ -4,6 +4,9 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BardTest {
@@ -42,6 +45,14 @@ class BardTest {
             assertEquals(2, p1.getSchool().getTable(Color.YELLOW.toString()).getStudents().size());
             assertEquals(0, p1.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
 
+            List<String> students = new ArrayList<>();
+            students.add("YELLOW");
+            students.add("BLUE");
+            students.add("YELLOW");
+            students.add("BLUE");
+
+
+            ((Bard) cards[0]).doOnClick(students);
             g1.playerPlaysCharacterCard(10);
 
             assertFalse(cards[0].getIsActive());

@@ -14,15 +14,16 @@ public class GameController implements Observer<Message>{
     // TODO: Error handling will be changed for each method when we will implement the network & the view
 
     private Game game;
+    private int gameControllerID;
     private boolean planningPhaseDone;
     private boolean playerActionPhaseDone;
     private int currentPlayerIndex;
     private int movesLeft;
     private boolean motherNatureMoved;
-    private String firstPlayer;
     private GameState gameState;
     protected static final String INVALID_STATE = "Invalid game state";
     protected static final String END_STATE = "The game has ended, the winner is: ";
+    private final List<String> gameQueue;
 
     /*
         Initialize GameController
@@ -33,12 +34,17 @@ public class GameController implements Observer<Message>{
         this.currentPlayerIndex = 0;
         this.movesLeft = Constants.PLAYER_MOVES;
         this.motherNatureMoved = false;
+        this.gameQueue = new ArrayList<>();
     }
 
     // Getter and Setter methods
 
-    public GameState getGameState() {
-        return gameState;
+    public List<String> getGameQueue() {
+        return gameQueue;
+    }
+
+    public void setGameControllerID(int gameControllerID) {
+        this.gameControllerID = gameControllerID;
     }
 
     public void setGameState(GameState gameState) {
@@ -99,20 +105,25 @@ public class GameController implements Observer<Message>{
             InvalidNumberOfStepsException, EmptyCloudException, AssistantCardAlreadyPlayedException,
             WrongTurnException, WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
             CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException, LoginException {
-        // TODO: receive a message from the view
+            StudentNotFoundException, NonExistentColorException {
+
+        /* ---------------------------------------------------------------
+        ! (network -> Server handles following stuff)
+        ! Fist thing login in the server, gameController not exists yet.
+        ! Second thing, the client can choose to join or create a game.
+        ! -> If the game is new we create a new gameController based on
+        !    the CreateGameMessage params
+        ! -> If the game already exists JoinGameMessage with gameID.
+        ! (controller -> Controller handles game phases from now on)
+        ! From now on the GameController exists and handle match phases.
+        --------------------------------------------------------------*/
+
         switch (gameState) {
-            case INIT:
-                prepareGame(receivedMessage);
-                break;
-            case LOGIN:
-                if(firstPlayer.equals(receivedMessage.getNickname()))
-                    handlePlayerLogin(receivedMessage);
-                else{
-                    if(firstPlayer.equals(game.getPlayers().get(0).getNickname()))
-                        handlePlayerLogin(receivedMessage);
-                    else throw new LoginException("Waiting for the first player to join");
+            case SETUP:
+                if (receivedMessage.getMessageType() != MessageType.WIZARD_ID) {
+                    throw new WrongMessageSentException("Must communicate wizardID before starting the game");
                 }
+                addPlayerToGame(receivedMessage);
                 if(game.getPlayers().size() == game.getPlayersNumber())
                     startGame();
                 break;
@@ -146,69 +157,68 @@ public class GameController implements Observer<Message>{
         }
     }
 
-    /*
-        If the received message contains the number of players,
-        then set the playersNumber in the Game class, otherwise if the received message
-        is a login request adds the player to the game.
-     */
-
-    public void loginState(Message receivedMessage) throws WrongMessageSentException {
-        if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY){
-            game.setPlayersNumber(((PlayerNumberMessage) receivedMessage).getPlayerNumber());
-        }
-        else {
-            if(receivedMessage.getMessageType() == MessageType.PLAYER_LOGIN)
-                handlePlayerLogin(receivedMessage);
-            else throw new WrongMessageSentException("Error");
-        }
+    // To enter the phase when players enter the game
+    public void goToSetupPhase(){
+        setGameState(GameState.SETUP);
     }
 
-    public void prepareGame(Message receivedMessage) throws WrongMessageSentException {
-        if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY) {
-            int playersNumber = ((PlayerNumberMessage) receivedMessage).getPlayerNumber();
-            if (this instanceof GameControllerExpertMode)
-                this.game = new GameExpertMode(playersNumber);
-            else
-                this.game = new Game(playersNumber);
-            this.firstPlayer = receivedMessage.getNickname();
-            goToLogin();
-        }
-        else throw new WrongMessageSentException("Error");
-    }
-
-    // The method receive a message from a player, if it is a PlayerLogin
-    //        the player is added to the game
-
-    public void handlePlayerLogin(Message receivedMessage){
-        boolean wizardIdAlreadyUsed = false;
-        if(receivedMessage.getMessageType() == MessageType.PLAYER_LOGIN){
-            Player player = new Player(((PlayerLoginRequest) receivedMessage).getWizardID(),
-                    ((PlayerLoginRequest) receivedMessage).getNickname(), game.getPlayersNumber());
-            for(int i=0; i<game.getPlayers().size(); i++) {
-                if (((PlayerLoginRequest) receivedMessage).getWizardID().equals(game.getPlayers().get(i).
-                        getWizardID())) {
-                    System.out.println("Error, select another wizard");
-                    wizardIdAlreadyUsed = true;
-                }
-            }
-            if(!wizardIdAlreadyUsed)
-                game.addPlayer(player);
-        }
-    }
-
-    // To control when the login is initialized
-    public void goToLogin(){
-        setGameState(GameState.LOGIN);
-    }
-
-    // To control when the game is initialized
-    public void initGame(){
-        setGameState(GameState.INIT);
-    }
-
-    // When all players can start playing
+    // To actually start the game
     public void startGame(){
         setGameState(GameState.IN_GAME);
+        System.out.println("START THE GAME");
+    }
+
+    /*
+        This method creates the game based on the playerNum param
+        and based on the instance (For expert mode or normal mode)
+     */
+    public void prepareGame(int playerNum) {
+        //TODO: add constants init & exception for numbers > 3
+        if (this instanceof GameControllerExpertMode)
+            this.game = new GameExpertMode(playerNum);
+        else
+            this.game = new Game(playerNum);
+        goToSetupPhase();
+    }
+
+    /*
+        This method adds the nickname of the client in a queue.
+        The queue contains the nickname of the clients before they
+        communicate their WizardID.
+     */
+    public void addPlayerToQueue(String nickname){
+        if(gameQueue.size() < getGame().getPlayersNumber()) {
+            this.gameQueue.add(nickname);
+            System.out.println("----------Players in the queue, game: "+gameControllerID+"----------");
+            gameQueue.forEach(System.out::println);
+            System.out.println("---------------QUEUE END----------------");
+        }
+        else
+            System.out.println("Full game");
+    }
+
+
+    /*
+        This method add the player (based on the receivedMessage's nickname) to the game.
+        If their WizardID has already been chosen it will throw an Exception
+     */
+    //TODO: Exception
+    public void addPlayerToGame(Message receivedMessage){
+
+        boolean wizardIdAlreadyUsed = false;
+
+        String nickname = String.valueOf(gameQueue.stream().filter(nick -> nick.equals(receivedMessage.getNickname())).findFirst());
+        Wizard wizardID = Wizard.valueOf(((WizardIDMessage) receivedMessage).getWizardID());
+        for(int i=0; i<game.getPlayers().size(); i++) {
+            if (wizardID.equals(game.getPlayers().get(i).getWizardID())) {
+                wizardIdAlreadyUsed = true;
+                break;
+            }
+        }
+        if(!wizardIdAlreadyUsed) {
+            getGame().addPlayer(new Player(wizardID, nickname, getGame().getPlayersNumber()));
+            System.out.println("NEW PLAYER ADDED: "+nickname+" wizard: "+wizardID);
+        }
     }
 
     /*

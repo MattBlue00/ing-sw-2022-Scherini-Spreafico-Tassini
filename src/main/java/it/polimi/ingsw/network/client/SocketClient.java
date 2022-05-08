@@ -28,7 +28,6 @@ public class SocketClient extends Client{
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.in = new ObjectInputStream(socket.getInputStream());
         this.readExecutionQueue = Executors.newSingleThreadExecutor();
-
     }
 
 
@@ -41,6 +40,7 @@ public class SocketClient extends Client{
     public void sendMessage(Message message) {
         try {
             out.writeObject(message);
+            out.flush();
             out.reset();
         } catch (IOException e) {
             disconnect();

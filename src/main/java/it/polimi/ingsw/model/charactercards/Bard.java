@@ -5,32 +5,37 @@ import it.polimi.ingsw.model.exceptions.FullTableException;
 import it.polimi.ingsw.model.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
 
-public class Bard extends CharacterCard {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bard extends CharacterCard implements ArraylistStringCard{
 
     /*
         CHARACTER CARD DESCRIPTION:
         The bard allows the player to switch up to 2 students between the hall and the dining room.
     */
 
+    List<String> students;
+
     public Bard() {
         super(10, 1);
     }
 
+
+    @Override
+    public void doOnClick(List<String> par) {
+        this.students = new ArrayList<>(par);
+    }
+
+
     public void doEffect(GameExpertMode game) {
 
-        int maxNumOfChanges = 2;
+        int maxNumOfChanges = students.size();
 
         while(maxNumOfChanges > 0){
 
-            //TODO: the view will ask the player which students to change
-
-            Color color1 = Color.BLUE; // PLACEHOLDER for the hall student
-            Color color2 = Color.YELLOW; // PLACEHOLDER for the table student
-
-            //TODO: need to ask the player for choices (from table to hall or otherwise?)
-
-            // Algorithm to switch two students between the hall and the right table(s)
-
+            Color color1 = Color.valueOf(students.get(maxNumOfChanges-1));
+            Color color2 = Color.valueOf(students.get(maxNumOfChanges-2));
             try {
 
                 Student hallStudent =
@@ -47,14 +52,13 @@ public class Bard extends CharacterCard {
                 game.getCurrentPlayer().getSchool().getTable(hallStudent.getColor().toString())
                         .addStudent(hallStudent, game.getCurrentPlayer());
 
-                maxNumOfChanges--;
-
             }
             catch(StudentNotFoundException | NonExistentColorException | FullTableException e){
                 e.printStackTrace();
             }
-
+            maxNumOfChanges=maxNumOfChanges-2;
         }
 
     }
+
 }

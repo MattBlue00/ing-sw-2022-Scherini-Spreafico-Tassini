@@ -1,6 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.network.message.GameModeMessage;
+import it.polimi.ingsw.network.message.CreateGameMessage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,16 +10,17 @@ class GameControllerFactoryTest {
     @Test
     void getGameController() {
         GameControllerFactory gameControllerFactory = new GameControllerFactory();
-        GameModeMessage message = new GameModeMessage("Ludo", false);
+        CreateGameMessage message = new CreateGameMessage("Ludo", 1, 2, false);
 
         GameController gameController = gameControllerFactory.getGameController(message);
         assertEquals(true, gameController instanceof GameController);
         assertEquals(false, gameController instanceof GameControllerExpertMode);
 
         GameControllerFactory gameControllerFactory_2 = new GameControllerFactory();
-        GameModeMessage message_2 = new GameModeMessage("Ludo", true);
+        CreateGameMessage message_2 = new CreateGameMessage("Ludo", 1, 3, true);
 
         GameController gameController_2 = gameControllerFactory_2.getGameController(message_2);
         assertEquals(true, gameController_2 instanceof GameControllerExpertMode);
     }
+
 }
