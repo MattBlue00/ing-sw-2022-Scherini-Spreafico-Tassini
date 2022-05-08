@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
+import it.polimi.ingsw.exceptions.EmptyCloudException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import java.util.List;
 public class Cloud {
 
     private final int capacity;
-    private boolean hasBeenChosen;
     private ArrayList<Student> students;
 
     public Cloud(int capacity) {
@@ -36,7 +35,7 @@ public class Cloud {
         If the cloud is already empty we throw an EmptyCloudException
      */
     public List<Student> removeStudents() throws EmptyCloudException {
-        List<Student> chosenStudents = new ArrayList<Student>(students);
+        List<Student> chosenStudents = new ArrayList<>(students);
         if(students.isEmpty()) throw new EmptyCloudException("The chosen cloud is empty");
         students.clear();
         return chosenStudents;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;

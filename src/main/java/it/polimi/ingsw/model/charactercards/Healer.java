@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 public class Healer extends CharacterCard implements IntCard {
 

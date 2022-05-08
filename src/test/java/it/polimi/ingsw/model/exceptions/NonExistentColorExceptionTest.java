@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Wizard;

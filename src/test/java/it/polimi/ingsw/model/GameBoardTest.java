@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyBagException;
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
+import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.EmptyCloudException;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,4 +40,15 @@ public class GameBoardTest{
 
         assertEquals(0, gameboard.getCloud(0).getStudents().size());
     }
+
+    @Test
+    public void testMotherNaturePosRandom(){
+
+        Constants.setConstants(2);
+        GameBoard gb = new GameBoard(2);
+
+        assertTrue(gb.getMotherNaturePos() >= 1 && gb.getMotherNaturePos() <= 12);
+
+    }
+
 }

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.CharacterCardNotFoundException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.charactercards.Bard;
 import it.polimi.ingsw.model.charactercards.Centaur;
 import it.polimi.ingsw.model.charactercards.Flagman;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

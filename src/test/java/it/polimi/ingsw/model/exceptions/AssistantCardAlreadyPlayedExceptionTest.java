@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.exceptions;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.exceptions.WrongMessageSentException;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Wizard;
 import it.polimi.ingsw.network.message.PlayerNumberMessage;

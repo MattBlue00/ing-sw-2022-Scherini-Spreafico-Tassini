@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
-import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 
 public class School {
 
@@ -10,21 +11,13 @@ public class School {
     private TowerRoom towerRoom;
     private Hall hall;
 
-    public School(int numberOfPlayers){
+    public School(){
         this.tables = new Table[Constants.NUM_COLORS];
         Color colors[] = Color.values();
-        for(int i = 0; i < Constants.NUM_TABLES; i++){
+        for(int i = 0; i < Constants.NUM_TABLES; i++)
             tables[i] = new Table(colors[i]);
-        }
-        // not a scalable solution, need to find a better way
-        if(numberOfPlayers == 3){
-            this.towerRoom = new TowerRoom(6);
-            this.hall = new Hall(9);
-        }
-        else {
-            this.towerRoom = new TowerRoom(8);
-            this.hall = new Hall(7);
-        }
+        this.hall = new Hall(Constants.MAX_HALL_STUDENTS);
+        this.towerRoom = new TowerRoom(Constants.MAX_TOWERS);
     }
 
     // Getter methods

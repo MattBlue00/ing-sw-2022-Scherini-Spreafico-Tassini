@@ -1,12 +1,13 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.charactercards.Flagman;
 import it.polimi.ingsw.model.charactercards.Healer;
 import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.model.charactercards.Villager;
-import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

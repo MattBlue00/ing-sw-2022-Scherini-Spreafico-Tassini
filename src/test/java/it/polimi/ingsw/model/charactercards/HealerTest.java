@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -62,7 +63,7 @@ public class HealerTest {
 
         }
         catch(NonExistentColorException | CharacterCardNotFoundException | CharacterCardAlreadyPlayedException |
-                NotEnoughCoinsException | IslandNotFoundException | FullTableException ignored){}
+              NotEnoughCoinsException | IslandNotFoundException | FullTableException ignored){}
 
     }
 }

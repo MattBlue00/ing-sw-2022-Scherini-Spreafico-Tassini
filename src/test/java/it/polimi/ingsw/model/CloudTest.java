@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
+import it.polimi.ingsw.exceptions.EmptyCloudException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

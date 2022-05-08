@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
