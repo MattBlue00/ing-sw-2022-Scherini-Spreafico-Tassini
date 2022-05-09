@@ -2,25 +2,21 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerExpertMode;
-import it.polimi.ingsw.controller.GameState;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.charactercards.Flagman;
 import it.polimi.ingsw.model.charactercards.Healer;
 import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class ShowGameApp
 {
     public static void main(String[] args) {
 
