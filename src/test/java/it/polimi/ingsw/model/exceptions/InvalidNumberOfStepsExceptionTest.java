@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.InvalidNumberOfStepsException;
 import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
-import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 
 import java.util.List;
 import java.util.ArrayList;

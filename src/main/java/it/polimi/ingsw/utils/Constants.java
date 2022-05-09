@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.utils;
 
 public class Constants {
 
@@ -11,7 +11,23 @@ public class Constants {
     public static final int OFFSET_COINS = 3;
     public static final int MIN_NUM_OF_STEPS = 1;
     public static final int MAX_NUM_OF_ISLANDS = 12;
-
     public static final int STUDENTS_PER_COLOR = 26;
+
+    public static int MAX_HALL_STUDENTS;
+    public static int MAX_TOWERS;
+    public static int MAX_CLOUD_STUDENTS;
+
+    public static void setConstants(int playersNumber){
+        if(playersNumber == 2){
+            MAX_HALL_STUDENTS = 7;
+            MAX_TOWERS = 8;
+            MAX_CLOUD_STUDENTS = 3;
+        }
+        else{
+            MAX_HALL_STUDENTS = 9;
+            MAX_TOWERS = 6;
+            MAX_CLOUD_STUDENTS = 4;
+        }
+    }
 
 }

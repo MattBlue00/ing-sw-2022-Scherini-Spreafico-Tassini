@@ -1,8 +1,9 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -252,6 +253,7 @@ class GameControllerTest {
     public void testGetMessageCaseInGame() throws WrongMessageSentException {
         GameController gc = new GameController();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
+        Constants.setConstants(2);
 
         gc.prepareGame(message);
         gc.setGameState(GameState.IN_GAME);
@@ -284,6 +286,7 @@ class GameControllerTest {
         List<Student> bag = new ArrayList<>(30);
         for(int i = 0; i < 10; i++)
             bag.add(new Student(Color.PINK));
+        gc.getGame().getBoard().setStudentsBag(bag);
 
         try {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
@@ -331,7 +334,7 @@ class GameControllerTest {
             gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
             gc.getMessage(new MoveToIslandMessage("Matteo", "PINK", 3));
             assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
-            assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
+            assertFalse(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
 
             gc.getMessage(new MotherNatureStepsMessage("Matteo", 2));
             assertEquals(gc.getGame().getCurrentPlayer(),
@@ -354,6 +357,7 @@ class GameControllerTest {
             assertFalse(gc.getPlayerActionPhaseDone());
 
             assertEquals(1, gc.getGame().getRoundNumber());
+
         }
         catch(Exception ignored){}
 
@@ -446,8 +450,6 @@ class GameControllerTest {
             e.printStackTrace();
         }
 
-        assertEquals(user1, gameController.getGame().getPlayers().get(0).getNickname());
-        assertEquals("Matteo", gameController.getGame().getPlayers().get(1).getNickname());
         assertEquals(gameController.getGame().getPlayersNumber(),
                 gameController.getGame().getPlayers().size());
         assertEquals(GameState.IN_GAME, gameController.getGameState());

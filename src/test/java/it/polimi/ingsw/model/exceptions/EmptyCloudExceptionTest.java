@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.EmptyCloudException;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Wizard;

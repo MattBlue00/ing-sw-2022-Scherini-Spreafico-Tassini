@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 
 /*
     In this list, the last node of the doubly linked list contains the address of the first node and
@@ -10,7 +11,7 @@ import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
 
 public class DoublyLinkedList {
     private Island head = null; // first element of the list
-    int size; // to check the number of islands in the list
+    private int size; // to check the number of islands in the list
 
     public int getSize() {
         return size;
@@ -20,7 +21,7 @@ public class DoublyLinkedList {
         Create the list with the initial number of islands
      */
     public DoublyLinkedList() {
-        for(int i=1; i < Constants.MAX_NUM_OF_ISLANDS+1; i++)
+        for(int i = 1; i <= Constants.MAX_NUM_OF_ISLANDS; i++)
             addIsland(new Island(i));
     }
 
@@ -56,6 +57,8 @@ public class DoublyLinkedList {
     public void mergeIslands(Island island){
         Island prev = island.getPrev();
         Island next = island.getNext();
+        if(island.getOwner().isEmpty()) // safety return (should never happen)
+            return;
         if(prev.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
             prev.getStudents().forEach(student -> island.addStudent(student));
@@ -89,9 +92,10 @@ public class DoublyLinkedList {
     public Island getIslandFromID(int islandID) throws IslandNotFoundException {
         Island island = head;
         int islandsToCheck = size;
-        while(!island.getNext().equals(head) && islandsToCheck > 0){
+        while(islandsToCheck > 0){
             if(island.getId()==islandID)
                 return island;
+            island = island.getNext();
             islandsToCheck--;
         }
         throw new IslandNotFoundException("No island found.");

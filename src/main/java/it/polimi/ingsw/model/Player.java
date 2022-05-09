@@ -1,8 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
-import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,7 @@ public class Player {
         this.deck.add(new AssistantCard(AssistantType.ELEPHANT));
         this.deck.add(new AssistantCard(AssistantType.TURTLE));
 
-
-
-        this.school = new School(playersNumber);    // TODO: School depends on numberOfPlayers, which is set to be decided after Players' creations
+        this.school = new School();
         this.lastAssistantCardPlayed = Optional.empty();
         this.characterCardAlreadyPlayed = false;
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.exceptions.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -375,5 +375,22 @@ public class GameTest{
         g1.setPlayers(players);
 
         assertEquals(players, g1.getPlayers());
+    }
+
+    @Test
+    public void showGameBoardTest(){
+
+        Game g1 = new Game(2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        List<Player> players = new ArrayList<>();
+
+        players.add(p1);
+        players.add(p2);
+        g1.setPlayers(players);
+        g1.setCurrentPlayer(p1);
+
+        assertDoesNotThrow(g1::showGameBoard);
+
     }
 }
