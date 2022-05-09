@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.message;
 
+//TODO: delete this class
 public class PlayerNumberMessage extends Message{
 
     private int playerNumber;

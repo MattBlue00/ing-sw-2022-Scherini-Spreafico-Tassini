@@ -13,8 +13,7 @@ class AssistantCardAlreadyPlayedExceptionTest {
     public void exceptionTest() throws WrongMessageSentException {
 
         GameController gc = new GameController();
-        PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        gc.prepareGame(message);
+        gc.prepareGame(2);
 
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());

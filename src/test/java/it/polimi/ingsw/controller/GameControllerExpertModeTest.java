@@ -23,7 +23,7 @@ class GameControllerExpertModeTest {
     public void testGetMessageCaseInGame() throws WrongMessageSentException {
         GameController gc = new GameControllerExpertMode();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        gc.prepareGame(message);
+        gc.prepareGame(message.getPlayerNumber());
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
@@ -141,7 +141,7 @@ class GameControllerExpertModeTest {
     public void testHandleCharacterCardChoice() throws WrongMessageSentException {
         GameController gc = new GameControllerExpertMode();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        gc.prepareGame(message);
+        gc.prepareGame(2);
         gc.setGameState(GameState.IN_GAME);
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
@@ -158,7 +158,7 @@ class GameControllerExpertModeTest {
         try {
             ((GameControllerExpertMode) gc).handleCharacterCardChoice(new CharacterCardMessageString("Matteo", 9, "green"));
             assertEquals(gc.getGame().getCurrentPlayer().getCoinsWallet(), 2);
-            assertEquals(gc.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed(), true);
+            assertTrue(gc.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed());
 
         } catch (CharacterCardAlreadyPlayedException e) {
             e.printStackTrace();

@@ -30,10 +30,8 @@ public class ShowGameApp
 
         GameController gc = new GameControllerExpertMode();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        try{
-            gc.prepareGame(message);
-        }
-        catch(WrongMessageSentException ignored){}
+        gc.prepareGame(message.getPlayerNumber());
+
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);

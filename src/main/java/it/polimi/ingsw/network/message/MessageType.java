@@ -2,6 +2,8 @@ package it.polimi.ingsw.network.message;
 
 public enum MessageType {
     LOGIN_REQUEST,
+    JOIN_GAME,
+    CREATE_GAME,
     PLAYER_NUMBER_REPLY,
     ASSISTANT_CARD_REPLY,
     MOTHER_NATURE_STEPS_REPLY,
@@ -9,8 +11,5 @@ public enum MessageType {
     MOVE_TO_TABLE_REPLY,
     MOVE_TO_ISLAND_REPLY,
     CHARACTER_CARD_REPLY,
-    CHARACTER_CARD_REPLY_INT,
-    CHARACTER_CARD_REPLY_STRING,
-    GAME_MODE_REPLY,
-    PLAYER_LOGIN
+    WIZARD_ID
 }

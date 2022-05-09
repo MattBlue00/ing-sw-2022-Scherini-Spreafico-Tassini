@@ -142,6 +142,9 @@ public class GameControllerExpertMode extends GameController{
             if(receivedMessage instanceof CharacterCardMessageString) {
                 ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageString) receivedMessage).getPar());
             }
+            if(receivedMessage instanceof CharacterCardMessageArraylistString){
+                //TODO: logic
+            }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);
         }
