@@ -1,9 +1,10 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
+import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,11 +96,7 @@ public class GameController implements Observer<Message>{
 
     // GameController methods
 
-    public void getMessage(Message receivedMessage) throws
-            InvalidNumberOfStepsException, EmptyCloudException, AssistantCardAlreadyPlayedException,
-            WrongTurnException, WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
-            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException, LoginException {
+    public void getMessage(Message receivedMessage) throws TryAgainException {
         // TODO: receive a message from the view
         switch (gameState) {
             case INIT:
@@ -166,6 +163,7 @@ public class GameController implements Observer<Message>{
     public void prepareGame(Message receivedMessage) throws WrongMessageSentException {
         if(receivedMessage.getMessageType() == MessageType.PLAYER_NUMBER_REPLY) {
             int playersNumber = ((PlayerNumberMessage) receivedMessage).getPlayerNumber();
+            Constants.setConstants(playersNumber);
             if (this instanceof GameControllerExpertMode)
                 this.game = new GameExpertMode(playersNumber);
             else
@@ -201,13 +199,18 @@ public class GameController implements Observer<Message>{
         setGameState(GameState.LOGIN);
     }
 
-    // To control when the game is initialized
-    public void initGame(){
-        setGameState(GameState.INIT);
-    }
-
     // When all players can start playing
     public void startGame(){
+
+        for(int i = 0; i < Constants.MAX_HALL_STUDENTS; i++) {
+            for (Player player : game.getPlayers()) {
+                player.getSchool().getHall().addStudent(game.getBoard().getStudentsBag().remove
+                        (getGame().getBoard().getStudentsBag().size() - 1));
+            }
+        }
+
+        Collections.shuffle(getGame().getPlayers());
+        game.setCurrentPlayer(game.getPlayers().get(0));
         setGameState(GameState.IN_GAME);
     }
 
@@ -226,10 +229,7 @@ public class GameController implements Observer<Message>{
         This method establishes the right flow of a player's action phase.
      */
 
-    public void actionPhase(Message message) throws InvalidNumberOfStepsException, EmptyCloudException,
-            WrongMessageSentException, IslandNotFoundException, NotEnoughCoinsException,
-            CharacterCardAlreadyPlayedException, CharacterCardNotFoundException, FullTableException,
-            StudentNotFoundException, NonExistentColorException {
+    public void actionPhase(Message message) throws TryAgainException {
 
         switch(message.getMessageType()){
             case MOVE_TO_TABLE_REPLY:
@@ -274,6 +274,7 @@ public class GameController implements Observer<Message>{
     public void endPlanningPhase(){
         planningPhaseDone = true;
         setOrder();
+        game.setCurrentPlayer(game.getPlayers().get(0));
         currentPlayerIndex = 0;
     }
 
@@ -294,6 +295,12 @@ public class GameController implements Observer<Message>{
      */
 
     public void nextRound(){
+        try{
+            game.refillClouds();
+        }
+        catch(EmptyBagException e){
+            System.out.println(e.getMessage());
+        }
         currentPlayerIndex = 0;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
         movesLeft = Constants.PLAYER_MOVES;
@@ -401,7 +408,7 @@ public class GameController implements Observer<Message>{
         The method handles the cloud choice at the end of the action phase.
      */
 
-    public void handleCloudChoice(Message receivedMessage) throws EmptyCloudException{
+    public void handleCloudChoice(Message receivedMessage) throws EmptyCloudException {
         game.takeStudentsFromCloud(((CloudChoiceMessage) receivedMessage).getCloudID());
     }
 

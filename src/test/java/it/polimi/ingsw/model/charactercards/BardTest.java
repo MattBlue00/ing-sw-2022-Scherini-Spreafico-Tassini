@@ -1,7 +1,8 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +55,7 @@ class BardTest {
 
         }
         catch(NonExistentColorException | FullTableException | CharacterCardNotFoundException
-                | CharacterCardAlreadyPlayedException | NotEnoughCoinsException ignored){}
+              | CharacterCardAlreadyPlayedException | NotEnoughCoinsException ignored){}
 
     }
 

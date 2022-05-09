@@ -2,8 +2,8 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerFactory;
-import it.polimi.ingsw.model.exceptions.TryAgainException;
-import it.polimi.ingsw.model.exceptions.WrongMessageSentException;
+import it.polimi.ingsw.exceptions.TryAgainException;
+import it.polimi.ingsw.exceptions.WrongMessageSentException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.utils.ANSIConstants;
+import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,6 +205,89 @@ public class Game{
 
     public void addPlayer(Player player){
         players.add(player);
+    }
+
+    public void showGameBoard(){
+
+        try {
+
+            String nextPlayerNickname;
+            if(players.size() - 1 == players.indexOf(currentPlayer))
+                nextPlayerNickname = players.get(0).getNickname();
+            else
+                nextPlayerNickname = players.get(players.indexOf(currentPlayer) + 1).getNickname();
+            System.out.printf("TURNO: %d\tGIOCATORE CORRENTE: %s\tPROSSIMO GIOCATORE: %s\n",
+                    roundNumber, currentPlayer.getNickname(), nextPlayerNickname);
+            System.out.println("--------------------");
+
+            int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
+
+            for (int i = 1; i <= getBoard().getIslands().getSize(); i++) {
+
+                Island currentIsland = getBoard().getIslands().getIslandFromID(i);
+
+                String ownerNickname;
+                if (currentIsland.getOwner().isPresent())
+                    ownerNickname = currentIsland.getOwner().get().getNickname();
+                else
+                    ownerNickname = "--";
+
+                System.out.println("ISOLA " + i);
+                System.out.println(currentIsland.getNumOfTowers() + " torri");
+                System.out.println("Proprietario: " + ownerNickname);
+
+                yellowStudents =
+                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                blueStudents =
+                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                greenStudents =
+                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                redStudents =
+                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                pinkStudents =
+                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+
+                System.out.println("Studenti: " +
+                        ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
+
+                if(currentIsland.getId() == getBoard().getMotherNaturePos())
+                    System.out.println(ANSIConstants.ANSI_BOLD + "Madre Natura è qui!" + ANSIConstants.ANSI_RESET);
+
+                System.out.println("--------------------");
+
+            }
+
+            for(int i = 0; i < playersNumber; i++) {
+                yellowStudents =
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                blueStudents =
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                greenStudents =
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                redStudents =
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                pinkStudents =
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+
+                //TODO: when the cloud number is asked, remember to save it decremented of 1!
+                System.out.print("NUVOLA " + (i + 1) + ": ");
+                System.out.println(
+                        ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
+                                ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
+                                ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
+                                ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
+                                ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
+            }
+
+            System.out.println("--------------------");
+
+        }
+        catch(IslandNotFoundException ignored){}
+
     }
 
 }

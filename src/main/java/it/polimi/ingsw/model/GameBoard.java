@@ -1,31 +1,33 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.EmptyBagException;
-import it.polimi.ingsw.model.exceptions.EmptyCloudException;
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.EmptyBagException;
+import it.polimi.ingsw.exceptions.EmptyCloudException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameBoard {
 
     // GameBoard variables
     private int motherNaturePos; // represent the current position of motherNature in the island array
     private final Cloud[] clouds;
-    private DoublyLinkedList islands;
+    private final DoublyLinkedList islands;
     private List<Student> studentsBag;
     private int numOfVetos;
 
 
-    public GameBoard(int playerNum){
-        this.clouds = new Cloud[playerNum];
+    public GameBoard(int playersNumber){
+
+        Random random = new Random();
+        this.motherNaturePos = random.nextInt(12) + 1;
+
+        this.clouds = new Cloud[playersNumber];
         this.studentsBag = new ArrayList<>();
         this.islands = new DoublyLinkedList();
         this.numOfVetos = 4;
 
-        for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
+        for(int i = 0; i< Constants.STUDENTS_PER_COLOR; i++){
             studentsBag.add(new Student(Color.RED));
         }
         for(int i=0; i<Constants.STUDENTS_PER_COLOR; i++){
@@ -43,15 +45,10 @@ public class GameBoard {
 
         Collections.shuffle(studentsBag);
 
-        for(int i = 0; i<playerNum; i++) {
-            Cloud cloud;
-            if(playerNum == 3)
-                cloud = new Cloud(4);
-            else
-                cloud = new Cloud(3);
-            clouds[i] = cloud;
-            for(int j=0; j<cloud.getCapacity(); j++)
-                cloud.addStudent(studentsBag.remove(studentsBag.size() - 1));
+        for(int i = 0; i<playersNumber; i++) {
+            clouds[i] = new Cloud(Constants.MAX_CLOUD_STUDENTS);
+            for(int j = 0; j<clouds[i].getCapacity(); j++)
+                clouds[i].addStudent(studentsBag.remove(studentsBag.size() - 1));
         }
     }
 

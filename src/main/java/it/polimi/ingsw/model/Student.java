@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 
 public class Student {
 

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.FullTableException;
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
-import it.polimi.ingsw.model.exceptions.NonExistentColorException;
-import it.polimi.ingsw.model.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

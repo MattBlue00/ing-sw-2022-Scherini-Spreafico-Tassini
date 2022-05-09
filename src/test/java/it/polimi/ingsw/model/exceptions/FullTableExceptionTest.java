@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.exceptions;
 
+import it.polimi.ingsw.exceptions.FullTableException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Test;
 

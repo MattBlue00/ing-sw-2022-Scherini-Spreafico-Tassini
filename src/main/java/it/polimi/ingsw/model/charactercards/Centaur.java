@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 import java.util.Optional;
 
