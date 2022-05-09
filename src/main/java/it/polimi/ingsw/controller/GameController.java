@@ -210,6 +210,7 @@ public class GameController implements Observer<Message>{
         }
 
         Collections.shuffle(getGame().getPlayers());
+        game.setCurrentPlayer(game.getPlayers().get(0));
         setGameState(GameState.IN_GAME);
     }
 
@@ -273,6 +274,7 @@ public class GameController implements Observer<Message>{
     public void endPlanningPhase(){
         planningPhaseDone = true;
         setOrder();
+        game.setCurrentPlayer(game.getPlayers().get(0));
         currentPlayerIndex = 0;
     }
 

@@ -1,13 +1,20 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.GameControllerExpertMode;
 import it.polimi.ingsw.controller.GameState;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.charactercards.Flagman;
+import it.polimi.ingsw.model.charactercards.Healer;
+import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Hello world!
@@ -25,36 +32,39 @@ public class App
         //SocketServer socketServer = new SocketServer(s1, 12345);
         //socketServer.run();
 
-        GameController gc = new GameController();
+        GameController gc = new GameControllerExpertMode();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        Constants.setConstants(2);
-
-        try {
+        try{
             gc.prepareGame(message);
         }
-        catch(Exception ignored){}
-        gc.setGameState(GameState.IN_GAME);
+        catch(WrongMessageSentException ignored){}
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
-        gc.getGame().setCurrentPlayer(p1);
+        gc.startGame();
+        CharacterCard c1 = new Healer();
+        CharacterCard c2 = new Innkeeper();
+        CharacterCard c3 = new Flagman();
+        GameExpertMode g = (GameExpertMode) gc.getGame();
+        g.addCharacterCards(new CharacterCard[]{c1, c2, c3});
+        p1.setCoinsWallet(5);
+        p2.setCoinsWallet(5);
+        g.getBoard().setMotherNaturePos(12);
 
         try {
-            gc.getMessage(new AssistantCardMessage("Matteo", "TURTLE"));
+            gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE"));
         }
         catch(Exception ignored){}
 
         try {
-            gc.getMessage(new AssistantCardMessage("Ludo", "FOX"));
+            gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "FOX"));
         }
         catch(Exception ignored){}
 
-        gc.getGame().getBoard().setMotherNaturePos(12);
         List<Student> bag = new ArrayList<>(30);
         for(int i = 0; i < 10; i++)
             bag.add(new Student(Color.PINK));
-        gc.getGame().getBoard().setStudentsBag(bag);
 
         try {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
@@ -65,14 +75,13 @@ public class App
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
-            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
-            gc.getMessage(new MoveToIslandMessage("Ludo", "PINK", 1));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToIslandMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK", 1));
 
-            gc.getMessage(new MotherNatureStepsMessage("Ludo", 1));
+            gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1));
+            gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 0));
 
-            gc.getMessage(new CloudChoiceMessage("Ludo", 0));
-
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
@@ -81,17 +90,19 @@ public class App
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
-            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
-            gc.getMessage(new MoveToIslandMessage("Matteo", "PINK", 3));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToIslandMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK", 3));
 
-            gc.getMessage(new MotherNatureStepsMessage("Matteo", 2));
-            gc.getMessage(new CloudChoiceMessage("Matteo", 1));
-
-            gc.getGame().showGameBoard();
+            ((Healer) c1).doOnClick(5);
+            gc.getMessage(new CharacterCardMessage(gc.getGame().getCurrentPlayer().getNickname(), 5));
+            gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 2));
+            gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 1));
 
         }
         catch(Exception ignored){}
+
+        gc.getGame().showGameBoard();
 
     }
 }

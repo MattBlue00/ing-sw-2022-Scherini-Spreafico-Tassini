@@ -24,12 +24,11 @@ class GameControllerExpertModeTest {
         GameController gc = new GameControllerExpertMode();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
         gc.prepareGame(message);
-        gc.setGameState(GameState.IN_GAME);
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getPlayersNumber());
         Player p2 = new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getPlayersNumber());
         gc.getGame().addPlayer(p1);
         gc.getGame().addPlayer(p2);
-        gc.getGame().setCurrentPlayer(p1);
+        gc.startGame();
         CharacterCard c1 = new Healer();
         CharacterCard c2 = new Innkeeper();
         CharacterCard c3 = new Flagman();

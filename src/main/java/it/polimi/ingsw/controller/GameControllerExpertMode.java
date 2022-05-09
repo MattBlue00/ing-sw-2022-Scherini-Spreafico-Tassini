@@ -77,6 +77,7 @@ public class GameControllerExpertMode extends GameController{
         ((GameExpertMode) getGame()).addCharacterCards(cards);
 
         Collections.shuffle(getGame().getPlayers());
+        getGame().setCurrentPlayer(getGame().getPlayers().get(0));
         setGameState(GameState.IN_GAME);
     }
 
@@ -98,6 +99,7 @@ public class GameControllerExpertMode extends GameController{
                 if(getMovesLeft() == 0 && !getMotherNatureMoved()){
                     handleMotherNature(message);
                     setMotherNatureMoved(true);
+                    getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
                 }
                 else
                     throw new WrongMessageSentException("You need to move other " + getMovesLeft() +

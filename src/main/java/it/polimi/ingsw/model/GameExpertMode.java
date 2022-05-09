@@ -140,7 +140,7 @@ public class GameExpertMode extends Game {
                 nextPlayerNickname = getPlayers().get(getPlayers().indexOf(getCurrentPlayer()) + 1).getNickname();
             System.out.printf("TURNO: %d\tGIOCATORE CORRENTE: %s\tPROSSIMO GIOCATORE: %s\n",
                     getRoundNumber(), getCurrentPlayer().getNickname(), nextPlayerNickname);
-            System.out.print("MONETE DI " + getCurrentPlayer().getNickname() + ": " + getCurrentPlayer().getCoinsWallet() + "\t");
+            System.out.print("Monete di " + getCurrentPlayer().getNickname() + ": " + getCurrentPlayer().getCoinsWallet() + "\t");
             if(getCurrentPlayer().getCharacterCardAlreadyPlayed())
                 System.out.println(ANSIConstants.ANSI_BOLD + "Una carta personaggio è stata già giocata." + ANSIConstants.ANSI_RESET);
             else
@@ -183,6 +183,8 @@ public class GameExpertMode extends Game {
 
                 if(currentIsland.getId() == getBoard().getMotherNaturePos())
                     System.out.println(ANSIConstants.ANSI_BOLD + "Madre Natura è qui!" + ANSIConstants.ANSI_RESET);
+                if(currentIsland.hasVeto())
+                    System.out.println(ANSIConstants.ANSI_BOLD + "C'è una tessera divieto!" + ANSIConstants.ANSI_RESET);
 
                 System.out.println("--------------------");
 
@@ -214,7 +216,7 @@ public class GameExpertMode extends Game {
 
             System.out.println("CARTE PERSONAGGIO:");
             for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-                System.out.print(characters[i].getClass().getName() + "\t\t" +
+                System.out.print(characters[i].getClass().getSimpleName() + "\n" +
                         "ID: " + characters[i].getId() + "\t" + "Costo: " + characters[i].getCost());
                 if(characters[i].getIsActive())
                     System.out.println("\tATTIVA");
