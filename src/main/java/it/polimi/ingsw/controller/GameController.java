@@ -215,7 +215,7 @@ public class GameController implements Observer<Message>{
         }
     }
 
-
+    //TODO: CONTROLLER SHOULDN'T MODIFY MODEL DIRECTLY
     // When all players can start playing
     public void startGame(){
         for(int i = 0; i < Constants.MAX_HALL_STUDENTS; i++) {
