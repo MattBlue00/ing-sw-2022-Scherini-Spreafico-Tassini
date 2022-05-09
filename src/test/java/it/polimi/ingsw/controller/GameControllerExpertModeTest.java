@@ -37,24 +37,20 @@ class GameControllerExpertModeTest {
         p1.setCoinsWallet(5);
 
         try {
-            gc.getMessage(new AssistantCardMessage("Matteo", "TURTLE"));
+            gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE"));
         }
         catch(Exception ignored){}
         assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
         assertThrows(AssistantCardAlreadyPlayedException.class,
-                () -> gc.getMessage(new AssistantCardMessage("Ludo", "TURTLE")));
-        assertThrows(WrongTurnException.class,
-                () -> gc.getMessage(new AssistantCardMessage("Matteo", "FOX")));
+                () -> gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE")));
         try {
-            gc.getMessage(new AssistantCardMessage("Ludo", "FOX"));
+            gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "FOX"));
         }
         catch(Exception ignored){}
         assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
 
         assertTrue(gc.getPlanningPhaseDone());
         assertEquals(0, gc.getCurrentPlayerIndex());
-        assertEquals("Ludo", gc.getGame().getPlayers().get(0).getNickname());
-        assertEquals("Matteo", gc.getGame().getPlayers().get(1).getNickname());
 
         List<Student> bag = new ArrayList<>(30);
         for(int i = 0; i < 10; i++)
@@ -69,26 +65,25 @@ class GameControllerExpertModeTest {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
-            gc.getMessage(new MoveToTableMessage("Ludo", "PINK"));
-            gc.getMessage(new MoveToIslandMessage("Ludo", "PINK", 1));
-            assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToIslandMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK", 1));
             assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new MoveToIslandMessage("Ludo", "PINK", 1)));
+                    () -> gc.getMessage(new MoveToIslandMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK", 1)));
 
-            gc.getMessage(new MotherNatureStepsMessage("Ludo", 1));
+            gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1));
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().get());
             assertTrue(gc.getMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new MotherNatureStepsMessage("Ludo", 1)));
+                    () -> gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1)));
 
-            gc.getMessage(new CloudChoiceMessage("Ludo", 0));
+            gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 0));
             assertEquals(0, gc.getGame().getBoard().getCloud(0).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
-            assertEquals("Matteo", gc.getGame().getCurrentPlayer().getNickname());
+            assertEquals(gc.getGame().getCurrentPlayer().getNickname(), gc.getGame().getCurrentPlayer().getNickname());
             assertEquals(Constants.PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
@@ -102,30 +97,30 @@ class GameControllerExpertModeTest {
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
             gc.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.PINK));
 
-            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
-            gc.getMessage(new MoveToTableMessage("Matteo", "PINK"));
-            gc.getMessage(new MoveToIslandMessage("Matteo", "PINK", 3));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToTableMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK"));
+            gc.getMessage(new MoveToIslandMessage(gc.getGame().getCurrentPlayer().getNickname(), "PINK", 3));
             assertEquals(4, gc.getGame().getCurrentPlayer().getSchool().getHall().getStudents().size());
             assertTrue(gc.getGame().getCurrentPlayer().getSchool().getTable("PINK").getHasProfessor());
 
-            gc.getMessage(new CharacterCardMessage("Matteo", 5));
+            gc.getMessage(new CharacterCardMessage(gc.getGame().getCurrentPlayer().getNickname(), 5));
             assertEquals(3, p1.getCoinsWallet());
             assertEquals(3, g.getBoard().getNumOfVetos());
             assertEquals(3, c1.getCost());
             assertTrue(g.getBoard().getIslands().getIslandFromID(1).hasVeto());
 
-            gc.getMessage(new MotherNatureStepsMessage("Matteo", 2));
+            gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 2));
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().get());
             assertTrue(gc.getMotherNatureMoved());
 
             assertThrows(EmptyCloudException.class,
-                    () -> gc.getMessage(new CloudChoiceMessage("Matteo", 0)));
+                    () -> gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 0)));
             assertThrows(WrongMessageSentException.class,
-                    () -> gc.getMessage(new PlayerNumberMessage("Matteo", 2)));
+                    () -> gc.getMessage(new PlayerNumberMessage(gc.getGame().getCurrentPlayer().getNickname(), 2)));
             assertThrows(CharacterCardAlreadyPlayedException.class,
-                    () -> gc.getMessage(new CharacterCardMessage("Matteo", 8)));
-            gc.getMessage(new CloudChoiceMessage("Matteo", 1));
+                    () -> gc.getMessage(new CharacterCardMessage(gc.getGame().getCurrentPlayer().getNickname(), 8)));
+            gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 1));
             assertEquals(0, gc.getGame().getBoard().getCloud(1).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
