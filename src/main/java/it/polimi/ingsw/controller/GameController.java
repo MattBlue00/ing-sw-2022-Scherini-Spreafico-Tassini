@@ -167,7 +167,6 @@ public class GameController implements Observer<Message>{
      */
     public void prepareGame(int playerNum) {
         //TODO: add constants init & exception for numbers > 3
-        Constants.setConstants(playerNum);
         if (this instanceof GameControllerExpertMode)
             this.game = new GameExpertMode(playerNum);
         else
@@ -218,7 +217,7 @@ public class GameController implements Observer<Message>{
     //TODO: CONTROLLER SHOULDN'T MODIFY MODEL DIRECTLY
     // When all players can start playing
     public void startGame(){
-        for(int i = 0; i < Constants.MAX_HALL_STUDENTS; i++) {
+        for(int i = 0; i < game.constants.MAX_HALL_STUDENTS; i++) {
             for (Player player : game.getPlayers()) {
                 player.getSchool().getHall().addStudent(game.getBoard().getStudentsBag().remove
                         (getGame().getBoard().getStudentsBag().size() - 1));

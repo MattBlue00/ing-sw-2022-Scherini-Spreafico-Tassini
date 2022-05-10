@@ -13,11 +13,11 @@ public class Constants {
     public static final int MAX_NUM_OF_ISLANDS = 12;
     public static final int STUDENTS_PER_COLOR = 26;
 
-    public static int MAX_HALL_STUDENTS;
-    public static int MAX_TOWERS;
-    public static int MAX_CLOUD_STUDENTS;
+    public int MAX_HALL_STUDENTS;
+    public int MAX_TOWERS;
+    public int MAX_CLOUD_STUDENTS;
 
-    public static void setConstants(int playersNumber){
+    public Constants(int playersNumber){
         if(playersNumber == 2){
             MAX_HALL_STUDENTS = 7;
             MAX_TOWERS = 8;

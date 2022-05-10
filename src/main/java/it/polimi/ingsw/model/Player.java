@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,4 +119,94 @@ public class Player {
         this.school.moveStudentToHall(this, color);
     }*/
 
+    public void showSchool(){
+
+        System.out.printf("SCUOLA DI: %s \n", getNickname());
+
+        int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
+        yellowStudents =
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+        blueStudents =
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+        greenStudents =
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+        redStudents =
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+        pinkStudents =
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+
+        System.out.println("Ingresso: " +
+                ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
+
+        yellowStudents = -1;
+        blueStudents = -1;
+        greenStudents = -1;
+        redStudents = -1;
+        pinkStudents = -1;
+
+        try {
+
+            yellowStudents =
+                    (int) this.getSchool().getTable("YELLOW").getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+            blueStudents =
+                    (int) this.getSchool().getTable("BLUE").getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+            greenStudents =
+                    (int) this.getSchool().getTable("GREEN").getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+            redStudents =
+                    (int) this.getSchool().getTable("RED").getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+            pinkStudents =
+                    (int) this.getSchool().getTable("PINK").getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+        } catch(NonExistentColorException ignored){}
+
+        System.out.println("Studenti per tavolo: " +
+                ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
+
+        System.out.print("Professori: ");
+        int yellowProf = -1;
+        int blueProf = -1;
+        int greenProf = -1;
+        int redProf = -1;
+        int pinkProf = -1;
+        try {
+
+            if (this.getSchool().getTable("YELLOW").getHasProfessor())
+                yellowProf = 1;
+            else yellowProf = 0;
+
+            if (this.getSchool().getTable("BLUE").getHasProfessor())
+                blueProf = 1;
+            else blueProf = 0;
+
+            if (this.getSchool().getTable("GREEN").getHasProfessor())
+                greenProf = 1;
+            else greenProf = 0;
+
+            if (this.getSchool().getTable("RED").getHasProfessor())
+                redProf = 1;
+            else redProf = 0;
+
+            if (this.getSchool().getTable("PINK").getHasProfessor())
+                pinkProf = 1;
+            else pinkProf = 0;
+
+        } catch(NonExistentColorException ignored){}
+
+        System.out.println(
+                ANSIConstants.ANSI_YELLOW + yellowProf + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_BLUE + blueProf + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_GREEN + greenProf + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_RED + redProf + ANSIConstants.ANSI_RESET + " " +
+                ANSIConstants.ANSI_PINK + pinkProf + ANSIConstants.ANSI_RESET);
+
+        System.out.println("Torri: " + this.getSchool().getTowerRoom().getTowersLeft());
+        System.out.println("--------------------");
+    }
 }

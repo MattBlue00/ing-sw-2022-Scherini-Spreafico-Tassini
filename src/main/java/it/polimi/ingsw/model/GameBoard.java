@@ -46,7 +46,7 @@ public class GameBoard {
         Collections.shuffle(studentsBag);
 
         for(int i = 0; i<playersNumber; i++) {
-            clouds[i] = new Cloud(Constants.MAX_CLOUD_STUDENTS);
+            clouds[i] = new Cloud(Game.constants.MAX_CLOUD_STUDENTS);
             for(int j = 0; j<clouds[i].getCapacity(); j++)
                 clouds[i].addStudent(studentsBag.remove(studentsBag.size() - 1));
         }

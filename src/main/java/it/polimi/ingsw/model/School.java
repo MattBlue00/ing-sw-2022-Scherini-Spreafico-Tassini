@@ -16,8 +16,8 @@ public class School {
         Color colors[] = Color.values();
         for(int i = 0; i < Constants.NUM_TABLES; i++)
             tables[i] = new Table(colors[i]);
-        this.hall = new Hall(Constants.MAX_HALL_STUDENTS);
-        this.towerRoom = new TowerRoom(Constants.MAX_TOWERS);
+        this.hall = new Hall(Game.constants.MAX_HALL_STUDENTS);
+        this.towerRoom = new TowerRoom(Game.constants.MAX_TOWERS);
     }
 
     // Getter methods

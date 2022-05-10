@@ -97,6 +97,8 @@ public class ShowGameApp
         catch(Exception ignored){}
 
         gc.getGame().showGameBoard();
+        p1.showSchool();
+        p2.showSchool();
 
     }
 }

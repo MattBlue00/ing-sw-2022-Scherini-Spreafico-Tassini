@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.EmptyBagException;
 import it.polimi.ingsw.exceptions.EmptyCloudException;
 import it.polimi.ingsw.utils.Constants;
@@ -44,10 +45,12 @@ public class GameBoardTest{
     @Test
     public void testMotherNaturePosRandom(){
 
-        Constants.setConstants(2);
-        GameBoard gb = new GameBoard(2);
+        GameController gc = new GameController();
+        gc.prepareGame(2);
+        gc.startGame();
 
-        assertTrue(gb.getMotherNaturePos() >= 1 && gb.getMotherNaturePos() <= 12);
+        assertTrue(gc.getGame().getBoard().getMotherNaturePos() >= 1 &&
+                gc.getGame().getBoard().getMotherNaturePos() <= 12);
 
     }
 

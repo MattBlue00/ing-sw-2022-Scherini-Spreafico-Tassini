@@ -17,8 +17,10 @@ public class Game{
     private final GameBoard board;
     private Player currentPlayer;
     private int maxSteps;
+    public static Constants constants;
 
     public Game(int playersNumber) {
+        constants = new Constants(playersNumber);
         this.playersNumber = playersNumber;
         this.players = new ArrayList<>();
         this.board = new GameBoard(playersNumber);
@@ -69,6 +71,10 @@ public class Game{
 
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
+    }
+
+    private Constants getConstants(){
+        return constants;
     }
 
     // Game methods

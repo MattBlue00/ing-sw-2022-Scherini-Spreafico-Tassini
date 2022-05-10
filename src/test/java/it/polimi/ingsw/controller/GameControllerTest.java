@@ -252,7 +252,6 @@ class GameControllerTest {
     public void testGetMessageCaseInGame() throws WrongMessageSentException {
         GameController gc = new GameController();
         PlayerNumberMessage message = new PlayerNumberMessage("Matteo", 2);
-        Constants.setConstants(2);
 
         gc.prepareGame(message.getPlayerNumber());
         gc.setGameState(GameState.IN_GAME);

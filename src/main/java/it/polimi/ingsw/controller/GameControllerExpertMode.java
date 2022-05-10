@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CharacterCard;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Player;
@@ -19,7 +20,7 @@ public class GameControllerExpertMode extends GameController{
 
     public void startGame(){
 
-        for(int i = 0; i < Constants.MAX_HALL_STUDENTS; i++) {
+        for(int i = 0; i < getGame().constants.MAX_HALL_STUDENTS; i++) {
             for (Player player : getGame().getPlayers()) {
                 player.getSchool().getHall().addStudent(getGame().getBoard().getStudentsBag().remove
                         (getGame().getBoard().getStudentsBag().size() - 1));
