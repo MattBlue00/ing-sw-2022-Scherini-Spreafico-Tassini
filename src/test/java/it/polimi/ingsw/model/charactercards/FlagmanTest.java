@@ -14,9 +14,9 @@ class FlagmanTest {
     @Test
     public void flagmanTest(){
 
-        GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
@@ -36,7 +36,7 @@ class FlagmanTest {
             s1.moveToTable(p1);
             g1.profCheck();
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
 
         // Test 1

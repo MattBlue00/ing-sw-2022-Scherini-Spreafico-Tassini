@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.ANSIConstants;
+import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Player {
     private Optional<AssistantCard> lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
-    public Player(Wizard wizardID, String nickname, int playersNumber) {
+    public Player(Wizard wizardID, String nickname, Constants constants) {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.coinsWallet = 1;
@@ -36,7 +37,7 @@ public class Player {
         this.deck.add(new AssistantCard(AssistantType.ELEPHANT));
         this.deck.add(new AssistantCard(AssistantType.TURTLE));
 
-        this.school = new School();
+        this.school = new School(constants);
         this.lastAssistantCardPlayed = Optional.empty();
         this.characterCardAlreadyPlayed = false;
     }
@@ -170,32 +171,27 @@ public class Player {
                 ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
 
         System.out.print("Professori: ");
-        int yellowProf = -1;
-        int blueProf = -1;
-        int greenProf = -1;
-        int redProf = -1;
-        int pinkProf = -1;
+        String yellowProf = "no";
+        String blueProf = "no";
+        String greenProf = "no";
+        String redProf = "no";
+        String pinkProf = "no";
         try {
 
             if (this.getSchool().getTable("YELLOW").getHasProfessor())
-                yellowProf = 1;
-            else yellowProf = 0;
+                yellowProf = "sì";
 
             if (this.getSchool().getTable("BLUE").getHasProfessor())
-                blueProf = 1;
-            else blueProf = 0;
+                blueProf = "sì";
 
             if (this.getSchool().getTable("GREEN").getHasProfessor())
-                greenProf = 1;
-            else greenProf = 0;
+                greenProf = "sì";
 
             if (this.getSchool().getTable("RED").getHasProfessor())
-                redProf = 1;
-            else redProf = 0;
+                redProf = "sì";
 
             if (this.getSchool().getTable("PINK").getHasProfessor())
-                pinkProf = 1;
-            else pinkProf = 0;
+                pinkProf = "sì";
 
         } catch(NonExistentColorException ignored){}
 

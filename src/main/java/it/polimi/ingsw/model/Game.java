@@ -5,6 +5,7 @@ import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Game{
@@ -17,13 +18,13 @@ public class Game{
     private final GameBoard board;
     private Player currentPlayer;
     private int maxSteps;
-    public static Constants constants;
+    private final Constants constants;
 
-    public Game(int playersNumber) {
-        constants = new Constants(playersNumber);
+    public Game(int playersNumber, Constants constants) {
+        this.constants = constants;
         this.playersNumber = playersNumber;
         this.players = new ArrayList<>();
-        this.board = new GameBoard(playersNumber);
+        this.board = new GameBoard(playersNumber, constants);
         this.roundNumber = 1;
     }
 
@@ -73,7 +74,7 @@ public class Game{
         this.roundNumber = roundNumber;
     }
 
-    private Constants getConstants(){
+    public Constants getConstants(){
         return constants;
     }
 
@@ -205,6 +206,18 @@ public class Game{
      */
     public void takeStudentsFromCloud(int cloudID) throws EmptyCloudException {
         board.takeStudentsFromCloud(cloudID, currentPlayer);
+    }
+
+    public void startGame(){
+        for(int i = 0; i < constants.MAX_HALL_STUDENTS; i++) {
+            for (Player player : players) {
+                player.getSchool().getHall().addStudent(board.getStudentsBag().remove
+                        (board.getStudentsBag().size() - 1));
+            }
+        }
+
+        Collections.shuffle(players);
+        currentPlayer = players.get(0);
     }
 
     // Debug methods

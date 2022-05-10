@@ -10,6 +10,8 @@ import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +30,9 @@ class GameExpertModeTest {
               steals the professor
          */
 
-        GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
@@ -53,7 +55,7 @@ class GameExpertModeTest {
             s3.moveToTable(p2);
             s4.moveToTable(p2);
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p2 has 2 yellow students and should have green professor
@@ -72,7 +74,7 @@ class GameExpertModeTest {
             s5.moveToTable(p1);
             s6.moveToTable(p1);
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p1 has 2 green students and should NOT have green professor
@@ -90,7 +92,7 @@ class GameExpertModeTest {
         try{
             s7.moveToTable(p1);
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
         // p1 has 2 yellow students and should have yellow professor
         // p1 has 3 green students and should have green professor
@@ -112,8 +114,8 @@ class GameExpertModeTest {
             This test verifies that Mother Nature moves correctly from a position to another.
          */
 
-        GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
@@ -150,9 +152,7 @@ class GameExpertModeTest {
         try{
             g1.moveMotherNature(1); // from island 9 to 10
         }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
+        catch(InvalidNumberOfStepsException ignored) {}
 
         assertEquals(10, g1.getBoard().getMotherNaturePos());
 
@@ -161,9 +161,7 @@ class GameExpertModeTest {
         try{
             g1.moveMotherNature(3); // from island 10 to 1
         }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
+        catch(InvalidNumberOfStepsException ignored){}
 
         assertEquals(1, g1.getBoard().getMotherNaturePos());
 
@@ -172,9 +170,8 @@ class GameExpertModeTest {
         try{
             g1.moveMotherNature(1); // from island 1 to 2
         }
-        catch(InvalidNumberOfStepsException e){
-            e.printStackTrace();
-        }
+        catch(InvalidNumberOfStepsException ignored){}
+
 
         assertEquals(2, g1.getBoard().getMotherNaturePos());
 
@@ -196,9 +193,9 @@ class GameExpertModeTest {
                he conquers the island
          */
 
-        GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
@@ -217,7 +214,7 @@ class GameExpertModeTest {
             s1.moveToTable(p1);
             g1.profCheck();
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
 
         // Test 1
@@ -295,6 +292,28 @@ class GameExpertModeTest {
         catch(IslandNotFoundException e){
             e.printStackTrace();
         }
+
+    }
+
+    @Test
+    public void showGameBoardTest(){
+
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
+        List<Player> players = new ArrayList<>();
+        CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
+        cards[0] = new Bard();
+        cards[1] = new Centaur();
+        cards[2] = new Flagman();
+        g1.addCharacterCards(cards);
+
+        players.add(p1);
+        players.add(p2);
+        g1.setPlayers(players);
+        g1.setCurrentPlayer(p1);
+
+        assertDoesNotThrow(g1::showGameBoard);
 
     }
 

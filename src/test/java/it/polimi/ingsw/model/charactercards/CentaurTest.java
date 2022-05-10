@@ -14,9 +14,9 @@ class CentaurTest {
     @Test
     public void centaurTest(){
 
-        GameExpertMode g1 = new GameExpertMode(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
@@ -33,7 +33,7 @@ class CentaurTest {
         try{
             g1.playerPlaysCharacterCard(6);
         }
-        catch(CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException e){}
+        catch(CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException ignored){}
 
         assertTrue(cards[1].getIsActive());
         assertEquals(2, p1.getCoinsWallet());
@@ -45,7 +45,7 @@ class CentaurTest {
             s1.moveToTable(p1);
             g1.profCheck();
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
 
         // Test 1

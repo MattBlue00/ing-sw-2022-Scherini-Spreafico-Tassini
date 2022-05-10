@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +13,8 @@ public class SchoolTest{
     @Test
     public void testMoveStudentToIsland() {
 
-        Game g1 = new Game(3);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
+        Game g1 = new Game(3, new Constants(3));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
         g1.addPlayer(p1);
@@ -40,7 +41,7 @@ public class SchoolTest{
     @Test
     public void testMoveStudentToTable() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
 

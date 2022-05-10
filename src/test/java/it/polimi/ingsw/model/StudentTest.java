@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +11,7 @@ public class StudentTest{
     @Test
     public void testMoveToHall() {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
 
@@ -31,7 +32,7 @@ public class StudentTest{
     @Test
     public void testMoveToTable() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
         Student s1 = new Student(Color.YELLOW);
         Student s2 = new Student(Color.BLUE);
 
@@ -39,7 +40,7 @@ public class StudentTest{
             s1.moveToTable(p1);
             s2.moveToTable(p1);
         }
-        catch(NonExistentColorException | FullTableException e){}
+        catch(NonExistentColorException | FullTableException ignored){}
 
         assertTrue(p1.getSchool().getTable("YELLOW").getStudents().contains(s1));
         assertTrue(p1.getSchool().getTable("BLUE").getStudents().contains(s2));

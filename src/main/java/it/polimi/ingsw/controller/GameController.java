@@ -36,6 +36,7 @@ public class GameController implements Observer<Message>{
         this.movesLeft = Constants.PLAYER_MOVES;
         this.motherNatureMoved = false;
         this.gameQueue = new ArrayList<>();
+        this.gameState = GameState.SETUP;
     }
 
     // Getter and Setter methods
@@ -166,11 +167,11 @@ public class GameController implements Observer<Message>{
         and based on the instance (For expert mode or normal mode)
      */
     public void prepareGame(int playerNum) {
-        //TODO: add constants init & exception for numbers > 3
+        //TODO: exception for numbers > 3
         if (this instanceof GameControllerExpertMode)
-            this.game = new GameExpertMode(playerNum);
+            this.game = new GameExpertMode(playerNum, new Constants(playerNum));
         else
-            this.game = new Game(playerNum);
+            this.game = new Game(playerNum, new Constants(playerNum));
         goToSetupPhase();
     }
 
@@ -209,23 +210,13 @@ public class GameController implements Observer<Message>{
             }
         }
         if(!wizardIdAlreadyUsed) {
-            getGame().addPlayer(new Player(wizardID, nickname, getGame().getPlayersNumber()));
+            getGame().addPlayer(new Player(wizardID, nickname, game.getConstants()));
             System.out.println("NEW PLAYER ADDED: "+nickname+" wizard: "+wizardID);
         }
     }
 
-    //TODO: CONTROLLER SHOULDN'T MODIFY MODEL DIRECTLY
-    // When all players can start playing
     public void startGame(){
-        for(int i = 0; i < game.constants.MAX_HALL_STUDENTS; i++) {
-            for (Player player : game.getPlayers()) {
-                player.getSchool().getHall().addStudent(game.getBoard().getStudentsBag().remove
-                        (getGame().getBoard().getStudentsBag().size() - 1));
-            }
-        }
-
-        Collections.shuffle(getGame().getPlayers());
-        game.setCurrentPlayer(game.getPlayers().get(0));
+        game.startGame();
         setGameState(GameState.IN_GAME);
         System.out.println("START THE GAME");
     }

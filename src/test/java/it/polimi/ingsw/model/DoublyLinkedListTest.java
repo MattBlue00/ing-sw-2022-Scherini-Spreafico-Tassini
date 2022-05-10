@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -14,9 +15,9 @@ class DoublyLinkedListTest {
     @Test
     public void mergeIslandsTest(){
 
-        Game g1 = new Game(2);
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getPlayersNumber());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getPlayersNumber());
+        Game g1 = new Game(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         try{
 

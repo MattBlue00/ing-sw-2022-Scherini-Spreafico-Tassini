@@ -17,7 +17,7 @@ public class GameBoard {
     private int numOfVetos;
 
 
-    public GameBoard(int playersNumber){
+    public GameBoard(int playersNumber, Constants constants){
 
         Random random = new Random();
         this.motherNaturePos = random.nextInt(12) + 1;
@@ -46,7 +46,7 @@ public class GameBoard {
         Collections.shuffle(studentsBag);
 
         for(int i = 0; i<playersNumber; i++) {
-            clouds[i] = new Cloud(Game.constants.MAX_CLOUD_STUDENTS);
+            clouds[i] = new Cloud(constants.MAX_CLOUD_STUDENTS);
             for(int j = 0; j<clouds[i].getCapacity(); j++)
                 clouds[i].addStudent(studentsBag.remove(studentsBag.size() - 1));
         }

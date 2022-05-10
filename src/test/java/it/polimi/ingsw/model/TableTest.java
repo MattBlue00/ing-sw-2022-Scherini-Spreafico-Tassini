@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +12,7 @@ public class TableTest{
     @Test
     public void testAddStudent() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
 
         try {
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
@@ -36,7 +37,7 @@ public class TableTest{
     // Throws FullTableException
     public void addStudentToAFullTableTest(){
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
         try {
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
@@ -48,16 +49,16 @@ public class TableTest{
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
             p1.getSchool().getTable("YELLOW").addStudent(new Student(Color.YELLOW), p1);
-        } catch(FullTableException | NonExistentColorException ignored){};
+        } catch(FullTableException | NonExistentColorException ignored){}
 
-        assertThrows(FullTableException.class, ()->{p1.getSchool().getTable("YELLOW").
-                addStudent(new Student(Color.YELLOW), p1);} );
+        assertThrows(FullTableException.class, ()-> p1.getSchool().getTable("YELLOW").
+                addStudent(new Student(Color.YELLOW), p1));
     }
 
     @Test
     public void testCoinCheck() throws NonExistentColorException {
 
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
 
         //we should start with one coin
         assertEquals(1, p1.getCoinsWallet());

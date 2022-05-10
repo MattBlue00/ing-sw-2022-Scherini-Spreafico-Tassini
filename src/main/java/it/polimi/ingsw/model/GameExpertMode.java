@@ -1,18 +1,25 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.*;
+import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 public class GameExpertMode extends Game {
 
     private final CharacterCard[] characters;
 
-    public GameExpertMode(int playersNumber) {
-        super(playersNumber);
+    public GameExpertMode(int playersNumber, Constants constants) {
+        super(playersNumber, constants);
         this.characters = new CharacterCard[Constants.CHARACTERS_NUM];
+    }
+
+    public CharacterCard[] getCharacters() {
+        return characters;
     }
 
     /*
@@ -126,6 +133,69 @@ public class GameExpertMode extends Game {
     public void addCharacterCards(CharacterCard[] cards){
 
         System.arraycopy(cards, 0, this.characters, 0, Constants.CHARACTERS_NUM);
+
+    }
+
+    public void startGame(){
+        for(int i = 0; i < getConstants().MAX_HALL_STUDENTS; i++) {
+            for (Player player : getPlayers()) {
+                player.getSchool().getHall().addStudent(getBoard().getStudentsBag().remove
+                        (getBoard().getStudentsBag().size() - 1));
+            }
+        }
+
+        CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
+        Random random = new Random();
+        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
+            // TODO: when all the CharacterCards are ready, the while loop has to be removed
+            int num = 0;
+            while(num == 0 || num == 1 || num == 7 || num == 11 || num == 12)
+                num = random.nextInt(12) + 1;
+            switch(num){
+                case 1:
+                    // cards[i] = new Monk();
+                    break;
+                case 2:
+                    cards[i] = new Innkeeper();
+                    break;
+                case 3:
+                    cards[i] = new Flagman();
+                    break;
+                case 4:
+                    cards[i] = new Postman();
+                    break;
+                case 5:
+                    cards[i] = new Healer();
+                    break;
+                case 6:
+                    cards[i] = new Centaur();
+                    break;
+                case 7:
+                    // cards[i] = new Jester();
+                    break;
+                case 8:
+                    cards[i] = new Knight();
+                    break;
+                case 9:
+                    cards[i] = new Villager();
+                    break;
+                case 10:
+                    cards[i] = new Bard();
+                    break;
+                case 11:
+                    // cards[i] = new Princess();
+                    break;
+                case 12:
+                    // cards[i] = new Thief();
+                    break;
+                default: // should never enter here
+                    break;
+            }
+        }
+        addCharacterCards(cards);
+
+        Collections.shuffle(getPlayers());
+        setCurrentPlayer(getPlayers().get(0));
 
     }
 

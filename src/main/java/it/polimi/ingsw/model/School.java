@@ -11,13 +11,13 @@ public class School {
     private TowerRoom towerRoom;
     private Hall hall;
 
-    public School(){
+    public School(Constants constants){
         this.tables = new Table[Constants.NUM_COLORS];
-        Color colors[] = Color.values();
+        Color[] colors = Color.values();
         for(int i = 0; i < Constants.NUM_TABLES; i++)
             tables[i] = new Table(colors[i]);
-        this.hall = new Hall(Game.constants.MAX_HALL_STUDENTS);
-        this.towerRoom = new TowerRoom(Game.constants.MAX_TOWERS);
+        this.hall = new Hall(constants.MAX_HALL_STUDENTS);
+        this.towerRoom = new TowerRoom(constants.MAX_TOWERS);
     }
 
     // Getter methods

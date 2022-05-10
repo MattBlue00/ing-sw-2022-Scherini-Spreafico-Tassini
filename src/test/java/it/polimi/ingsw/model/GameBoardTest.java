@@ -11,8 +11,8 @@ public class GameBoardTest{
 
     @Test
     public void testRefillClouds() {
-        GameBoard gameboard = new GameBoard(2);
-        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        GameBoard gameboard = new GameBoard(2, new Constants(2));
+        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
 
         try {
             gameboard.takeStudentsFromCloud(0, player);
@@ -22,16 +22,15 @@ public class GameBoardTest{
 
         try {
             gameboard.refillClouds();
-        } catch (EmptyBagException e) {
-            e.printStackTrace();
-        }
+        } catch (EmptyBagException ignored){}
+
         assertEquals(3, gameboard.getCloud(0).getStudents().size());
     }
 
     @Test
     public void testTakeStudentsFromCloud() {
-        GameBoard gameboard = new GameBoard(2);
-        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", 2);
+        GameBoard gameboard = new GameBoard(2, new Constants(2));
+        Player player = new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2));
 
         try {
             gameboard.takeStudentsFromCloud(0, player);
@@ -47,6 +46,8 @@ public class GameBoardTest{
 
         GameController gc = new GameController();
         gc.prepareGame(2);
+        gc.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD, "Matteo", new Constants(2)));
+        gc.getGame().addPlayer(new Player(Wizard.PINK_WIZARD, "Ludo", new Constants(2)));
         gc.startGame();
 
         assertTrue(gc.getGame().getBoard().getMotherNaturePos() >= 1 &&
