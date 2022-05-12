@@ -4,8 +4,7 @@ import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.server.SocketServer;
 
 
-public class App 
-{
+public class ServerMain {
     public static void main(String[] args) {
 
         // For network debugging purpose only
