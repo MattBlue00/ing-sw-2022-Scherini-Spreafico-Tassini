@@ -49,7 +49,7 @@ public class GameExpertMode extends Game {
                 card.setIsActive(true);
                 found = true;
                 getCurrentPlayer().setCoinsWallet(getCurrentPlayer().getCoinsWallet() - card.getCost());
-                if(card.getId() == 5 || card.getId() == 10 || card.getId() == 3){
+                if(card.getId() == 1 || card.getId() == 3 || card.getId() == 5 || card.getId() == 10 || card.getId() == 11){
                     card.doEffect(this);
                     card.setUpCard();
                 }
@@ -149,11 +149,11 @@ public class GameExpertMode extends Game {
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
             // TODO: when all the CharacterCards are ready, the while loop has to be removed
             int num = 0;
-            while(num == 0 || num == 1 || num == 7 || num == 11 || num == 12)
+            while(num == 0 || num == 7 || num == 12)
                 num = random.nextInt(12) + 1;
             switch(num){
                 case 1:
-                    // cards[i] = new Monk();
+                    cards[i] = new Monk(getBoard().getStudentsBag());
                     break;
                 case 2:
                     cards[i] = new Innkeeper();
@@ -183,7 +183,7 @@ public class GameExpertMode extends Game {
                     cards[i] = new Bard();
                     break;
                 case 11:
-                    // cards[i] = new Princess();
+                    cards[i] = new Princess(getBoard().getStudentsBag());
                     break;
                 case 12:
                     // cards[i] = new Thief();

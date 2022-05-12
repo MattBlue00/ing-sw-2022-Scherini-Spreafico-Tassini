@@ -1,15 +1,9 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.*;
-import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.model.GameExpertMode;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
-
-import java.util.Collections;
-import java.util.Random;
 
 public class GameControllerExpertMode extends GameController{
 
@@ -85,7 +79,7 @@ public class GameControllerExpertMode extends GameController{
                 ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageString) receivedMessage).getPar());
             }
             if(receivedMessage instanceof CharacterCardMessageArraylistString){
-                ((ArraylistStringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageArraylistString) receivedMessage).getPar());
+                ((ArrayListStringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageArraylistString) receivedMessage).getPar());
             }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);

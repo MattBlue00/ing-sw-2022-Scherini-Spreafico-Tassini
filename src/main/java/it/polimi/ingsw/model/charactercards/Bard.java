@@ -9,7 +9,7 @@ import it.polimi.ingsw.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bard extends CharacterCard implements ArraylistStringCard{
+public class Bard extends CharacterCard implements ArrayListStringCard {
 
     /*
         CHARACTER CARD DESCRIPTION:

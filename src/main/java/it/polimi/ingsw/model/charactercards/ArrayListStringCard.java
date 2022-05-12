@@ -2,6 +2,6 @@ package it.polimi.ingsw.model.charactercards;
 
 import java.util.List;
 
-public interface ArraylistStringCard {
+public interface ArrayListStringCard {
     void doOnClick(List<String> par);
 }
