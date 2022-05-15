@@ -42,4 +42,20 @@ class PrincessTest {
 
     }
 
+    @Test
+    public void showStudentsOnTheCard(){
+
+        GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
+        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
+        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
+
+        CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
+        cards[0] = new Princess(g1.getBoard().getStudentsBag());
+        cards[1] = new Centaur();
+        cards[2] = new Flagman();
+        g1.addCharacterCards(cards);
+
+        ((Princess) cards[0]).showStudentsOnTheCard();
+    }
+
 }

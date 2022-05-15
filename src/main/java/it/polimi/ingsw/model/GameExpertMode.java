@@ -49,7 +49,8 @@ public class GameExpertMode extends Game {
                 card.setIsActive(true);
                 found = true;
                 getCurrentPlayer().setCoinsWallet(getCurrentPlayer().getCoinsWallet() - card.getCost());
-                if(card.getId() == 1 || card.getId() == 3 || card.getId() == 5 || card.getId() == 10 || card.getId() == 11){
+                if(card.getId() == 1 || card.getId() == 3 || card.getId() == 5 || card.getId()== 7 ||
+                        card.getId() == 10 || card.getId() == 11 || card.getId() == 12){
                     card.doEffect(this);
                     card.setUpCard();
                 }
@@ -171,7 +172,7 @@ public class GameExpertMode extends Game {
                     cards[i] = new Centaur();
                     break;
                 case 7:
-                    // cards[i] = new Jester();
+                    cards[i] = new Jester(getBoard().getStudentsBag());
                     break;
                 case 8:
                     cards[i] = new Knight();
@@ -186,7 +187,7 @@ public class GameExpertMode extends Game {
                     cards[i] = new Princess(getBoard().getStudentsBag());
                     break;
                 case 12:
-                    // cards[i] = new Thief();
+                    cards[i] = new Thief();
                     break;
                 default: // should never enter here
                     break;
