@@ -11,16 +11,9 @@ public class ClientMainCLI {
 
     public static void main(String[] args){
 
-        try {
-            SocketClient c = new SocketClient("127.0.0.1", 12345);
             CommandLineInterface cli = new CommandLineInterface();
-            ClientController clientController = new ClientController(cli,c);
+            ClientController clientController = new ClientController(cli);
             cli.addObserver(clientController);
-            cli.askNickname();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+            cli.init();
     }
-
 }

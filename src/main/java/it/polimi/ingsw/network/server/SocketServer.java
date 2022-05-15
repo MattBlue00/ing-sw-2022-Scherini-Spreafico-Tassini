@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.network.message.Message;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class SocketServer implements Runnable{
 
     }
 
-    public void addClient(String nickname, ClientHandler clientHandler){
+    public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException {
         server.addClient(nickname, clientHandler);
     }
 

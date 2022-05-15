@@ -1,7 +1,9 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,6 +22,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
 
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private VirtualView virtualView;
 
     public SocketClientHandler(SocketServer socketServer, Socket client) {
         this.socketServer = socketServer;
@@ -35,6 +38,13 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
+    public void setVirtualView(VirtualView virtualView) {
+        this.virtualView = virtualView;
+    }
+
+    public VirtualView getVirtualView() {
+        return virtualView;
+    }
 
     @Override
     public void run() {
@@ -56,18 +66,26 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         try{
             while(!Thread.currentThread().isInterrupted()) {
                 synchronized (inputLock) {
-                    Message message = (Message) in.readObject();
+                    Message message;
+                    message = (Message) in.readObject();
                     System.out.println("Message:"+message);
                     if (message != null && message.getMessageType() == MessageType.LOGIN_REQUEST) {
-                        socketServer.addClient(message.getNickname(), this);
+                        try {
+                            socketServer.addClient(message.getNickname(), this);
+                            virtualView.askCreateOrJoin();
+                        }catch (TryAgainException e){
+                            virtualView.showGenericMessage("Nickname has already been chosen");
+                            virtualView.askNickname();
+                        }
                     } else {
                         socketServer.getMessage(message);
                     }
                 }
             }
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(IOException | ClassNotFoundException e){
+            disconnect();
         }
+
         client.close();
     }
 

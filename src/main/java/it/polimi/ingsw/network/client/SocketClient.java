@@ -1,5 +1,8 @@
 package it.polimi.ingsw.network.client;
 
+import it.polimi.ingsw.network.message.AskMessage;
+import it.polimi.ingsw.network.message.Ask_Type;
+import it.polimi.ingsw.network.message.ErrorMessage;
 import it.polimi.ingsw.network.message.Message;
 
 import java.io.IOException;
@@ -50,28 +53,30 @@ public class SocketClient extends Client{
     @Override
     public void readMessage() {
         readExecutionQueue.execute(() -> {
-
             while (!readExecutionQueue.isShutdown()) {
                 Message message;
                 try {
                     message = (Message) in.readObject();
-                    System.out.println("Received: " + message.toString());
                 } catch (IOException | ClassNotFoundException e) {
-                    System.out.println("Connection lost with the server.");
+                    message = new ErrorMessage("Connection lost...");
                     disconnect();
                     readExecutionQueue.shutdownNow();
                 }
-            }});
+                notifyObservers(message);
+            }
+            });
         }
 
     @Override
     public void disconnect() {
         try {
             if (!socket.isClosed()) {
+                System.out.println("---Disconnected from the server---");
                 out.close();
                 in.close();
                 readExecutionQueue.shutdownNow();
                 socket.close();
+
             }
         } catch (IOException e) {
             e.printStackTrace();
