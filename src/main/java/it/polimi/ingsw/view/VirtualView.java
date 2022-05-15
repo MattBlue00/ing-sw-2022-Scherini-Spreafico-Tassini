@@ -1,6 +1,6 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.network.message.LoginRequest;
+import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observers.Observer;
 
@@ -12,32 +12,39 @@ public class VirtualView implements View, Observer {
         this.clientHandler = clientHandler;
     }
 
-    public ClientHandler getClientHandler() {
-        return clientHandler;
-    }
-
     @Override
     public void askNickname() {
+        clientHandler.sendMessage(new AskMessage(Ask_Type.NICKNAME_NOT_UNIQUE));
     }
 
     @Override
     public void askCreateOrJoin() {
-
+        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
     }
 
     @Override
     public void askGameInfo() {
+        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
+    }
 
+    @Override
+    public void askGameNumber() {
+        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
     }
 
     @Override
     public void askWizardID() {
-
+        clientHandler.sendMessage(new AskMessage(Ask_Type.WIZARD_ID));
     }
 
     @Override
-    public void update(Object message) {
+    public void showGenericMessage(String message) {
+        clientHandler.sendMessage(new GenericMessage(message));
+    }
 
+    @Override
+    public void update(Message message) {
+        clientHandler.sendMessage( message);
     }
 
 }

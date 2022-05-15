@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.view.VirtualView;
 
 public interface ClientHandler {
     /*
@@ -17,4 +18,8 @@ public interface ClientHandler {
         Sends a message to the client.
     */
     void sendMessage(Message message);
+
+    void setVirtualView(VirtualView virtualView);
+
+    VirtualView getVirtualView();
 }

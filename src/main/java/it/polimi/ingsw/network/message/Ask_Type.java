@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.message;
 
-public enum ErrorType {
+public enum Ask_Type {
     NICKNAME_NOT_UNIQUE,
-    GAMEID_NOT_UNIQUE,
-    CONNECTION_ERROR
+    GAME_ID,
+    WIZARD_ID
 }

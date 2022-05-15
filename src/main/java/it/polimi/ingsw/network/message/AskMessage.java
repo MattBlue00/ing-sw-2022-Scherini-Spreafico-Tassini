@@ -1,15 +1,13 @@
 package it.polimi.ingsw.network.message;
 
-public class ErrorMessage extends Message{
-    private String errorString;
-    private ErrorType errorType;
-    public ErrorMessage(ErrorType errorType, String errorString) {
-        super(null, MessageType.ERROR_MESSAGE);
-        this.errorType = errorType;
-        this.errorString = errorString;
+public class AskMessage extends Message{
+    private Ask_Type askType;
+    public AskMessage(Ask_Type askType) {
+        super(null, MessageType.ASK_TYPE);
+        this.askType = askType;
     }
 
-    public ErrorType getErrorType() {
-        return errorType;
+    public Ask_Type getAskType() {
+        return askType;
     }
 }

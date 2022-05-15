@@ -5,12 +5,11 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
 import it.polimi.ingsw.utils.Constants;
+import it.polimi.ingsw.view.VirtualView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class GameController implements Observer<Message>{
+public class GameController implements Observer{
 
     // TODO: Error handling will be changed for each method when we will implement the network & the view
 
@@ -25,6 +24,7 @@ public class GameController implements Observer<Message>{
     protected static final String INVALID_STATE = "Invalid game state";
     protected static final String END_STATE = "The game has ended, the winner is: ";
     private final List<String> gameQueue;
+    private transient Map<String, VirtualView> virtualViewMap;
 
     /*
         Initialize GameController
@@ -37,6 +37,7 @@ public class GameController implements Observer<Message>{
         this.motherNatureMoved = false;
         this.gameQueue = new ArrayList<>();
         this.gameState = GameState.SETUP;
+        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
     }
 
     // Getter and Setter methods
@@ -101,23 +102,24 @@ public class GameController implements Observer<Message>{
         this.currentPlayerIndex = currentPlayerIndex;
     }
 
+    public Map<String, VirtualView> getVirtualViewMap() {
+        return virtualViewMap;
+    }
+
     // GameController methods
 
-        /* ---------------------------------------------------------------
-        ! (network -> Server handles following stuff)
-        ! Fist thing login in the server, gameController not exists yet.
-        ! Second thing, the client can choose to join or create a game.
-        ! -> If the game is new we create a new gameController based on
-        !    the CreateGameMessage params
-        ! -> If the game already exists JoinGameMessage with gameID.
-        ! (controller -> Controller handles game phases from now on)
-        ! From now on the GameController exists and handle match phases.
-        --------------------------------------------------------------*/
-
+    /* ---------------------------------------------------------------
+    ! (network -> Server handles following stuff)
+    ! Fist thing login in the server, gameController not exists yet.
+    ! Second thing, the client can choose to join or create a game.
+    ! -> If the game is new we create a new gameController based on
+    !    the CreateGameMessage params
+    ! -> If the game already exists JoinGameMessage with gameID.
+    ! (controller -> Controller handles game phases from now on)
+    ! From now on the GameController exists and handle match phases.
+    --------------------------------------------------------------*/
 
     public void getMessage(Message receivedMessage) throws TryAgainException {
-        // TODO: receive a message from the view
-
         switch (gameState) {
             case SETUP:
                 if (receivedMessage.getMessageType() != MessageType.WIZARD_ID) {
@@ -180,9 +182,10 @@ public class GameController implements Observer<Message>{
         The queue contains the nickname of the clients before they
         communicate their WizardID.
      */
-    public void addPlayerToQueue(String nickname){
+    public void addPlayerToQueue(String nickname, VirtualView virtualView){
         if(gameQueue.size() < getGame().getPlayersNumber()) {
             this.gameQueue.add(nickname);
+            this.virtualViewMap.put(nickname, virtualView);
             System.out.println("----------Players in the queue, game: "+gameControllerID+"----------");
             gameQueue.forEach(System.out::println);
             System.out.println("---------------QUEUE END----------------");
@@ -206,6 +209,8 @@ public class GameController implements Observer<Message>{
         for(int i=0; i<game.getPlayers().size(); i++) {
             if (wizardID.equals(game.getPlayers().get(i).getWizardID())) {
                 wizardIdAlreadyUsed = true;
+                virtualViewMap.get(receivedMessage.getNickname()).showGenericMessage("Wizard ID has already been chosen...");
+                virtualViewMap.get(receivedMessage.getNickname()).askWizardID();
                 break;
             }
         }
@@ -218,7 +223,7 @@ public class GameController implements Observer<Message>{
     public void startGame(){
         game.startGame();
         setGameState(GameState.IN_GAME);
-        System.out.println("START THE GAME");
+        broadcastGenericMessage("GAME CAN NOW START");
     }
 
     /*
@@ -490,6 +495,13 @@ public class GameController implements Observer<Message>{
         }
         return winningPlayer;
     }
+
+    public void broadcastGenericMessage(String message) {
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showGenericMessage(message);
+        }
+    }
+
 
     @Override
     public void update(Message message) {

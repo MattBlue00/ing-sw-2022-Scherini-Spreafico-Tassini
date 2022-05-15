@@ -7,6 +7,7 @@ import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.exceptions.WrongMessageSentException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
+import it.polimi.ingsw.view.VirtualView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +17,6 @@ public class Server{
 
     private GameControllerFactory gameControllerFactory;
     private final Map<Integer,GameController> gameControllerMap;
-    private GameController gameController;
     private Object lock; //LOCK for synchronization
     private final Map<String, ClientHandler> clientHandlerMap;
 
@@ -35,14 +35,13 @@ public class Server{
         Add a new client to the server.
         If the client's nickname has already been chosen throw a new Exception.
      */
-    public void addClient(String nickname, ClientHandler clientHandler){
-        // virtual view will be associated to the added client
+    public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException{
+        clientHandler.setVirtualView(new VirtualView(clientHandler));
         if(!clientHandlerMap.containsKey(nickname)) {
-            clientHandlerMap.put(nickname, clientHandler); // This can be done if the game is not started yet.
-            //clientHandlerMap.forEach((key, value) -> System.out.println(key));
+            clientHandlerMap.put(nickname, clientHandler);
             return;
         }
-        System.out.println("Error nickname already exists"); // TODO: replace with exception
+        throw new TryAgainException("Error nickname already exists");
     }
 
     /*
@@ -67,10 +66,13 @@ public class Server{
             gameControllerMap.put(gameNumber, initController(message));
             gameControllerMap.get(gameNumber).setGameControllerID(gameNumber);
             gameControllerMap.get(gameNumber).prepareGame(playerNum);
-            gameControllerMap.get(gameNumber).addPlayerToQueue(nickname);
+            gameControllerMap.get(gameNumber).addPlayerToQueue(nickname, clientHandlerMap.get(nickname).getVirtualView());
+            clientHandlerMap.get(nickname).getVirtualView().askWizardID();
             return;
         }
         System.out.println("Game Number has already been chosen.");
+        clientHandlerMap.get(nickname).getVirtualView().showGenericMessage("The game ID has already been chosen...");
+        clientHandlerMap.get(nickname).getVirtualView().askGameInfo();
     }
 
     /*
@@ -87,7 +89,13 @@ public class Server{
                 createNewGameController(message);
             }
             else if(message.getMessageType() == MessageType.JOIN_GAME) {
-                gameControllerMap.get(((JoinGameMessage) message).getGameID()).addPlayerToQueue(message.getNickname());
+                try {
+                    gameControllerMap.get(((JoinGameMessage) message).getGameID()).addPlayerToQueue(message.getNickname(), clientHandlerMap.get(message.getNickname()).getVirtualView());
+                    clientHandlerMap.get(message.getNickname()).getVirtualView().askWizardID();
+                }catch (NullPointerException e){
+                    clientHandlerMap.get(message.getNickname()).getVirtualView().showGenericMessage("This game ID does not exists...");
+                    clientHandlerMap.get(message.getNickname()).getVirtualView().askGameNumber();
+                }
             }
             else{
                 int gameID  = getGameIDFromNickname(message.getNickname());
