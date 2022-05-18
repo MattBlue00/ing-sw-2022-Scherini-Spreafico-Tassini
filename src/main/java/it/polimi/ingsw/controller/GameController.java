@@ -353,8 +353,8 @@ public class GameController implements Observer{
         List<Player> players = game.getPlayers();
         List<AssistantCard> cardsPlayed = new ArrayList<>(players.size());
         for(Player player : players){
-            if(player.getLastAssistantCardPlayed().isPresent())
-                cardsPlayed.add(player.getLastAssistantCardPlayed().get());
+            if(player.getLastAssistantCardPlayed() != null)
+                cardsPlayed.add(player.getLastAssistantCardPlayed());
         }
         for(AssistantCard card : cardsPlayed){
             if(card.getName().equals(cardName)){
@@ -380,8 +380,8 @@ public class GameController implements Observer{
     public void setOrder(){
         List<Player> players = game.getPlayers();
         for(int i=0; i<game.getPlayersNumber()-1;i++){
-            if(players.get(i).getLastAssistantCardPlayed().get().getWeight() >
-                    players.get(i+1).getLastAssistantCardPlayed().get().getWeight()) {
+            if(players.get(i).getLastAssistantCardPlayed().getWeight() >
+                    players.get(i+1).getLastAssistantCardPlayed().getWeight()) {
                 Collections.swap(players, i, i+1);
             }
         }

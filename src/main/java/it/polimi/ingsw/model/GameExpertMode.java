@@ -72,7 +72,7 @@ public class GameExpertMode extends Game {
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
-        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().get().getMotherNatureSteps());
+        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
                 card.doEffect(this);
@@ -225,8 +225,8 @@ public class GameExpertMode extends Game {
                 Island currentIsland = getBoard().getIslands().getIslandFromID(i);
 
                 String ownerNickname;
-                if (currentIsland.getOwner().isPresent())
-                    ownerNickname = currentIsland.getOwner().get().getNickname();
+                if (currentIsland.getOwner() != null)
+                    ownerNickname = currentIsland.getOwner().getNickname();
                 else
                     ownerNickname = "--";
 

@@ -24,10 +24,10 @@ public class PlayerTest{
 
         player.playAssistantCard("FOX");
 
-        if(game.getCurrentPlayer().getLastAssistantCardPlayed().isEmpty())
+        if(game.getCurrentPlayer().getLastAssistantCardPlayed() == null)
             System.out.println("ERROR in: " + this.getClass());
 
-        assertEquals("FOX", game.getCurrentPlayer().getLastAssistantCardPlayed().get().getName());
+        assertEquals("FOX", game.getCurrentPlayer().getLastAssistantCardPlayed().getName());
     }
 
     @Test
@@ -66,12 +66,12 @@ public class PlayerTest{
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         g1.setCurrentPlayer(p1);
 
-        if(p1.getAssistantCardFromName("FOX").isEmpty())
+        if(p1.getAssistantCardFromName("FOX") == null)
             System.out.println("ERROR in: " + this.getClass());
 
-        assertEquals("FOX", p1.getAssistantCardFromName("FOX").get().getName());
+        assertEquals("FOX", p1.getAssistantCardFromName("FOX").getName());
         p1.playAssistantCard("FOX");
-        assertEquals(Optional.empty(), p1.getAssistantCardFromName("FOX"));
+        assertEquals(null, p1.getAssistantCardFromName("FOX"));
     }
 
     @Test

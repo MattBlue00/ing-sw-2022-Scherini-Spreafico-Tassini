@@ -58,7 +58,7 @@ public class HealerTest {
 
             g1.islandConquerCheck(1);
             assertFalse(cards[0].getIsActive());
-            assertEquals(Optional.empty(), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
             assertFalse(g1.getBoard().getIslands().getIslandFromID(1).hasVeto());
 
         }

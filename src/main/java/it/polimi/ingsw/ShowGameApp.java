@@ -45,6 +45,7 @@ public class ShowGameApp
         p1.setCoinsWallet(5);
         p2.setCoinsWallet(5);
         g.getBoard().setMotherNaturePos(12);
+        g.showGameBoard();
 
         try {
             gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE"));

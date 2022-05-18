@@ -43,12 +43,12 @@ class GameControllerTest {
             gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
         } catch (AssistantCardAlreadyPlayedException ignored) {}
 
-        if(gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().isEmpty())
+        if(gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed() == null)
             System.out.println("ERROR");
 
-        assertEquals(cardName, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().get().getName());
-        assertEquals(5, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().get().getWeight());
-        assertEquals(3, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().get().getMotherNatureSteps());
+        assertEquals(cardName, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getName());
+        assertEquals(5, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getWeight());
+        assertEquals(3, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
         assertEquals(9, gameController.getGame().getCurrentPlayer().getDeck().size());
     }
 
@@ -261,10 +261,10 @@ class GameControllerTest {
         }
         catch(Exception ignored){}
 
-        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().isEmpty())
+        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed() == null)
             System.out.println("ASSISTANT ERROR");
 
-        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
+        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
         assertThrows(AssistantCardAlreadyPlayedException.class,
                 () -> gc.getMessage(new AssistantCardMessage("Ludo", "TURTLE")));
         assertThrows(WrongTurnException.class,
@@ -274,7 +274,7 @@ class GameControllerTest {
             gc.getMessage(new AssistantCardMessage("Ludo", "FOX"));
         }
         catch(Exception ignored){}
-        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
+        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
 
         assertTrue(gc.getPlanningPhaseDone());
         assertEquals(0, gc.getCurrentPlayerIndex());
@@ -305,11 +305,11 @@ class GameControllerTest {
 
             gc.getMessage(new MotherNatureStepsMessage("Ludo", 1));
 
-            if(gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().isEmpty())
+            if(gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner() == null)
                 System.out.println("LUDO ERROR");
 
             assertEquals(gc.getGame().getCurrentPlayer(),
-                    gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().get());
+                    gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner());
             assertTrue(gc.getMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new MotherNatureStepsMessage("Ludo", 1)));
@@ -340,11 +340,10 @@ class GameControllerTest {
 
             gc.getMessage(new MotherNatureStepsMessage("Matteo", 2));
 
-            if(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().isPresent())
+            if(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner() != null)
                 System.out.println("MATTEO ERROR");
 
-            assertEquals(gc.getGame().getCurrentPlayer(),
-                    gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().get());
+            assertNull(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
             assertTrue(gc.getMotherNatureMoved());
 
             assertThrows(EmptyCloudException.class,
@@ -352,7 +351,7 @@ class GameControllerTest {
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberMessage("Matteo", 2)));
             gc.getMessage(new CloudChoiceMessage("Matteo", 1));
-            assertEquals(0, gc.getGame().getBoard().getCloud(1).getStudents().size());
+            assertEquals(3, gc.getGame().getBoard().getCloud(1).getStudents().size());
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
             assertEquals(0, gc.getCurrentPlayerIndex());
@@ -362,7 +361,7 @@ class GameControllerTest {
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
 
-            assertEquals(1, gc.getGame().getRoundNumber());
+            assertEquals(2, gc.getGame().getRoundNumber());
 
         }
         catch(Exception ignored){}

@@ -63,7 +63,7 @@ public class VillagerTest {
 
             // p2 should be owner of the island
             g1.islandConquerCheck(1);
-            assertEquals(Optional.of(p2), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p2, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
             g1.setCurrentPlayer(p1);
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
@@ -78,7 +78,7 @@ public class VillagerTest {
             assertFalse(cards[0].getIsActive());
             assertEquals(2, p1.getCoinsWallet());
             assertEquals(4, cards[0].getCost());
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
         } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |
@@ -131,7 +131,7 @@ public class VillagerTest {
                 g1.getBoard().getIslands().getIslandFromID(1).addStudent(s3);
                 g1.getBoard().getIslands().getIslandFromID(1).addStudent(s4);
 
-                assertEquals(Optional.empty(), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+                assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
                 g1.setCurrentPlayer(p1);
 
@@ -143,7 +143,7 @@ public class VillagerTest {
                 assertFalse(cards[0].getIsActive());
                 assertEquals(2, p1.getCoinsWallet());
                 assertEquals(4, cards[0].getCost());
-                assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+                assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
             } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |

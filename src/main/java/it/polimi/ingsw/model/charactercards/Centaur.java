@@ -30,11 +30,11 @@ public class Centaur extends CharacterCard {
                 return;
             }
             Player currentPlayer = game.getCurrentPlayer();
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
+            Player owner = selectedIsland.getOwner();
+            if(owner != null) {
+                if (!owner.equals(currentPlayer)) {
                     int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                    int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner.get());
+                    int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner);
                     GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                             game.getBoard().getIslands());
                 }

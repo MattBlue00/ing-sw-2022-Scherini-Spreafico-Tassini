@@ -17,7 +17,7 @@ public class Player {
     private List<AssistantCard> deck;
     private School school;
     private int coinsWallet;
-    private Optional<AssistantCard> lastAssistantCardPlayed;
+    private AssistantCard lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
     public Player(Wizard wizardID, String nickname, Constants constants) {
@@ -38,7 +38,7 @@ public class Player {
         this.deck.add(new AssistantCard(AssistantType.TURTLE));
 
         this.school = new School(constants);
-        this.lastAssistantCardPlayed = Optional.empty();
+        this.lastAssistantCardPlayed = null;
         this.characterCardAlreadyPlayed = false;
     }
 
@@ -66,16 +66,16 @@ public class Player {
 
     public Wizard getWizardID() { return wizardID; }
 
-    public Optional<AssistantCard> getLastAssistantCardPlayed() {
+    public AssistantCard getLastAssistantCardPlayed() {
         return lastAssistantCardPlayed;
     }
 
     public void setLastAssistantCardPlayed(AssistantCard lastAssistantCardPlayed) {
-        this.lastAssistantCardPlayed = Optional.of(lastAssistantCardPlayed);
+        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
     }
 
     public void resetLastAssistantCardPlayed(){
-        this.lastAssistantCardPlayed = Optional.empty();
+        this.lastAssistantCardPlayed = null;
     }
 
     public boolean getCharacterCardAlreadyPlayed() {
@@ -94,18 +94,21 @@ public class Player {
         remove it from player's deck
      */
     public void playAssistantCard(String cardName) {
-        Optional<AssistantCard> chosenCard = getAssistantCardFromName(cardName);
+        AssistantCard chosenCard = getAssistantCardFromName(cardName);
         this.lastAssistantCardPlayed = chosenCard;
-        getDeck().remove(chosenCard.get());
+        getDeck().remove(chosenCard);
     }
 
     /*
         Find all cards with the name equals to the parameter,
         hypothesis: deck does not contain cards with same name.
      */
-    public Optional<AssistantCard> getAssistantCardFromName(String cardName){
-        return getDeck().stream().filter(card -> card.getName().equals(cardName)).findFirst();
+    public AssistantCard getAssistantCardFromName(String cardName){
+        Optional <AssistantCard> assistantCard  =
+                getDeck().stream().filter(card -> card.getName().equals(cardName)).findFirst();
+        return assistantCard.orElse(null);
     }
+    // TODO: findFirst returns an Optional, better check
 
     public void moveStudent(Island island, String color) throws StudentNotFoundException {
         this.school.moveStudentToIsland(island, color);

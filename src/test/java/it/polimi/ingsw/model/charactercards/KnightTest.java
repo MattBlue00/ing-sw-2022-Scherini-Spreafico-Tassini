@@ -60,7 +60,7 @@ public class KnightTest {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s4);
 
             g1.islandConquerCheck(1);
-            assertEquals(Optional.of(p2), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p2, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
             g1.setCurrentPlayer(p1);
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
@@ -73,7 +73,7 @@ public class KnightTest {
             assertFalse(cards[0].getIsActive());
             assertEquals(3, p1.getCoinsWallet());
             assertEquals(3, cards[0].getCost());
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
         } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |

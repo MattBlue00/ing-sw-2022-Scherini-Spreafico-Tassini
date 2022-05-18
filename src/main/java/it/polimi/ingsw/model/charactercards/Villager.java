@@ -40,11 +40,11 @@ public class Villager extends CharacterCard implements StringCard {
                 return;
             }
             Player currentPlayer = game.getCurrentPlayer();
-            Optional<Player> owner = selectedIsland.getOwner();
-            if(owner.isPresent()) {
-                if (!owner.get().equals(currentPlayer)) {
+            Player owner = selectedIsland.getOwner();
+            if(owner != null) {
+                if (!owner.equals(currentPlayer)) {
                     int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
-                    int calcOwner = selectedIsland.influenceCalc(owner.get(), colorToExclude);
+                    int calcOwner = selectedIsland.influenceCalc(owner, colorToExclude);
                     GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                             game.getBoard().getIslands());
                 }
