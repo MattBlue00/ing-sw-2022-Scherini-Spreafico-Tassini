@@ -4,7 +4,9 @@ import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
-public class Healer extends CharacterCard implements IntCard {
+import java.io.Serializable;
+
+public class Healer extends CharacterCard implements IntCard, Serializable {
 
     /*
         CHARACTER CARD DESCRIPTION:

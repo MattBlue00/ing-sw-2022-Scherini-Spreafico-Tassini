@@ -177,9 +177,7 @@ public class GameExpertMode extends Game {
     }
 
     public void showGameBoard(){
-
         try {
-
             String nextPlayerNickname;
             if(getPlayers().size() - 1 == getPlayers().indexOf(getCurrentPlayer()))
                 nextPlayerNickname = getPlayers().get(0).getNickname();
@@ -274,7 +272,8 @@ public class GameExpertMode extends Game {
             }
 
             System.out.println("--------------------");
-
+            // Show all schools
+            getPlayers().forEach(Player::showSchool);
         }
         catch(IslandNotFoundException ignored){}
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -164,8 +166,25 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void askAssistantCard() {
+        out.println("Select the Assistant Card From your deck you want to play : ");
+        try {
+            String assistantCard = readLine();
+            notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(assistantCard));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void showGenericMessage(String message) {
         out.println(message);
+    }
+
+    @Override
+    public void showGameStatus(Game game) {
+        clearInterface();
+        game.showGameBoard();
     }
 
 

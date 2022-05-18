@@ -6,10 +6,11 @@ import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bard extends CharacterCard implements ArrayListStringCard {
+public class Bard extends CharacterCard implements ArrayListStringCard, Serializable {
 
     /*
         CHARACTER CARD DESCRIPTION:

@@ -3,9 +3,10 @@ package it.polimi.ingsw.model.charactercards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Innkeeper extends CharacterCard {
+public class Innkeeper extends CharacterCard implements Serializable {
 
     /*
         CHARACTER CARD DESCRIPTION:

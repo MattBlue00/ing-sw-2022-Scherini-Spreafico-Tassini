@@ -9,10 +9,7 @@ import it.polimi.ingsw.view.VirtualView;
 
 import java.util.*;
 
-public class GameController implements Observer{
-
-    // TODO: Error handling will be changed for each method when we will implement the network & the view
-
+public class GameController{
     private Game game;
     private int gameControllerID;
     private boolean planningPhaseDone;
@@ -204,7 +201,7 @@ public class GameController implements Observer{
 
         boolean wizardIdAlreadyUsed = false;
 
-        String nickname = String.valueOf(gameQueue.stream().filter(nick -> nick.equals(receivedMessage.getNickname())).findFirst());
+        String nickname = String.valueOf(gameQueue.stream().filter(nick -> nick.equals(receivedMessage.getNickname())).findFirst().get());
         Wizard wizardID = Wizard.valueOf(((WizardIDMessage) receivedMessage).getWizardID());
         for(int i=0; i<game.getPlayers().size(); i++) {
             if (wizardID.equals(game.getPlayers().get(i).getWizardID())) {
@@ -222,8 +219,12 @@ public class GameController implements Observer{
 
     public void startGame(){
         game.startGame();
-        setGameState(GameState.IN_GAME);
+        System.out.println("game: "+game+" ho inizializzato il game");
         broadcastGenericMessage("GAME CAN NOW START");
+        broadCastGameBoard();
+        setGameState(GameState.IN_GAME);
+        System.out.println(game.getCurrentPlayer().getNickname());
+        virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
     }
 
     /*
@@ -234,7 +235,7 @@ public class GameController implements Observer{
         if (message.getMessageType() == MessageType.ASSISTANT_CARD_REPLY)
             handleAssistantCardChoice(message);
         else
-            System.out.println("Wrong message sent.");
+            virtualViewMap.get(message.getNickname()).showGenericMessage("Wrong message sent.");
     }
 
     /*
@@ -502,9 +503,10 @@ public class GameController implements Observer{
         }
     }
 
-
-    @Override
-    public void update(Message message) {
-        // TODO: implement update
+    public void broadCastGameBoard(){
+        for(VirtualView vv : virtualViewMap.values()){
+            vv.showGameStatus(this.game);
+        }
     }
+
 }

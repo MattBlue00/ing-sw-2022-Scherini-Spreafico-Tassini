@@ -3,13 +3,15 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
+
 /*
     In this list, the last node of the doubly linked list contains the address of the first node and
     the first node contains the address of the last node.
     In a circular doubly linked list, there is a cycle and none of the node pointers are set to null.
  */
 
-public class DoublyLinkedList {
+public class DoublyLinkedList implements Serializable {
     private Island head = null; // first element of the list
     private int size; // to check the number of islands in the list
 

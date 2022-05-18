@@ -83,6 +83,11 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onUpdateAssistantCard(String assistantCard) {
+        client.sendMessage(new AssistantCardMessage(nickname, assistantCard));
+    }
+
+    @Override
     public void update(Message message) {
         switch(message.getMessageType()){
             case ASK_TYPE:
@@ -90,9 +95,13 @@ public class ClientController implements ViewObserver, Observer {
                     case NICKNAME_NOT_UNIQUE -> taskQueue.execute(view::askNickname);
                     case GAME_ID -> taskQueue.execute(view::askCreateOrJoin);
                     case WIZARD_ID -> taskQueue.execute(view::askWizardID);
+                    case ASSISTANT ->  taskQueue.execute(view::askAssistantCard);
                     default -> {//should never be reached
                     }
                 }
+                break;
+            case GAME_STATUS:
+                taskQueue.execute(() -> view.showGameStatus(((GameStatusMessage) message).getGame()));
                 break;
             case GENERIC:
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));

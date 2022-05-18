@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class TowerRoom {
+import java.io.Serializable;
+
+public class TowerRoom implements Serializable {
 
     private int towersLeft;
 

@@ -2,11 +2,12 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Hall {
+public class Hall implements Serializable {
 
     private final int capacity;
     private ArrayList<Student> students;

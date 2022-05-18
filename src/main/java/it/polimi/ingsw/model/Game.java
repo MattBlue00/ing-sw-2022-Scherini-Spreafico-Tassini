@@ -4,11 +4,12 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Game{
+public class Game implements Serializable {
 
     // game variables
 
@@ -303,6 +304,9 @@ public class Game{
             }
 
             System.out.println("--------------------");
+
+            // Show all schools
+            players.forEach(Player::showSchool);
 
         }
         catch(IslandNotFoundException ignored){}
