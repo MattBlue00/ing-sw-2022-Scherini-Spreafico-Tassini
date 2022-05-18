@@ -55,7 +55,7 @@ class CentaurTest {
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(Optional.empty(), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();
@@ -69,7 +69,7 @@ class CentaurTest {
             Student s3 = new Student(Color.BLUE);
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s3);
             g1.islandConquerCheck(1);
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();
@@ -88,7 +88,7 @@ class CentaurTest {
             g1.profCheck();
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s5);
             g1.islandConquerCheck(1);
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(NonExistentColorException | FullTableException | IslandNotFoundException e){
             e.printStackTrace();
@@ -105,7 +105,7 @@ class CentaurTest {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s6);
             g1.playerPlaysCharacterCard(6);
 
-            assertEquals(Optional.of(p2), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p2, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
             assertFalse(cards[0].getIsActive());
             assertEquals(2, p1.getCoinsWallet());
             assertEquals(4, cards[1].getCost());

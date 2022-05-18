@@ -123,11 +123,11 @@ public class GameBoard {
             return;
         }
         Island selectedIsland = islands.getIslandFromID(islandID);
-        Optional<Player> owner = selectedIsland.getOwner();
-        if(owner.isPresent()) {
-            if (!owner.get().equals(currentPlayer)) {
+        Player owner = selectedIsland.getOwner();
+        if(owner != null) {
+            if (!owner.equals(currentPlayer)) {
                 int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
-                int calcOwner = selectedIsland.influenceCalc(owner.get());
+                int calcOwner = selectedIsland.influenceCalc(owner);
                 islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner, islands);
             }
         }
@@ -141,11 +141,11 @@ public class GameBoard {
     public static void islandConquerAlgorithm
             (Player currentPlayer, Island selectedIsland, int calcCurrent, int calcOwner, DoublyLinkedList islands) {
 
-        if(selectedIsland.getOwner().isPresent()) {
+        if(selectedIsland.getOwner() != null) {
             if (calcCurrent > calcOwner && calcCurrent > 0) {
 
                 int towersToMove = selectedIsland.getNumOfTowers();
-                TowerRoom towerRoomPreviousOwner = selectedIsland.getOwner().get().getSchool().getTowerRoom();
+                TowerRoom towerRoomPreviousOwner = selectedIsland.getOwner().getSchool().getTowerRoom();
                 TowerRoom towerRoomNewOwner = currentPlayer.getSchool().getTowerRoom();
                 towerRoomPreviousOwner.setTowersLeft(towerRoomPreviousOwner.getTowersLeft() + towersToMove);
                 selectedIsland.setOwner(currentPlayer);

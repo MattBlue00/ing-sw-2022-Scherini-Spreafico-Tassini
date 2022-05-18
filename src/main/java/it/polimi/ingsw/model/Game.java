@@ -183,7 +183,7 @@ public class Game{
      */
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException, IslandNotFoundException {
 
-        int max_steps = currentPlayer.getLastAssistantCardPlayed().get().getMotherNatureSteps();
+        int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
 
         if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
             throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
@@ -246,8 +246,8 @@ public class Game{
                 Island currentIsland = getBoard().getIslands().getIslandFromID(i);
 
                 String ownerNickname;
-                if (currentIsland.getOwner().isPresent())
-                    ownerNickname = currentIsland.getOwner().get().getNickname();
+                if (currentIsland.getOwner() != null)
+                    ownerNickname = currentIsland.getOwner().getNickname();
                 else
                     ownerNickname = "--";
 

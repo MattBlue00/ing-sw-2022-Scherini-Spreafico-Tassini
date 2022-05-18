@@ -42,17 +42,17 @@ class GameControllerExpertModeTest {
         }
         catch(Exception ignored){}
 
-        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().isEmpty())
+        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed() == null)
             System.out.println("ERROR in: " + this.getClass());
 
-        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
+        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
         assertThrows(AssistantCardAlreadyPlayedException.class,
                 () -> gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE")));
         try {
             gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "FOX"));
         }
         catch(Exception ignored){}
-        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().get().getName());
+        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
 
         assertTrue(gc.getPlanningPhaseDone());
         assertEquals(0, gc.getCurrentPlayerIndex());
@@ -75,11 +75,11 @@ class GameControllerExpertModeTest {
 
             gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1));
 
-            if(gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().isEmpty())
+            if(gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner() == null)
                 System.out.println("ERROR in: " + this.getClass());
 
             assertEquals(gc.getGame().getCurrentPlayer(),
-                    gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner().get());
+                    gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner());
             assertTrue(gc.getMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1)));
@@ -116,10 +116,11 @@ class GameControllerExpertModeTest {
 
             gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 2));
 
-            if(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner().isPresent())
+            if(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner() != null
+            )
                 System.out.println("ERROR in: " + this.getClass());
 
-            assertEquals(Optional.empty(),
+            assertEquals(null,
                     gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
             assertTrue(gc.getMotherNatureMoved());
 

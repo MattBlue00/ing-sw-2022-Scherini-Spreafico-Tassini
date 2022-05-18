@@ -57,14 +57,14 @@ public class DoublyLinkedList {
     public void mergeIslands(Island island){
         Island prev = island.getPrev();
         Island next = island.getNext();
-        if(island.getOwner().isEmpty()) // safety return (should never happen)
+        if(island.getOwner() == null) // safety return (should never happen)
             return;
-        if(prev.getOwner().equals(island.getOwner())){
+        if(prev.getOwner() != null && prev.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
             prev.getStudents().forEach(student -> island.addStudent(student));
             removeIsland(prev);
         }
-        if(next.getOwner().equals(island.getOwner())){
+        if(next.getOwner() != null && next.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + next.getNumOfTowers());
             next.getStudents().forEach(student -> island.addStudent(student));
             removeIsland(next);

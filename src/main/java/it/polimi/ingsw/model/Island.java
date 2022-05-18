@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class Island {
 
-    private Optional<Player> owner;
+    private Player owner;
     private final int id;
     private int numOfTowers;
     private List<Student> students;
@@ -22,7 +22,7 @@ public class Island {
         this.id = id;
         this.veto = false;
         this.students = new ArrayList<>();
-        this.owner = Optional.empty();
+        this.owner = null;
         this.numOfTowers = 0;
     }
 
@@ -32,12 +32,12 @@ public class Island {
         return id;
     }
 
-    public Optional<Player> getOwner(){
+    public Player getOwner(){
         return owner;
     }
 
     public void setOwner(Player owner) {
-        this.owner = Optional.of(owner);
+        this.owner = owner;
     }
 
     public void addStudent(Student student){
@@ -89,7 +89,7 @@ public class Island {
 
             influencePoints += influenceCalcStudents(currentPlayer);
 
-            if(owner.isPresent() && owner.get().equals(currentPlayer))
+            if(owner != null && owner.equals(currentPlayer))
                 influencePoints += numOfTowers;
 
         } catch (NonExistentColorException e) {
@@ -110,7 +110,7 @@ public class Island {
 
             influencePoints += influenceCalcStudents(currentPlayer, color);
 
-            if(owner.isPresent() && owner.get().equals(currentPlayer))
+            if(owner != null && owner.equals(currentPlayer))
                 influencePoints += numOfTowers;
 
         } catch (NonExistentColorException e) {
