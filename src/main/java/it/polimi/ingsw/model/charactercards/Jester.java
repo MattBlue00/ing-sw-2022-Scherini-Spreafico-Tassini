@@ -66,8 +66,9 @@ public class Jester extends CharacterCard implements ArrayListStringCard{
 
     public List<Student> getStudentsOnTheCard() { return studentsOnTheCard; }
 
+    @Override
     public void showStudentsOnTheCard(){
-        System.out.print("STUDENTI SULLA CARTA JESTER: ");
+        System.out.print("\tStudenti sulla carta: ");
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
 
         yellowStudents =
@@ -81,13 +82,11 @@ public class Jester extends CharacterCard implements ArrayListStringCard{
         pinkStudents =
                 (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
-        System.out.println(
+        System.out.print(
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
-
-        System.out.println("--------------------");
     }
 }

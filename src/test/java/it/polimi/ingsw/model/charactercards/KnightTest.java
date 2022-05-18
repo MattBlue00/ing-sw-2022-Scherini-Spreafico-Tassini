@@ -29,6 +29,14 @@ public class KnightTest {
         g1.setCurrentPlayer(p1);
         p1.setCoinsWallet(5);
 
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
+
         try {
 
             Student s1 = new Student(Color.BLUE);

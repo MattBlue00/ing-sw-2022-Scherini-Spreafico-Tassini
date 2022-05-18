@@ -57,6 +57,14 @@ public class GameTest{
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Student s1 = new Student(Color.YELLOW);
 
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
+
         g1.setCurrentPlayer(p1);
         p1.getSchool().getHall().addStudent(s1);
         try {
@@ -206,6 +214,14 @@ public class GameTest{
         Game g1 = new Game(2, new Constants(2));
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
+
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
 
         g1.addPlayer(p1);
         g1.addPlayer(p2);

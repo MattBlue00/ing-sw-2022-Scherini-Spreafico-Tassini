@@ -11,12 +11,6 @@ public class GameControllerExpertMode extends GameController{
         super();
     }
 
-    public void startGame(){
-        getGame().startGame();
-        setGameState(GameState.IN_GAME);
-        System.out.println("START THE GAME");
-    }
-
     @Override
     public void actionPhase(Message message) throws TryAgainException {
 
@@ -78,8 +72,8 @@ public class GameControllerExpertMode extends GameController{
             if(receivedMessage instanceof CharacterCardMessageString) {
                 ((StringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageString) receivedMessage).getPar());
             }
-            if(receivedMessage instanceof CharacterCardMessageArraylistString){
-                ((ArrayListStringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageArraylistString) receivedMessage).getPar());
+            if(receivedMessage instanceof CharacterCardMessageArrayListString){
+                ((ArrayListStringCard) ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID)).doOnClick(((CharacterCardMessageArrayListString) receivedMessage).getPar());
             }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);

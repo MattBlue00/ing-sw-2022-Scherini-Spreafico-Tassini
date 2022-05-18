@@ -38,6 +38,8 @@ public abstract class CharacterCard {
 
     public abstract void doEffect(GameExpertMode game);
 
+    public void showStudentsOnTheCard(){}
+
     public void setUpCard(){
         this.setCost(getCost() + 1);
         this.setIsActive(false);

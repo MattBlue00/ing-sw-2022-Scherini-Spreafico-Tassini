@@ -64,8 +64,8 @@ public class SocketClient extends Client{
                 }
                 notifyObservers(message);
             }
-            });
-        }
+        });
+    }
 
     @Override
     public void disconnect() {

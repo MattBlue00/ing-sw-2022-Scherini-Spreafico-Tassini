@@ -22,7 +22,7 @@ class JesterTest {
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
-        List studentsOnTheCard = new ArrayList<>();
+        List<Student> studentsOnTheCard = new ArrayList<>();
         Student s1 = new Student(Color.BLUE);
         Student s2 = new Student(Color.GREEN);
         Student s3 = new Student(Color.RED);

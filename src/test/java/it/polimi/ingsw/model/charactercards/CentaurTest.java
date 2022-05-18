@@ -18,6 +18,14 @@ class CentaurTest {
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
+
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Bard();
         cards[1] = new Centaur();

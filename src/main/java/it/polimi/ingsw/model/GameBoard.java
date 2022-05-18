@@ -43,6 +43,30 @@ public class GameBoard {
             studentsBag.add(new Student(Color.PINK));
         }
 
+        List<Student> islandStudentsList = new ArrayList<>(10);
+        for(int i = 0; i < Constants.NUM_COLORS; i++){
+            islandStudentsList.add(studentsBag.remove((Constants.STUDENTS_PER_COLOR*i)));
+            islandStudentsList.add(studentsBag.remove((Constants.STUDENTS_PER_COLOR*i)+1));
+        }
+        Collections.shuffle(islandStudentsList);
+
+        int noStudentPos1 = motherNaturePos;
+        int noStudentPos2;
+        if(motherNaturePos > 6)
+            noStudentPos2 = motherNaturePos - 6;
+        else
+            noStudentPos2 = motherNaturePos + 6;
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                if((i+1) != noStudentPos1 && (i+1) != noStudentPos2) {
+                    Island currentIsland = islands.getIslandFromID(i+1);
+                    currentIsland.addStudent(islandStudentsList.remove(islandStudentsList.size() - 1));
+                }
+            } catch (IslandNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+
         Collections.shuffle(studentsBag);
 
         for(int i = 0; i<playersNumber; i++) {

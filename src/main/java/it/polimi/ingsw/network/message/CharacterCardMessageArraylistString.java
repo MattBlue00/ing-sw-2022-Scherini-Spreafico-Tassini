@@ -2,11 +2,11 @@ package it.polimi.ingsw.network.message;
 
 import java.util.List;
 
-public class CharacterCardMessageArraylistString extends CharacterCardMessage{
+public class CharacterCardMessageArrayListString extends CharacterCardMessage{
 
     List<String> par;
 
-    public CharacterCardMessageArraylistString(String nickname, int cardID,  List<String> par) {
+    public CharacterCardMessageArrayListString(String nickname, int cardID, List<String> par) {
         super(nickname, cardID);
         this.par = par;
     }
