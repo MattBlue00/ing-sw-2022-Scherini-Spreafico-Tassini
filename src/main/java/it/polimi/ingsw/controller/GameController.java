@@ -223,8 +223,11 @@ public class GameController{
         broadcastGenericMessage("GAME CAN NOW START");
         broadCastGameBoard();
         setGameState(GameState.IN_GAME);
-        System.out.println(game.getCurrentPlayer().getNickname());
-        virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
+        // For old tests
+        if(!virtualViewMap.isEmpty()) {
+            System.out.println(game.getCurrentPlayer().getNickname());
+            virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
+        }
     }
 
     /*
@@ -333,6 +336,7 @@ public class GameController{
 
     public void handleAssistantCardChoice(Message receivedMessage) throws AssistantCardAlreadyPlayedException{
        String chosenCard = ((AssistantCardMessage) receivedMessage).getCardName().toUpperCase();
+       System.out.println(chosenCard);
        if(isAssistantCardPlayable(chosenCard))
            game.getCurrentPlayer().playAssistantCard(chosenCard);
        else
