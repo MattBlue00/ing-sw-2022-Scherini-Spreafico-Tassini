@@ -4,11 +4,12 @@ import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Table {
+public class Table implements Serializable {
 
     private final Color color;
     private boolean hasProfessor;

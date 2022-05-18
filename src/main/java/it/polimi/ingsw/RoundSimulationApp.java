@@ -97,8 +97,6 @@ public class RoundSimulationApp
         catch(Exception ignored){}
 
         gc.getGame().showGameBoard();
-        p1.showSchool();
-        p2.showSchool();
 
     }
 }

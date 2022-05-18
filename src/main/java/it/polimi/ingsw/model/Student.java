@@ -3,7 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
 
     private final Color color;
 

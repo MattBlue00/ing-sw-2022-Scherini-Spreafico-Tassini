@@ -3,9 +3,10 @@ package it.polimi.ingsw.model.charactercards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Centaur extends CharacterCard {
+public class Centaur extends CharacterCard implements Serializable {
 
     /*
         CHARACTER CARD DESCRIPTION:

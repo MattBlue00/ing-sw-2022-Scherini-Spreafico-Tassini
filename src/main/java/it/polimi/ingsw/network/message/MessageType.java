@@ -15,5 +15,6 @@ public enum MessageType {
     SUCCESS_MESSAGE,
     ERROR_MESSAGE,
     GENERIC,
-    ASK_TYPE
+    ASK_TYPE,
+    GAME_STATUS
 }

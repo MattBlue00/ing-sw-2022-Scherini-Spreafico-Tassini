@@ -3,9 +3,10 @@ package it.polimi.ingsw.model.charactercards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Villager extends CharacterCard implements StringCard {
+public class Villager extends CharacterCard implements StringCard, Serializable {
 
     /*
         CHARACTER CARD DESCRIPTION:

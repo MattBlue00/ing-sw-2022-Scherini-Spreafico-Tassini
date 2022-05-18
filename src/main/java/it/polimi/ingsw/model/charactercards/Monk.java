@@ -6,9 +6,10 @@ import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Monk extends CharacterCard implements StringIntCard{
+public class Monk extends CharacterCard implements StringIntCard, Serializable {
 
     private Student[] students;
     private String chosenColor;

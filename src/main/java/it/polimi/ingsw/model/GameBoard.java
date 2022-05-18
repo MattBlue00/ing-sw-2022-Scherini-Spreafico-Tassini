@@ -5,9 +5,10 @@ import it.polimi.ingsw.exceptions.EmptyCloudException;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GameBoard {
+public class GameBoard implements Serializable {
 
     // GameBoard variables
     private int motherNaturePos; // represent the current position of motherNature in the island array

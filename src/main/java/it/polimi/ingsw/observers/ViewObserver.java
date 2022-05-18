@@ -8,4 +8,5 @@ public interface ViewObserver {
     void onUpdateGameInfo(int gameNumber, boolean mode, int numOfPlayers);
     void onUpdateGameNumber(int gameNumber);
     void onUpdateWizardID(String wizardID);
+    void onUpdateAssistantCard(String assistantCard);
 }

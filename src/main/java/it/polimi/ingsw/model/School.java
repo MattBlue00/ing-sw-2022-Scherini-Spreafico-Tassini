@@ -5,7 +5,9 @@ import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
-public class School {
+import java.io.Serializable;
+
+public class School implements Serializable {
 
     private Table tables[];
     private TowerRoom towerRoom;

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.utils;
 
-public class Constants {
+import java.io.Serializable;
+
+public class Constants implements Serializable {
 
     public static final int CHARACTERS_NUM = 3;
     public static final int NUM_COLORS = 5;

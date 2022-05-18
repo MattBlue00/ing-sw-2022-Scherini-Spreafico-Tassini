@@ -7,9 +7,10 @@ import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Student;
 
+import java.io.Serializable;
 import java.util.Locale;
 
-public class Thief extends CharacterCard implements StringCard{
+public class Thief extends CharacterCard implements StringCard, Serializable {
 
     private String chosenColor;
 

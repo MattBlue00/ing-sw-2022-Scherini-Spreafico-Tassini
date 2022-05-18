@@ -2,11 +2,12 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.EmptyCloudException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Cloud {
+public class Cloud implements Serializable {
 
     private final int capacity;
     private ArrayList<Student> students;

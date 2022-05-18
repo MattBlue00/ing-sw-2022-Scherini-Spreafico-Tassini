@@ -2,11 +2,12 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Island {
+public class Island implements Serializable {
 
     private Player owner;
     private final int id;

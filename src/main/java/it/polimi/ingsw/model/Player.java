@@ -6,11 +6,12 @@ import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Player {
+public class Player implements Serializable {
 
     private final Wizard wizardID;
     private final String nickname;
@@ -125,7 +126,7 @@ public class Player {
 
     public void showSchool(){
 
-        System.out.printf("SCUOLA DI: %s \n", getNickname());
+        System.out.println("SCUOLA DI: "+getNickname());
 
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
         yellowStudents =

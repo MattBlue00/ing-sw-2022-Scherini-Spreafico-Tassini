@@ -10,11 +10,12 @@ import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Jester extends CharacterCard implements ArrayListStringCard{
+public class Jester extends CharacterCard implements ArrayListStringCard, Serializable {
 
     private List<Student> studentsOnTheCard = new ArrayList<>();
     private List<String> studentsToMove;
