@@ -33,9 +33,16 @@ public class PlayerTest{
     @Test
     void moveStudentToIslandTest() throws IslandNotFoundException {
         Game g1 = new Game(2, new Constants(2));
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Student s1 = new Student(Color.YELLOW);
-            Island island = g1.getBoard().getIslands().getIslandFromID(1);
+        Island island = g1.getBoard().getIslands().getIslandFromID(1);
 
         g1.setCurrentPlayer(p1);
         p1.getSchool().getHall().addStudent(s1);

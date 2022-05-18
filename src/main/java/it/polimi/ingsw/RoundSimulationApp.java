@@ -2,7 +2,6 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerExpertMode;
-import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.charactercards.Flagman;
 import it.polimi.ingsw.model.charactercards.Healer;
@@ -16,7 +15,7 @@ import java.util.List;
  * Hello world!
  *
  */
-public class ShowGameApp
+public class RoundSimulationApp
 {
     public static void main(String[] args) {
 

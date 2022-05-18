@@ -55,8 +55,9 @@ public class Princess extends CharacterCard implements StringCard {
 
     //TODO: what if parameters are incorrect? We should give players other attempts!
 
+    @Override
     public void showStudentsOnTheCard(){
-        System.out.print("STUDENTI SULLA CARTA PRINCESS: ");
+        System.out.print("\tStudenti sulla carta: ");
         int yellowStudents = 0, blueStudents = 0, greenStudents = 0, redStudents = 0, pinkStudents = 0;
 
         for (int i = 0; i < 4; i++){
@@ -71,14 +72,13 @@ public class Princess extends CharacterCard implements StringCard {
             else pinkStudents++;
         }
 
-        System.out.println(
+        System.out.print(
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
 
-        System.out.println("--------------------");
     }
 
 }

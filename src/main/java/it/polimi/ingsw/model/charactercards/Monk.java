@@ -4,6 +4,7 @@ import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Student;
+import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.util.List;
 
@@ -50,5 +51,31 @@ public class Monk extends CharacterCard implements StringIntCard{
     }
 
     //TODO: what if parameters are incorrect? We should give players other attempts!
+
+    @Override
+    public void showStudentsOnTheCard(){
+        System.out.print("\tStudenti sulla carta: ");
+        int yellowStudents = 0, blueStudents = 0, greenStudents = 0, redStudents = 0, pinkStudents = 0;
+
+        for (int i = 0; i < 4; i++){
+            if(students[i].getColor().toString().equals("YELLOW"))
+                yellowStudents++;
+            else if(students[i].getColor().toString().equals("BLUE"))
+                blueStudents++;
+            else if(students[i].getColor().toString().equals("GREEN"))
+                greenStudents++;
+            else if(students[i].getColor().toString().equals("RED"))
+                redStudents++;
+            else pinkStudents++;
+        }
+
+        System.out.print(
+                ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
+                        ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
+
+    }
 
 }

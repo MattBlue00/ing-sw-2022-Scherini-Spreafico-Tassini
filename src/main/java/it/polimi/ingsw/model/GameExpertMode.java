@@ -5,9 +5,7 @@ import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 public class GameExpertMode extends Game {
 
@@ -147,50 +145,28 @@ public class GameExpertMode extends Game {
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         Random random = new Random();
+        List<Integer> cardsAlreadyPicked = new ArrayList<>(3);
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            // TODO: when all the CharacterCards are ready, the while loop has to be removed
-            int num = 0;
-            while(num == 0 || num == 7 || num == 12)
+            int num;
+            do{
                 num = random.nextInt(12) + 1;
-            switch(num){
-                case 1:
-                    cards[i] = new Monk(getBoard().getStudentsBag());
-                    break;
-                case 2:
-                    cards[i] = new Innkeeper();
-                    break;
-                case 3:
-                    cards[i] = new Flagman();
-                    break;
-                case 4:
-                    cards[i] = new Postman();
-                    break;
-                case 5:
-                    cards[i] = new Healer();
-                    break;
-                case 6:
-                    cards[i] = new Centaur();
-                    break;
-                case 7:
-                    cards[i] = new Jester(getBoard().getStudentsBag());
-                    break;
-                case 8:
-                    cards[i] = new Knight();
-                    break;
-                case 9:
-                    cards[i] = new Villager();
-                    break;
-                case 10:
-                    cards[i] = new Bard();
-                    break;
-                case 11:
-                    cards[i] = new Princess(getBoard().getStudentsBag());
-                    break;
-                case 12:
-                    cards[i] = new Thief();
-                    break;
-                default: // should never enter here
-                    break;
+            }while(cardsAlreadyPicked.contains(num));
+            cardsAlreadyPicked.add(num);
+            switch (num) {
+                case 1 -> cards[i] = new Monk(getBoard().getStudentsBag());
+                case 2 -> cards[i] = new Innkeeper();
+                case 3 -> cards[i] = new Flagman();
+                case 4 -> cards[i] = new Postman();
+                case 5 -> cards[i] = new Healer();
+                case 6 -> cards[i] = new Centaur();
+                case 7 -> cards[i] = new Jester(getBoard().getStudentsBag());
+                case 8 -> cards[i] = new Knight();
+                case 9 -> cards[i] = new Villager();
+                case 10 -> cards[i] = new Bard();
+                case 11 -> cards[i] = new Princess(getBoard().getStudentsBag());
+                case 12 -> cards[i] = new Thief();
+                default -> {
+                } // should never enter here
             }
         }
         addCharacterCards(cards);
@@ -289,6 +265,7 @@ public class GameExpertMode extends Game {
             for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
                 System.out.print(characters[i].getClass().getSimpleName() + "\n" +
                         "ID: " + characters[i].getId() + "\t" + "Costo: " + characters[i].getCost());
+                characters[i].showStudentsOnTheCard();
                 if(characters[i].getIsActive())
                     System.out.println("\tATTIVA");
                 else

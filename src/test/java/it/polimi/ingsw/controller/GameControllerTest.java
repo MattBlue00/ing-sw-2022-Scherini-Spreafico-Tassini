@@ -83,6 +83,14 @@ class GameControllerTest {
 
         gameController.prepareGame(m.getPlayerNumber());
 
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = gameController.getGame().getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
+
         String user = "Samuele";
         Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getConstants());
         Message message = new MoveToIslandMessage(player.getNickname(), "BLUE", 1);

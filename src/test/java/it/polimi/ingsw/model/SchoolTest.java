@@ -20,6 +20,14 @@ public class SchoolTest{
         g1.addPlayer(p1);
         g1.setCurrentPlayer(p1);
 
+        for(int i = 0; i < Constants.MAX_NUM_OF_ISLANDS; i++){
+            try {
+                Island currentIsland = g1.getBoard().getIslands().getIslandFromID(i+1);
+                if(currentIsland.getStudents().size()>0)
+                    currentIsland.getStudents().clear();
+            } catch (IslandNotFoundException ignored){}
+        }
+
         s1.moveToHall(p1);
         s2.moveToHall(p1);
 
