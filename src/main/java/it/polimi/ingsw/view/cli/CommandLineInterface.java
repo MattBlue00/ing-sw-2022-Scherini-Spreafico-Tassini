@@ -2,11 +2,13 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -167,10 +169,117 @@ public class CommandLineInterface extends ViewObservable implements View {
 
     @Override
     public void askAssistantCard() {
-        out.println("Select the Assistant Card From your deck you want to play : ");
+        out.println("Select the Assistant Card you want to play: ");
         try {
             String assistantCard = readLine();
             notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(assistantCard));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void askMoveStudent(){
+        out.println("Type ISLAND if you want to move a student to an Island, TABLE if you want to move it to its Table:");
+        try {
+            String choice = readLine().toUpperCase();
+            if(choice.equals("ISLAND")) {
+                out.println("Which student do you want to move to an Island? Please type a valid color:");
+                String color = readLine().toUpperCase();
+                out.println("Towards which island? Please type a valid number:");
+                int islandID = Integer.parseInt(readLine());
+                notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(color, islandID));
+            }
+            if(choice.equals("TABLE")){
+                out.println("Which student do you want to move to its Table? Please type a valid color:");
+                String color = readLine().toUpperCase();
+                notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(color));
+            }
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void askMotherNatureSteps() {
+        out.println("How many steps do you wish Mother Nature has to move of? Please type a valid number:");
+        try {
+            int steps = Integer.parseInt(readLine());
+            notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(steps));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void askCloud() {
+        out.println("Which cloud do you want to pick students from? Please type a valid number:");
+        try {
+            int cloudID = Integer.parseInt(readLine()) - 1;
+            notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudID));
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void askCharacterCard() {
+        out.println("Which character card do you want to use? Please type a valid number:");
+        try {
+            int characterCardID = Integer.parseInt(readLine());
+            switch (characterCardID) {
+                case 2, 4, 6, 8 -> notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(characterCardID));
+                case 3, 5 -> {
+                    out.println("Please enter a valid parameter (number):");
+                    int par = Integer.parseInt(readLine());
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(characterCardID, par));
+                }
+                case 9, 11, 12 -> {
+                    out.println("Please enter a valid parameter (color):");
+                    String par = readLine().toUpperCase();
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardString(characterCardID, par));
+                }
+                case 1 -> {
+                    out.println("Please enter a valid parameter (color):");
+                    String par1 = readLine().toUpperCase();
+                    out.println("Please enter a valid parameter (number):");
+                    int par2 = Integer.parseInt(readLine());
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardStringInt(characterCardID, par1, par2));
+                }
+                case 7 -> {
+                    out.println("Please enter a valid list of colors (0, 2, 4 or 6 colors), STOP to end the list.");
+                    List<String> list = new ArrayList<>();
+                    while (true) {
+                        if (list.size() == 6)
+                            break;
+                        out.println("Please enter the color of the hall student (STOP to end):");
+                        String par1 = readLine().toUpperCase();
+                        if (par1.equals("STOP"))
+                            break;
+                        list.add(par1);
+                        out.println("Please enter the color of the card student:");
+                        String par2 = readLine().toUpperCase();
+                        list.add(par2);
+                    }
+                }
+                case 10 -> {
+                    out.println("Please enter a valid list of colors (0, 2 or 4 colors), STOP to end the list.");
+                    List<String> list = new ArrayList<>();
+                    while (true) {
+                        if (list.size() == 4)
+                            break;
+                        out.println("Please enter the color of the hall student (STOP to end):");
+                        String par1 = readLine().toUpperCase();
+                        if (par1.equals("STOP"))
+                            break;
+                        list.add(par1);
+                        out.println("Please enter the color of the table student:");
+                        String par2 = readLine().toUpperCase();
+                        list.add(par2);
+                    }
+                }
+                default -> {
+                }
+            }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -186,7 +295,6 @@ public class CommandLineInterface extends ViewObservable implements View {
         clearInterface();
         game.showGameBoard();
     }
-
 
     public void clearInterface(){
         out.flush();

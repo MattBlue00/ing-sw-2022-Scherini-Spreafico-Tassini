@@ -81,8 +81,6 @@ public class Game implements Serializable {
 
     // Game methods
 
-    // TODO: WE WILL NEED A METHOD FOR RESET AT THE END OF A ROUND (LAST_CARD_PLAYED = NULL...)
-
     /*
         This method starts the chain of events that take a certain number of students, equal to the max number of students
         the cloud can have, from the studentBag and puts them on the clouds, one at a time

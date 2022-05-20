@@ -41,7 +41,7 @@ public class Server{
             clientHandlerMap.put(nickname, clientHandler);
             return;
         }
-        throw new TryAgainException("Error nickname already exists");
+        throw new TryAgainException("Error: nickname already exists");
     }
 
     /*
@@ -100,7 +100,7 @@ public class Server{
             else{
                 int gameID  = getGameIDFromNickname(message.getNickname());
                 if(gameID != -1) {
-                    System.out.println("message sent to game number: "+gameID);
+                    System.out.println("Message sent to game number: "+gameID);
                     gameControllerMap.get(gameID).getMessage(message);
                 }
                 else throw new WrongMessageSentException("Error");
@@ -112,8 +112,8 @@ public class Server{
     }
 
     /*
-        return the gameID associated to a nickname, if it doesn't exists
-        return 1.
+        returns the gameID associated to a nickname, if it doesn't exists
+        returns -1.
     */
     private int getGameIDFromNickname(String nickname){
         return gameControllerMap.entrySet()

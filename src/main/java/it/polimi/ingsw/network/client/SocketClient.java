@@ -1,7 +1,5 @@
 package it.polimi.ingsw.network.client;
 
-import it.polimi.ingsw.network.message.AskMessage;
-import it.polimi.ingsw.network.message.Ask_Type;
 import it.polimi.ingsw.network.message.ErrorMessage;
 import it.polimi.ingsw.network.message.Message;
 
@@ -15,12 +13,9 @@ import java.util.concurrent.Executors;
 
 public class SocketClient extends Client{
 
-
     private final Socket socket;
-
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
-
     private final ExecutorService readExecutionQueue;
 
     private static final int SOCKET_TIMEOUT = 10000;
@@ -60,7 +55,6 @@ public class SocketClient extends Client{
                 } catch (IOException | ClassNotFoundException e) {
                     message = new ErrorMessage("Connection lost...");
                     disconnect();
-                    readExecutionQueue.shutdownNow();
                 }
                 notifyObservers(message);
             }
@@ -76,7 +70,6 @@ public class SocketClient extends Client{
                 in.close();
                 readExecutionQueue.shutdownNow();
                 socket.close();
-
             }
         } catch (IOException e) {
             e.printStackTrace();

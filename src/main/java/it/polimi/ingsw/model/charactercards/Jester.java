@@ -59,7 +59,6 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Serial
 
     // the first color is for the student to pick from the hall,
     // the second color is for the student to pick from the card
-    // TODO: if par.size() > 6, throw new exception
     @Override
     public void doOnClick(List<String> par) {
         this.studentsToMove = new ArrayList<>(par);

@@ -9,6 +9,10 @@ public interface View {
     void askGameNumber();
     void askWizardID();
     void askAssistantCard();
+    void askMoveStudent();
+    void askMotherNatureSteps();
+    void askCloud();
+    void askCharacterCard();
     void showGenericMessage(String message);
     void showGameStatus(Game game);
 }

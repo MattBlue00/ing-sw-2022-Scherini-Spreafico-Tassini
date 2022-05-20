@@ -17,7 +17,7 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
         The bard allows the player to switch up to 2 students between the hall and the dining room.
     */
 
-    List<String> students;
+    private List<String> students;
 
     public Bard() {
         super(10, 1);
@@ -36,8 +36,8 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
 
         while(maxNumOfChanges > 0){
 
-            Color color1 = Color.valueOf(students.get(maxNumOfChanges-1));
-            Color color2 = Color.valueOf(students.get(maxNumOfChanges-2));
+            Color color1 = Color.valueOf(students.get(maxNumOfChanges-2));
+            Color color2 = Color.valueOf(students.get(maxNumOfChanges-1));
             try {
 
                 Student hallStudent =

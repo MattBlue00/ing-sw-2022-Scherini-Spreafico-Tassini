@@ -5,9 +5,10 @@ import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GameExpertMode extends Game {
+public class GameExpertMode extends Game implements Serializable {
 
     private final CharacterCard[] characters;
 
@@ -185,7 +186,9 @@ public class GameExpertMode extends Game {
                 nextPlayerNickname = getPlayers().get(getPlayers().indexOf(getCurrentPlayer()) + 1).getNickname();
             System.out.printf("TURNO: %d\tGIOCATORE CORRENTE: %s\tPROSSIMO GIOCATORE: %s\n",
                     getRoundNumber(), getCurrentPlayer().getNickname(), nextPlayerNickname);
-            System.out.print("Monete di " + getCurrentPlayer().getNickname() + ": " + getCurrentPlayer().getCoinsWallet() + "\t");
+
+            getPlayers().forEach(x -> System.out.printf("Monete di %s: %d     ", x.getNickname(), x.getCoinsWallet()));
+
             if(getCurrentPlayer().getCharacterCardAlreadyPlayed())
                 System.out.println(ANSIConstants.ANSI_BOLD + "Una carta personaggio è stata già giocata." + ANSIConstants.ANSI_RESET);
             else

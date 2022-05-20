@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public abstract class CharacterCard {
+import java.io.Serializable;
+
+public abstract class CharacterCard implements Serializable {
 
     private final int id;
     private int cost;
