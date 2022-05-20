@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CharacterCardMessageArrayListString extends CharacterCardMessage{
 
-    List<String> par;
+    private List<String> par;
 
     public CharacterCardMessageArrayListString(String nickname, int cardID, List<String> par) {
         super(nickname, cardID);

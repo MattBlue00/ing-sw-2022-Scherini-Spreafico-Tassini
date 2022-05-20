@@ -15,32 +15,52 @@ public class VirtualView implements View, Observer {
 
     @Override
     public void askNickname() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.NICKNAME_NOT_UNIQUE));
+        clientHandler.sendMessage(new AskMessage(AskType.NICKNAME_NOT_UNIQUE));
     }
 
     @Override
     public void askCreateOrJoin() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
+        clientHandler.sendMessage(new AskMessage(AskType.GAME_ID));
     }
 
     @Override
     public void askGameInfo() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
+        clientHandler.sendMessage(new AskMessage(AskType.GAME_ID));
     }
 
     @Override
     public void askGameNumber() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.GAME_ID));
+        clientHandler.sendMessage(new AskMessage(AskType.GAME_ID));
     }
 
     @Override
     public void askWizardID() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.WIZARD_ID));
+        clientHandler.sendMessage(new AskMessage(AskType.WIZARD_ID));
     }
 
     @Override
     public void askAssistantCard() {
-        clientHandler.sendMessage(new AskMessage(Ask_Type.ASSISTANT));
+        clientHandler.sendMessage(new AskMessage(AskType.ASSISTANT_CARD));
+    }
+
+    @Override
+    public void askMoveStudent() {
+        clientHandler.sendMessage(new AskMessage(AskType.MOVE_STUDENT));
+    }
+
+    @Override
+    public void askMotherNatureSteps() {
+        clientHandler.sendMessage(new AskMessage(AskType.MOVE_MOTHER_NATURE));
+    }
+
+    @Override
+    public void askCloud() {
+        clientHandler.sendMessage(new AskMessage(AskType.CLOUD_CHOICE));
+    }
+
+    @Override
+    public void askCharacterCard() {
+        clientHandler.sendMessage(new AskMessage(AskType.CHARACTER_CARD));
     }
 
     @Override

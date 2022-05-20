@@ -88,6 +88,46 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onUpdateIslandStudentMove(String color, int islandID){
+        client.sendMessage(new MoveToIslandMessage(nickname, color, islandID));
+    }
+
+    @Override
+    public void onUpdateTableStudentMove(String color){
+        client.sendMessage(new MoveToTableMessage(nickname, color));
+    }
+
+    @Override
+    public void onUpdateMotherNatureSteps(int steps) {
+        client.sendMessage(new MotherNatureStepsMessage(nickname, steps));
+    }
+
+    @Override
+    public void onUpdateCloudChoice(int cloudID) {
+        client.sendMessage(new CloudChoiceMessage(nickname, cloudID));
+    }
+
+    @Override
+    public void onUpdateCharacterCard(int characterCardID) {
+        client.sendMessage(new CharacterCardMessage(nickname, characterCardID));
+    }
+
+    @Override
+    public void onUpdateCharacterCardInt(int characterCardID, int par) {
+        client.sendMessage(new CharacterCardMessageInt(nickname, characterCardID, par));
+    }
+
+    @Override
+    public void onUpdateCharacterCardString(int characterCardID, String par) {
+        client.sendMessage(new CharacterCardMessageString(nickname, characterCardID, par));
+    }
+
+    @Override
+    public void onUpdateCharacterCardStringInt(int characterCardID, String par1, int par2) {
+        client.sendMessage(new CharacterCardMessageStringInt(nickname, characterCardID, par1, par2));
+    }
+
+    @Override
     public void update(Message message) {
         switch(message.getMessageType()){
             case ASK_TYPE:
@@ -95,7 +135,11 @@ public class ClientController implements ViewObserver, Observer {
                     case NICKNAME_NOT_UNIQUE -> taskQueue.execute(view::askNickname);
                     case GAME_ID -> taskQueue.execute(view::askCreateOrJoin);
                     case WIZARD_ID -> taskQueue.execute(view::askWizardID);
-                    case ASSISTANT ->  taskQueue.execute(view::askAssistantCard);
+                    case ASSISTANT_CARD ->  taskQueue.execute(view::askAssistantCard);
+                    case MOVE_STUDENT -> taskQueue.execute(view::askMoveStudent);
+                    case MOVE_MOTHER_NATURE -> taskQueue.execute(view::askMotherNatureSteps);
+                    case CLOUD_CHOICE -> taskQueue.execute(view::askCloud);
+                    case CHARACTER_CARD -> taskQueue.execute(view::askCharacterCard);
                     default -> {//should never be reached
                     }
                 }

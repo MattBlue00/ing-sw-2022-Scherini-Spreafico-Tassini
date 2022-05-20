@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.message;
 
 public class CharacterCardMessageInt extends CharacterCardMessage {
 
-    int par;
+    private int par;
 
     public CharacterCardMessageInt(String nickname, int cardID, int par) {
         super(nickname, cardID);

@@ -47,11 +47,10 @@ class BardTest {
             assertEquals(0, p1.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
 
             List<String> students = new ArrayList<>();
-            students.add("YELLOW");
             students.add("BLUE");
             students.add("YELLOW");
             students.add("BLUE");
-
+            students.add("YELLOW");
 
             ((Bard) cards[0]).doOnClick(students);
             g1.playerPlaysCharacterCard(10);

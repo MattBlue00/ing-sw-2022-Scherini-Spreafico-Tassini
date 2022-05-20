@@ -3,7 +3,6 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.observers.Observer;
 import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.view.VirtualView;
 
@@ -135,8 +134,18 @@ public class GameController{
                         currentPlayerIndex++;
                         if (currentPlayerIndex == game.getPlayersNumber()) {
                             endPlanningPhase();
-                        } else
+                            if(!virtualViewMap.isEmpty()) {
+                                System.out.println(game.getCurrentPlayer().getNickname());
+                                broadcastGameBoard();
+                                virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
+                            }
+                        } else {
                             game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
+                            if(!virtualViewMap.isEmpty()) {
+                                System.out.println(game.getCurrentPlayer().getNickname());
+                                virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
+                            }
+                        }
                     } else {
                         actionPhase(receivedMessage);
                         if (playerActionPhaseDone) {
@@ -221,7 +230,7 @@ public class GameController{
         game.startGame();
         System.out.println("game: "+game+" ho inizializzato il game");
         broadcastGenericMessage("GAME CAN NOW START");
-        broadCastGameBoard();
+        broadcastGameBoard();
         setGameState(GameState.IN_GAME);
         // For old tests
         if(!virtualViewMap.isEmpty()) {
@@ -235,8 +244,9 @@ public class GameController{
      */
 
     public void planningPhase(Message message) throws AssistantCardAlreadyPlayedException{
-        if (message.getMessageType() == MessageType.ASSISTANT_CARD_REPLY)
+        if (message.getMessageType() == MessageType.ASSISTANT_CARD_REPLY) {
             handleAssistantCardChoice(message);
+        }
         else
             virtualViewMap.get(message.getNickname()).showGenericMessage("Wrong message sent.");
     }
@@ -256,6 +266,16 @@ public class GameController{
                 else{
                     handleStudentMovement(message);
                     movesLeft--;
+                    if(!virtualViewMap.isEmpty() && movesLeft > 0) {
+                        System.out.println(game.getCurrentPlayer().getNickname());
+                        broadcastGameBoard();
+                        virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
+                    }
+                    if(!virtualViewMap.isEmpty() && movesLeft == 0) {
+                        System.out.println(game.getCurrentPlayer().getNickname());
+                        broadcastGameBoard();
+                        virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMotherNatureSteps();
+                    }
                 }
                 break;
             case MOTHER_NATURE_STEPS_REPLY:
@@ -263,6 +283,11 @@ public class GameController{
                     handleMotherNature(message);
                     motherNatureMoved = true;
                     game.islandConquerCheck(game.getBoard().getMotherNaturePos());
+                    if(!virtualViewMap.isEmpty()) {
+                        System.out.println(game.getCurrentPlayer().getNickname());
+                        broadcastGameBoard();
+                        virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
+                    }
                 }
                 else
                     throw new WrongMessageSentException("You need to move other " + movesLeft +
@@ -304,6 +329,11 @@ public class GameController{
         movesLeft = Constants.PLAYER_MOVES;
         playerActionPhaseDone = false;
         motherNatureMoved = false;
+        if(!virtualViewMap.isEmpty()) {
+            System.out.println(game.getCurrentPlayer().getNickname());
+            broadcastGameBoard();
+            virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
+        }
     }
 
     /*
@@ -326,6 +356,11 @@ public class GameController{
         game.setRoundNumber(game.getRoundNumber() + 1);
         for(Player player : game.getPlayers())
             player.resetLastAssistantCardPlayed();
+        if(!virtualViewMap.isEmpty()) {
+            System.out.println(game.getCurrentPlayer().getNickname());
+            broadcastGameBoard();
+            virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
+        }
     }
 
     /*
@@ -507,7 +542,7 @@ public class GameController{
         }
     }
 
-    public void broadCastGameBoard(){
+    public void broadcastGameBoard(){
         for(VirtualView vv : virtualViewMap.values()){
             vv.showGameStatus(this.game);
         }

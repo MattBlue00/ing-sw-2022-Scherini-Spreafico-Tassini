@@ -1,11 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.ClientController;
-import it.polimi.ingsw.network.client.Client;
-import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.view.cli.CommandLineInterface;
-
-import java.io.IOException;
 
 public class ClientMainCLI {
 
