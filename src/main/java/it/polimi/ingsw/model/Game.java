@@ -234,7 +234,7 @@ public class Game implements Serializable {
                 nextPlayerNickname = players.get(0).getNickname();
             else
                 nextPlayerNickname = players.get(players.indexOf(currentPlayer) + 1).getNickname();
-            System.out.printf("TURNO: %d\tGIOCATORE CORRENTE: %s\tPROSSIMO GIOCATORE: %s\n",
+            System.out.printf("ROUND: %d\tCURRENT PLAYER: %s\tNEXT PLAYER: %s\n",
                     roundNumber, currentPlayer.getNickname(), nextPlayerNickname);
             System.out.println("--------------------");
 
@@ -250,9 +250,9 @@ public class Game implements Serializable {
                 else
                     ownerNickname = "--";
 
-                System.out.println("ISOLA " + i);
-                System.out.println(currentIsland.getNumOfTowers() + " torri");
-                System.out.println("Proprietario: " + ownerNickname);
+                System.out.println("ISLAND " + i);
+                System.out.println(currentIsland.getNumOfTowers() + " towers");
+                System.out.println("Owner: " + ownerNickname);
 
                 yellowStudents =
                         (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
@@ -265,7 +265,7 @@ public class Game implements Serializable {
                 pinkStudents =
                         (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
-                System.out.println("Studenti: " +
+                System.out.println("Students: " +
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
@@ -273,7 +273,7 @@ public class Game implements Serializable {
                         ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
 
                 if(currentIsland.getId() == getBoard().getMotherNaturePos())
-                    System.out.println(ANSIConstants.ANSI_BOLD + "Madre Natura è qui!" + ANSIConstants.ANSI_RESET);
+                    System.out.println(ANSIConstants.ANSI_BOLD + "Mother Nature is here!" + ANSIConstants.ANSI_RESET);
 
                 System.out.println("--------------------");
 
@@ -292,7 +292,7 @@ public class Game implements Serializable {
                         (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
                 //TODO: when the cloud number is asked, remember to save it decremented of 1!
-                System.out.print("NUVOLA " + (i + 1) + ": ");
+                System.out.print("CLOUD " + (i + 1) + ": ");
                 System.out.println(
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                                 ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
@@ -309,6 +309,19 @@ public class Game implements Serializable {
         }
         catch(IslandNotFoundException ignored){}
 
+    }
+
+    public void showDeck(){
+        List<AssistantCard> deck = this.currentPlayer.getDeck();
+        System.out.println("Assistant cards in the deck: ");
+        for(AssistantCard assistantCard : deck){
+            System.out.print(assistantCard.getName() + " card, Mother Nature steps: " +
+                    assistantCard.getMotherNatureSteps() + ", card's weight: " + assistantCard.getWeight() + "\n");
+        }
+        for(Player player : this.getPlayers()){
+            if(player != this.getCurrentPlayer())
+                System.out.println(player.getNickname() + "'s last Assistant Card played: " + player.getLastAssistantCardPlayed());
+        }
     }
 
 }

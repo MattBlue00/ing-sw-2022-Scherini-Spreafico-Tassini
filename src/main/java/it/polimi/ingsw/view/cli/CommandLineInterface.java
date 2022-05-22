@@ -5,10 +5,10 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -135,10 +135,22 @@ public class CommandLineInterface extends ViewObservable implements View {
             out.println("Type the number (ID) of the game you want to create [ game number must be unique ]: ");
             int gameNumber = Integer.parseInt(readLine());
             out.println("Chose the type of game you want to play [ For Expert mode type TRUE, for normal mode type FALSE ] : ");
-            boolean gameMode = Boolean.parseBoolean(readLine());
+            String str = readLine();
+            while (!str.equalsIgnoreCase("true") && !str.equalsIgnoreCase("false")){
+                System.out.println("The given input is not correct, please retry. " +
+                        "\nChose the type of game you want to play [ For Expert mode type TRUE, for normal mode type FALSE ] : ");
+                str = readLine();
+            }
+            boolean gameMode = Boolean.parseBoolean(str.toLowerCase(Locale.ROOT));
             out.println("Enter the number of players for the game [ 2 or 3 ] : ");
-            int numOfPlayers = Integer.parseInt(readLine());
-            notifyObserver(viewObserver -> viewObserver.onUpdateGameInfo(gameNumber, gameMode, numOfPlayers));
+            int numOfPlayers;
+            do {
+                numOfPlayers = Integer.parseInt(readLine());
+                if(numOfPlayers != 2 && numOfPlayers != 3)
+                    out.println("Please enter a valid choice. \nEnter the number of players for the game [ 2 or 3 ] : ");
+            }while(numOfPlayers != 2 && numOfPlayers != 3);
+            int finalNumOfPlayers = numOfPlayers;
+            notifyObserver(viewObserver -> viewObserver.onUpdateGameInfo(gameNumber, gameMode,finalNumOfPlayers));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -161,7 +173,13 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("(The wizard must be unique)");
         try {
             String wizard = readLine();
-            notifyObserver(viewObserver -> viewObserver.onUpdateWizardID(wizard));
+            while (!wizard.equalsIgnoreCase("BLUE_WIZARD") && !wizard.equalsIgnoreCase("PINK_WIZARD")
+                    && !wizard.equalsIgnoreCase("YELLOW_WIZARD") && !wizard.equalsIgnoreCase("GREEN_WIZARD")){
+                System.out.println("The given input is not correct, please retry. \nGameWizard (BLUE_WIZARD | PINK_WIZARD | YELLOW_WIZARD | GREEN_WIZARD): ");
+                wizard = readLine();
+            }
+            String finalWizard = wizard.toUpperCase();
+            notifyObserver(viewObserver -> viewObserver.onUpdateWizardID(finalWizard));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -172,7 +190,16 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Select the Assistant Card you want to play: ");
         try {
             String assistantCard = readLine();
-            notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(assistantCard));
+            while (!assistantCard.equalsIgnoreCase("CHEETAH") && !assistantCard.equalsIgnoreCase("OSTRICH")
+                && !assistantCard.equalsIgnoreCase("CAT") && !assistantCard.equalsIgnoreCase("EAGLE")
+                && !assistantCard.equalsIgnoreCase("FOX") && !assistantCard.equalsIgnoreCase("SNAKE")
+                && !assistantCard.equalsIgnoreCase("OCTOPUS") && !assistantCard.equalsIgnoreCase("DOG")
+                && !assistantCard.equalsIgnoreCase("ELEPHANT") && !assistantCard.equalsIgnoreCase("TURTLE")){
+                System.out.println("The given input is not correct, please retry. \nSelect the Assistant Card you want to play: ");
+                assistantCard = readLine();
+            }
+            String finalAssistantCard = assistantCard.toUpperCase();
+            notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(finalAssistantCard));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -182,21 +209,46 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Type ISLAND if you want to move a student to an Island, TABLE if you want to move it to its Table:");
         try {
             String choice = readLine().toUpperCase();
-            if(choice.equals("ISLAND")) {
-                out.println("Which student do you want to move to an Island? Please type a valid color:");
-                String color = readLine().toUpperCase();
+            while (!choice.equalsIgnoreCase("ISLAND") && !choice.equalsIgnoreCase("TABLE")){
+                System.out.println("The given input is not correct, please try again. \n" +
+                        "Type ISLAND if you want to move a student to an Island, TABLE if you want to move it to its Table: ");
+                choice = readLine();
+            }
+            if(choice.equalsIgnoreCase("ISLAND")) {
+                out.println("Which student do you want to move to an Island? Please type a valid color " +
+                        "[YELLOW, BLUE, GREEN, RED, PINK]:");
+                String finalColor = checkColor().toUpperCase();
                 out.println("Towards which island? Please type a valid number:");
                 int islandID = Integer.parseInt(readLine());
-                notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(color, islandID));
+                while (islandID < 1 || islandID >12){
+                    System.out.println("The given input is not correct, please try again. \n" +
+                            "Towards which island? Please type a valid number:");
+                    islandID = Integer.parseInt(readLine());
+                }
+                int finalIslandID = islandID;
+                notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(finalColor, finalIslandID));
             }
-            if(choice.equals("TABLE")){
-                out.println("Which student do you want to move to its Table? Please type a valid color:");
-                String color = readLine().toUpperCase();
-                notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(color));
+            if(choice.equalsIgnoreCase("TABLE")){
+                out.println("Which student do you want to move to its Table? Please type a valid color " +
+                        "[YELLOW, BLUE, GREEN, RED, PINK]:");
+                String finalColor = checkColor().toUpperCase();
+                notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(finalColor));
             }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String checkColor() throws ExecutionException {
+        String color = readLine().toUpperCase();
+        while (!color.equalsIgnoreCase("YELLOW") && !color.equalsIgnoreCase("BLUE")
+                && !color.equalsIgnoreCase("GREEN") && !color.equalsIgnoreCase("RED")
+                && !color.equalsIgnoreCase("PINK")){
+            System.out.println("The given input is not correct, please try again. \n" +
+                    "Please type a valid color [YELLOW, BLUE, GREEN, RED, PINK]:");
+            color = readLine();
+        }
+        return color;
     }
 
     @Override
@@ -204,7 +256,13 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("How many steps do you wish Mother Nature has to move of? Please type a valid number:");
         try {
             int steps = Integer.parseInt(readLine());
-            notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(steps));
+            while (steps < 1 || steps > 5){
+                System.out.println("The given input is not correct, please try again. \n" +
+                        "How many steps do you wish Mother Nature has to move of? Please type a valid number: ");
+                steps = Integer.parseInt(readLine());
+            }
+            int finalSteps = steps;
+            notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(finalSteps));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -215,7 +273,13 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Which cloud do you want to pick students from? Please type a valid number:");
         try {
             int cloudID = Integer.parseInt(readLine()) - 1;
-            notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudID));
+            while (cloudID != 1 && cloudID != 2){
+                System.out.println("The given input is not correct, please try again. \n" +
+                        "How many steps do you wish Mother Nature has to move of? Please type a valid number: ");
+                cloudID = Integer.parseInt(readLine()) - 1;
+            }
+            int finalCloudID = cloudID;
+            notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(finalCloudID));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -226,24 +290,35 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Which character card do you want to use? Please type a valid number:");
         try {
             int characterCardID = Integer.parseInt(readLine());
+            while (characterCardID < 1 || characterCardID > 12 ){
+                System.out.println("The given input is not correct, please try again. \n" +
+                        "Which character card do you want to use? Please type a valid number:  ");
+                characterCardID = Integer.parseInt(readLine());
+            }
+            int finalCharacterCardID = characterCardID;
             switch (characterCardID) {
-                case 2, 4, 6, 8 -> notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(characterCardID));
+                case 2, 4, 6, 8 -> notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(finalCharacterCardID));
                 case 3, 5 -> {
                     out.println("Please enter a valid parameter (number):");
                     int par = Integer.parseInt(readLine());
-                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(characterCardID, par));
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(finalCharacterCardID, par));
                 }
                 case 9, 11, 12 -> {
                     out.println("Please enter a valid parameter (color):");
-                    String par = readLine().toUpperCase();
-                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardString(characterCardID, par));
+                    String par = checkColor().toUpperCase();
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardString(finalCharacterCardID, par));
                 }
                 case 1 -> {
                     out.println("Please enter a valid parameter (color):");
-                    String par1 = readLine().toUpperCase();
-                    out.println("Please enter a valid parameter (number):");
+                    String par1 = checkColor().toUpperCase();
+                    out.println("Please enter a valid parameter (islandID number):");
                     int par2 = Integer.parseInt(readLine());
-                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardStringInt(characterCardID, par1, par2));
+                    while (par2 < 1 || par2 > 12){
+                        out.println("Please enter a valid parameter (islandID number):");
+                        par2 = Integer.parseInt(readLine());
+                    }
+                    int finalPar = par2;
+                    notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardStringInt(finalCharacterCardID, par1, finalPar));
                 }
                 case 7 -> {
                     out.println("Please enter a valid list of colors (0, 2, 4 or 6 colors), STOP to end the list.");
@@ -252,12 +327,12 @@ public class CommandLineInterface extends ViewObservable implements View {
                         if (list.size() == 6)
                             break;
                         out.println("Please enter the color of the hall student (STOP to end):");
-                        String par1 = readLine().toUpperCase();
-                        if (par1.equals("STOP"))
+                        String par1 = checkColor().toUpperCase();
+                        if (par1.equalsIgnoreCase("STOP"))
                             break;
                         list.add(par1);
                         out.println("Please enter the color of the card student:");
-                        String par2 = readLine().toUpperCase();
+                        String par2 = checkColor().toUpperCase();
                         list.add(par2);
                     }
                 }
@@ -268,12 +343,12 @@ public class CommandLineInterface extends ViewObservable implements View {
                         if (list.size() == 4)
                             break;
                         out.println("Please enter the color of the hall student (STOP to end):");
-                        String par1 = readLine().toUpperCase();
+                        String par1 = checkColor().toUpperCase();
                         if (par1.equals("STOP"))
                             break;
                         list.add(par1);
                         out.println("Please enter the color of the table student:");
-                        String par2 = readLine().toUpperCase();
+                        String par2 = checkColor().toUpperCase();
                         list.add(par2);
                     }
                 }
@@ -294,6 +369,11 @@ public class CommandLineInterface extends ViewObservable implements View {
     public void showGameStatus(Game game) {
         clearInterface();
         game.showGameBoard();
+    }
+
+    public void showDeck(Game game) {
+        clearInterface();
+        game.showDeck();
     }
 
     public void clearInterface(){

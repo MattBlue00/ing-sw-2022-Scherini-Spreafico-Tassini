@@ -9,6 +9,7 @@ import it.polimi.ingsw.network.message.WizardIDMessage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ClientMain {
@@ -24,16 +25,29 @@ public class ClientMain {
             String user = str;
             System.out.println("CREATE or JOIN a game: ");
             str = reader.readLine();
-            if(str.toUpperCase().equals("CREATE")){
+            while (!str.equalsIgnoreCase("CREATE") && !str.equalsIgnoreCase("JOIN")){
+                System.out.println("The given input is not correct, please retry. \nCREATE or JOIN a game: ");
+                str = reader.readLine();
+            }
+            if(str.equalsIgnoreCase("CREATE")){
                 System.out.println("GameNumber : ");
                 int gameNumber = scan.nextInt();
                 System.out.println("Expert mode (true, false) : ");
-                boolean gameMode = Boolean.parseBoolean(reader.readLine());
-                System.out.println("Num of players : ");
+                str = reader.readLine();
+                while (!str.equalsIgnoreCase("true") && !str.equalsIgnoreCase("false")){
+                    System.out.println("The given input is not correct, please retry. \nExpert mode (true, false)  ");
+                    str = reader.readLine();
+                }
+                boolean gameMode = Boolean.parseBoolean(str.toLowerCase(Locale.ROOT));
+                System.out.println("Num of players (two or three): ");
                 int playerNum = scan.nextInt();
+                while (playerNum != 2 && playerNum != 3){
+                    System.out.println("The given input is not correct, please retry. \nNum of players (two or three): ");
+                    playerNum = scan.nextInt();
+                }
                 c.sendMessage(new CreateGameMessage(user, gameNumber, playerNum, gameMode));
             }
-            else if (str.toUpperCase().equals("JOIN")){
+            else if (str.equalsIgnoreCase("JOIN")){
                 System.out.println("GameNumber : ");
                 int gameNumber = scan.nextInt();
                 c.sendMessage(new JoinGameMessage(user, gameNumber));
@@ -44,7 +58,12 @@ public class ClientMain {
             }
             System.out.println("GameWizard (BLUE_WIZARD | PINK_WIZARD | YELLOW_WIZARD | GREEN_WIZARD): ");
             str = reader.readLine();
-            c.sendMessage(new WizardIDMessage(user, str));
+            while (!str.equalsIgnoreCase("BLUE_WIZARD") && !str.equalsIgnoreCase("PINK_WIZARD")
+                && !str.equalsIgnoreCase("YELLOW_WIZARD") && !str.equalsIgnoreCase("GREEN_WIZARD")){
+                System.out.println("The given input is not correct, please retry. \nGameWizard (BLUE_WIZARD | PINK_WIZARD | YELLOW_WIZARD | GREEN_WIZARD): ");
+                str = reader.readLine();
+            }
+            c.sendMessage(new WizardIDMessage(user, str.toUpperCase(Locale.ROOT)));
             str = reader.readLine();
             System.out.println("-------------END-------------");
             c.disconnect();

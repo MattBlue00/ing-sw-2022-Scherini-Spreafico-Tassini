@@ -143,6 +143,7 @@ public class GameController{
                             game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
                             if(!virtualViewMap.isEmpty()) {
                                 System.out.println(game.getCurrentPlayer().getNickname());
+                                showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
                                 virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
                             }
                         }
@@ -228,13 +229,13 @@ public class GameController{
 
     public void startGame(){
         game.startGame();
-        System.out.println("game: "+game+" ho inizializzato il game");
+        System.out.println("game: " + game + " has been initialized");
         broadcastGenericMessage("GAME CAN NOW START");
-        broadcastGameBoard();
         setGameState(GameState.IN_GAME);
         // For old tests
         if(!virtualViewMap.isEmpty()) {
             System.out.println(game.getCurrentPlayer().getNickname());
+            showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
         }
     }
@@ -359,6 +360,7 @@ public class GameController{
         if(!virtualViewMap.isEmpty()) {
             System.out.println(game.getCurrentPlayer().getNickname());
             broadcastGameBoard();
+            showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
         }
     }
@@ -374,8 +376,13 @@ public class GameController{
        System.out.println(chosenCard);
        if(isAssistantCardPlayable(chosenCard))
            game.getCurrentPlayer().playAssistantCard(chosenCard);
-       else
-           throw new AssistantCardAlreadyPlayedException("You can't play this assistant card!");
+       else {
+           if(!virtualViewMap.isEmpty()) {
+               virtualViewMap.get(receivedMessage.getNickname()).showGenericMessage("You can't play this assistant card!");
+               virtualViewMap.get(receivedMessage.getNickname()).askAssistantCard();
+           }
+           else throw new AssistantCardAlreadyPlayedException("You can't play this assistant card!");
+       }
     }
 
     /*
@@ -548,4 +555,7 @@ public class GameController{
         }
     }
 
+    public void showDeck(VirtualView virtualView){
+        virtualView.showDeck(this.game);
+    }
 }

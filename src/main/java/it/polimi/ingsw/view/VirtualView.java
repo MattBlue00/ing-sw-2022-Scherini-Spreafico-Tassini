@@ -74,8 +74,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void showDeck(Game game) { clientHandler.sendMessage(new ShowDeckMessage(game)); }
+
+    @Override
     public void update(Message message) {
-        clientHandler.sendMessage( message);
+        clientHandler.sendMessage(message);
     }
 
 }

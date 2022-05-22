@@ -15,4 +15,5 @@ public interface View {
     void askCharacterCard();
     void showGenericMessage(String message);
     void showGameStatus(Game game);
+    void showDeck(Game game);
 }
