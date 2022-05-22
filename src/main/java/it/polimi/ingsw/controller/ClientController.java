@@ -147,6 +147,9 @@ public class ClientController implements ViewObserver, Observer {
             case GAME_STATUS:
                 taskQueue.execute(() -> view.showGameStatus(((GameStatusMessage) message).getGame()));
                 break;
+            case SHOW_DECK_MESSAGE:
+                taskQueue.execute(() -> view.showDeck(((ShowDeckMessage) message).getGame()));
+                break;
             case GENERIC:
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));
             default: //should never be reached
