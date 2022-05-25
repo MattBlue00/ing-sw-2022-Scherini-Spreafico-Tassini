@@ -17,5 +17,6 @@ public interface ViewObserver {
     void onUpdateCharacterCardInt(int characterCardID, int par);
     void onUpdateCharacterCardString(int characterCardID, String par);
     void onUpdateCharacterCardStringInt(int characterCardID, String par1, int par2);
+    void onUpdateActionChoice(String choice);
 
 }

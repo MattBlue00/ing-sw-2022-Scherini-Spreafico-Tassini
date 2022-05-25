@@ -15,6 +15,20 @@ public class GameControllerExpertMode extends GameController{
     public void actionPhase(Message message) throws TryAgainException {
 
         switch(message.getMessageType()){
+            case ACTION_CHOICE:
+                if(((ActionChoiceMessage) message).getChoice().equals("STUDENT")) {
+                    if (!getVirtualViewMap().isEmpty()) {
+                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                    }
+                }
+                else {
+                    if (!getVirtualViewMap().isEmpty() && !getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCharacterCard();
+                    }
+                }
+                break;
             case MOVE_TO_TABLE_REPLY:
             case MOVE_TO_ISLAND_REPLY:
                 if(getMovesLeft() == 0){
@@ -26,7 +40,10 @@ public class GameControllerExpertMode extends GameController{
                     if(!getVirtualViewMap().isEmpty() && getMovesLeft() > 0) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
                         broadcastGameBoard();
-                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                        if(!getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed())
+                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
+                        else
+                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
                     }
                     if(!getVirtualViewMap().isEmpty() && getMovesLeft() == 0) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
@@ -51,10 +68,8 @@ public class GameControllerExpertMode extends GameController{
                             " students before moving Mother Nature!");
                 break;
             case CLOUD_CHOICE_REPLY:
-                if(getMotherNatureMoved()) {
+                if(getMotherNatureMoved())
                     handleCloudChoice(message);
-                    setPlayerActionPhaseDone(true);
-                }
                 else
                     throw new WrongMessageSentException("You need to move mother nature first!");
                 break;
@@ -64,10 +79,7 @@ public class GameControllerExpertMode extends GameController{
                     if(!getVirtualViewMap().isEmpty()) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
                         broadcastGameBoard();
-                        if(getMovesLeft() > 0)
-                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
-                        else
-                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
                     }
                 }
                 else
@@ -109,6 +121,19 @@ public class GameControllerExpertMode extends GameController{
     }
 
     @Override
+    public void endPlanningPhase() {
+        setPlanningPhaseDone(true);
+        setOrder();
+        getGame().setCurrentPlayer(getGame().getPlayers().get(0));
+        setCurrentPlayerIndex(0);
+        if(!getVirtualViewMap().isEmpty()) {
+            System.out.println(getGame().getCurrentPlayer().getNickname());
+            broadcastGameBoard();
+            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
+        }
+    }
+
+    @Override
     public void nextPlayerActionPhase(){
         winCheck();
         getGame().getCurrentPlayer().setCharacterCardAlreadyPlayed(false);
@@ -116,7 +141,11 @@ public class GameControllerExpertMode extends GameController{
         setMovesLeft(3);
         setPlayerActionPhaseDone(false);
         setMotherNatureMoved(false);
-        //TODO: which action to undertake next? MoveStudent or playCharacterCard?
+        if(!getVirtualViewMap().isEmpty()) {
+            System.out.println(getGame().getCurrentPlayer().getNickname());
+            broadcastGameBoard();
+            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
+        }
     }
 
     @Override
@@ -131,6 +160,7 @@ public class GameControllerExpertMode extends GameController{
         setCurrentPlayerIndex(0);
         getGame().setCurrentPlayer(getGame().getPlayers().get(getCurrentPlayerIndex()));
         setMovesLeft(3);
+        setPlayerPlanningPhaseDone(false);
         setPlanningPhaseDone(false);
         setPlayerActionPhaseDone(false);
         setMotherNatureMoved(false);

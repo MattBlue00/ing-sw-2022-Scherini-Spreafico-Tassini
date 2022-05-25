@@ -17,5 +17,6 @@ public enum MessageType {
     GENERIC,
     ASK_TYPE,
     GAME_STATUS,
-    SHOW_DECK_MESSAGE
+    SHOW_DECK_MESSAGE,
+    ACTION_CHOICE
 }

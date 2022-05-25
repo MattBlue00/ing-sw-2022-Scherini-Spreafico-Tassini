@@ -128,6 +128,11 @@ public class ClientController implements ViewObserver, Observer {
     }
 
     @Override
+    public void onUpdateActionChoice(String choice) {
+        client.sendMessage(new ActionChoiceMessage(nickname, choice));
+    }
+
+    @Override
     public void update(Message message) {
         switch(message.getMessageType()){
             case ASK_TYPE:
@@ -140,6 +145,7 @@ public class ClientController implements ViewObserver, Observer {
                     case MOVE_MOTHER_NATURE -> taskQueue.execute(view::askMotherNatureSteps);
                     case CLOUD_CHOICE -> taskQueue.execute(view::askCloud);
                     case CHARACTER_CARD -> taskQueue.execute(view::askCharacterCard);
+                    case ACTION_CHOICE -> taskQueue.execute(view::askAction);
                     default -> {//should never be reached
                     }
                 }

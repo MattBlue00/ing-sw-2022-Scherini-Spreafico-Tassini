@@ -11,6 +11,7 @@ import java.util.*;
 public class GameController{
     private Game game;
     private int gameControllerID;
+    private boolean playerPlanningPhaseDone;
     private boolean planningPhaseDone;
     private boolean playerActionPhaseDone;
     private int currentPlayerIndex;
@@ -26,6 +27,7 @@ public class GameController{
         Initialize GameController
      */
     public GameController(){
+        this.playerPlanningPhaseDone = false;
         this.planningPhaseDone = false;
         this.playerActionPhaseDone = false;
         this.currentPlayerIndex = 0;
@@ -72,6 +74,14 @@ public class GameController{
 
     public void setMotherNatureMoved(boolean motherNatureMoved) {
         this.motherNatureMoved = motherNatureMoved;
+    }
+
+    public boolean getPlayerPlanningPhaseDone() {
+        return playerPlanningPhaseDone;
+    }
+
+    public void setPlayerPlanningPhaseDone(boolean playerPlanningPhaseDone) {
+        this.playerPlanningPhaseDone = playerPlanningPhaseDone;
     }
 
     public boolean getPlanningPhaseDone() {
@@ -131,19 +141,16 @@ public class GameController{
                 else {
                     if (!planningPhaseDone) {
                         planningPhase(receivedMessage);
-                        currentPlayerIndex++;
-                        if (currentPlayerIndex == game.getPlayersNumber()) {
-                            endPlanningPhase();
+                        if(playerPlanningPhaseDone){
+                            currentPlayerIndex++;
+                            if (currentPlayerIndex == game.getPlayersNumber())
+                                endPlanningPhase();
+                            else
+                                nextPlayerPlanningPhase();
+                        }
+                        else{
                             if(!virtualViewMap.isEmpty()) {
                                 System.out.println(game.getCurrentPlayer().getNickname());
-                                broadcastGameBoard();
-                                virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
-                            }
-                        } else {
-                            game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-                            if(!virtualViewMap.isEmpty()) {
-                                System.out.println(game.getCurrentPlayer().getNickname());
-                                showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
                                 virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
                             }
                         }
@@ -253,6 +260,37 @@ public class GameController{
     }
 
     /*
+        This method allows the next player to play his planning phase properly.
+     */
+
+    public void nextPlayerPlanningPhase(){
+        playerPlanningPhaseDone = false;
+        game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
+        if(!virtualViewMap.isEmpty()) {
+            System.out.println(game.getCurrentPlayer().getNickname());
+            showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
+            virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
+        }
+    }
+
+    /*
+       This method sets the class's attributes and the players' order so that the first player of the action phase
+       can play properly.
+    */
+
+    public void endPlanningPhase(){
+        planningPhaseDone = true;
+        setOrder();
+        game.setCurrentPlayer(game.getPlayers().get(0));
+        currentPlayerIndex = 0;
+        if(!virtualViewMap.isEmpty()) {
+            System.out.println(game.getCurrentPlayer().getNickname());
+            broadcastGameBoard();
+            virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
+        }
+    }
+
+    /*
         This method establishes the right flow of a player's action phase.
      */
 
@@ -295,10 +333,8 @@ public class GameController{
                             " students before moving Mother Nature!");
                 break;
             case CLOUD_CHOICE_REPLY:
-                if(motherNatureMoved) {
+                if(motherNatureMoved)
                     handleCloudChoice(message);
-                    playerActionPhaseDone = true;
-                }
                 else
                     throw new WrongMessageSentException("You need to move mother nature first!");
                 break;
@@ -306,18 +342,6 @@ public class GameController{
                 throw new WrongMessageSentException("Wrong message sent.");
         }
 
-    }
-
-    /*
-       This method sets the class's attributes and the players' order so that the first player of the action phase
-       can play properly.
-    */
-
-    public void endPlanningPhase(){
-        planningPhaseDone = true;
-        setOrder();
-        game.setCurrentPlayer(game.getPlayers().get(0));
-        currentPlayerIndex = 0;
     }
 
     /*
@@ -351,6 +375,7 @@ public class GameController{
         currentPlayerIndex = 0;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
         movesLeft = Constants.PLAYER_MOVES;
+        playerPlanningPhaseDone = false;
         planningPhaseDone = false;
         playerActionPhaseDone = false;
         motherNatureMoved = false;
@@ -374,8 +399,10 @@ public class GameController{
     public void handleAssistantCardChoice(Message receivedMessage) throws AssistantCardAlreadyPlayedException{
        String chosenCard = ((AssistantCardMessage) receivedMessage).getCardName().toUpperCase();
        System.out.println(chosenCard);
-       if(isAssistantCardPlayable(chosenCard))
+       if(isAssistantCardPlayable(chosenCard)) {
            game.getCurrentPlayer().playAssistantCard(chosenCard);
+           playerPlanningPhaseDone = true;
+       }
        else {
            if(!virtualViewMap.isEmpty()) {
                virtualViewMap.get(receivedMessage.getNickname()).showGenericMessage("You can't play this assistant card!");
@@ -468,7 +495,18 @@ public class GameController{
      */
 
     public void handleCloudChoice(Message receivedMessage) throws EmptyCloudException {
-        game.takeStudentsFromCloud(((CloudChoiceMessage) receivedMessage).getCloudID());
+        try {
+            game.takeStudentsFromCloud(((CloudChoiceMessage) receivedMessage).getCloudID());
+            playerActionPhaseDone = true;
+        }
+        catch(IndexOutOfBoundsException e){
+            if(!virtualViewMap.isEmpty()) {
+                System.out.println(game.getCurrentPlayer().getNickname());
+                virtualViewMap.get(game.getCurrentPlayer().getNickname()).
+                        showGenericMessage("The given input is not correct, please try again.");
+                virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
+            }
+        }
     }
 
     /*
