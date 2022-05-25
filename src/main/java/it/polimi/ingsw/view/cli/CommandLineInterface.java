@@ -333,8 +333,7 @@ public class CommandLineInterface extends ViewObservable implements View {
                         list.add(par2);
                     }
                 }
-                default -> {
-                }
+                default -> {}
             }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);

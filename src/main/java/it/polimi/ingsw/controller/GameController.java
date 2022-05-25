@@ -183,7 +183,6 @@ public class GameController{
         and based on the instance (For expert mode or normal mode)
      */
     public void prepareGame(int playerNum) {
-        //TODO: exception for numbers > 3
         if (this instanceof GameControllerExpertMode)
             this.game = new GameExpertMode(playerNum, new Constants(playerNum));
         else
@@ -213,7 +212,6 @@ public class GameController{
         This method add the player (based on the receivedMessage's nickname) to the game.
         If their WizardID has already been chosen it will throw an Exception
      */
-    //TODO: Exception
     public void addPlayerToGame(Message receivedMessage){
 
         boolean wizardIdAlreadyUsed = false;
