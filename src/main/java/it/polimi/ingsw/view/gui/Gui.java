@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Gui extends ViewObservable implements View {
 
-    private SceneController sceneController;
+    private final SceneController sceneController;
 
     public Gui() {
         this.sceneController = new SceneController();
@@ -68,6 +68,11 @@ public class Gui extends ViewObservable implements View {
 
     @Override
     public void askCharacterCard() {
+
+    }
+
+    @Override
+    public void askAction() {
 
     }
 
