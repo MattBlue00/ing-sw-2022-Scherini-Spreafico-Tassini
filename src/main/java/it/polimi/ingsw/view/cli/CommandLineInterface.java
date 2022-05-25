@@ -273,13 +273,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Which cloud do you want to pick students from? Please type a valid number:");
         try {
             int cloudID = Integer.parseInt(readLine()) - 1;
-            while (cloudID != 1 && cloudID != 2){
-                System.out.println("The given input is not correct, please try again. \n" +
-                        "How many steps do you wish Mother Nature has to move of? Please type a valid number: ");
-                cloudID = Integer.parseInt(readLine()) - 1;
-            }
-            int finalCloudID = cloudID;
-            notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(finalCloudID));
+            notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudID));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -352,8 +346,7 @@ public class CommandLineInterface extends ViewObservable implements View {
                         list.add(par2);
                     }
                 }
-                default -> {
-                }
+                default -> {}
             }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);

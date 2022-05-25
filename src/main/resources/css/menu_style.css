@@ -1,0 +1,24 @@
+.background{
+    -fx-background-image: url('/img/wallpaper.jpg');
+    -fx-background-size: cover;
+}
+
+.form{
+    -fx-background-color: rgba(255, 245, 238, 0.63);
+    -fx-background-radius: 25px;
+    -fx-min-width: 400px;
+    -fx-min-height: 300px;
+}
+
+.text_label{
+    -fx-font-weight: bold;
+}
+
+.textField{
+    -fx-font-weight: normal;
+}
+
+.error_label{
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
