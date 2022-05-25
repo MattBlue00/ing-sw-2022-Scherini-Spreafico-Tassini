@@ -184,13 +184,13 @@ public class GameExpertMode extends Game implements Serializable {
                 nextPlayerNickname = getPlayers().get(0).getNickname();
             else
                 nextPlayerNickname = getPlayers().get(getPlayers().indexOf(getCurrentPlayer()) + 1).getNickname();
-            System.out.printf("TURNO: %d\tGIOCATORE CORRENTE: %s\tPROSSIMO GIOCATORE: %s\n",
+            System.out.printf("ROUND: %d\tCURRENT PLAYER: %s\tNEXT PLAYER: %s\n",
                     getRoundNumber(), getCurrentPlayer().getNickname(), nextPlayerNickname);
 
-            getPlayers().forEach(x -> System.out.printf("Monete di %s: %d     ", x.getNickname(), x.getCoinsWallet()));
+            getPlayers().forEach(x -> System.out.printf("Coins wallet of %s: %d     ", x.getNickname(), x.getCoinsWallet()));
 
             if(getCurrentPlayer().getCharacterCardAlreadyPlayed())
-                System.out.println(ANSIConstants.ANSI_BOLD + "Una carta personaggio è stata già giocata." + ANSIConstants.ANSI_RESET);
+                System.out.println(ANSIConstants.ANSI_BOLD + "A character card has already been played!" + ANSIConstants.ANSI_RESET);
             else
                 System.out.println();
             System.out.println("--------------------");
@@ -207,9 +207,9 @@ public class GameExpertMode extends Game implements Serializable {
                 else
                     ownerNickname = "--";
 
-                System.out.println("ISOLA " + i);
-                System.out.println(currentIsland.getNumOfTowers() + " torri");
-                System.out.println("Proprietario: " + ownerNickname);
+                System.out.println("ISLAND " + i);
+                System.out.println(currentIsland.getNumOfTowers() + " towers");
+                System.out.println("Owner: " + ownerNickname);
 
                 yellowStudents =
                         (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
@@ -222,7 +222,7 @@ public class GameExpertMode extends Game implements Serializable {
                 pinkStudents =
                         (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
-                System.out.println("Studenti: " +
+                System.out.println("Students: " +
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                         ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
@@ -230,9 +230,9 @@ public class GameExpertMode extends Game implements Serializable {
                         ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
 
                 if(currentIsland.getId() == getBoard().getMotherNaturePos())
-                    System.out.println(ANSIConstants.ANSI_BOLD + "Madre Natura è qui!" + ANSIConstants.ANSI_RESET);
+                    System.out.println(ANSIConstants.ANSI_BOLD + "Mother Nature is here!" + ANSIConstants.ANSI_RESET);
                 if(currentIsland.hasVeto())
-                    System.out.println(ANSIConstants.ANSI_BOLD + "C'è una tessera divieto!" + ANSIConstants.ANSI_RESET);
+                    System.out.println(ANSIConstants.ANSI_BOLD + "There's a veto tile here!" + ANSIConstants.ANSI_RESET);
 
                 System.out.println("--------------------");
 
@@ -251,7 +251,7 @@ public class GameExpertMode extends Game implements Serializable {
                         (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
                 //TODO: when the cloud number is asked, remember to save it decremented of 1!
-                System.out.print("NUVOLA " + (i + 1) + ": ");
+                System.out.print("CLOUD " + (i + 1) + ": ");
                 System.out.println(
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                                 ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
@@ -262,13 +262,13 @@ public class GameExpertMode extends Game implements Serializable {
 
             System.out.println("--------------------");
 
-            System.out.println("CARTE PERSONAGGIO:");
+            System.out.println("CHARACTER CARDS:");
             for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
                 System.out.print(characters[i].getClass().getSimpleName() + "\n" +
-                        "ID: " + characters[i].getId() + "\t" + "Costo: " + characters[i].getCost());
+                        "ID: " + characters[i].getId() + "\t" + "Cost: " + characters[i].getCost());
                 characters[i].showStudentsOnTheCard();
                 if(characters[i].getIsActive())
-                    System.out.println("\tATTIVA");
+                    System.out.println("\t\tACTIVE NOW");
                 else
                     System.out.println();
 

@@ -21,14 +21,16 @@ public class Thief extends CharacterCard implements StringCard, Serializable {
     @Override
     public void doEffect(GameExpertMode game) {
         for(Player player : game.getPlayers()){
-            int i = 0;
+            int count = 3;
             try {
-                while (player.getSchool().getTable(this.chosenColor).getStudents().size() > 0 || i > 2) {
+                while (player.getSchool().getTable(this.chosenColor).getStudents().size() > 0 && count > 0) {
                     Student student = player.getSchool().getTable(this.chosenColor).removeStudent();
                     game.getBoard().getStudentsBag().add(student);
-                    i++;
+                    count--;
                 }
-            } catch (NonExistentColorException | StudentNotFoundException e) {}
+            } catch (NonExistentColorException | StudentNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

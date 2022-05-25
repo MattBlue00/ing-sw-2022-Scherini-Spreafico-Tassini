@@ -8,5 +8,6 @@ public enum AskType {
     MOVE_STUDENT,
     MOVE_MOTHER_NATURE,
     CLOUD_CHOICE,
-    CHARACTER_CARD
+    CHARACTER_CARD,
+    ACTION_CHOICE
 }

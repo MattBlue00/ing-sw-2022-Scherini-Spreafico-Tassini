@@ -64,6 +64,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void askAction() {
+        clientHandler.sendMessage(new AskMessage(AskType.ACTION_CHOICE));
+    }
+
+    @Override
     public void showGenericMessage(String message) {
         clientHandler.sendMessage(new GenericMessage(message));
     }

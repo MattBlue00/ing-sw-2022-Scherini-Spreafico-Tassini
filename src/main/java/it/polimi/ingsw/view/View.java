@@ -13,6 +13,7 @@ public interface View {
     void askMotherNatureSteps();
     void askCloud();
     void askCharacterCard();
+    void askAction();
     void showGenericMessage(String message);
     void showGameStatus(Game game);
     void showDeck(Game game);

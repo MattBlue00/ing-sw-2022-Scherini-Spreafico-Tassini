@@ -126,7 +126,7 @@ public class Player implements Serializable {
 
     public void showSchool(){
 
-        System.out.println("SCUOLA DI: "+getNickname());
+        System.out.println(getNickname() + "'s school:");
 
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
         yellowStudents =
@@ -140,7 +140,7 @@ public class Player implements Serializable {
         pinkStudents =
                 (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
 
-        System.out.println("Ingresso: " +
+        System.out.println("Hall: " +
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
@@ -167,14 +167,14 @@ public class Player implements Serializable {
                     (int) this.getSchool().getTable("PINK").getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
         } catch(NonExistentColorException ignored){}
 
-        System.out.println("Studenti per tavolo: " +
+        System.out.println("Students per table: " +
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_BLUE + blueStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_GREEN + greenStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_RED + redStudents + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_PINK + pinkStudents + ANSIConstants.ANSI_RESET);
 
-        System.out.print("Professori: ");
+        System.out.print("Professors: ");
         String yellowProf = "no";
         String blueProf = "no";
         String greenProf = "no";
@@ -183,19 +183,19 @@ public class Player implements Serializable {
         try {
 
             if (this.getSchool().getTable("YELLOW").getHasProfessor())
-                yellowProf = "sì";
+                yellowProf = "yes";
 
             if (this.getSchool().getTable("BLUE").getHasProfessor())
-                blueProf = "sì";
+                blueProf = "yes";
 
             if (this.getSchool().getTable("GREEN").getHasProfessor())
-                greenProf = "sì";
+                greenProf = "yes";
 
             if (this.getSchool().getTable("RED").getHasProfessor())
-                redProf = "sì";
+                redProf = "yes";
 
             if (this.getSchool().getTable("PINK").getHasProfessor())
-                pinkProf = "sì";
+                pinkProf = "yes";
 
         } catch(NonExistentColorException ignored){}
 
@@ -206,7 +206,7 @@ public class Player implements Serializable {
                 ANSIConstants.ANSI_RED + redProf + ANSIConstants.ANSI_RESET + " " +
                 ANSIConstants.ANSI_PINK + pinkProf + ANSIConstants.ANSI_RESET);
 
-        System.out.println("Torri: " + this.getSchool().getTowerRoom().getTowersLeft());
+        System.out.println("Towers: " + this.getSchool().getTowerRoom().getTowersLeft());
         System.out.println("--------------------");
     }
 }

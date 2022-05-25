@@ -55,7 +55,7 @@ public class Monk extends CharacterCard implements StringIntCard, Serializable {
 
     @Override
     public void showStudentsOnTheCard(){
-        System.out.print("\tStudenti sulla carta: ");
+        System.out.print("\t\tStudents on the card: ");
         int yellowStudents = 0, blueStudents = 0, greenStudents = 0, redStudents = 0, pinkStudents = 0;
 
         for (int i = 0; i < 4; i++){

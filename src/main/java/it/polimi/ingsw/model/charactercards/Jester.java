@@ -68,7 +68,7 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Serial
 
     @Override
     public void showStudentsOnTheCard(){
-        System.out.print("\tStudenti sulla carta: ");
+        System.out.print("\t\tStudents on the card: ");
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
 
         yellowStudents =
