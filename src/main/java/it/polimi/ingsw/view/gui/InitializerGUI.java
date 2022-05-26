@@ -15,7 +15,7 @@ import java.io.IOException;
 public class InitializerGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Gui gui = new Gui();
+        GraphicalUserInterface gui = new GraphicalUserInterface();
         ClientController clientController = new ClientController(gui);
         gui.addObserver(clientController);
 
@@ -40,7 +40,7 @@ public class InitializerGUI extends Application {
         gui.getSceneController().setCurrentScene(scene);
 
         stage.getIcons().add(icon);
-        stage.setTitle("Eriantys board game");
+        stage.setTitle("Eriantys");
         stage.setMinHeight(500);
         stage.setMinWidth(500);
         stage.setScene(scene);
