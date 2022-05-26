@@ -4,16 +4,12 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 
-import java.io.IOException;
-
-public class Gui extends ViewObservable implements View {
+public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
 
-    public Gui() {
+    public GraphicalUserInterface() {
         this.sceneController = new SceneController();
     }
 
