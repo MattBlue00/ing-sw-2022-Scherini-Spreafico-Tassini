@@ -37,7 +37,7 @@ public class Cloud implements Serializable {
      */
     public List<Student> removeStudents() throws EmptyCloudException {
         List<Student> chosenStudents = new ArrayList<>(students);
-        if(students.isEmpty()) throw new EmptyCloudException("The chosen cloud is empty");
+        if(students.isEmpty()) throw new EmptyCloudException("The chosen cloud has already been emptied, please choose another one.");
         students.clear();
         return chosenStudents;
     }

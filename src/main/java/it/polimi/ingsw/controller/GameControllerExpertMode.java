@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.utils.ANSIConstants;
 
 public class GameControllerExpertMode extends GameController{
 
@@ -32,59 +33,108 @@ public class GameControllerExpertMode extends GameController{
                 break;
             case MOVE_TO_TABLE_REPLY:
             case MOVE_TO_ISLAND_REPLY:
-                if(getMovesLeft() == 0){
-                    throw new WrongMessageSentException("No moves left!");
-                }
-                else{
-                    handleStudentMovement(message);
-                    setMovesLeft(getMovesLeft() - 1);
-                    if(!getVirtualViewMap().isEmpty() && getMovesLeft() > 0) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
-                        broadcastGameBoard();
-                        if(!getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed())
-                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
-                        else
-                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                try {
+                    if (getMovesLeft() == 0) {
+                        throw new WrongMessageSentException("No moves left!");
+                    } else {
+                        handleStudentMovement(message);
+                        setMovesLeft(getMovesLeft() - 1);
+                        if (!getVirtualViewMap().isEmpty() && getMovesLeft() > 0) {
+                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            broadcastGameBoard();
+                            broadcastWaitingMessage();
+                            if (!getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed())
+                                getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
+                            else
+                                getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                        }
+                        if (!getVirtualViewMap().isEmpty() && getMovesLeft() == 0) {
+                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            broadcastGameBoard();
+                            broadcastWaitingMessage();
+                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
+                        }
                     }
-                    if(!getVirtualViewMap().isEmpty() && getMovesLeft() == 0) {
+                }
+                catch(FullTableException | StudentNotFoundException | IslandNotFoundException | NonExistentColorException e){
+                    if(!getVirtualViewMap().isEmpty()) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
-                        broadcastGameBoard();
-                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
+                                showGenericMessage(e.getMessage());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
                     }
                 }
                 break;
             case MOTHER_NATURE_STEPS_REPLY:
-                if(getMovesLeft() == 0 && !getMotherNatureMoved()){
-                    handleMotherNature(message);
-                    setMotherNatureMoved(true);
-                    getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
+                try {
+                    if (getMovesLeft() == 0 && !getMotherNatureMoved()) {
+                        handleMotherNature(message);
+                        setMotherNatureMoved(true);
+                        getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
+                        if (!getVirtualViewMap().isEmpty()) {
+                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            broadcastGameBoard();
+                            broadcastWaitingMessage();
+                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
+                        }
+                    } else
+                        throw new WrongMessageSentException("You need to move other " + getMovesLeft() +
+                                " students before moving Mother Nature!");
+                }
+                catch(InvalidNumberOfStepsException | IslandNotFoundException e){
                     if(!getVirtualViewMap().isEmpty()) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
-                        broadcastGameBoard();
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
+                                showGenericMessage(e.getMessage());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
+                    }
+                }
+                break;
+            case CLOUD_CHOICE_REPLY:
+                try {
+                    if (getMotherNatureMoved())
+                        handleCloudChoice(message);
+                    else
+                        throw new WrongMessageSentException("You need to move mother nature first!");
+                }
+                catch(IndexOutOfBoundsException e){
+                    if(!getVirtualViewMap().isEmpty()) {
+                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
+                                showGenericMessage("There's no cloud with such id, please try again.");
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
                     }
                 }
-                else
-                    throw new WrongMessageSentException("You need to move other " + getMovesLeft() +
-                            " students before moving Mother Nature!");
-                break;
-            case CLOUD_CHOICE_REPLY:
-                if(getMotherNatureMoved())
-                    handleCloudChoice(message);
-                else
-                    throw new WrongMessageSentException("You need to move mother nature first!");
-                break;
-            case CHARACTER_CARD_REPLY:
-                if(!getMotherNatureMoved()) {
-                    handleCharacterCardChoice(message);
+                catch(EmptyCloudException e){
                     if(!getVirtualViewMap().isEmpty()) {
                         System.out.println(getGame().getCurrentPlayer().getNickname());
-                        broadcastGameBoard();
-                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
+                                showGenericMessage(e.getMessage());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
                     }
                 }
-                else
-                    throw new WrongMessageSentException("You are no longer able to play a character card!");
+                break;
+            case CHARACTER_CARD_REPLY:
+                try {
+                    if (!getMotherNatureMoved()) {
+                        handleCharacterCardChoice(message);
+                        if (!getVirtualViewMap().isEmpty()) {
+                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            broadcastGameBoard();
+                            broadcastWaitingMessage();
+                            getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
+                        }
+                    } else
+                        throw new WrongMessageSentException("You are no longer able to play a character card!");
+                }
+                catch(CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException e){
+                    if(!getVirtualViewMap().isEmpty()) {
+                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
+                                showGenericMessage(e.getMessage());
+                        getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
+                    }
+                }
                 break;
             default:
                 throw new WrongMessageSentException("Wrong message sent.");
@@ -96,8 +146,8 @@ public class GameControllerExpertMode extends GameController{
         This method lets the current player play a character card, if possible.
      */
 
-    public void handleCharacterCardChoice(Message receivedMessage) throws
-            CharacterCardAlreadyPlayedException, NotEnoughCoinsException, CharacterCardNotFoundException {
+    public void handleCharacterCardChoice(Message receivedMessage)
+            throws NotEnoughCoinsException, CharacterCardAlreadyPlayedException, CharacterCardNotFoundException {
 
         int chosenCardID = ((CharacterCardMessage) receivedMessage).getCardID();
 
@@ -118,6 +168,9 @@ public class GameControllerExpertMode extends GameController{
             }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);
+            if(!getVirtualViewMap().isEmpty())
+                broadcastUpdateMessage(getGame().getCurrentPlayer().getNickname() + " has played the Character Card number " + chosenCardID + "!");
+
         }
     }
 
@@ -130,7 +183,10 @@ public class GameControllerExpertMode extends GameController{
         setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
+            broadcastGenericMessage(
+                    ANSIConstants.ANSI_BOLD + "-- ACTION PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
             broadcastGameStatusFirstActionPhase();
+            broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
         }
     }
@@ -146,6 +202,7 @@ public class GameControllerExpertMode extends GameController{
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
             broadcastGameBoard();
+            broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
         }
     }
@@ -172,7 +229,10 @@ public class GameControllerExpertMode extends GameController{
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
             broadcastGameBoard();
+            broadcastGenericMessage(
+                    ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
             showDeck(getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()));
+            broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAssistantCard();
         }
     }

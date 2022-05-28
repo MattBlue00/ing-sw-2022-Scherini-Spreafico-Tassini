@@ -8,6 +8,7 @@ import it.polimi.ingsw.observers.ViewObserver;
 import it.polimi.ingsw.view.View;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -125,6 +126,11 @@ public class ClientController implements ViewObserver, Observer {
     @Override
     public void onUpdateCharacterCardStringInt(int characterCardID, String par1, int par2) {
         client.sendMessage(new CharacterCardMessageStringInt(nickname, characterCardID, par1, par2));
+    }
+
+    @Override
+    public void onUpdateCharacterCardArrayListString(int characterCardID, ArrayList<String> list) {
+        client.sendMessage(new CharacterCardMessageArrayListString(nickname, characterCardID, list));
     }
 
     @Override

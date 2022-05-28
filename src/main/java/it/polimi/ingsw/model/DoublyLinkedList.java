@@ -63,12 +63,12 @@ public class DoublyLinkedList implements Serializable {
             return;
         if(prev.getOwner() != null && prev.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
-            prev.getStudents().forEach(student -> island.addStudent(student));
+            prev.getStudents().forEach(island::addStudent);
             removeIsland(prev);
         }
         if(next.getOwner() != null && next.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + next.getNumOfTowers());
-            next.getStudents().forEach(student -> island.addStudent(student));
+            next.getStudents().forEach(island::addStudent);
             removeIsland(next);
         }
     }
@@ -100,27 +100,7 @@ public class DoublyLinkedList implements Serializable {
             island = island.getNext();
             islandsToCheck--;
         }
-        throw new IslandNotFoundException("No island found.");
+        throw new IslandNotFoundException("No Island " + islandID + " was found.");
     }
 
-
-    // For debugging: print the list of islands and their info from head to tail and then from tail to head
-    /*public void printList(){
-        Island temp = head;
-        System.out.println("From head to tail: ");
-        while(!temp.getNext().equals(head)){
-            System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().get().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner().get()));
-            temp = temp.getNext();
-        }
-        System.out.println("L'isola "+temp.getId()+" appartenente a "+temp.getOwner().get().getNickname()+" possiede influenza: "+temp.influenceCalc(temp.getOwner().get()));
-
-        System.out.println("From tail to head: ");
-        Island tail = head.getPrev();
-        temp = tail;
-        while(!temp.getPrev().equals(tail)){
-            System.out.printf("%d ",temp.getId());
-            temp = temp.getPrev();
-        }
-        System.out.println(temp.getId());
-    }*/
 }
