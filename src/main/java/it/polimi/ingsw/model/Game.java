@@ -318,9 +318,11 @@ public class Game implements Serializable {
             System.out.print(assistantCard.getName() + " card, Mother Nature steps: " +
                     assistantCard.getMotherNatureSteps() + ", card's weight: " + assistantCard.getWeight() + "\n");
         }
-        for(Player player : this.getPlayers()){
-            if(player != this.getCurrentPlayer() && player.getLastAssistantCardPlayed() != null)
-                System.out.println(player.getNickname() + "'s last Assistant Card played: " + player.getLastAssistantCardPlayed().getName());
+        if(!currentPlayer.equals(players.get(0))) {
+            for (int i = 0; i < playersNumber - 1; i++) {
+                if(!players.get(i).equals(currentPlayer) && players.get(i).getLastAssistantCardPlayed() != null)
+                    System.out.println(players.get(i).getNickname() + "'s last Assistant Card played: " + players.get(i).getLastAssistantCardPlayed().getName());
+            }
         }
     }
 

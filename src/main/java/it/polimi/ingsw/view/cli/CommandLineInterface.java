@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -135,7 +136,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             out.println("Choose the type of game you want to play [ For Expert mode type TRUE, for normal mode type FALSE ] : ");
             String str = readLine();
             while (!str.equalsIgnoreCase("true") && !str.equalsIgnoreCase("false")){
-                System.out.println("The given input is not correct, please retry. " +
+                    out.println("The given input is not correct, please retry. " +
                         "\nChose the type of game you want to play [ For Expert mode type TRUE, for normal mode type FALSE ] : ");
                 str = readLine();
             }
@@ -173,7 +174,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             String wizard = readLine();
             while (!wizard.equalsIgnoreCase("BLUE_WIZARD") && !wizard.equalsIgnoreCase("PINK_WIZARD")
                     && !wizard.equalsIgnoreCase("YELLOW_WIZARD") && !wizard.equalsIgnoreCase("GREEN_WIZARD")){
-                System.out.println("The given input is not correct, please retry. \nGameWizard (BLUE_WIZARD | PINK_WIZARD | YELLOW_WIZARD | GREEN_WIZARD): ");
+                out.println("The given input is not correct, please retry. \nGameWizard (BLUE_WIZARD | PINK_WIZARD | YELLOW_WIZARD | GREEN_WIZARD): ");
                 wizard = readLine();
             }
             String finalWizard = wizard.toUpperCase();
@@ -208,7 +209,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         try {
             String choice = readLine().toUpperCase();
             while (!choice.equalsIgnoreCase("ISLAND") && !choice.equalsIgnoreCase("TABLE")){
-                System.out.println("The given input is not correct, please try again. \n" +
+                out.println("The given input is not correct, please try again. \n" +
                         "Type ISLAND if you want to move a student to an Island, TABLE if you want to move it to its Table: ");
                 choice = readLine();
             }
@@ -219,7 +220,7 @@ public class CommandLineInterface extends ViewObservable implements View {
                 out.println("Towards which island? Please type a valid number:");
                 int islandID = Integer.parseInt(readLine());
                 while (islandID < 1 || islandID >12){
-                    System.out.println("The given input is not correct, please try again. \n" +
+                    out.println("The given input is not correct, please try again. \n" +
                             "Towards which island? Please type a valid number:");
                     islandID = Integer.parseInt(readLine());
                 }
@@ -243,7 +244,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         try {
             int steps = Integer.parseInt(readLine());
             while (steps < 1 || steps > 5){
-                System.out.println("The given input is not correct, please try again. \n" +
+                out.println("The given input is not correct, please try again. \n" +
                         "How many steps do you wish Mother Nature has to move of? Please type a valid number: ");
                 steps = Integer.parseInt(readLine());
             }
@@ -271,7 +272,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         try {
             int characterCardID = Integer.parseInt(readLine());
             while (characterCardID < 1 || characterCardID > 12 ){
-                System.out.println("The given input is not correct, please try again. \n" +
+                out.println("The given input is not correct, please try again. \n" +
                         "Which character card do you want to use? Please type a valid number:  ");
                 characterCardID = Integer.parseInt(readLine());
             }
@@ -346,7 +347,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         try {
             String choice = readLine().toUpperCase();
             while (!choice.equalsIgnoreCase("STUDENT") && !choice.equalsIgnoreCase("CARD")){
-                System.out.println("The given input is not correct, please try again. \n" +
+                out.println("The given input is not correct, please try again. \n" +
                         "Type type STUDENT to move a student, CARD to play a character card: ");
                 choice = readLine();
             }
@@ -360,6 +361,12 @@ public class CommandLineInterface extends ViewObservable implements View {
     @Override
     public void showGenericMessage(String message) {
         out.println(message);
+    }
+
+    @Override
+    public void showAssistantCardsPlayed(List<Player> players) {
+        clearInterface();
+        players.forEach(p -> out.println(p.getNickname() + " has played: " + p.getLastAssistantCardPlayed().getName()));
     }
 
     @Override
@@ -382,7 +389,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         while (!finalColor.equalsIgnoreCase("YELLOW") && !finalColor.equalsIgnoreCase("BLUE")
                 && !finalColor.equalsIgnoreCase("GREEN") && !finalColor.equalsIgnoreCase("RED")
                 && !finalColor.equalsIgnoreCase("PINK")){
-            System.out.println("The given input is not correct, please try again. \n" +
+            out.println("The given input is not correct, please try again. \n" +
                     "Please type a valid color [YELLOW, BLUE, GREEN, RED, PINK]:");
             finalColor = readLine().toUpperCase();
         }

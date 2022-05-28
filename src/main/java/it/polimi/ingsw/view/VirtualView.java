@@ -1,9 +1,13 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.model.AssistantCard;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observers.Observer;
+
+import java.util.List;
 
 public class VirtualView implements View, Observer {
 
@@ -73,6 +77,9 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new GenericMessage(message));
     }
 
+    public void showAssistantCardsPlayed(List<Player> players){
+        clientHandler.sendMessage(new AssistantCardsPlayedMessage(players));
+    }
     @Override
     public void showGameStatus(Game game) {
         clientHandler.sendMessage(new GameStatusMessage(game));

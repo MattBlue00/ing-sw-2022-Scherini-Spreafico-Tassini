@@ -16,6 +16,7 @@ public enum MessageType {
     ERROR_MESSAGE,
     GENERIC,
     ASK_TYPE,
+    ASSISTANT_CARDS_PLAYED,
     GAME_STATUS,
     SHOW_DECK_MESSAGE,
     ACTION_CHOICE

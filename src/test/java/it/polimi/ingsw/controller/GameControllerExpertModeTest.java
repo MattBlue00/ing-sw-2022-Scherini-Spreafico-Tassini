@@ -88,7 +88,7 @@ class GameControllerExpertModeTest {
             assertEquals(0, gc.getGame().getBoard().getCloud(0).getStudents().size());
 
             assertEquals(gc.getGame().getCurrentPlayer().getNickname(), gc.getGame().getCurrentPlayer().getNickname());
-            assertEquals(Constants.PLAYER_MOVES, gc.getMovesLeft());
+            assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
             assertEquals(1, gc.getCurrentPlayerIndex());
@@ -120,12 +120,9 @@ class GameControllerExpertModeTest {
             )
                 System.out.println("ERROR in: " + this.getClass());
 
-            assertEquals(null,
-                    gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
+            assertNull(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
             assertTrue(gc.getMotherNatureMoved());
 
-            assertThrows(EmptyCloudException.class,
-                    () -> gc.getMessage(new CloudChoiceMessage(gc.getGame().getCurrentPlayer().getNickname(), 0)));
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberMessage(gc.getGame().getCurrentPlayer().getNickname(), 2)));
             assertThrows(WrongMessageSentException.class,
@@ -138,7 +135,7 @@ class GameControllerExpertModeTest {
 
             assertEquals(0, gc.getCurrentPlayerIndex());
             assertEquals("Ludo", gc.getGame().getCurrentPlayer().getNickname());
-            assertEquals(Constants.PLAYER_MOVES, gc.getMovesLeft());
+            assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getPlanningPhaseDone());
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
