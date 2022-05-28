@@ -209,4 +209,10 @@ public class Player implements Serializable {
         System.out.println("Towers: " + this.getSchool().getTowerRoom().getTowersLeft());
         System.out.println("--------------------");
     }
+
+    // Debug methods
+
+    public void setDeck(List<AssistantCard> deck) {
+        this.deck = deck;
+    }
 }

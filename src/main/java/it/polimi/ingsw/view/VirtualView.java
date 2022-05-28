@@ -73,6 +73,9 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(new GenericMessage(message));
     }
 
+    public void showGameStatusFirstActionPhase(Game game){
+        clientHandler.sendMessage(new GameStatusFirstActionPhaseMessage(game));
+    }
     @Override
     public void showGameStatus(Game game) {
         clientHandler.sendMessage(new GameStatusMessage(game));

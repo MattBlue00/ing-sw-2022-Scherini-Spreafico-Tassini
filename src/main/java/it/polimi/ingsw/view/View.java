@@ -15,6 +15,7 @@ public interface View {
     void askCharacterCard();
     void askAction();
     void showGenericMessage(String message);
+    void showGameStatusFirstActionPhase(Game game);
     void showGameStatus(Game game);
     void showDeck(Game game);
 }

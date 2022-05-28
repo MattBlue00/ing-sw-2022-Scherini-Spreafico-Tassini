@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
 
@@ -126,9 +127,10 @@ public class GameControllerExpertMode extends GameController{
         setOrder();
         getGame().setCurrentPlayer(getGame().getPlayers().get(0));
         setCurrentPlayerIndex(0);
+        setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
-            broadcastGameBoard();
+            broadcastGameStatusFirstActionPhase();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
         }
     }
@@ -138,7 +140,7 @@ public class GameControllerExpertMode extends GameController{
         winCheck();
         getGame().getCurrentPlayer().setCharacterCardAlreadyPlayed(false);
         getGame().setCurrentPlayer(getGame().getPlayers().get(getCurrentPlayerIndex()));
-        setMovesLeft(3);
+        setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         setPlayerActionPhaseDone(false);
         setMotherNatureMoved(false);
         if(!getVirtualViewMap().isEmpty()) {
@@ -165,9 +167,12 @@ public class GameControllerExpertMode extends GameController{
         setPlayerActionPhaseDone(false);
         setMotherNatureMoved(false);
         getGame().setRoundNumber(getGame().getRoundNumber() + 1);
+        for(Player player : getGame().getPlayers())
+            player.resetLastAssistantCardPlayed();
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
             broadcastGameBoard();
+            showDeck(getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()));
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAssistantCard();
         }
     }

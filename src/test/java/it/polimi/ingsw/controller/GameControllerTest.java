@@ -36,9 +36,12 @@ class GameControllerTest {
 
         assertEquals(2, gameController.getGame().getPlayersNumber());
 
-        Player player = new Player(Wizard.BLUE_WIZARD, user, gameController.getGame().getConstants() );
+        Player player1 = new Player(Wizard.BLUE_WIZARD, user, gameController.getGame().getConstants());
+        Player player2 = new Player(Wizard.PINK_WIZARD, "Ludo", gameController.getGame().getConstants());
+        gameController.getGame().addPlayer(player1);
+        gameController.getGame().addPlayer(player2);
+        gameController.getGame().setCurrentPlayer(player1);
 
-        gameController.getGame().setCurrentPlayer(player);
         try {
             gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
         } catch (AssistantCardAlreadyPlayedException ignored) {}
@@ -156,9 +159,7 @@ class GameControllerTest {
         Player player = new Player(Wizard.PINK_WIZARD, user, gameController.getGame().getConstants());
         gameController.getGame().setCurrentPlayer(player);
 
-        try {
-            gameController.handleCloudChoice(message);
-        } catch (EmptyCloudException ignored){}
+        gameController.handleCloudChoice(message);
 
         assertEquals(0, gameController.getGame().getBoard().getCloud(1).getStudents().size());
     }
@@ -327,7 +328,7 @@ class GameControllerTest {
             assertEquals(7, gc.getGame().getPlayers().get(0).getSchool().getHall().getStudents().size());
 
             assertEquals("Matteo", gc.getGame().getCurrentPlayer().getNickname());
-            assertEquals(Constants.PLAYER_MOVES, gc.getMovesLeft());
+            assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
             assertEquals(1, gc.getCurrentPlayerIndex());
@@ -354,8 +355,6 @@ class GameControllerTest {
             assertNull(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
             assertTrue(gc.getMotherNatureMoved());
 
-            assertThrows(EmptyCloudException.class,
-                    () -> gc.getMessage(new CloudChoiceMessage("Matteo", 0)));
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberMessage("Matteo", 2)));
             gc.getMessage(new CloudChoiceMessage("Matteo", 1));
@@ -364,7 +363,6 @@ class GameControllerTest {
 
             assertEquals(0, gc.getCurrentPlayerIndex());
             assertEquals("Ludo", gc.getGame().getCurrentPlayer().getNickname());
-            assertEquals(Constants.PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getPlanningPhaseDone());
             assertFalse(gc.getMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
@@ -403,102 +401,42 @@ class GameControllerTest {
         assertEquals(gc.getGame().getCurrentPlayer(), gc.getGame().getPlayers().get(0));
 
     }
-/*
+
+    /*
+        This test verifies that players never occur in errors when playing Assistant Card, especially when facing
+        borderline cases (detailed in the test method).
+     */
     @Test
-    public void testHandlePlayerLoginWithThreePlayers() throws WrongMessageSentException {
-        String user1 = "Ludovica";
-        int playersNumber = 3;
-        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
+    public void isAssistantCardPlayableTest(){
 
-        GameController gameController = new GameController();
+        GameController gc = new GameController();
+        gc.prepareGame(2);
+        gc.getGame().addPlayer(new Player(Wizard.PINK_WIZARD, "Ludo", gc.getGame().getConstants()));
+        gc.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD, "Matteo", gc.getGame().getConstants()));
+        gc.startGame();
+        Player p1 = gc.getGame().getPlayers().get(0);
+        Player p2 = gc.getGame().getPlayers().get(1);
 
-        gameController.prepareGame(message.getPlayerNumber());
-        assertEquals(playersNumber, gameController.getGame().getPlayersNumber());
+        // Case 1: Player 1 plays CHEETAH, player 2 CANNOT play CHEETAH
 
-        String user2 = "Matteo";
-        String user3 = "Samuele";
+        p1.playAssistantCard("CHEETAH");
+        gc.getGame().setCurrentPlayer(p2);
+        assertEquals("CHEETAH", p1.getLastAssistantCardPlayed().getName());
+        assertFalse(gc.isAssistantCardPlayable("CHEETAH"));
+        p1.resetLastAssistantCardPlayed();
+        gc.getGame().setCurrentPlayer(p1);
 
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE_WIZARD);
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m3 = new PlayerLoginRequest(user3, Wizard.GREEN_WIZARD);
+        // Case 2: Player 1 plays FOX, player 2 has no other choice than playing FOX, so he plays it
 
-        gameController.handlePlayerLogin(m1);
-        gameController.handlePlayerLogin(m2);
-        gameController.handlePlayerLogin(m3);
+        p1.playAssistantCard("FOX");
+        assertEquals("FOX", p1.getLastAssistantCardPlayed().getName());
+        gc.getGame().setCurrentPlayer(p2);
+        List<AssistantCard> deck = new ArrayList<>(1);
+        deck.add(new AssistantCard(AssistantType.FOX));
+        p2.setDeck(deck);
+        assertEquals(1, p2.getDeck().size());
+        assertTrue(gc.isAssistantCardPlayable("FOX"));
 
-        assertEquals(user1, gameController.getGame().getPlayers().get(0).getNickname());
-        assertEquals(user2, gameController.getGame().getPlayers().get(1).getNickname());
-        assertEquals(user3, gameController.getGame().getPlayers().get(2).getNickname());
     }
 
-    @Test
-    public void testHandlePlayerLoginWithTwoPlayers() throws WrongMessageSentException {
-        String user1 = "Ludovica";
-        int playersNumber = 2;
-        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
-
-        GameController gameController = new GameController();
-
-        gameController.prepareGame(message);
-        assertEquals(playersNumber, gameController.getGame().getPlayersNumber());
-
-        String user2 = "Matteo";
-
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.BLUE_WIZARD);
-
-        gameController.handlePlayerLogin(m1);
-        gameController.handlePlayerLogin(m2);
-
-        assertEquals(user1, gameController.getGame().getPlayers().get(0).getNickname());
-        assertEquals(user2, gameController.getGame().getPlayers().get(1).getNickname());
-    }
-
-    @Test
-    public void testGetMessageCaseLoginWithHandlePlayerLogin() throws WrongMessageSentException {
-        String user1 = "Ludovica";
-        int playersNumber = 2;
-        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
-
-        GameController gameController = new GameController();
-
-        gameController.prepareGame(message);
-        assertEquals(playersNumber, gameController.getGame().getPlayersNumber());
-
-        String user2 = "Matteo";
-        gameController.setGameState(GameState.LOGIN);
-
-        PlayerLoginRequest m2 = new PlayerLoginRequest(user2, Wizard.PINK_WIZARD);
-        PlayerLoginRequest m1 = new PlayerLoginRequest(user1, Wizard.GREEN_WIZARD);
-
-        try {
-            gameController.getMessage(m1);
-            gameController.getMessage(m2);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-        assertEquals(gameController.getGame().getPlayersNumber(),
-                gameController.getGame().getPlayers().size());
-        assertEquals(GameState.IN_GAME, gameController.getGameState());
-    }
-
-    @Test
-    public void testGetMessageCaseInit() throws WrongMessageSentException {
-        String user1 = "Ludovica";
-        int playersNumber = 2;
-        PlayerNumberMessage message = new PlayerNumberMessage(user1, playersNumber);
-        GameController gameController = new GameController();
-
-        gameController.prepareGame(message.getPlayerNumber());
-
-        try {
-            gameController.getMessage(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(playersNumber, gameController.getGame().getPlayersNumber());
-    }*/
 }

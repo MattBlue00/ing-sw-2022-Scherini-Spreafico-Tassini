@@ -31,7 +31,6 @@ public class GameController{
         this.planningPhaseDone = false;
         this.playerActionPhaseDone = false;
         this.currentPlayerIndex = 0;
-        this.movesLeft = Constants.PLAYER_MOVES;
         this.motherNatureMoved = false;
         this.gameQueue = new ArrayList<>();
         this.gameState = GameState.SETUP;
@@ -216,7 +215,7 @@ public class GameController{
 
         boolean wizardIdAlreadyUsed = false;
 
-        String nickname = String.valueOf(gameQueue.stream().filter(nick -> nick.equals(receivedMessage.getNickname())).findFirst().get());
+        String nickname = gameQueue.stream().filter(nick -> nick.equals(receivedMessage.getNickname())).findFirst().get();
         Wizard wizardID = Wizard.valueOf(((WizardIDMessage) receivedMessage).getWizardID());
         for(int i=0; i<game.getPlayers().size(); i++) {
             if (wizardID.equals(game.getPlayers().get(i).getWizardID())) {
@@ -235,7 +234,7 @@ public class GameController{
     public void startGame(){
         game.startGame();
         System.out.println("game: " + game + " has been initialized");
-        broadcastGenericMessage("GAME CAN NOW START");
+        broadcastGenericMessage("Get ready to play!");
         setGameState(GameState.IN_GAME);
         // For old tests
         if(!virtualViewMap.isEmpty()) {
@@ -281,9 +280,10 @@ public class GameController{
         setOrder();
         game.setCurrentPlayer(game.getPlayers().get(0));
         currentPlayerIndex = 0;
+        movesLeft = game.getConstants().PLAYER_MOVES;
         if(!virtualViewMap.isEmpty()) {
             System.out.println(game.getCurrentPlayer().getNickname());
-            broadcastGameBoard();
+            broadcastGameStatusFirstActionPhase();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
         }
     }
@@ -349,7 +349,7 @@ public class GameController{
     public void nextPlayerActionPhase(){
         winCheck();
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-        movesLeft = Constants.PLAYER_MOVES;
+        movesLeft = game.getConstants().PLAYER_MOVES;
         playerActionPhaseDone = false;
         motherNatureMoved = false;
         if(!virtualViewMap.isEmpty()) {
@@ -372,7 +372,6 @@ public class GameController{
         }
         currentPlayerIndex = 0;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
-        movesLeft = Constants.PLAYER_MOVES;
         playerPlanningPhaseDone = false;
         planningPhaseDone = false;
         playerActionPhaseDone = false;
@@ -402,10 +401,8 @@ public class GameController{
            playerPlanningPhaseDone = true;
        }
        else {
-           if(!virtualViewMap.isEmpty()) {
+           if(!virtualViewMap.isEmpty())
                virtualViewMap.get(receivedMessage.getNickname()).showGenericMessage("You can't play this assistant card!");
-               virtualViewMap.get(receivedMessage.getNickname()).askAssistantCard();
-           }
            else throw new AssistantCardAlreadyPlayedException("You can't play this assistant card!");
        }
     }
@@ -422,6 +419,8 @@ public class GameController{
         }
         if(!found)
             return false;
+        if(game.getCurrentPlayer().equals(game.getPlayers().get(0)))
+            return true;
         List<Player> players = game.getPlayers();
         List<AssistantCard> cardsPlayed = new ArrayList<>(players.size());
         for(Player player : players){
@@ -492,7 +491,7 @@ public class GameController{
         The method handles the cloud choice at the end of the action phase.
      */
 
-    public void handleCloudChoice(Message receivedMessage) throws EmptyCloudException {
+    public void handleCloudChoice(Message receivedMessage){
         try {
             game.takeStudentsFromCloud(((CloudChoiceMessage) receivedMessage).getCloudID());
             playerActionPhaseDone = true;
@@ -501,7 +500,15 @@ public class GameController{
             if(!virtualViewMap.isEmpty()) {
                 System.out.println(game.getCurrentPlayer().getNickname());
                 virtualViewMap.get(game.getCurrentPlayer().getNickname()).
-                        showGenericMessage("The given input is not correct, please try again.");
+                        showGenericMessage("There's no cloud with such id, please try again.");
+                virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
+            }
+        }
+        catch(EmptyCloudException e){
+            if(!virtualViewMap.isEmpty()) {
+                System.out.println(game.getCurrentPlayer().getNickname());
+                virtualViewMap.get(game.getCurrentPlayer().getNickname()).
+                        showGenericMessage("The chosen cloud has already been chosen, please choose another one.");
                 virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
             }
         }
@@ -582,6 +589,12 @@ public class GameController{
     public void broadcastGenericMessage(String message) {
         for (VirtualView vv : virtualViewMap.values()) {
             vv.showGenericMessage(message);
+        }
+    }
+
+    public void broadcastGameStatusFirstActionPhase(){
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showGameStatusFirstActionPhase(this.game);
         }
     }
 
