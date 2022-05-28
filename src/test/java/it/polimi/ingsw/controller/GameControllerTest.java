@@ -42,9 +42,7 @@ class GameControllerTest {
         gameController.getGame().addPlayer(player2);
         gameController.getGame().setCurrentPlayer(player1);
 
-        try {
-            gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
-        } catch (AssistantCardAlreadyPlayedException ignored) {}
+        gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
 
         if(gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed() == null)
             System.out.println("ERROR");
@@ -141,7 +139,11 @@ class GameControllerTest {
         gameController.getGame().getBoard().setMotherNaturePos(randomPos);
         try {
             gameController.handleMotherNature(message);
-        } catch (InvalidNumberOfStepsException | IslandNotFoundException ignored){}
+        } catch (InvalidNumberOfStepsException e) {
+            throw new RuntimeException(e);
+        } catch (IslandNotFoundException e) {
+            e.printStackTrace();
+        }
 
         assertEquals((randomPos+steps)%12, gameController.getGame().getBoard().getMotherNaturePos());
     }
@@ -159,7 +161,11 @@ class GameControllerTest {
         Player player = new Player(Wizard.PINK_WIZARD, user, gameController.getGame().getConstants());
         gameController.getGame().setCurrentPlayer(player);
 
-        gameController.handleCloudChoice(message);
+        try {
+            gameController.handleCloudChoice(message);
+        } catch (EmptyCloudException e) {
+            e.printStackTrace();
+        }
 
         assertEquals(0, gameController.getGame().getBoard().getCloud(1).getStudents().size());
     }
@@ -274,8 +280,6 @@ class GameControllerTest {
             System.out.println("ASSISTANT ERROR");
 
         assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
-        assertThrows(AssistantCardAlreadyPlayedException.class,
-                () -> gc.getMessage(new AssistantCardMessage("Ludo", "TURTLE")));
         assertThrows(WrongTurnException.class,
                 () -> gc.getMessage(new AssistantCardMessage("Matteo", "FOX")));
 

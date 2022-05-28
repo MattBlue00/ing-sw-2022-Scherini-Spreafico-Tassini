@@ -185,7 +185,7 @@ public class Game implements Serializable {
         int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
 
         if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
-            throw new InvalidNumberOfStepsException("The number of steps selected is not valid.");
+            throw new InvalidNumberOfStepsException("You can't move Mother Nature of " + steps + " steps! Maximum allowed: " + max_steps);
 
         board.moveMotherNature(steps);
 
@@ -318,16 +318,20 @@ public class Game implements Serializable {
             System.out.print(assistantCard.getName() + " card, Mother Nature steps: " +
                     assistantCard.getMotherNatureSteps() + ", card's weight: " + assistantCard.getWeight() + "\n");
         }
-        if(!currentPlayer.equals(players.get(0))) {
-            for (int i = 0; i < playersNumber - 1; i++) {
-                if(!players.get(i).equals(currentPlayer) && players.get(i).getLastAssistantCardPlayed() != null)
-                    System.out.println(players.get(i).getNickname() + "'s last Assistant Card played: " + players.get(i).getLastAssistantCardPlayed().getName());
-            }
-        }
     }
 
     public void showAssistantCardsPlayed(){
-        players.forEach(p -> System.out.println(p.getNickname() + " has played: " + p.getLastAssistantCardPlayed().getName()));
+        players.forEach(p -> System.out.println(p.getNickname() + " has played: "
+                + p.getLastAssistantCardPlayed().getName() +
+                " (Mother Nature steps: " + p.getLastAssistantCardPlayed().getMotherNatureSteps() +
+                ", Weight: " + p.getLastAssistantCardPlayed().getWeight() + ")"));
+        System.out.println("--------------------");
+    }
+
+    public void showPlayersOrder(){
+        System.out.println("The players' order is: ");
+        players.forEach(p -> System.out.println(p.getNickname()));
+        System.out.println("--------------------");
     }
 
 }

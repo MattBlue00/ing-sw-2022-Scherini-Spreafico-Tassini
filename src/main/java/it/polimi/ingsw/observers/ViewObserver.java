@@ -1,5 +1,7 @@
 package it.polimi.ingsw.observers;
 
+import java.util.ArrayList;
+
 public interface ViewObserver {
 
     void onUpdateServerData(String address, int port);
@@ -17,6 +19,7 @@ public interface ViewObserver {
     void onUpdateCharacterCardInt(int characterCardID, int par);
     void onUpdateCharacterCardString(int characterCardID, String par);
     void onUpdateCharacterCardStringInt(int characterCardID, String par1, int par2);
+    void onUpdateCharacterCardArrayListString(int characterCardID, ArrayList<String> list);
     void onUpdateActionChoice(String choice);
 
 }

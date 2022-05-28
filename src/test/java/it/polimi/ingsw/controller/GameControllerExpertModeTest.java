@@ -46,8 +46,6 @@ class GameControllerExpertModeTest {
             System.out.println("ERROR in: " + this.getClass());
 
         assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
-        assertThrows(AssistantCardAlreadyPlayedException.class,
-                () -> gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "TURTLE")));
         try {
             gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "FOX"));
         }
@@ -165,10 +163,11 @@ class GameControllerExpertModeTest {
 
         try {
             gc.handleCharacterCardChoice(new CharacterCardMessageString("Matteo", 9, "green"));
-            assertEquals(gc.getGame().getCurrentPlayer().getCoinsWallet(), 2);
-            assertTrue(gc.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed());
-
-        } catch (CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException ignored){}
+        } catch (NotEnoughCoinsException | CharacterCardAlreadyPlayedException | CharacterCardNotFoundException e) {
+            e.printStackTrace();
+        }
+        assertEquals(gc.getGame().getCurrentPlayer().getCoinsWallet(), 2);
+        assertTrue(gc.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed());
     }
 
     @Test

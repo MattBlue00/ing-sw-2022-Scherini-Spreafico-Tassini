@@ -57,7 +57,7 @@ public class GameExpertMode extends Game implements Serializable {
         }
 
         if (!found)
-            throw new CharacterCardNotFoundException("No character card with id " + id + " exists.");
+            throw new CharacterCardNotFoundException("There's no Character Card with id " + id + " in this match...");
         else
             getCurrentPlayer().setCharacterCardAlreadyPlayed(true);
 
