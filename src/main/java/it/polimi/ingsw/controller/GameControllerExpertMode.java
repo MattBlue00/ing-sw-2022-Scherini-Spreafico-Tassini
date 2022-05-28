@@ -130,8 +130,7 @@ public class GameControllerExpertMode extends GameController{
         setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         if(!getVirtualViewMap().isEmpty()) {
             System.out.println(getGame().getCurrentPlayer().getNickname());
-            broadcastAssistantCardsPlayed();
-            broadcastGameBoard();
+            broadcastGameStatusFirstActionPhase();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
         }
     }

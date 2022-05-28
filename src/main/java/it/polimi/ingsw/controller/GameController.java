@@ -283,8 +283,7 @@ public class GameController{
         movesLeft = game.getConstants().PLAYER_MOVES;
         if(!virtualViewMap.isEmpty()) {
             System.out.println(game.getCurrentPlayer().getNickname());
-            broadcastAssistantCardsPlayed();
-            broadcastGameBoard();
+            broadcastGameStatusFirstActionPhase();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
         }
     }
@@ -593,9 +592,9 @@ public class GameController{
         }
     }
 
-    public void broadcastAssistantCardsPlayed(){
+    public void broadcastGameStatusFirstActionPhase(){
         for (VirtualView vv : virtualViewMap.values()) {
-            vv.showAssistantCardsPlayed(game.getPlayers());
+            vv.showGameStatusFirstActionPhase(this.game);
         }
     }
 

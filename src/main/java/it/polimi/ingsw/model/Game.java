@@ -326,4 +326,8 @@ public class Game implements Serializable {
         }
     }
 
+    public void showAssistantCardsPlayed(){
+        players.forEach(p -> System.out.println(p.getNickname() + " has played: " + p.getLastAssistantCardPlayed().getName()));
+    }
+
 }

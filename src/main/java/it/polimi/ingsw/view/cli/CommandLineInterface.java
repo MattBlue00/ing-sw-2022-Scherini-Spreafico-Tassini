@@ -364,9 +364,10 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void showAssistantCardsPlayed(List<Player> players) {
+    public void showGameStatusFirstActionPhase(Game game) {
         clearInterface();
-        players.forEach(p -> out.println(p.getNickname() + " has played: " + p.getLastAssistantCardPlayed().getName()));
+        game.showAssistantCardsPlayed();
+        game.showGameBoard();
     }
 
     @Override

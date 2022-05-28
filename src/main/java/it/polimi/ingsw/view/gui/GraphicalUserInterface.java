@@ -81,7 +81,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void showAssistantCardsPlayed(List<Player> players) {
+    public void showGameStatusFirstActionPhase(Game game) {
 
     }
 

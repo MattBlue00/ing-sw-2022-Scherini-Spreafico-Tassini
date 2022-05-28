@@ -150,6 +150,9 @@ public class ClientController implements ViewObserver, Observer {
                     }
                 }
                 break;
+            case GAME_STATUS_FIRST_ACTION_PHASE:
+                taskQueue.execute(() -> view.showGameStatusFirstActionPhase(((GameStatusFirstActionPhaseMessage) message).getGame()));
+                break;
             case GAME_STATUS:
                 taskQueue.execute(() -> view.showGameStatus(((GameStatusMessage) message).getGame()));
                 break;
@@ -158,6 +161,7 @@ public class ClientController implements ViewObserver, Observer {
                 break;
             case GENERIC:
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));
+                break;
             default: //should never be reached
                 break;
         }
