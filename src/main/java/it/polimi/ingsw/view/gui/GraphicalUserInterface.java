@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 import javafx.application.Platform;
@@ -77,6 +76,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
+
+    }
+
+    @Override
+    public void showExistingGames(List<Integer> existingGames) {
 
     }
 

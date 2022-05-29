@@ -383,6 +383,16 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void showExistingGames(List<Integer> existingGames) {
+        if(existingGames.isEmpty()){
+            out.println("No games have been created yet");
+            return;
+        }
+        out.println("Game list: ");
+        existingGames.forEach(out::println);
+    }
+
+    @Override
     public void showGameStatusFirstActionPhase(Game game) {
         clearInterface();
         game.showAssistantCardsPlayed();

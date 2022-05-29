@@ -111,10 +111,14 @@ public class Server{
         }
     }
 
+    public Map<Integer, GameController> getGameControllerMap() {
+        return gameControllerMap;
+    }
+
     /*
-        returns the gameID associated to a nickname, if it doesn't exists
-        returns -1.
-    */
+            returns the gameID associated to a nickname, if it doesn't exists
+            returns -1.
+        */
     private int getGameIDFromNickname(String nickname){
         return gameControllerMap.entrySet()
                 .stream()
