@@ -1,19 +1,22 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.controller.GameController;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShowExistingGamesMessage extends Message{
 
-    private final List<Integer> existingGames;
+    private final Map<Integer, GameController> existingGames;
 
-    public ShowExistingGamesMessage(List<Integer> existingGames) {
+    public ShowExistingGamesMessage(Map<Integer, GameController> existingGames) {
         super(null, MessageType.EXISTING_GAMES);
-        this.existingGames = new ArrayList<>();
-        this.existingGames.addAll(existingGames);
+        this.existingGames = existingGames;
     }
 
-    public List<Integer> getExistingGames() {
+    public Map<Integer, GameController> getExistingGames() {
         return existingGames;
     }
 }
