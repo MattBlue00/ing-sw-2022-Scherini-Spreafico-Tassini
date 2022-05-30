@@ -104,16 +104,6 @@ public class Game implements Serializable {
     }
 
     /*
-    ----THIS METHOD IS NEEDED FOR THE THIEF CARD THAT WE DID NOT IMPLEMENT YET----
-    public void playerMovesStudentToHall(String color){
-        try{
-            currentPlayer.moveStudentToHall(color);
-        }catch (NonExistentColorException e){
-            e.printStackTrace();
-        }
-    }*/
-
-    /*
         This method is needed to make overriding possible in GameExpertMode.
         If the game is played with the basic rules, it just calls the profCheckAlgorithm method.
      */

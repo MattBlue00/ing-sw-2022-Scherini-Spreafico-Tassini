@@ -5,15 +5,35 @@ import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.io.Serializable;
 
+/**
+ * This server-side class is the {@link GameController}'s subclass, and offers new (overridden) methods to handle the
+ * game flow of a game in Expert mode.
+ */
+
 public class GameControllerExpertMode extends GameController implements Serializable {
+
+    /**
+     * Game controller constructor.
+     */
 
     public GameControllerExpertMode() {
         super();
     }
+
+    /**
+     * Establishes the right flow of the current player's Action Phase by using the controller's variables.
+     * This overridden version has two more cases: case {@code ACTION_CHOICE} refers to those messages related to the
+     * choice between playing a Character Card and moving a student, while case {@code CHARACTER_CARD_REPLY} refers to
+     * those messages related to the Character Card handling.
+     *
+     * @param message the message sent by the client.
+     * @throws TryAgainException if an exception cannot be caught by the controller, it is caught by the {@link Server} class.
+     */
 
     @Override
     public void actionPhase(Message message) throws TryAgainException {
@@ -69,7 +89,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 break;
             case MOTHER_NATURE_STEPS_REPLY:
                 try {
-                    if (getMovesLeft() == 0 && !getMotherNatureMoved()) {
+                    if (getMovesLeft() == 0 && !hasMotherNatureMoved()) {
                         handleMotherNature(message);
                         setMotherNatureMoved(true);
                         getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
@@ -94,7 +114,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 break;
             case CLOUD_CHOICE_REPLY:
                 try {
-                    if (getMotherNatureMoved())
+                    if (hasMotherNatureMoved())
                         handleCloudChoice(message);
                     else
                         throw new WrongMessageSentException("You need to move mother nature first!");
@@ -118,7 +138,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 break;
             case CHARACTER_CARD_REPLY:
                 try {
-                    if (!getMotherNatureMoved()) {
+                    if (!hasMotherNatureMoved()) {
                         handleCharacterCardChoice(message);
                         if (!getVirtualViewMap().isEmpty()) {
                             System.out.println(getGame().getCurrentPlayer().getNickname());
@@ -144,8 +164,17 @@ public class GameControllerExpertMode extends GameController implements Serializ
 
     }
 
-    /*
-        This method lets the current player play a character card, if possible.
+    /**
+     * Allows the current player to play a Character Card, if possible. Furthermore, if there are any, sets
+     * the chosen card's parameters as specified in the message. If no exception is thrown, every player
+     * (except the current one) will be notified.
+     *
+     * @param receivedMessage the message sent by the client.
+     * @throws NotEnoughCoinsException if the current player cannot afford the price of the chosen card.
+     * @throws CharacterCardAlreadyPlayedException if the current player has already played a Character Card during the
+     *                                             same round.
+     * @throws CharacterCardNotFoundException if the current player has chosen an ID that does not correspond to any of
+     *                                        the three cards available in the game.
      */
 
     public void handleCharacterCardChoice(Message receivedMessage)
@@ -176,6 +205,12 @@ public class GameControllerExpertMode extends GameController implements Serializ
         }
     }
 
+    /**
+     * Sets the controller's variables and the players' order so that the first player of the current round's
+     * Action Phase can play properly. This overridden version asks the next player which action to undertake
+     * next (play a card or move a student) rather than asking where to move a student.
+     */
+
     @Override
     public void endPlanningPhase() {
         setPlanningPhaseDone(true);
@@ -193,6 +228,11 @@ public class GameControllerExpertMode extends GameController implements Serializ
         }
     }
 
+    /**
+     * Resets the controller's variables in order to let the next player play his Action Phase properly. This
+     * overridden version handles one more variable, specific to the Expert mode.
+     */
+
     @Override
     public void nextPlayerActionPhase(){
         winCheck();
@@ -208,6 +248,11 @@ public class GameControllerExpertMode extends GameController implements Serializ
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
         }
     }
+
+    /**
+     * Sets the controller's variables in order to let the players play the next round properly. This overridden
+     * version handles one more variable, specific to the Expert mode.
+     */
 
     @Override
     public void nextRound(){

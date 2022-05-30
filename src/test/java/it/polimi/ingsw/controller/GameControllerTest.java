@@ -171,7 +171,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void testDeclareWinningPlayer(){
+    public void testDeclareWinningPlayer() throws TieException {
         GameController gameController = new GameController();
         PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
 
@@ -212,12 +212,20 @@ class GameControllerTest {
         gameController.getGame().getPlayers().get(1).getSchool().getTowerRoom().setTowersLeft(1);
         gameController.getGame().getPlayers().get(2).getSchool().getTowerRoom().setTowersLeft(4);
 
-        assertTrue(gameController.isStudentBagEmpty());
+        try {
+            assertTrue(gameController.isStudentBagEmpty());
+        } catch (TieException e) {
+            throw new RuntimeException(e);
+        }
 
         List<Student> students = new ArrayList<>();
         students.add(new Student(Color.RED));
         gameController.getGame().getBoard().setStudentsBag(students);
-        assertFalse(gameController.isStudentBagEmpty());
+        try {
+            assertFalse(gameController.isStudentBagEmpty());
+        } catch (TieException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -323,7 +331,7 @@ class GameControllerTest {
 
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner());
-            assertTrue(gc.getMotherNatureMoved());
+            assertTrue(gc.hasMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new MotherNatureStepsMessage("Ludo", 1)));
 
@@ -333,7 +341,7 @@ class GameControllerTest {
 
             assertEquals("Matteo", gc.getGame().getCurrentPlayer().getNickname());
             assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
-            assertFalse(gc.getMotherNatureMoved());
+            assertFalse(gc.hasMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
             assertEquals(1, gc.getCurrentPlayerIndex());
 
@@ -357,7 +365,7 @@ class GameControllerTest {
                 System.out.println("MATTEO ERROR");
 
             assertNull(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
-            assertTrue(gc.getMotherNatureMoved());
+            assertTrue(gc.hasMotherNatureMoved());
 
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberMessage("Matteo", 2)));
@@ -368,7 +376,7 @@ class GameControllerTest {
             assertEquals(0, gc.getCurrentPlayerIndex());
             assertEquals("Ludo", gc.getGame().getCurrentPlayer().getNickname());
             assertFalse(gc.getPlanningPhaseDone());
-            assertFalse(gc.getMotherNatureMoved());
+            assertFalse(gc.hasMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
 
             assertEquals(2, gc.getGame().getRoundNumber());

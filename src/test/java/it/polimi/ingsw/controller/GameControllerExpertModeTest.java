@@ -7,10 +7,7 @@ import it.polimi.ingsw.model.charactercards.Healer;
 import it.polimi.ingsw.model.charactercards.Innkeeper;
 import it.polimi.ingsw.model.charactercards.Villager;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -78,7 +75,7 @@ class GameControllerExpertModeTest {
 
             assertEquals(gc.getGame().getCurrentPlayer(),
                     gc.getGame().getBoard().getIslands().getIslandFromID(1).getOwner());
-            assertTrue(gc.getMotherNatureMoved());
+            assertTrue(gc.hasMotherNatureMoved());
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 1)));
 
@@ -87,7 +84,7 @@ class GameControllerExpertModeTest {
 
             assertEquals(gc.getGame().getCurrentPlayer().getNickname(), gc.getGame().getCurrentPlayer().getNickname());
             assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
-            assertFalse(gc.getMotherNatureMoved());
+            assertFalse(gc.hasMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
             assertEquals(1, gc.getCurrentPlayerIndex());
 
@@ -119,7 +116,7 @@ class GameControllerExpertModeTest {
                 System.out.println("ERROR in: " + this.getClass());
 
             assertNull(gc.getGame().getBoard().getIslands().getIslandFromID(3).getOwner());
-            assertTrue(gc.getMotherNatureMoved());
+            assertTrue(gc.hasMotherNatureMoved());
 
             assertThrows(WrongMessageSentException.class,
                     () -> gc.getMessage(new PlayerNumberMessage(gc.getGame().getCurrentPlayer().getNickname(), 2)));
@@ -135,7 +132,7 @@ class GameControllerExpertModeTest {
             assertEquals("Ludo", gc.getGame().getCurrentPlayer().getNickname());
             assertEquals(gc.getGame().getConstants().PLAYER_MOVES, gc.getMovesLeft());
             assertFalse(gc.getPlanningPhaseDone());
-            assertFalse(gc.getMotherNatureMoved());
+            assertFalse(gc.hasMotherNatureMoved());
             assertFalse(gc.getPlayerActionPhaseDone());
 
             assertEquals(2, gc.getGame().getRoundNumber());
