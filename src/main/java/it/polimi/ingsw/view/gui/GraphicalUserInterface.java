@@ -11,8 +11,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
 
-    public GraphicalUserInterface() {
-        this.sceneController = new SceneController();
+    public GraphicalUserInterface(SceneController sceneController) {
+        this.sceneController = sceneController;
     }
 
     public SceneController getSceneController() {
@@ -26,7 +26,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCreateOrJoin() {
-        //TODO: do every method in gui
+        Platform.runLater(()-> sceneController.changeRootPane(observers, "lobby_scene.fxml"));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
-
+        Platform.runLater(()->sceneController.showAlert(message));
     }
 
     @Override
