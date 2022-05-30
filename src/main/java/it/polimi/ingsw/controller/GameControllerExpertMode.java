@@ -7,7 +7,9 @@ import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 
-public class GameControllerExpertMode extends GameController{
+import java.io.Serializable;
+
+public class GameControllerExpertMode extends GameController implements Serializable {
 
     public GameControllerExpertMode() {
         super();

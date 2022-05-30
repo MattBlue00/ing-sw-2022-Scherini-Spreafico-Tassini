@@ -1,7 +1,9 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.controller.ClientController;
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 
@@ -118,7 +120,6 @@ public class CommandLineInterface extends ViewObservable implements View {
                 if(!choice.equalsIgnoreCase("CREATE") && !choice.equalsIgnoreCase("JOIN"))
                     out.println("Please enter a valid choice [ type CREATE to create or JOIN to join ] : ");
             }while(!choice.equalsIgnoreCase("CREATE") && !choice.equalsIgnoreCase("JOIN"));
-
             String finalChoice = choice;
             notifyObserver(viewObserver -> viewObserver.onUpdateCreateOrJoin(finalChoice));
         } catch (ExecutionException e) {
@@ -383,13 +384,25 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void showExistingGames(List<Integer> existingGames) {
-        if(existingGames.isEmpty()){
-            out.println("No games have been created yet");
-            return;
+    public void showExistingGames(Map<Integer, GameController> existingGames) {
+        if(existingGames.isEmpty())
+            out.println("No games have been created yet.");
+        else {
+            out.println("Existing games list: ");
+            for(Map.Entry<Integer, GameController> entry : existingGames.entrySet()) {
+                Integer key = entry.getKey();
+                GameController value = entry.getValue();
+                out.print("- "+key+": ");
+                List<Player> players = value.getGame().getPlayers();
+                for(int i = 0; i < players.size() - 1; i++){
+                    out.print(players.get(i).getNickname() + ", ");
+                }
+                if(players.size() == value.getGame().getPlayersNumber())
+                    out.println(players.get(players.size() - 1).getNickname() + " (FULL)");
+                else
+                    out.println(players.get(players.size() - 1).getNickname() + " (WAITING FOR PLAYERS TO JOIN)");
+            }
         }
-        out.println("Game list: ");
-        existingGames.forEach(out::println);
     }
 
     @Override

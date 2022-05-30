@@ -1,11 +1,13 @@
 package it.polimi.ingsw.view.gui;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 import javafx.application.Platform;
 
 import java.util.List;
+import java.util.Map;
 
 public class GraphicalUserInterface extends ViewObservable implements View {
 
@@ -80,7 +82,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void showExistingGames(List<Integer> existingGames) {
+    public void showExistingGames(Map<Integer, GameController> existingGames) {
 
     }
 

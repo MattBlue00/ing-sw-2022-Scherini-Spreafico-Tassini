@@ -1,11 +1,13 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observers.Observer;
 
 import java.util.List;
+import java.util.Map;
 
 public class VirtualView implements View, Observer {
 
@@ -76,7 +78,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void showExistingGames(List<Integer> existingGames) {
+    public void showExistingGames(Map<Integer, GameController> existingGames) {
         clientHandler.sendMessage(new ShowExistingGamesMessage(existingGames));
     }
 

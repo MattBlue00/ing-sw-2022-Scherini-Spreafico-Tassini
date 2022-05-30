@@ -169,7 +169,7 @@ public class ClientController implements ViewObserver, Observer {
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));
                 break;
             case EXISTING_GAMES:
-                taskQueue.execute(()-> view.showExistingGames(((ShowExistingGamesMessage)message).getExistingGames()));
+                taskQueue.execute(()-> view.showExistingGames(((ShowExistingGamesMessage) message).getExistingGames()));
             default: //should never be reached
                 break;
         }

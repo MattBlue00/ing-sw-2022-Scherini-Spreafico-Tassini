@@ -30,7 +30,7 @@ public class SocketServer implements Runnable{
             serverSocket = new ServerSocket(port);
             System.out.println("Server running on port: "+port);
         } catch (IOException e) {
-            System.out.println("Error initializing serverSocket");
+            System.out.println("Error initializing serverSocket.");
             e.printStackTrace();
         }
         while(!Thread.currentThread().isInterrupted()){
@@ -40,7 +40,7 @@ public class SocketServer implements Runnable{
                 Thread thread = new Thread(clientHandler, "ss_handler: "+client.getInetAddress());
                 thread.start();
             } catch (IOException e) {
-                System.out.println("Connection ended");
+                System.out.println("Connection ended.");
                 e.printStackTrace();
             }
         }
