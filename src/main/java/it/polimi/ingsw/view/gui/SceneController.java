@@ -14,6 +14,8 @@ import java.util.List;
 
 public class SceneController extends ViewObservable {
 
+    private final ClientGUIMain main;
+
     private Scene currentScene;
     private GenericSceneController currentController;
 
@@ -21,31 +23,33 @@ public class SceneController extends ViewObservable {
         return currentScene;
     }
 
-    public GenericSceneController getCurrentController() {
-        return currentController;
+    public SceneController(ClientGUIMain main) {
+        this.main = main;
     }
 
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
     }
 
-    public <T> void changeRootPane(List<ViewObserver> observers, Scene scene, String fxml){
-        T controller = null;
-
+    public void changeRootPane(List<ViewObserver> observers, String fxml){
+        GenericSceneController controller;
         try {
             FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/" + fxml));
             Parent root = loader.load();
+
             controller = loader.getController();
             ((ViewObservable) controller).addAllObservers(observers);
+            currentController = controller;
 
-            currentController = (GenericSceneController) controller;
-            currentScene = scene;
+            currentScene = new Scene(root);
+
             currentScene.setRoot(root);
         } catch (IOException e) {
           e.printStackTrace();
         }
+        main.changeScene(currentScene);
     }
-    public void changeRootPane(GenericSceneController controller, Scene scene, String fxml) {
+    public void changeRootPane(GenericSceneController controller, String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/" + fxml));
 
@@ -54,19 +58,14 @@ public class SceneController extends ViewObservable {
             currentController = controller;
             Parent root = loader.load();
 
-            currentScene = scene;
             currentScene.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        main.changeScene(currentScene);
     }
 
-    public void changeRootPane(List<ViewObserver> observers, String fxml){
-        changeRootPane(observers, currentScene, fxml);
-    }
-
-    public void changeRootPane(GenericSceneController controller, Event event, String fxml) {
-        Scene scene = ((Node) event.getSource()).getScene();
-        changeRootPane(controller, scene, fxml);
+    public void showAlert(String message){
+        main.showAlert(message);
     }
 }
