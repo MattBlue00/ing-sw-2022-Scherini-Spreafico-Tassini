@@ -95,10 +95,4 @@ public class Table implements Serializable {
 
     }
 
-    //for debugging
-    /*public void showTable(){
-        System.out.println(this.color + " table");
-        System.out.println("Numero studenti (in questa table): " + this.students.size());
-    }*/
-
 }
