@@ -44,8 +44,10 @@ public class SocketServer implements Runnable{
                 e.printStackTrace();
             }
         }
+    }
 
-
+    public Server getServer() {
+        return server;
     }
 
     public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException {

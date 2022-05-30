@@ -5,6 +5,8 @@ import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observers.Observer;
 
+import java.util.List;
+
 public class VirtualView implements View, Observer {
 
     private final ClientHandler clientHandler;
@@ -71,6 +73,11 @@ public class VirtualView implements View, Observer {
     @Override
     public void showGenericMessage(String message) {
         clientHandler.sendMessage(new GenericMessage(message));
+    }
+
+    @Override
+    public void showExistingGames(List<Integer> existingGames) {
+        clientHandler.sendMessage(new ShowExistingGamesMessage(existingGames));
     }
 
     public void showGameStatusFirstActionPhase(Game game){

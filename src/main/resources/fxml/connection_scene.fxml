@@ -19,7 +19,7 @@
         <graphic>
             <TextField styleClass="textField" fx:id="portField" prefHeight="25.0" prefWidth="267.0" />
         </graphic></Label>
-    <Button fx:id="connectionBtn" onAction="#onConnectButtonClick" text="CONNECT" />
+    <Button fx:id="connectionBtn" text="CONNECT" />
    <Label fx:id="serverInfoLabel" styleClass="error_label"/>
     </VBox>
     <stylesheets>
