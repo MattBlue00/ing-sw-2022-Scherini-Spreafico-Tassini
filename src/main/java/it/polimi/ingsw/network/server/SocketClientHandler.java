@@ -72,10 +72,10 @@ public class SocketClientHandler implements ClientHandler, Runnable{
                     if (message != null && message.getMessageType() == MessageType.LOGIN_REQUEST) {
                         try {
                             socketServer.addClient(message.getNickname(), this);
-                            virtualView.showExistingGames(socketServer.getServer().getGameControllerMap().keySet().stream().toList());
+                            virtualView.showExistingGames(socketServer.getServer().getGameControllerMap());
                             virtualView.askCreateOrJoin();
                         }catch (TryAgainException e){
-                            virtualView.showGenericMessage("Nickname has already been chosen");
+                            virtualView.showGenericMessage("Nickname has already been chosen.");
                             virtualView.askNickname();
                         }
                     } else {

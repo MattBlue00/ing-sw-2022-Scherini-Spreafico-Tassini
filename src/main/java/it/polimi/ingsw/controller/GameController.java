@@ -7,9 +7,10 @@ import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.view.VirtualView;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GameController{
+public class GameController implements Serializable {
     private Game game;
     private int gameControllerID;
     private boolean playerPlanningPhaseDone;
@@ -209,7 +210,7 @@ public class GameController{
             System.out.println("---------------QUEUE END----------------");
         }
         else
-            System.out.println("Full game");
+            System.out.println("The game is full.");
     }
 
 
@@ -239,7 +240,7 @@ public class GameController{
 
     public void startGame(){
         game.startGame();
-        System.out.println("game: " + game + " has been initialized");
+        System.out.println("game: " + game + " has been initialized.");
         broadcastGenericMessage("Get ready to play!");
         broadcastGenericMessage(
                 ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
