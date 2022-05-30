@@ -18,7 +18,17 @@
     -fx-font-weight: normal;
 }
 
-.error_label{
+.title{
     -fx-font-weight: bold;
-    -fx-text-fill: red;
+    -fx-font-size: 18px;
 }
+.btn{
+    -fx-background-radius: 55px;
+    -fx-padding: 10px 25px;
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%,#fa72de, #00d4ff);
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+}
+/*TODO*/
+.wizard_image{}

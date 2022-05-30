@@ -47,11 +47,11 @@ public class ClientGUIMain extends Application {
 
         stage.getIcons().add(icon);
         stage.setTitle("Eriantys");
+        stage.setMinHeight(500);
+        stage.setMinWidth(500);
         stage.setHeight(600);
         stage.setWidth(600);
         stage.setScene(scene);
-        stage.setResizable(false);
-
         stage.show();
     }
 
@@ -65,6 +65,8 @@ public class ClientGUIMain extends Application {
         stage.setScene(scene);
         stage.setWidth(600);
         stage.setHeight(600);
+        stage.setMinHeight(500);
+        stage.setMinWidth(500);
         stage.show();
     }
 

@@ -11,16 +11,15 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="337.0" styleClass="text_label" text="ADDRESS: ">
+    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="337.0" text="ADDRESS: ">
       <graphic>
-         <TextField fx:id="ipAddressField" prefHeight="22.0" prefWidth="247.0" styleClass="textField" text="127.0.0.1" />
+         <TextField fx:id="ipAddressField" prefHeight="22.0" prefWidth="247.0" text="127.0.0.1" />
       </graphic></Label>
-    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="335.0" styleClass="text_label" text="PORT: ">
+    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="335.0" text="PORT: ">
         <graphic>
             <TextField fx:id="portField" prefHeight="25.0" prefWidth="267.0" styleClass="textField" text="12345" />
         </graphic></Label>
-    <Button fx:id="connectionBtn" text="CONNECT" />
-   <Label fx:id="serverInfoLabel" styleClass="error_label" />
+    <Button fx:id="connectionBtn" text="CONNECT" styleClass="btn"/>
     </VBox>
     <stylesheets>
         <URL value="@../css/menu_style.css" />
