@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
 import javafx.application.Platform;
@@ -13,8 +14,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
 
-    public GraphicalUserInterface() {
-        this.sceneController = new SceneController();
+    public GraphicalUserInterface(SceneController sceneController) {
+        this.sceneController = sceneController;
     }
 
     public SceneController getSceneController() {
@@ -28,22 +29,22 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCreateOrJoin() {
-        //TODO: do every method in gui
+        Platform.runLater(()-> sceneController.changeRootPane(observers, "lobby_scene.fxml"));
     }
 
     @Override
     public void askGameInfo() {
-
+        Platform.runLater(()-> sceneController.changeRootPane(observers, "creating_game_scene.fxml"));
     }
 
     @Override
     public void askGameNumber() {
-
+        Platform.runLater(()-> sceneController.changeRootPane(observers, "joining_game_scene.fxml"));
     }
 
     @Override
     public void askWizardID() {
-
+        Platform.runLater(()-> sceneController.changeRootPane(observers, "wizard_choice_scene.fxml"));
     }
 
     @Override
@@ -78,12 +79,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGenericMessage(String message) {
-
+        Platform.runLater(()-> sceneController.showAlert(message));
     }
 
     @Override
     public void showExistingGames(Map<Integer, GameController> existingGames) {
-
+        Platform.runLater(()-> sceneController.showAlert(printExistingGames(existingGames)));
     }
 
     @Override
@@ -99,5 +100,30 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     @Override
     public void showDeck(Game game) {
 
+    }
+
+    public String printExistingGames(Map<Integer, GameController> existingGames){
+        String str = "";
+        if(existingGames.isEmpty())
+            str = "No games have been created yet.";
+        else {
+            str = str.concat("Existing games list: \n");
+            for(Map.Entry<Integer, GameController> entry : existingGames.entrySet()) {
+                Integer key = entry.getKey();
+                GameController value = entry.getValue();
+                str = str.concat("- "+key+": ");
+                List<Player> players = value.getGame().getPlayers();
+                for(int i = 0; i < players.size() - 1; i++){
+                   str = str.concat(players.get(i).getNickname() + ", ");
+                }
+                try {
+                    if (players.size() == value.getGame().getPlayersNumber())
+                        str = str.concat(players.get(players.size() - 1).getNickname() + " (FULL)\n");
+                    else
+                        str = str.concat(players.get(players.size() - 1).getNickname() + " (WAITING FOR PLAYERS TO JOIN)\n");
+                }catch(IndexOutOfBoundsException e){str = str.concat("NO PLAYERS IN GAME YET\n");}
+            }
+        }
+        return str;
     }
 }

@@ -397,10 +397,12 @@ public class CommandLineInterface extends ViewObservable implements View {
                 for(int i = 0; i < players.size() - 1; i++){
                     out.print(players.get(i).getNickname() + ", ");
                 }
-                if(players.size() == value.getGame().getPlayersNumber())
-                    out.println(players.get(players.size() - 1).getNickname() + " (FULL)");
-                else
-                    out.println(players.get(players.size() - 1).getNickname() + " (WAITING FOR PLAYERS TO JOIN)");
+                try {
+                    if (players.size() == value.getGame().getPlayersNumber())
+                        out.println(players.get(players.size() - 1).getNickname() + " (FULL)");
+                    else
+                        out.println(players.get(players.size() - 1).getNickname() + " (WAITING FOR PLAYERS TO JOIN)");
+                }catch (IndexOutOfBoundsException e){out.println("NO PLAYERS IN GAME YET");}
             }
         }
     }

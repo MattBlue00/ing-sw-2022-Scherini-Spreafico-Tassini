@@ -4,16 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenes.NicknameSceneController">
+<VBox alignment="CENTER" minHeight="600.0" minWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenes.NicknameSceneController">
     <stylesheets>
         <URL value="@../css/menu_style.css" />
     </stylesheets>
     <VBox alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0" styleClass="form">
-      <Label styleClass="text_label" contentDisplay="RIGHT" text="NICKNAME: ">
+      <Label contentDisplay="RIGHT" text="NICKNAME: ">
          <graphic>
             <TextField fx:id="nicknameField" styleClass="textField" alignment="TOP_LEFT"/>
          </graphic>
       </Label>
-        <Button fx:id="addingClientBtn" layoutX="246.0" layoutY="221.0" mnemonicParsing="false" text="Enter the Lobby" />
+        <Button fx:id="addingClientBtn" layoutX="246.0" layoutY="221.0" mnemonicParsing="false" text="Enter the Lobby" styleClass="btn"/>
     </VBox>
 </VBox>

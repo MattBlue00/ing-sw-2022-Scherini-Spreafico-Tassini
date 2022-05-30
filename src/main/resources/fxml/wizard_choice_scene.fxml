@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" minHeight="600.0" minWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenes.WizardSceneController">
+   <stylesheets>
+      <URL value="@../css/menu_style.css" />
+   </stylesheets>
+   <VBox alignment="CENTER" maxWidth="500.0" minHeight="200.0" prefHeight="200.0" prefWidth="412.0" spacing="20.0" styleClass="form">
+      <Label styleClass="title" text="Choose your Wizard" />
+      <HBox alignment="CENTER" prefHeight="180.0" prefWidth="400.0">
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <ImageView fx:id="yellow_wizard" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="wizard_image">
+               <Image url="@../img/wizards/yellow_wizard.jpg" />
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label styleClass="text_label" text="Yellow" />
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <ImageView fx:id="blue_wizard" fitHeight="150.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true" styleClass="wizard_image">
+               <Image url="@../img/wizards/blue_wizard.jpg" />
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label styleClass="text_label" text="Blue" />
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <ImageView fx:id="green_wizard" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="wizard_image">
+               <Image url="@../img/wizards/green_wizard.jpg" />
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label styleClass="text_label" text="Green" />
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <ImageView fx:id="pink_wizard" fitHeight="150.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true" styleClass="wizard_image">
+               <Image url="@../img/wizards/pink_wizard.jpg" />
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label styleClass="text_label" text="Pink" />
+         </VBox>
+      </HBox>
+   </VBox>
+</VBox>

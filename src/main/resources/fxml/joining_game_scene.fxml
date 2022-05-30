@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<VBox alignment="CENTER" spacing="20" styleClass="background" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenes.JoiningGameController">
+    <stylesheets>
+        <URL value="@../css/menu_style.css" />
+    </stylesheets>
+    <VBox styleClass="form" alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0">
+        <Label text="Insert Game ID" styleClass="title"/>
+        <Label contentDisplay="RIGHT" prefHeight="25.0" prefWidth="129.0" text="Game ID:">
+            <graphic>
+                <TextField fx:id="gameID" prefHeight="25.0" prefWidth="76.0" />
+            </graphic>
+        </Label>
+        <Button fx:id="joinGame" styleClass="btn" mnemonicParsing="false" text="JOIN GAME" />
+    </VBox>
+</VBox>
+
