@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
@@ -18,34 +19,30 @@ public class Knight extends CharacterCard implements Serializable {
         super(8, 2);
     }
 
-    public void doEffect(GameExpertMode game){
+    public void doEffect(GameExpertMode game) throws TryAgainException {
 
         int islandID = game.getBoard().getMotherNaturePos();
 
-        try {
-            Island selectedIsland = game.getBoard().getIslands().getIslandFromID(islandID);
-            if(selectedIsland.hasVeto()) {
-                selectedIsland.setVeto(false);
-                game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
-                return;
-            }
-            Player currentPlayer = game.getCurrentPlayer();
-            Player owner = selectedIsland.getOwner();
-            if(owner != null) {
-                if (!owner.equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
-                    int calcOwner = selectedIsland.influenceCalc(owner);
-                    GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
-                            game.getBoard().getIslands());
-                }
-            }
-            else{
+        Island selectedIsland = game.getBoard().getIslands().getIslandFromID(islandID);
+        if(selectedIsland.hasVeto()) {
+            selectedIsland.setVeto(false);
+            game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+            return;
+        }
+        Player currentPlayer = game.getCurrentPlayer();
+        Player owner = selectedIsland.getOwner();
+        if(owner != null) {
+            if (!owner.equals(currentPlayer)) {
                 int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
-                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                int calcOwner = selectedIsland.influenceCalc(owner);
+                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
             }
-        } catch (IslandNotFoundException e) {
-            e.printStackTrace();
+        }
+        else{
+            int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
+            GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                    game.getBoard().getIslands());
         }
 
     }

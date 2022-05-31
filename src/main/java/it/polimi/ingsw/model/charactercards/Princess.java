@@ -1,8 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.exceptions.FullTableException;
-import it.polimi.ingsw.exceptions.IslandNotFoundException;
-import it.polimi.ingsw.exceptions.NonExistentColorException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.GameExpertMode;
@@ -30,22 +28,20 @@ public class Princess extends CharacterCard implements StringCard, Serializable 
     }
 
     @Override
-    public void doEffect(GameExpertMode game) {
-
-        try {
-            for (int i = 0; i < 4; i++) {
-                if (students[i].getColor().toString().equals(chosenColor)) {
-                    game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
-                            students[i], game.getCurrentPlayer()
-                    );
-                    students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
-                    break;
-                }
+    public void doEffect(GameExpertMode game) throws TryAgainException {
+        boolean done = false;
+        for (int i = 0; i < 4; i++) {
+            if (students[i].getColor().toString().equals(chosenColor)) {
+                game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
+                        students[i], game.getCurrentPlayer()
+                );
+                students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                done = true;
+                break;
             }
-        } catch (NonExistentColorException | FullTableException e){
-            e.printStackTrace();
         }
-
+        if(!done)
+            throw new StudentNotFoundException("There's no such student on the card!");
     }
 
     // Debug method

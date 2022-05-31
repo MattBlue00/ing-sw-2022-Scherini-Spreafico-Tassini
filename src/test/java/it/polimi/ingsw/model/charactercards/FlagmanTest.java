@@ -36,6 +36,7 @@ class FlagmanTest {
         g1.addPlayer(p2);
         g1.setCurrentPlayer(p1);
         p1.setCoinsWallet(5);
+        p2.setCoinsWallet(5);
 
         Student s1 = new Student(Color.BLUE);
         Student s2 = new Student(Color.GREEN);
@@ -44,7 +45,9 @@ class FlagmanTest {
             s1.moveToTable(p1);
             g1.profCheck();
         }
-        catch(NonExistentColorException | FullTableException ignored){}
+        catch(TryAgainException e){
+            throw new RuntimeException(e);
+        }
 
 
         // Test 1
@@ -54,10 +57,10 @@ class FlagmanTest {
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         // Test 2
@@ -71,7 +74,7 @@ class FlagmanTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         g1.setCurrentPlayer(p2);
@@ -90,7 +93,7 @@ class FlagmanTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(NonExistentColorException | FullTableException | IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         Student s6 = new Student(Color.PINK);
@@ -105,7 +108,7 @@ class FlagmanTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         Student s7 = new Student(Color.PINK);
@@ -117,16 +120,18 @@ class FlagmanTest {
         try {
 
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s7);
+            ((Flagman) cards[2]).doOnClick(1);
             g1.playerPlaysCharacterCard(3);
 
             assertEquals(p2, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
             assertFalse(cards[2].getIsActive());
-            assertEquals(2, p1.getCoinsWallet());
+            assertEquals(2, p2.getCoinsWallet());
             assertEquals(4, cards[2].getCost());
 
         }
-        catch(IslandNotFoundException | NotEnoughCoinsException | CharacterCardAlreadyPlayedException |
-              CharacterCardNotFoundException ignored){}
+        catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

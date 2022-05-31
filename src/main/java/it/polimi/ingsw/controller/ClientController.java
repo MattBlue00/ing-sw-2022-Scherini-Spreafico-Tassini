@@ -299,7 +299,6 @@ public class ClientController implements ViewObserver, Observer {
                 taskQueue.shutdownNow();
                 taskQueue = Executors.newSingleThreadExecutor();
                 view.showDisconnectionMessage(((DisconnectionMessage) message).getMessageStr());
-                //client.disconnect();
                 break;
             default: //should never be reached
                 break;

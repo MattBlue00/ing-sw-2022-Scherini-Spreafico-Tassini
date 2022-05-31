@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Student;
@@ -29,20 +31,18 @@ public class Monk extends CharacterCard implements StringIntCard, Serializable {
     }
 
     @Override
-    public void doEffect(GameExpertMode game) {
-
-        try {
-            for (int i = 0; i < 4; i++) {
-                if (students[i].getColor().toString().equals(chosenColor)) {
-                    game.getBoard().getIslands().getIslandFromID(chosenIsland).addStudent(students[i]);
-                    students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
-                    break;
-                }
+    public void doEffect(GameExpertMode game) throws TryAgainException {
+        boolean done = false;
+        for (int i = 0; i < 4; i++) {
+            if (students[i].getColor().toString().equals(chosenColor)) {
+                game.getBoard().getIslands().getIslandFromID(chosenIsland).addStudent(students[i]);
+                students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                done = true;
+                break;
             }
-        } catch (IslandNotFoundException e) {
-            e.printStackTrace();
         }
-
+        if(!done)
+            throw new StudentNotFoundException("There's no such student on the card!");
     }
 
     // Debug method
@@ -50,8 +50,6 @@ public class Monk extends CharacterCard implements StringIntCard, Serializable {
     public Student[] getStudents(){
         return students;
     }
-
-    //TODO: what if parameters are incorrect? We should give players other attempts!
 
     @Override
     public void showStudentsOnTheCard(){

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
@@ -30,7 +31,7 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
     }
 
 
-    public void doEffect(GameExpertMode game) {
+    public void doEffect(GameExpertMode game) throws TryAgainException {
 
         int maxNumOfChanges = students.size();
 
@@ -38,7 +39,6 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
 
             Color color1 = Color.valueOf(students.get(maxNumOfChanges-2));
             Color color2 = Color.valueOf(students.get(maxNumOfChanges-1));
-            try {
 
                 Student hallStudent =
                         game.getCurrentPlayer().getSchool().getHall().removeStudent(color1.toString());
@@ -54,10 +54,6 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
                 game.getCurrentPlayer().getSchool().getTable(hallStudent.getColor().toString())
                         .addStudent(hallStudent, game.getCurrentPlayer());
 
-            }
-            catch(StudentNotFoundException | NonExistentColorException | FullTableException e){
-                e.printStackTrace();
-            }
             maxNumOfChanges=maxNumOfChanges-2;
         }
 

@@ -84,8 +84,8 @@ public class KnightTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
-        } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |
-                 CharacterCardAlreadyPlayedException | NotEnoughCoinsException | IslandNotFoundException ignored) {
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
         }
     }
 }

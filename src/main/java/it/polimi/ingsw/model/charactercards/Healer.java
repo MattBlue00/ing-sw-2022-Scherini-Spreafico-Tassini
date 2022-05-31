@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.NoVetoTilesException;
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
-import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 import java.io.Serializable;
 
@@ -30,17 +31,13 @@ public class Healer extends CharacterCard implements IntCard, Serializable {
 
     // Param: islandID
     @Override
-    public void doEffect(GameExpertMode game) {
-
-        try{
+    public void doEffect(GameExpertMode game) throws TryAgainException {
+        if(game.getBoard().getNumOfVetos() < 1)
+            throw new NoVetoTilesException("There are no veto tiles available!");
+        else {
             game.getBoard().getIslands().getIslandFromID(this.islandID).setVeto(true);
             game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() - 1);
-        }catch(IslandNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
 
-
-    //TODO: need to check for VetoTilesRunOutException
 }
