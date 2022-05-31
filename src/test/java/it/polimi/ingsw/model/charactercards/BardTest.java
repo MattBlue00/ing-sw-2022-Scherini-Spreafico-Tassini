@@ -64,8 +64,9 @@ class BardTest {
             assertEquals(2, p1.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
 
         }
-        catch(NonExistentColorException | FullTableException | CharacterCardNotFoundException
-              | CharacterCardAlreadyPlayedException | NotEnoughCoinsException ignored){}
+        catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

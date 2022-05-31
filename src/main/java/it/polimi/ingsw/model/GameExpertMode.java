@@ -32,8 +32,7 @@ public class GameExpertMode extends Game implements Serializable {
         return Arrays.stream(characters).filter(card -> card.getId()==id).findFirst().get();
     }
 
-    public void playerPlaysCharacterCard(int id) throws
-            CharacterCardAlreadyPlayedException, NotEnoughCoinsException, CharacterCardNotFoundException {
+    public void playerPlaysCharacterCard(int id) throws TryAgainException {
 
         if (getCurrentPlayer().getCharacterCardAlreadyPlayed())
             throw new CharacterCardAlreadyPlayedException("You have already played a character card this round!");
@@ -74,7 +73,11 @@ public class GameExpertMode extends Game implements Serializable {
         setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
-                card.doEffect(this);
+                try {
+                    card.doEffect(this);
+                } catch (TryAgainException e) {
+                    throw new RuntimeException(e);
+                }
                 card.setUpCard();
             }
         }
@@ -95,7 +98,11 @@ public class GameExpertMode extends Game implements Serializable {
         boolean done = false;
         for (CharacterCard card : characters) {
             if (card.getId() == 2 && card.getIsActive()) {
-                card.doEffect(this);
+                try {
+                    card.doEffect(this);
+                } catch (TryAgainException e) {
+                    throw new RuntimeException(e);
+                }
                 card.setUpCard();
                 done = true;
             }
@@ -118,7 +125,11 @@ public class GameExpertMode extends Game implements Serializable {
         for (CharacterCard card : characters) {
             if ((card.getId() == 6 || card.getId() == 8 || card.getId() == 9)
                     && card.getIsActive()) {
-                card.doEffect(this);
+                try {
+                    card.doEffect(this);
+                } catch (TryAgainException e) {
+                    throw new RuntimeException(e);
+                }
                 card.setUpCard();
                 done = true;
             }

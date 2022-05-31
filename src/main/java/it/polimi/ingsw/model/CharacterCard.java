@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
+
 import java.io.Serializable;
 
 public abstract class CharacterCard implements Serializable {
@@ -38,7 +40,7 @@ public abstract class CharacterCard implements Serializable {
 
     // Character card methods
 
-    public abstract void doEffect(GameExpertMode game);
+    public abstract void doEffect(GameExpertMode game) throws TryAgainException;
 
     public void showStudentsOnTheCard(){}
 

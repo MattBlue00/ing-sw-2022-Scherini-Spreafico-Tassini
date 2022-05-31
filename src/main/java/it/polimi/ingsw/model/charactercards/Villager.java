@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
@@ -30,36 +31,30 @@ public class Villager extends CharacterCard implements StringCard, Serializable 
         this.colorToExclude = colorToExclude;
     }
 
-    public void doEffect(GameExpertMode game){
+    public void doEffect(GameExpertMode game) throws TryAgainException {
 
-
-        try {
-            Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
-            if(selectedIsland.hasVeto()) {
-                selectedIsland.setVeto(false);
-                game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
-                return;
-            }
-            Player currentPlayer = game.getCurrentPlayer();
-            Player owner = selectedIsland.getOwner();
-            if(owner != null) {
-                if (!owner.equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
-                    int calcOwner = selectedIsland.influenceCalc(owner, colorToExclude);
-                    GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
-                            game.getBoard().getIslands());
-                }
-            }
-            else{
+        Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
+        if(selectedIsland.hasVeto()) {
+            selectedIsland.setVeto(false);
+            game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+            return;
+        }
+        Player currentPlayer = game.getCurrentPlayer();
+        Player owner = selectedIsland.getOwner();
+        if(owner != null) {
+            if (!owner.equals(currentPlayer)) {
                 int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
-                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                int calcOwner = selectedIsland.influenceCalc(owner, colorToExclude);
+                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
             }
-        } catch (IslandNotFoundException e) {
-            e.printStackTrace();
+        }
+        else{
+            int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
+            GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                    game.getBoard().getIslands());
         }
 
     }
-
 
 }

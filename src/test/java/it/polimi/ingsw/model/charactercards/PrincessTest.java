@@ -37,8 +37,9 @@ class PrincessTest {
             assertEquals(1, g1.getCurrentPlayer().getSchool().getTable(studentToMove.getColor().toString()).getStudents().size());
             assertEquals(studentToMove, g1.getCurrentPlayer().getSchool().getTable(studentToMove.getColor().toString()).getStudents().get(0));
             assertNotEquals(studentToMove, ((Princess) cards[0]).getStudents()[0]);
-        } catch (CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException |
-                 NonExistentColorException ignored){}
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

@@ -13,9 +13,7 @@ import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Server{
@@ -98,7 +96,8 @@ public class Server{
             }
             else if(message.getMessageType() == MessageType.JOIN_GAME) {
                 try {
-                    gameControllerMap.get(((JoinGameMessage) message).getGameID()).addPlayerToQueue(message.getNickname(), clientHandlerMap.get(message.getNickname()).getVirtualView());
+                    gameControllerMap.get(((JoinGameMessage) message).getGameID()).
+                            addPlayerToQueue(message.getNickname(), clientHandlerMap.get(message.getNickname()).getVirtualView());
                     clientHandlerMap.get(message.getNickname()).getVirtualView().askWizardID();
                 }catch (NullPointerException e){
                     clientHandlerMap.get(message.getNickname()).getVirtualView().showGenericMessage("This game ID does not exists...");
@@ -159,16 +158,20 @@ public class Server{
                     gameControllerMap.get(gameID).broadcastDisconnectionMessage("Player " + nick +
                             " disconnected from the game.\n"
                             + ANSIConstants.ANSI_BOLD + "----- GAME FINISHED -----" + ANSIConstants.ANSI_RESET);
+                    List<View> viewsToNotify = new ArrayList<>();
                     for (Player player : gameControllerMap.get(gameID).getGame().getPlayers()){
                         if(!player.getNickname().equals(nick)){
                             String name = player.getNickname();
-                            //View virtualView =
-                            gameControllerMap.get(gameID).getVirtualViewMap().get(name).showExistingGames(getGameControllerMap());
-                            gameControllerMap.get(gameID).getVirtualViewMap().get(name).askCreateOrJoin();
+                            View virtualView = gameControllerMap.get(gameID).getVirtualViewMap().get(name);
+                            viewsToNotify.add(virtualView);
                             gameControllerMap.get(gameID).getVirtualViewMap().remove(name);
                         }
                     }
                     gameControllerMap.remove(gameID);
+                    for(View view : viewsToNotify) {
+                        view.showExistingGames(gameControllerMap);
+                        view.askCreateOrJoin();
+                    }
                     Server.LOGGER.severe("GameController " + gameID + " removed from gameControllerMap." +
                             "\n--- Game finished ---");
                 }

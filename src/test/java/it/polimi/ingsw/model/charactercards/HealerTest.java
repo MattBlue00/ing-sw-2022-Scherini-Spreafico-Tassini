@@ -58,12 +58,13 @@ public class HealerTest {
 
             g1.islandConquerCheck(1);
             assertFalse(cards[0].getIsActive());
-            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
             assertFalse(g1.getBoard().getIslands().getIslandFromID(1).hasVeto());
 
         }
-        catch(NonExistentColorException | CharacterCardNotFoundException | CharacterCardAlreadyPlayedException |
-              NotEnoughCoinsException | IslandNotFoundException | FullTableException ignored){}
+        catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

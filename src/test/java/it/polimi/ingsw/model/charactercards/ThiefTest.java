@@ -90,7 +90,8 @@ public class ThiefTest {
                     assertEquals(0, p1.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
                     assertEquals(0, p2.getSchool().getTable(Color.BLUE.toString()).getStudents().size());
 
-            } catch (CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException |
-                     NonExistentColorException | FullTableException ignored) {}
-        }
+            } catch (TryAgainException e) {
+                throw new RuntimeException(e);
+            }
+    }
     }

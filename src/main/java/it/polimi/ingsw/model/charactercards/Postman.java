@@ -17,10 +17,9 @@ public class Postman extends CharacterCard implements Serializable {
     }
 
     // no parameters
+
     public void doEffect(GameExpertMode game){
-
         game.setMaxSteps(game.getMaxSteps() + 2);
-
     }
 
 }

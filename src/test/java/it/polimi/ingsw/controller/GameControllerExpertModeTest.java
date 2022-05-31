@@ -160,7 +160,7 @@ class GameControllerExpertModeTest {
 
         try {
             gc.handleCharacterCardChoice(new CharacterCardMessageString("Matteo", 9, "green"));
-        } catch (NotEnoughCoinsException | CharacterCardAlreadyPlayedException | CharacterCardNotFoundException e) {
+        } catch (TryAgainException e) {
             e.printStackTrace();
         }
         assertEquals(gc.getGame().getCurrentPlayer().getCoinsWallet(), 2);

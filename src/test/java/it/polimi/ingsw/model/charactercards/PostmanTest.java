@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.exceptions.CharacterCardAlreadyPlayedException;
-import it.polimi.ingsw.exceptions.CharacterCardNotFoundException;
-import it.polimi.ingsw.exceptions.InvalidNumberOfStepsException;
-import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
@@ -49,9 +46,10 @@ public class PostmanTest {
             assertEquals(4, g1.getBoard().getMotherNaturePos());
             assertFalse(cards[0].getIsActive());
 
-    }
-        catch(CharacterCardNotFoundException | CharacterCardAlreadyPlayedException |
-              NotEnoughCoinsException | InvalidNumberOfStepsException ignored){}
+        }
+        catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.charactercards;
 import it.polimi.ingsw.exceptions.FullTableException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.GameExpertMode;
@@ -27,31 +28,27 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Serial
     }
 
     @Override
-    public void doEffect(GameExpertMode game) {
+    public void doEffect(GameExpertMode game) throws TryAgainException {
         int maxNumOfChanges = studentsToMove.size();
 
         while (maxNumOfChanges > 0) {
 
             Color color1 = Color.valueOf(studentsToMove.get(maxNumOfChanges - 1));
             Color color2 = Color.valueOf(studentsToMove.get(maxNumOfChanges - 2));
-            try {
 
-                Student hallStudent =
-                        game.getCurrentPlayer().getSchool().getHall().removeStudent(color2.toString());
+            Student hallStudent =
+                    game.getCurrentPlayer().getSchool().getHall().removeStudent(color2.toString());
 
-                Student cardStudent =
-                        this.studentsOnTheCard.stream().filter(x -> x.getColor().equals(color1)).findFirst().get();
+            Student cardStudent =
+                    this.studentsOnTheCard.stream().filter(x -> x.getColor().equals(color1)).findFirst().get();
 
-                if (game.getCurrentPlayer().getSchool().getTable(color1.toString()).getNumOfStudents()
-                        >= Constants.TABLE_LENGTH)
-                    throw new FullTableException("The " + color1 + " table is full!");
+            if (game.getCurrentPlayer().getSchool().getTable(color1.toString()).getNumOfStudents()
+                    >= Constants.TABLE_LENGTH)
+                throw new FullTableException("The " + color1 + " table is full!");
 
-                game.getCurrentPlayer().getSchool().getHall().addStudent(cardStudent);
-                this.getStudentsOnTheCard().add(hallStudent);
+            game.getCurrentPlayer().getSchool().getHall().addStudent(cardStudent);
+            this.getStudentsOnTheCard().add(hallStudent);
 
-            } catch (StudentNotFoundException | NonExistentColorException | FullTableException e) {
-                e.printStackTrace();
-            }
             maxNumOfChanges = maxNumOfChanges - 2;
         }
     }

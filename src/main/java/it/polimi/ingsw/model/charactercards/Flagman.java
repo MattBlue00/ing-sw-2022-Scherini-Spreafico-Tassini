@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
@@ -27,12 +28,8 @@ public class Flagman extends CharacterCard implements IntCard, Serializable {
 
     // Param: islandID
     @Override
-    public void doEffect(GameExpertMode game){
-        try {
-            game.getBoard().islandConquerCheck(game.getCurrentPlayer(), this.islandID);
-        }
-        // the view/controller will be responsible to send the method a valid island ID
-        catch(IslandNotFoundException ignored){}
+    public void doEffect(GameExpertMode game) throws TryAgainException {
+        game.getBoard().islandConquerCheck(game.getCurrentPlayer(), this.islandID);
     }
 
 

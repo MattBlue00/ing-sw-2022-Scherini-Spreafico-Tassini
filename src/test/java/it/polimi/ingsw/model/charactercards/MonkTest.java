@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.exceptions.CharacterCardAlreadyPlayedException;
-import it.polimi.ingsw.exceptions.CharacterCardNotFoundException;
-import it.polimi.ingsw.exceptions.IslandNotFoundException;
-import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
@@ -48,8 +45,9 @@ class MonkTest {
             assertEquals(g1.getBoard().getIslands().getIslandFromID(1).getStudents().get(0).getColor().toString(),
                     studentToMove.getColor().toString());
             assertNotEquals(studentToMove, ((Monk) cards[0]).getStudents()[0]);
-        } catch (CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException |
-                IslandNotFoundException ignored){}
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

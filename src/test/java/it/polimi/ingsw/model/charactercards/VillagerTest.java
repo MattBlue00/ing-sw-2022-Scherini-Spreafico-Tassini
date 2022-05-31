@@ -81,8 +81,8 @@ public class VillagerTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
-        } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |
-                 CharacterCardAlreadyPlayedException | NotEnoughCoinsException | IslandNotFoundException ignored) {
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -131,7 +131,7 @@ public class VillagerTest {
                 g1.getBoard().getIslands().getIslandFromID(1).addStudent(s3);
                 g1.getBoard().getIslands().getIslandFromID(1).addStudent(s4);
 
-                assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+                assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
                 g1.setCurrentPlayer(p1);
 
@@ -146,8 +146,8 @@ public class VillagerTest {
                 assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
 
-            } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException |
-                    CharacterCardAlreadyPlayedException | NotEnoughCoinsException | IslandNotFoundException ignored) {
+            } catch (TryAgainException e) {
+                throw new RuntimeException(e);
             }
         }
     }

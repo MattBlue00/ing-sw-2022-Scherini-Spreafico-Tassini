@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,12 +35,16 @@ class CentaurTest {
         g1.addPlayer(p2);
         g1.setCurrentPlayer(p1);
         p1.setCoinsWallet(5);
+        p2.setCoinsWallet(5);
         g1.getBoard().setMotherNaturePos(1);
 
         try{
             g1.playerPlaysCharacterCard(6);
         }
-        catch(CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException ignored){}
+        catch (
+                TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
         assertTrue(cards[1].getIsActive());
         assertEquals(2, p1.getCoinsWallet());
@@ -63,10 +66,11 @@ class CentaurTest {
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(4, cards[1].getCost());
+            assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         // Test 2
@@ -80,7 +84,7 @@ class CentaurTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         g1.setCurrentPlayer(p2);
@@ -99,7 +103,7 @@ class CentaurTest {
             assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(NonExistentColorException | FullTableException | IslandNotFoundException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         Student s6 = new Student(Color.PINK);
@@ -112,15 +116,17 @@ class CentaurTest {
 
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s6);
             g1.playerPlaysCharacterCard(6);
+            g1.islandConquerCheck(1);
 
             assertEquals(p2, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
             assertFalse(cards[0].getIsActive());
             assertEquals(2, p1.getCoinsWallet());
-            assertEquals(4, cards[1].getCost());
+            assertEquals(5, cards[1].getCost());
 
         }
-        catch(IslandNotFoundException | CharacterCardNotFoundException | CharacterCardAlreadyPlayedException |
-                NotEnoughCoinsException ignored){}
+        catch(TryAgainException e){
+            throw new RuntimeException(e);
+        }
 
     }
 

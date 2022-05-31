@@ -68,8 +68,8 @@ class InnkeeperTest {
             assertTrue(p1.getSchool().getTable(Color.BLUE.toString()).getHasProfessor());
             assertFalse(p2.getSchool().getTable(Color.BLUE.toString()).getHasProfessor());
 
-        } catch (NonExistentColorException | FullTableException | CharacterCardNotFoundException
-                 | CharacterCardAlreadyPlayedException | NotEnoughCoinsException ignored) {
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
         }
     }
 }

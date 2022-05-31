@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
@@ -19,34 +20,31 @@ public class Centaur extends CharacterCard implements Serializable {
     }
 
     // Does not need parameters
-    public void doEffect(GameExpertMode game){
+    public void doEffect(GameExpertMode game) throws TryAgainException {
 
         //checks if an island can be conquered without counting the towers number
 
-        try {
-            Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
-            if(selectedIsland.hasVeto()) {
-                selectedIsland.setVeto(false);
-                game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
-                return;
-            }
-            Player currentPlayer = game.getCurrentPlayer();
-            Player owner = selectedIsland.getOwner();
-            if(owner != null) {
-                if (!owner.equals(currentPlayer)) {
-                    int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                    int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner);
-                    GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
-                            game.getBoard().getIslands());
-                }
-            }
-            else{
+        Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
+        if(selectedIsland.hasVeto()) {
+            selectedIsland.setVeto(false);
+            game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+            return;
+        }
+        Player currentPlayer = game.getCurrentPlayer();
+        Player owner = selectedIsland.getOwner();
+        if(owner != null) {
+            if (!owner.equals(currentPlayer)) {
                 int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
-                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner);
+                GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
             }
-        // it is guaranteed that IslandNotFound will never be called
-        } catch (IslandNotFoundException ignored) {}
+        }
+        else{
+            int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
+            GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
+                    game.getBoard().getIslands());
+        }
 
     }
 }

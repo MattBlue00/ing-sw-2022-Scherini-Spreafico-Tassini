@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.exceptions.CharacterCardAlreadyPlayedException;
-import it.polimi.ingsw.exceptions.CharacterCardNotFoundException;
-import it.polimi.ingsw.exceptions.NonExistentColorException;
-import it.polimi.ingsw.exceptions.NotEnoughCoinsException;
+import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
@@ -73,11 +70,12 @@ class JesterTest {
                             .stream().filter(x -> x.getColor().toString().equals("BLUE")).findFirst().get());
             assertEquals(s3, g1.getCurrentPlayer().getSchool().getHall().getStudents()
                     .stream().filter(x -> x.getColor().toString().equals("RED")).findFirst().get());
-            assertEquals(true, ((Jester) cards[0]).getStudentsOnTheCard().contains(s7));
-            assertEquals(true, ((Jester) cards[0]).getStudentsOnTheCard().contains(s8));
+            assertTrue(((Jester) cards[0]).getStudentsOnTheCard().contains(s7));
+            assertTrue(((Jester) cards[0]).getStudentsOnTheCard().contains(s8));
 
-        } catch (CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException
-                ignored){}
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
