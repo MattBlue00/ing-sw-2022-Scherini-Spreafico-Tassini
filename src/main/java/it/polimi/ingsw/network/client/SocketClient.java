@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.message.ErrorMessage;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.network.message.PingMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,6 +11,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SocketClient extends Client{
 
@@ -17,6 +20,7 @@ public class SocketClient extends Client{
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
     private final ExecutorService readExecutionQueue;
+    private final ScheduledExecutorService pinger;
 
     private static final int SOCKET_TIMEOUT = 10000;
 
@@ -26,6 +30,7 @@ public class SocketClient extends Client{
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.in = new ObjectInputStream(socket.getInputStream());
         this.readExecutionQueue = Executors.newSingleThreadExecutor();
+        this.pinger = Executors.newSingleThreadScheduledExecutor();
     }
 
 
@@ -69,10 +74,22 @@ public class SocketClient extends Client{
                 out.close();
                 in.close();
                 readExecutionQueue.shutdownNow();
+                enablePinger(false);
                 socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /*
+     * Enable a heartbeat (ping messages) between client and server sockets to keep the connection alive.
+     */
+    public void enablePinger(boolean enabled) {
+        if (enabled) {
+            pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
+        } else {
+            pinger.shutdownNow();
         }
     }
 }

@@ -102,6 +102,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     }
 
+    @Override
+    public void showDisconnectionMessage(String nicknameDisconnected) {
+
+    }
+
     public String printExistingGames(Map<Integer, GameController> existingGames){
         String str = "";
         if(existingGames.isEmpty())

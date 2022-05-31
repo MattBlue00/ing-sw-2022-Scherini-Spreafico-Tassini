@@ -23,4 +23,5 @@ public interface View {
     void showGameStatusFirstActionPhase(Game game);
     void showGameStatus(Game game);
     void showDeck(Game game);
+    void showDisconnectionMessage(String message);
 }

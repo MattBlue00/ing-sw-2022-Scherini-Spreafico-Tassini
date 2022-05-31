@@ -23,7 +23,7 @@ public class ClientController implements ViewObserver, Observer {
     private final View view;
     private Client client;
     private String nickname;
-    private final ExecutorService taskQueue;
+    private ExecutorService taskQueue;
 
     /**
      * Client controller constructor.
@@ -50,6 +50,7 @@ public class ClientController implements ViewObserver, Observer {
             client = new SocketClient(address, port);
             client.addObserver(this);
             client.readMessage();
+            client.enablePinger(true);
             taskQueue.execute(view::askNickname);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -293,6 +294,12 @@ public class ClientController implements ViewObserver, Observer {
                 break;
             case GENERIC:
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));
+                break;
+            case DISCONNECTION:
+                taskQueue.shutdownNow();
+                taskQueue = Executors.newSingleThreadExecutor();
+                view.showDisconnectionMessage(((DisconnectionMessage) message).getMessageStr());
+                //client.disconnect();
                 break;
             default: //should never be reached
                 break;
