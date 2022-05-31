@@ -2,22 +2,28 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerFactory;
-import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.exceptions.WrongMessageSentException;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.network.message.CreateGameMessage;
+import it.polimi.ingsw.network.message.JoinGameMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
+import it.polimi.ingsw.utils.ANSIConstants;
+import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Server{
 
     private GameControllerFactory gameControllerFactory;
     private final Map<Integer,GameController> gameControllerMap;
-    private Object lock; //LOCK for synchronization
+    public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+    private final Object lock; //LOCK for synchronization
     private final Map<String, ClientHandler> clientHandlerMap;
 
     public Server() {
@@ -39,6 +45,7 @@ public class Server{
         clientHandler.setVirtualView(new VirtualView(clientHandler));
         if(!clientHandlerMap.containsKey(nickname)) {
             clientHandlerMap.put(nickname, clientHandler);
+            Server.LOGGER.info("Added " + nickname + " to clientHandlerMap");
             return;
         }
         throw new TryAgainException("Error: nickname already exists");
@@ -49,6 +56,7 @@ public class Server{
      */
     public void removeClient(String nickname){
         clientHandlerMap.remove(nickname);
+        LOGGER.severe("Removed " + nickname + " from the client list.");
     }
 
     /*
@@ -70,7 +78,7 @@ public class Server{
             clientHandlerMap.get(nickname).getVirtualView().askWizardID();
             return;
         }
-        System.out.println("Game Number has already been chosen.");
+        LOGGER.info(() -> "Game Number has already been chosen.");
         clientHandlerMap.get(nickname).getVirtualView().showGenericMessage("The game ID has already been chosen...");
         clientHandlerMap.get(nickname).getVirtualView().askGameInfo();
     }
@@ -100,7 +108,7 @@ public class Server{
             else{
                 int gameID  = getGameIDFromNickname(message.getNickname());
                 if(gameID != -1) {
-                    System.out.println("Message sent to game number: "+gameID);
+                    LOGGER.info(() -> "Message sent to game number: "+gameID);
                     gameControllerMap.get(gameID).getMessage(message);
                 }
                 else throw new WrongMessageSentException("Error");
@@ -144,8 +152,26 @@ public class Server{
     public void onDisconnect(ClientHandler clientHandler){
         synchronized (lock){
             String nick = getNicknameFromClientHandler(clientHandler);
-
             if(nick != null){
+                int gameID = getGameIDFromNickname(nick);
+                if(gameID != -1) {
+                    gameControllerMap.get(gameID).getVirtualViewMap().remove(nick);
+                    gameControllerMap.get(gameID).broadcastDisconnectionMessage("Player " + nick +
+                            " disconnected from the game.\n"
+                            + ANSIConstants.ANSI_BOLD + "----- GAME FINISHED -----" + ANSIConstants.ANSI_RESET);
+                    for (Player player : gameControllerMap.get(gameID).getGame().getPlayers()){
+                        if(!player.getNickname().equals(nick)){
+                            String name = player.getNickname();
+                            //View virtualView =
+                            gameControllerMap.get(gameID).getVirtualViewMap().get(name).showExistingGames(getGameControllerMap());
+                            gameControllerMap.get(gameID).getVirtualViewMap().get(name).askCreateOrJoin();
+                            gameControllerMap.get(gameID).getVirtualViewMap().remove(name);
+                        }
+                    }
+                    gameControllerMap.remove(gameID);
+                    Server.LOGGER.severe("GameController " + gameID + " removed from gameControllerMap." +
+                            "\n--- Game finished ---");
+                }
                 removeClient(nick);
             }
         }

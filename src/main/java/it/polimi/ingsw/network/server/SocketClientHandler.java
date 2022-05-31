@@ -3,12 +3,16 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
+import it.polimi.ingsw.network.message.PingMessage;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+
+import static it.polimi.ingsw.network.server.Server.LOGGER;
 
 public class SocketClientHandler implements ClientHandler, Runnable{
 
@@ -33,8 +37,9 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         try {
             this.out = new ObjectOutputStream(client.getOutputStream());
             this.in = new ObjectInputStream(client.getInputStream());
-        } catch (IOException e) {
-            System.out.println("Error from socketClientHandler");
+        } catch (IOException ex) {
+            Server.LOGGER.severe("Error from socketClientHandler"+ ex.getClass().getSimpleName()
+                    + ": " + ex.getMessage());
         }
     }
 
@@ -50,8 +55,10 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     public void run() {
         try {
             handleClientConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Server.LOGGER.severe("Client " + client.getInetAddress() + " connection dropped. \n" +
+                    ex.getClass().getSimpleName() + ": " + ex.getMessage());
+            disconnect();
         }
     }
 
@@ -62,32 +69,41 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         FIXME: During testing it launches an Exception despite working correctly
      */
     public void handleClientConnection() throws IOException {
-        System.out.println("Client connected from "+client.getInetAddress());
+        Server.LOGGER.info("Client connected from " + client.getInetAddress());
         try{
             while(!Thread.currentThread().isInterrupted()) {
                 synchronized (inputLock) {
-                    Message message;
-                    message = (Message) in.readObject();
-                    System.out.println("Message:"+message);
-                    if (message != null && message.getMessageType() == MessageType.LOGIN_REQUEST) {
-                        try {
-                            socketServer.addClient(message.getNickname(), this);
-                            virtualView.showExistingGames(socketServer.getServer().getGameControllerMap());
-                            virtualView.askCreateOrJoin();
-                        }catch (TryAgainException e){
-                            virtualView.showGenericMessage("Nickname has already been chosen.");
-                            virtualView.askNickname();
+                    if (in != null && connected) {
+                        Message message;
+                        message = (Message) in.readObject();
+                        if (!message.getClass().getSimpleName().equalsIgnoreCase("PingMessage")) {
+                            Server.LOGGER.info("Message: " + message.getClass().getSimpleName());
                         }
-                    } else {
-                        socketServer.getMessage(message);
+                        if (message.getMessageType() != MessageType.PING) {
+                            if (message.getMessageType() == MessageType.LOGIN_REQUEST) {
+                                try {
+                                    socketServer.addClient(message.getNickname(), this);
+                                    virtualView.showExistingGames(socketServer.getServer().getGameControllerMap());
+                                    virtualView.askCreateOrJoin();
+                                } catch (TryAgainException e) {
+                                    Server.LOGGER.severe("Nickname has already been chosen");
+                                    virtualView.showGenericMessage("Nickname has already been chosen");
+                                    virtualView.askNickname();
+                                }
+                            } else {
+                                Server.LOGGER.info("Received: " + message.getClass().getSimpleName());
+                                socketServer.getMessage(message);
+                            }
+                        }
                     }
                 }
             }
-        }catch(IOException | ClassNotFoundException e){
+        }catch(IOException | ClassNotFoundException ex){
+            Server.LOGGER.severe("Invalid stream from client. \n" +
+                    ex.getClass().getSimpleName() + ": " + ex.getMessage());
+        } finally {
             disconnect();
         }
-
-        client.close();
     }
 
     /*
@@ -105,8 +121,8 @@ public class SocketClientHandler implements ClientHandler, Runnable{
                 if (!client.isClosed()) {
                     client.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                Server.LOGGER.severe(ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
             connected = false;
             Thread.currentThread().interrupt();
@@ -120,13 +136,12 @@ public class SocketClientHandler implements ClientHandler, Runnable{
             synchronized (outputLock) {
                 out.writeObject(message);
                 out.reset();
-                System.out.println("Sent: "+message.toString());
+                Server.LOGGER.info("Sent: "+message.getClass().getSimpleName());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Server.LOGGER.severe(ex.getClass().getSimpleName() + ": " + ex.getMessage());
             disconnect();
         }
     }
-
 
 }

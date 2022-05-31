@@ -98,4 +98,7 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessage(message);
     }
 
+    @Override
+    public void showDisconnectionMessage(String message) { clientHandler.sendMessage(new DisconnectionMessage(message)); }
+
 }

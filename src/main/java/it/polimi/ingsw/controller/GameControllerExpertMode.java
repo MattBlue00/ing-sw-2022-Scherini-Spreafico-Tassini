@@ -10,17 +10,19 @@ import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.io.Serializable;
 
+import static it.polimi.ingsw.network.server.Server.LOGGER;
+
 /**
  * This server-side class is the {@link GameController}'s subclass, and offers new (overridden) methods to handle the
  * game flow of a game in Expert mode.
  */
 
-public class GameControllerExpertMode extends GameController implements Serializable {
+public class GameControllerExpertMode extends GameController{
 
     /**
      * Game controller constructor.
      */
-
+    
     public GameControllerExpertMode() {
         super();
     }
@@ -42,13 +44,13 @@ public class GameControllerExpertMode extends GameController implements Serializ
             case ACTION_CHOICE:
                 if(((ActionChoiceMessage) message).getChoice().equals("STUDENT")) {
                     if (!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
                     }
                 }
                 else {
                     if (!getVirtualViewMap().isEmpty() && !getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCharacterCard();
                     }
                 }
@@ -62,7 +64,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                         handleStudentMovement(message);
                         setMovesLeft(getMovesLeft() - 1);
                         if (!getVirtualViewMap().isEmpty() && getMovesLeft() > 0) {
-                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            LOGGER.info(getGame().getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             if (!getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed())
@@ -71,7 +73,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                                 getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
                         }
                         if (!getVirtualViewMap().isEmpty() && getMovesLeft() == 0) {
-                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            LOGGER.info(getGame().getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
@@ -80,7 +82,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 }
                 catch(FullTableException | StudentNotFoundException | IslandNotFoundException | NonExistentColorException e){
                     if(!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
@@ -94,7 +96,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                         setMotherNatureMoved(true);
                         getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
                         if (!getVirtualViewMap().isEmpty()) {
-                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            LOGGER.info(getGame().getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
@@ -105,7 +107,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 }
                 catch(InvalidNumberOfStepsException | IslandNotFoundException e){
                     if(!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMotherNatureSteps();
@@ -121,7 +123,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 }
                 catch(IndexOutOfBoundsException e){
                     if(!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
                                 showGenericMessage("There's no cloud with such id, please try again.");
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
@@ -129,7 +131,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 }
                 catch(EmptyCloudException e){
                     if(!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askCloud();
@@ -141,7 +143,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                     if (!hasMotherNatureMoved()) {
                         handleCharacterCardChoice(message);
                         if (!getVirtualViewMap().isEmpty()) {
-                            System.out.println(getGame().getCurrentPlayer().getNickname());
+                            LOGGER.info(getGame().getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askMoveStudent();
@@ -151,7 +153,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
                 }
                 catch(CharacterCardAlreadyPlayedException | NotEnoughCoinsException | CharacterCardNotFoundException e){
                     if(!getVirtualViewMap().isEmpty()) {
-                        System.out.println(getGame().getCurrentPlayer().getNickname());
+                        LOGGER.info(getGame().getCurrentPlayer().getNickname());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
@@ -219,7 +221,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
         setCurrentPlayerIndex(0);
         setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         if(!getVirtualViewMap().isEmpty()) {
-            System.out.println(getGame().getCurrentPlayer().getNickname());
+            LOGGER.info(getGame().getCurrentPlayer().getNickname());
             broadcastGenericMessage(
                     ANSIConstants.ANSI_BOLD + "-- ACTION PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
             broadcastGameStatusFirstActionPhase();
@@ -242,7 +244,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
         setPlayerActionPhaseDone(false);
         setMotherNatureMoved(false);
         if(!getVirtualViewMap().isEmpty()) {
-            System.out.println(getGame().getCurrentPlayer().getNickname());
+            LOGGER.info(getGame().getCurrentPlayer().getNickname());
             broadcastGameBoard();
             broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
@@ -259,8 +261,8 @@ public class GameControllerExpertMode extends GameController implements Serializ
         try{
             getGame().refillClouds();
         }
-        catch(EmptyBagException e){
-            System.out.println(e.getMessage());
+        catch(EmptyBagException ex){
+            LOGGER.severe(ex.getClass().getSimpleName() + ": " + ex.getMessage());
         }
         getGame().getCurrentPlayer().setCharacterCardAlreadyPlayed(false);
         setCurrentPlayerIndex(0);
@@ -274,7 +276,7 @@ public class GameControllerExpertMode extends GameController implements Serializ
         for(Player player : getGame().getPlayers())
             player.resetLastAssistantCardPlayed();
         if(!getVirtualViewMap().isEmpty()) {
-            System.out.println(getGame().getCurrentPlayer().getNickname());
+            LOGGER.info(getGame().getCurrentPlayer().getNickname());
             broadcastGameBoard();
             broadcastGenericMessage(
                     ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
@@ -283,6 +285,4 @@ public class GameControllerExpertMode extends GameController implements Serializ
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAssistantCard();
         }
     }
-
-
 }

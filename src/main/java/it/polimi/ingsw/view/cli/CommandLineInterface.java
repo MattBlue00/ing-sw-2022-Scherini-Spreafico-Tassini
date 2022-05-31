@@ -5,10 +5,12 @@ import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
+import it.polimi.ingsw.observers.ViewObserver;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
 import java.util.*;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -104,7 +106,12 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println("Enter your nickname [must be unique] : ");
         try {
             String nickname = readLine().trim();
-            notifyObserver(viewObserver -> viewObserver.onUpdateNickname(nickname));
+            while (nickname.equalsIgnoreCase("")){
+                out.println("Please enter a valid nickname [must be unique] : ");
+                nickname = readLine().trim();
+            }
+            String finalNickname = nickname;
+            notifyObserver(viewObserver -> viewObserver.onUpdateNickname(finalNickname));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
@@ -134,7 +141,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             int gameNumber = 0;
             do{
                 try {
-                    out.println("Type the number (ID) of the game you want to create [ game number must be unique and greater than zero]: ");
+                    out.println("Type the number (ID) of the game you want to create [ game number must be unique and greater than zero ]: ");
                     gameNumber = Integer.parseInt(readLine());
                     if(gameNumber <= 0)
                         out.println("The ID must be greater than zero!");
@@ -220,7 +227,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(assistantCard));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        }
+        } catch (NullPointerException ignored){}
     }
 
     public void askMoveStudent(){
@@ -246,8 +253,7 @@ public class CommandLineInterface extends ViewObservable implements View {
                         out.println("Towards which island? Please type a valid number:");
                         islandID = Integer.parseInt(readLine());
                         if (islandID < 1 || islandID > 12) {
-                           out.println("The given input is not correct, please try again. \n" +
-                                   "Towards which island? Please type a valid number:");
+                           out.println("The given input is not correct, please try again.");
                         }
                     }
                     catch(NumberFormatException e){
@@ -267,8 +273,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             }
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        }
-
+        } catch (NullPointerException ignored){}
     }
 
     @Override
@@ -279,9 +284,15 @@ public class CommandLineInterface extends ViewObservable implements View {
             do {
                 try {
                     out.println("How many steps do you wish Mother Nature has to move of? Please type a valid number:");
-                    steps = Integer.parseInt(readLine());
-                    if (steps < 1 || steps > 7)
-                        out.println("The given input is not correct, please try again.");
+                    String string = readLine();
+                    if(string != null) {
+                        steps = Integer.parseInt(string);
+                        if (steps < 1 || steps > 7)
+                            out.println("The given input is not correct, please try again.");
+                    }
+                    else{
+                        throw new NullPointerException();
+                    }
                 }
                 catch(NumberFormatException e){
                     out.println("Please type a valid number.");
@@ -292,19 +303,24 @@ public class CommandLineInterface extends ViewObservable implements View {
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
+        catch (NullPointerException ignored){}
     }
 
     @Override
     public void askCloud() {
 
         try {
-            int cloudID = 0;
+            int cloudID = -1;
             do {
                 try {
                     out.println("Which cloud do you want to pick students from? Please type a valid number:");
-                    cloudID = Integer.parseInt(readLine()) - 1;
-                    if (cloudID < 0 || cloudID > 2)
-                        out.println("The given input is not correct, please try again.");
+                    String string = readLine();
+                    if(string != null) {
+                        cloudID = Integer.parseInt(string) - 1;
+                        if (cloudID < 0 || cloudID > 2)
+                            out.println("The given input is not correct, please try again.");
+                    }
+                    else throw new NullPointerException();
                 }
                 catch(NumberFormatException e){
                     out.println("Please type a valid number.");
@@ -314,7 +330,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(finalCloudID));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        }
+        } catch (NullPointerException ignored){}
     }
 
     @Override
@@ -426,7 +442,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             notifyObserver(viewObserver -> viewObserver.onUpdateActionChoice(finalChoice));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        }
+        } catch (NullPointerException ignored){}
     }
 
     @Override
@@ -477,18 +493,26 @@ public class CommandLineInterface extends ViewObservable implements View {
         game.showDeck();
     }
 
+    @Override
+    public void showDisconnectionMessage(String message) {
+        clearInterface();
+        out.println(message);
+    }
+
     public void clearInterface(){
         out.flush();
     }
 
+    //TODO: parsing outside this method
+    //(readLine() might give problems)
     private String checkColor(String color) throws ExecutionException {
-        String finalColor = color;
-        while (!finalColor.equals("YELLOW") && !finalColor.equals("BLUE") && !finalColor.equals("GREEN")
-                && !finalColor.equals("RED") && !finalColor.equals("PINK")){
-            out.println("The given input is not correct, please try again. \n" +
-                    "Please type a valid color [YELLOW, BLUE, GREEN, RED, PINK]:");
-            finalColor = readLine().toUpperCase();
-        }
+            String finalColor = color;
+            while (!finalColor.equals("YELLOW") && !finalColor.equals("BLUE") && !finalColor.equals("GREEN")
+                    && !finalColor.equals("RED") && !finalColor.equals("PINK")) {
+                out.println("The given input is not correct, please try again. \n" +
+                        "Please type a valid color [YELLOW, BLUE, GREEN, RED, PINK]:");
+                finalColor = readLine().toUpperCase();
+            }
         return finalColor;
     }
 

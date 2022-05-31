@@ -6,6 +6,9 @@ import it.polimi.ingsw.network.message.Message;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+
+import static it.polimi.ingsw.network.server.Server.LOGGER;
 
 public class SocketServer implements Runnable{
 
@@ -28,10 +31,10 @@ public class SocketServer implements Runnable{
     public void run() {
         try {
             serverSocket = new ServerSocket(port);
-            System.out.println("Server running on port: "+port);
-        } catch (IOException e) {
-            System.out.println("Error initializing serverSocket.");
-            e.printStackTrace();
+            Server.LOGGER.info("Server running on port: "+port);
+        } catch (IOException ex) {
+            Server.LOGGER.severe("Error initializing serverSocket" + ex.getClass().getSimpleName() +
+                    ": " + ex.getMessage());
         }
         while(!Thread.currentThread().isInterrupted()){
             try {
@@ -39,9 +42,8 @@ public class SocketServer implements Runnable{
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);
                 Thread thread = new Thread(clientHandler, "ss_handler: "+client.getInetAddress());
                 thread.start();
-            } catch (IOException e) {
-                System.out.println("Connection ended.");
-                e.printStackTrace();
+            } catch (IOException ex) {
+                Server.LOGGER.severe("Connection ended" + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
         }
     }

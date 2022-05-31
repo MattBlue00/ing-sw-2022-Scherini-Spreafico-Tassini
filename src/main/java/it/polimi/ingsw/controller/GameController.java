@@ -10,6 +10,9 @@ import it.polimi.ingsw.view.VirtualView;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.logging.Logger;
+
+import static it.polimi.ingsw.network.server.Server.LOGGER;
 
 /**
  * This server-side class controls the game flow of a game in Normal mode towards all of its phases, from its creation
@@ -215,6 +218,19 @@ public class GameController implements Serializable {
         return virtualViewMap;
     }
 
+    // GameController methods
+
+    /* ---------------------------------------------------------------
+    ! (network -> Server handles following stuff)
+    ! Fist thing login in the server, gameController not exists yet.
+    ! Second thing, the client can choose to join or create a game.
+    ! -> If the game is new we create a new gameController based on
+    !    the CreateGameMessage params
+    ! -> If the game already exists JoinGameMessage with gameID.
+    ! (controller -> Controller handles game phases from now on)
+    ! From now on the GameController exists and handle match phases.
+    --------------------------------------------------------------*/
+
     /**
      * Receives a message from a client and executes different actions according to the message's type and
      * according to which state is the game in: adding players to the queue (state {@code SETUP}) or modifying
@@ -235,7 +251,7 @@ public class GameController implements Serializable {
                     startGame();
                 else
                     if(!virtualViewMap.isEmpty()) {
-                        System.out.println(receivedMessage.getNickname());
+                        LOGGER.info(receivedMessage.getNickname());
                         broadcastGenericMessage("Please wait for " +
                                 (game.getPlayersNumber() - gameQueue.size()) + " more player(s) to join.");
                     }
@@ -252,9 +268,10 @@ public class GameController implements Serializable {
                                 endPlanningPhase();
                             else
                                 nextPlayerPlanningPhase();
-                        } else {
-                            if (!virtualViewMap.isEmpty()) {
-                                System.out.println(game.getCurrentPlayer().getNickname());
+                        }
+                        else{
+                            if(!virtualViewMap.isEmpty()) {
+                                LOGGER.info(game.getCurrentPlayer().getNickname());
                                 virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
                             }
                         }
@@ -272,7 +289,7 @@ public class GameController implements Serializable {
                 }
                 break;
             default:
-                System.out.println(INVALID_STATE);
+                LOGGER.severe(INVALID_STATE);
                 break;
         }
     }
@@ -311,12 +328,15 @@ public class GameController implements Serializable {
         if(gameQueue.size() < getGame().getPlayersNumber()) {
             this.gameQueue.add(nickname);
             this.virtualViewMap.put(nickname, virtualView);
-            System.out.println("----------Players in the queue, game: "+gameControllerID+"----------");
-            gameQueue.forEach(System.out::println);
-            System.out.println("---------------QUEUE END----------------");
+            LOGGER.info("----------Players in the queue, game: "+gameControllerID+"----------");
+            for (String player : gameQueue){
+                LOGGER.info(player);
+            }
+            LOGGER.info("---------------QUEUE END----------------");
         }
-        else
-            System.out.println("The game is full.");
+        else {
+            LOGGER.info("Full game");
+        }
     }
 
 
@@ -342,7 +362,7 @@ public class GameController implements Serializable {
         }
         if(!wizardIdAlreadyUsed) {
             getGame().addPlayer(new Player(wizardID, nickname, game.getConstants()));
-            System.out.println("NEW PLAYER ADDED: "+nickname+" wizard: "+wizardID);
+            LOGGER.info("NEW PLAYER "+nickname+", wizard "+wizardID+ ", ADDED TO GAMECONTROLLER NUM. "+gameControllerID);
         }
     }
 
@@ -353,14 +373,14 @@ public class GameController implements Serializable {
 
     public void startGame(){
         game.startGame();
-        System.out.println("game: " + game + " has been initialized.");
+        LOGGER.info("game: " + game + " has been initialized");
         broadcastGenericMessage("Get ready to play!");
         broadcastGenericMessage(
                 ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
         setGameState(GameState.IN_GAME);
         // For old tests
         if(!virtualViewMap.isEmpty()) {
-            System.out.println(game.getCurrentPlayer().getNickname());
+            LOGGER.info(game.getCurrentPlayer().getNickname());
             showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
             broadcastWaitingMessage();
@@ -389,7 +409,7 @@ public class GameController implements Serializable {
         playerPlanningPhaseDone = false;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
         if(!virtualViewMap.isEmpty()) {
-            System.out.println(game.getCurrentPlayer().getNickname());
+            LOGGER.info(game.getCurrentPlayer().getNickname());
             showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
             broadcastWaitingMessage();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
@@ -408,7 +428,7 @@ public class GameController implements Serializable {
         currentPlayerIndex = 0;
         movesLeft = game.getConstants().PLAYER_MOVES;
         if(!virtualViewMap.isEmpty()) {
-            System.out.println(game.getCurrentPlayer().getNickname());
+            LOGGER.info(game.getCurrentPlayer().getNickname());
             broadcastGenericMessage(
                     ANSIConstants.ANSI_BOLD + "-- ACTION PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
             broadcastGameStatusFirstActionPhase();
@@ -436,13 +456,13 @@ public class GameController implements Serializable {
                         handleStudentMovement(message);
                         movesLeft--;
                         if (!virtualViewMap.isEmpty() && movesLeft > 0) {
-                            System.out.println(game.getCurrentPlayer().getNickname());
+                            LOGGER.info(game.getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
                         }
                         if (!virtualViewMap.isEmpty() && movesLeft == 0) {
-                            System.out.println(game.getCurrentPlayer().getNickname());
+                            LOGGER.info(game.getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMotherNatureSteps();
@@ -451,7 +471,7 @@ public class GameController implements Serializable {
                 }
                 catch(FullTableException | StudentNotFoundException | IslandNotFoundException | NonExistentColorException e){
                     if(!virtualViewMap.isEmpty()) {
-                        System.out.println(game.getCurrentPlayer().getNickname());
+                        LOGGER.info(game.getCurrentPlayer().getNickname());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
@@ -465,7 +485,7 @@ public class GameController implements Serializable {
                         motherNatureMoved = true;
                         game.islandConquerCheck(game.getBoard().getMotherNaturePos());
                         if (!virtualViewMap.isEmpty()) {
-                            System.out.println(game.getCurrentPlayer().getNickname());
+                            LOGGER.info(game.getCurrentPlayer().getNickname());
                             broadcastGameBoard();
                             broadcastWaitingMessage();
                             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
@@ -477,7 +497,7 @@ public class GameController implements Serializable {
                 }
                 catch(InvalidNumberOfStepsException | IslandNotFoundException e){
                     if(!virtualViewMap.isEmpty()) {
-                        System.out.println(game.getCurrentPlayer().getNickname());
+                        LOGGER.info(game.getCurrentPlayer().getNickname());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMotherNatureSteps();
@@ -493,7 +513,7 @@ public class GameController implements Serializable {
                 }
                 catch(IndexOutOfBoundsException e){
                     if(!virtualViewMap.isEmpty()) {
-                        System.out.println(game.getCurrentPlayer().getNickname());
+                        LOGGER.info(game.getCurrentPlayer().getNickname());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).
                                 showGenericMessage("There's no cloud with such id, please try again.");
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
@@ -501,7 +521,7 @@ public class GameController implements Serializable {
                 }
                 catch(EmptyCloudException e){
                     if(!virtualViewMap.isEmpty()) {
-                        System.out.println(game.getCurrentPlayer().getNickname());
+                        LOGGER.info(game.getCurrentPlayer().getNickname());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).
                                 showGenericMessage(e.getMessage());
                         virtualViewMap.get(game.getCurrentPlayer().getNickname()).askCloud();
@@ -525,7 +545,7 @@ public class GameController implements Serializable {
         playerActionPhaseDone = false;
         motherNatureMoved = false;
         if(!virtualViewMap.isEmpty()) {
-            System.out.println(game.getCurrentPlayer().getNickname());
+            LOGGER.info(game.getCurrentPlayer().getNickname());
             broadcastGameBoard();
             broadcastWaitingMessage();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
@@ -540,8 +560,8 @@ public class GameController implements Serializable {
         try{
             game.refillClouds();
         }
-        catch(EmptyBagException e){
-            System.out.println(e.getMessage());
+        catch(EmptyBagException ex){
+            LOGGER.severe(ex.getClass().getSimpleName() + ": " + ex.getMessage());
         }
         currentPlayerIndex = 0;
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
@@ -553,7 +573,7 @@ public class GameController implements Serializable {
         for(Player player : game.getPlayers())
             player.resetLastAssistantCardPlayed();
         if(!virtualViewMap.isEmpty()) {
-            System.out.println(game.getCurrentPlayer().getNickname());
+            LOGGER.info(game.getCurrentPlayer().getNickname());
             broadcastGameBoard();
             broadcastGenericMessage(
                     ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
@@ -572,7 +592,7 @@ public class GameController implements Serializable {
 
     public void handleAssistantCardChoice(Message receivedMessage){
        String chosenCard = ((AssistantCardMessage) receivedMessage).getCardName().toUpperCase();
-       System.out.println(chosenCard);
+       LOGGER.info(chosenCard);
        if(isAssistantCardPlayable(chosenCard)) {
            game.getCurrentPlayer().playAssistantCard(chosenCard);
            playerPlanningPhaseDone = true;
@@ -721,9 +741,9 @@ public class GameController implements Serializable {
     public void winCheck(){
         try {
             if(noTowersLeftCheck() || isStudentBagEmpty() || lessThanFourIslandsCheck())
-                System.out.println(END_STATE+game.getCurrentPlayer().getNickname());
+                LOGGER.info(END_STATE+game.getCurrentPlayer().getNickname());
             if (game.getRoundNumber() == 10 && game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)))
-                System.out.println(END_STATE + declareWinningPlayer().getNickname());
+                LOGGER.info(END_STATE + declareWinningPlayer().getNickname());
         }
         catch(TieException e){
             broadcastGenericMessage(e.getMessage());
@@ -749,7 +769,7 @@ public class GameController implements Serializable {
     public boolean isStudentBagEmpty() throws TieException {
         if(game.getBoard().getStudentsBag().size() == 0){
             Player winningPlayer = declareWinningPlayer();
-            System.out.println(END_STATE+winningPlayer);
+            LOGGER.info(END_STATE+winningPlayer);
             return true;
         }
         return false;
@@ -764,7 +784,7 @@ public class GameController implements Serializable {
     public boolean lessThanFourIslandsCheck() throws TieException {
         if(game.getBoard().getIslands().getSize() <= 3){
             Player winningPlayer = declareWinningPlayer();
-            System.out.println(END_STATE+winningPlayer);
+            LOGGER.info(END_STATE+winningPlayer);
             return true;
         }
         return false;
@@ -825,6 +845,13 @@ public class GameController implements Serializable {
     public void broadcastGenericMessage(String message) {
         for (VirtualView vv : virtualViewMap.values()) {
             vv.showGenericMessage(message);
+        }
+    }
+
+    //TODO: comment
+    public void broadcastDisconnectionMessage(String message){
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showDisconnectionMessage(message);
         }
     }
 
