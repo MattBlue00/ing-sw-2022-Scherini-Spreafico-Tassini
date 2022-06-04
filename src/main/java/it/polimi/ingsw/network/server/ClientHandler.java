@@ -3,6 +3,8 @@ package it.polimi.ingsw.network.server;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.view.VirtualView;
 
+import java.net.Socket;
+
 public interface ClientHandler {
     /*
         Returns the connection status.
@@ -22,4 +24,6 @@ public interface ClientHandler {
     void setVirtualView(VirtualView virtualView);
 
     VirtualView getVirtualView();
+
+    Socket getSocketClient();
 }

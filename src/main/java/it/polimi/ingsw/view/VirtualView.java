@@ -6,7 +6,6 @@ import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.ClientHandler;
 import it.polimi.ingsw.observers.Observer;
 
-import java.util.List;
 import java.util.Map;
 
 public class VirtualView implements View, Observer {

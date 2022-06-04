@@ -6,19 +6,21 @@ import it.polimi.ingsw.network.message.Message;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-
-import static it.polimi.ingsw.network.server.Server.LOGGER;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SocketServer implements Runnable{
 
     private final Server server;
     private final int port;
     private ServerSocket serverSocket;
+    private final ScheduledExecutorService pinger;
 
     public SocketServer(Server server, int port) {
         this.server = server;
         this.port = port;
+        this.pinger = Executors.newSingleThreadScheduledExecutor();
     }
 
     /*
@@ -42,6 +44,7 @@ public class SocketServer implements Runnable{
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);
                 Thread thread = new Thread(clientHandler, "ss_handler: "+client.getInetAddress());
                 thread.start();
+                //pinger.scheduleAtFixedRate(() -> isReachable(),0, 1000, TimeUnit.MILLISECONDS);
             } catch (IOException ex) {
                 Server.LOGGER.severe("Connection ended" + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
@@ -64,4 +67,16 @@ public class SocketServer implements Runnable{
         server.onDisconnect(clientHandler);
     }
 
+    public void isReachable(){
+        server.getClientHandlerMap().forEach( (string, clientHandler) -> {
+            try {
+                boolean reachable;
+                reachable = clientHandler.getSocketClient().getInetAddress().isReachable(10000);
+                if(!reachable){
+                   onDisconnect(clientHandler); }
+            } catch (IOException e) {
+                throw new RuntimeException(e); }
+            }
+        );
+    }
 }

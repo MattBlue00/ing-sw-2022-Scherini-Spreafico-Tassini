@@ -10,6 +10,9 @@ import it.polimi.ingsw.view.VirtualView;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static it.polimi.ingsw.network.server.Server.LOGGER;
@@ -76,6 +79,15 @@ public class GameController implements Serializable {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    /**
+     * Gets the game's state.
+     *
+     * @return the state of the game.
+     */
+    public GameState getGameState() {
+        return gameState;
     }
 
     /**
@@ -339,6 +351,17 @@ public class GameController implements Serializable {
         else {
             LOGGER.info("The game " + gameControllerID + " is full!");
         }
+    }
+
+    /**
+     * Removes a player from the queue (given the nickname).
+     *
+     * @param nickname is the nickname of the player who disconnected
+     */
+    public void removePlayerFromQueue(String nickname){
+        this.gameQueue.remove(nickname);
+        this.virtualViewMap.remove(nickname);
+        LOGGER.severe(nickname + " removed from game " + gameControllerID + " queue");
     }
 
 
