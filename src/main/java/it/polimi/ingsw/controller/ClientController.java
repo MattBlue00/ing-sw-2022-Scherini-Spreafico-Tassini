@@ -50,7 +50,6 @@ public class ClientController implements ViewObserver, Observer {
             client = new SocketClient(address, port);
             client.addObserver(this);
             client.readMessage();
-            client.enablePinger(true);
             taskQueue.execute(view::askNickname);
         } catch (IOException e) {
             throw new RuntimeException(e);

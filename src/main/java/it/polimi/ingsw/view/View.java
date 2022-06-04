@@ -3,7 +3,6 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
 
-import java.util.List;
 import java.util.Map;
 
 public interface View {

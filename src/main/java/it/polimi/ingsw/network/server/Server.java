@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerFactory;
+import it.polimi.ingsw.controller.GameState;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.exceptions.WrongMessageSentException;
 import it.polimi.ingsw.model.Player;
@@ -122,10 +123,12 @@ public class Server{
         return gameControllerMap;
     }
 
+    public Map<String, ClientHandler> getClientHandlerMap() { return clientHandlerMap; }
+
     /*
-            returns the gameID associated to a nickname, if it doesn't exists
-            returns -1.
-        */
+                returns the gameID associated to a nickname, if it doesn't exists
+                returns -1.
+            */
     private int getGameIDFromNickname(String nickname){
         return gameControllerMap.entrySet()
                 .stream()
@@ -153,7 +156,7 @@ public class Server{
             String nick = getNicknameFromClientHandler(clientHandler);
             if(nick != null){
                 int gameID = getGameIDFromNickname(nick);
-                if(gameID != -1) {
+                if(gameID != -1 && gameControllerMap.get(gameID).getGameState().equals(GameState.IN_GAME)) {
                     gameControllerMap.get(gameID).getVirtualViewMap().remove(nick);
                     gameControllerMap.get(gameID).broadcastDisconnectionMessage("Player " + nick +
                             " disconnected from the game.\n"
@@ -174,6 +177,8 @@ public class Server{
                     }
                     Server.LOGGER.severe("GameController " + gameID + " removed from gameControllerMap." +
                             "\n--- Game finished ---");
+                } else if (gameID != -1 && gameControllerMap.get(gameID).getGameState().equals(GameState.SETUP)) {
+                    gameControllerMap.get(gameID).removePlayerFromQueue(nick);
                 }
                 removeClient(nick);
             }

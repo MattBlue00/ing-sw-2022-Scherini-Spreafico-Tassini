@@ -21,6 +21,5 @@ public enum MessageType {
     SHOW_DECK_MESSAGE,
     ACTION_CHOICE,
     EXISTING_GAMES,
-    PING,
     DISCONNECTION
 }

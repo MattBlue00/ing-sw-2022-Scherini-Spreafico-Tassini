@@ -214,7 +214,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             notifyObserver(viewObserver -> viewObserver.onUpdateWizardID(finalWizard));
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
-        }
+        } catch (NullPointerException ignored){}
     }
 
     @Override
