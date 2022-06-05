@@ -4,33 +4,72 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
+import it.polimi.ingsw.controller.GameControllerExpertMode;
 
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class is the same as the {@link Game} class, but it handles Expert mode matches. Therefore, it has methods for
+ * Character Cards handling, and it is controlled by the {@link GameControllerExpertMode}.
+ */
+
 public class GameExpertMode extends Game implements Serializable {
 
     private final CharacterCard[] characters;
+
+    /**
+     * Game (Expert mode) constructor.
+     *
+     * @param playersNumber the number of players of the match.
+     * @param constants the useful constants to set for this game.
+     */
 
     public GameExpertMode(int playersNumber, Constants constants) {
         super(playersNumber, constants);
         this.characters = new CharacterCard[Constants.CHARACTERS_NUM];
     }
 
+    /**
+     * Returns an array containing all the 3 Character Cards available for this game.
+     *
+     * @return an array of {@link CharacterCard} subclasses (each one is different, since each card present in the game
+     * is different).
+     */
+
     public CharacterCard[] getCharacters() {
         return characters;
     }
 
-    /*
-        This method lets a player play a chosen character card. If it involves a change in an already existent
-        method, its effect will not be visible right after use; otherwise, the card's doEffect method will be
-        instantly triggered.
+    /**
+     * Returns the Character Card with the given ID between the ones present in the current game, if possible.
+     *
+     * @param id an {@code int} representing the ID of the desired card.
+     * @return the desired {@link CharacterCard}.
+     * @throws NoSuchElementException if there's no Character Card with the given ID in the current game.
      */
 
-
-    public CharacterCard getCharacterCardByID(int id){
-        return Arrays.stream(characters).filter(card -> card.getId()==id).findFirst().get();
+    public CharacterCard getCharacterCardByID(int id) throws NoSuchElementException{
+        Optional<CharacterCard> card = Arrays.stream(characters).filter(x -> x.getId() == id).findFirst();
+        if(card.isPresent())
+            return card.get();
+        else throw new NoSuchElementException("There's no Character Card with such ID!");
     }
+
+    /**
+     * Allows the current player to play a chosen Character Card. If it involves a change in an already existent
+     * method, its effect will not be visible right after use; otherwise, the card's doEffect method will be
+     * instantly triggered.
+     *
+     * @param id an {@code int} representing the ID of the card to play.
+     * @throws TryAgainException if the desired card can't be played. This may happen because of the first true
+     * conditions along the following:
+     * 1) the current player has already played a Character Card in the same round - actually, this exception should
+     * never be thrown here ({@link GameControllerExpertMode} should prevent this case), but it has been kept for safety.
+     * 2) the current player has not enough coins to activate the card's effect.
+     * 3) the Character Card ID provided does not refer to any of the existing 3 cards in the current game.
+     * As the exception name suggests, it is then asked the current player to provide input again.
+     */
 
     public void playerPlaysCharacterCard(int id) throws TryAgainException {
 
@@ -62,9 +101,12 @@ public class GameExpertMode extends Game implements Serializable {
 
     }
 
-    /*
-        This overridden method controls whether the card which modifies Mother Nature's movement algorithm has
-        been chosen by the current player.
+    /**
+     * Checks if the card which modifies Mother Nature's maximum number of steps has been activated by the current
+     * player. In case it has, calls the card's doEffect method; in case it hasn't, this method is identical to the
+     * overridden one.
+     *
+     * @param steps an {@code int} representing the number of steps the player wishes Mother Nature to move of.
      */
 
     @Override
@@ -87,9 +129,12 @@ public class GameExpertMode extends Game implements Serializable {
 
     }
 
-    /*
-        This overridden method controls whether the card which modifies the profCheck algorithm has been chosen
-        by the current player.
+    /**
+     * Checks if the card which modifies the profCheck algorithm has been activated by the current player. In case it
+     * has, calls the card's doEffect method; in case it hasn't, this method is identical to the overridden one.
+     *
+     * @throws NonExistentColorException if a table of a non-existent color is somehow accessed (it should never be
+     * thrown, so it is safely ignorable).
      */
 
     @Override
@@ -113,9 +158,10 @@ public class GameExpertMode extends Game implements Serializable {
 
     }
 
-    /*
-        This overridden method controls whether one of the cards which modify the islandConquerCheck algorithm
-        has been chosen by the current player.
+    /**
+     * Checks if one of the cards which modify the islandConquerCheck algorithm has been activated by the current
+     * player. In case one of them have, calls the card's doEffect method; in case none of them have, this method is
+     * identical to the overridden one.
      */
 
     @Override
@@ -139,13 +185,21 @@ public class GameExpertMode extends Game implements Serializable {
       
     }
 
-    // Debug methods
+    /**
+     * Adds the given set of Character Cards to the game.
+     *
+     * @param cards the array containing the Character Cards to add to the game.
+     */
 
     public void addCharacterCards(CharacterCard[] cards){
-
         System.arraycopy(cards, 0, this.characters, 0, Constants.CHARACTERS_NUM);
-
     }
+
+    /**
+     * Fills the players' halls with the right amount of students and shuffles the players' order at the beginning of
+     * the match, in order to start the game properly (just as the overridden method does). Plus, generates a random
+     * set of 3 different Character Cards and adds them to the game.
+     */
 
     public void startGame(){
         for(int i = 0; i < getConstants().MAX_HALL_STUDENTS; i++) {
@@ -187,6 +241,10 @@ public class GameExpertMode extends Game implements Serializable {
         setCurrentPlayer(getPlayers().get(0));
 
     }
+
+    /**
+     * Allows the view to properly show the game status (Expert mode).
+     */
 
     public void showGameBoard(){
         try {
@@ -242,7 +300,7 @@ public class GameExpertMode extends Game implements Serializable {
 
                 if(currentIsland.getId() == getBoard().getMotherNaturePos())
                     System.out.println(ANSIConstants.ANSI_BOLD + "Mother Nature is here!" + ANSIConstants.ANSI_RESET);
-                if(currentIsland.hasVeto())
+                if(currentIsland.hasVetoTile())
                     System.out.println(ANSIConstants.ANSI_BOLD + "There's a veto tile here!" + ANSIConstants.ANSI_RESET);
 
                 System.out.println("--------------------");

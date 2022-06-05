@@ -5,32 +5,44 @@ import it.polimi.ingsw.utils.Constants;
 
 import java.io.Serializable;
 
-/*
-    In this list, the last node of the doubly linked list contains the address of the first node and
-    the first node contains the address of the last node.
-    In a circular doubly linked list, there is a cycle and none of the node pointers are set to null.
+/**
+ * This is the islands' data structure. It is a particular list in which the last node contains the address of the
+ * first node and the first node contains the address of the last node (so, it is "circular" and none of the pointers
+ * are set to {@code null}).
  */
 
 public class DoublyLinkedList implements Serializable {
+
     private Island head = null; // first element of the list
     private int size; // to check the number of islands in the list
 
-    public int getSize() {
-        return size;
-    }
-
-    /*
-        Create the list with the initial number of islands
+    /**
+     * Doubly Linked List constructor (since it has been specifically written for the game, the list contains 12 nodes
+     * from the beginning, each one holding an island).
      */
+
     public DoublyLinkedList() {
         for(int i = 1; i <= Constants.MAX_NUM_OF_ISLANDS; i++)
             addIsland(new Island(i));
     }
 
-    /*
-        The method adds an Island at the bottom the list, if the list is empty
-        it just adds the first element and set prev and next to the same Island.
+    /**
+     * Returns the number of nodes (islands) of the list.
+     *
+     * @return an {@code int} representing the number of nodes (islands) in the list.
+     */
+
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Adds an island at the bottom of the list. If the list is empty, adds the first element and set the "prev" and
+     * "next" pointers towards the same island.
+     *
+     * @param island the island to add.
     */
+
     public void addIsland(Island island){
         if(head == null){
             island.setNext(island);
@@ -50,12 +62,14 @@ public class DoublyLinkedList implements Serializable {
         size++;
     }
 
-    /*
-        MergeIslands gets an island as parameter.
-        If the island owner is the same as the near islands owners, the method merges
-        the current island with the near ones.
-        It removes the near islands and sum the values of the current owner on the current island.
+    /**
+     * Merges the island passed as a parameter with one or both the adjacent islands, if requirements are met. If
+     * merging is performed, removes the adjacent islands and updates the current island with the correct numbers of
+     * towers and students.
+     *
+     * @param island the island whose merging capability is going to be checked.
      */
+
     public void mergeIslands(Island island){
         Island prev = island.getPrev();
         Island next = island.getNext();
@@ -73,10 +87,13 @@ public class DoublyLinkedList implements Serializable {
         }
     }
 
-    /*
-        The method removes an island, and decrease the size of the data structure.
-        if the removed item is the head, it declares as new head the next island.
+    /**
+     * Removes an island and decreases the size of the data structure. If the removed node is the head node, the next
+     * island is declared the new head.
+     *
+     * @param island the island to remove.
      */
+
     public void removeIsland(Island island) {
         if(island != null) {
             if(island.equals(head))
@@ -87,10 +104,14 @@ public class DoublyLinkedList implements Serializable {
         }
     }
 
-    /*
-        Custom getter that take an integer islandID and return the Island with the same IslandID.
-        If there isn't an Island with that ID it throws an InvalidIslandException
+    /**
+     * Returns the island with the specified ID, if present.
+     *
+     * @param islandID the ID of the island to return.
+     * @return the desired island.
+     * @throws IslandNotFoundException if the provided island ID does not refer to any of the existing islands.
      */
+
     public Island getIslandFromID(int islandID) throws IslandNotFoundException {
         Island island = head;
         int islandsToCheck = size;

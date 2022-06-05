@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HealerTest {
@@ -48,18 +46,18 @@ public class HealerTest {
             assertTrue(p2.getSchool().getTable(Color.YELLOW.toString()).getHasProfessor());
             assertTrue(p1.getSchool().getTable(Color.BLUE.toString()).getHasProfessor());
 
-            ((Healer) cards[0]).setIslandID(1);
+            ((Healer) cards[0]).doOnClick(1);
             g1.playerPlaysCharacterCard(5);
 
             assertFalse(cards[0].getIsActive());
             assertEquals(3, p1.getCoinsWallet());
             assertEquals(3, cards[0].getCost());
-            assertTrue(g1.getBoard().getIslands().getIslandFromID(1).hasVeto());
+            assertTrue(g1.getBoard().getIslands().getIslandFromID(1).hasVetoTile());
 
             g1.islandConquerCheck(1);
             assertFalse(cards[0].getIsActive());
             assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
-            assertFalse(g1.getBoard().getIslands().getIslandFromID(1).hasVeto());
+            assertFalse(g1.getBoard().getIslands().getIslandFromID(1).hasVetoTile());
 
         }
         catch (TryAgainException e) {

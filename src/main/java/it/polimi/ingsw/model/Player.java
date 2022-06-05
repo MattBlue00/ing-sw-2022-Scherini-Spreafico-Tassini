@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is the representation of a playing client in the game model. It holds all the data unique to each player
+ * in a match, such as their nickname, their wizardID, the Assistant Cards they still have and their school. If the
+ * match is being played in Expert mode, other useful data (otherwise present but unused), such as the coins' wallet
+ * and a flag that is {@code true} if the player has already played a Character Card in a round, will be accessed and
+ * updated.
+ */
+
 public class Player implements Serializable {
 
     private final Wizard wizardID;
@@ -21,11 +29,20 @@ public class Player implements Serializable {
     private AssistantCard lastAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
+    /**
+     * Player constructor.
+     *
+     * @param wizardID the ID of the wizard the player wishes to embody.
+     * @param nickname the associated client's nickname.
+     * @param constants the set of constants for this game.
+     */
+
     public Player(Wizard wizardID, String nickname, Constants constants) {
         this.wizardID = wizardID;
         this.nickname = nickname;
         this.coinsWallet = 1;
 
+        // building the Assistant Card deck
         this.deck = new ArrayList<>(10);
         this.deck.add(new AssistantCard(AssistantType.CHEETAH));
         this.deck.add(new AssistantCard(AssistantType.OSTRICH));
