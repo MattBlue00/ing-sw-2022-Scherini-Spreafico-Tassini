@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.utils.Constants;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -44,7 +45,7 @@ public class SocketServer implements Runnable{
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);
                 Thread thread = new Thread(clientHandler, "ss_handler: "+client.getInetAddress());
                 thread.start();
-                //pinger.scheduleAtFixedRate(() -> isReachable(),0, 1000, TimeUnit.MILLISECONDS);
+                pinger.scheduleAtFixedRate(this::isReachable,0, 1000, TimeUnit.MILLISECONDS);
             } catch (IOException ex) {
                 Server.LOGGER.severe("Connection ended" + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
@@ -71,7 +72,7 @@ public class SocketServer implements Runnable{
         server.getClientHandlerMap().forEach( (string, clientHandler) -> {
             try {
                 boolean reachable;
-                reachable = clientHandler.getSocketClient().getInetAddress().isReachable(10000);
+                reachable = clientHandler.getSocketClient().getInetAddress().isReachable(Constants.CONNECTION_TIMEOUT_SERVER);
                 if(!reachable){
                    onDisconnect(clientHandler); }
             } catch (IOException e) {

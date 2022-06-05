@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Game;
 import java.util.Map;
 
 public interface View {
+    void askServerData();
     void askNickname();
     void askCreateOrJoin();
     void askGameInfo();
