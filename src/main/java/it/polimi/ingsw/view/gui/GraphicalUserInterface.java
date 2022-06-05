@@ -23,6 +23,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void askServerData() {
+
+    }
+
+    @Override
     public void askNickname() {
         Platform.runLater(()-> sceneController.changeRootPane(observers, "nickname_scene.fxml"));
     }

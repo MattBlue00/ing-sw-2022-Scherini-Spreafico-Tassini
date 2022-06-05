@@ -2,22 +2,25 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.message.ErrorMessage;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.utils.Constants;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SocketClient extends Client{
 
     private final Socket socket;
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
-    private final ExecutorService readExecutionQueue;
-
+    private ExecutorService readExecutionQueue;
     private static final int SOCKET_TIMEOUT = 10000;
 
     public SocketClient(String address, int port) throws IOException {
@@ -25,7 +28,6 @@ public class SocketClient extends Client{
         this.socket.connect(new InetSocketAddress(address, port), SOCKET_TIMEOUT);
         this.out = new ObjectOutputStream(socket.getOutputStream());
         this.in = new ObjectInputStream(socket.getInputStream());
-        this.readExecutionQueue = Executors.newSingleThreadExecutor();
     }
 
 
@@ -74,5 +76,13 @@ public class SocketClient extends Client{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setReadExecutionQueue(ExecutorService readExecutionQueue) {
+        this.readExecutionQueue = readExecutionQueue;
     }
 }

@@ -17,6 +17,11 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
+    public void askServerData() {
+
+    }
+
+    @Override
     public void askNickname() {
         clientHandler.sendMessage(new AskMessage(AskType.NICKNAME_NOT_UNIQUE));
     }
