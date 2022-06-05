@@ -70,14 +70,12 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     public void handleClientConnection() throws IOException {
         Server.LOGGER.info("Client connected from " + client.getInetAddress());
         try{
-            while(!Thread.currentThread().isInterrupted()) {
+            while(!Thread.currentThread().isInterrupted() && client.getInetAddress().isReachable(10000)) {
                 synchronized (inputLock) {
                     if (in != null && connected) {
                         Message message;
                         message = (Message) in.readObject();
-                        if (!message.getClass().getSimpleName().equalsIgnoreCase("PingMessage")) {
-                            Server.LOGGER.info("Message: " + message.getClass().getSimpleName());
-                        }
+                        Server.LOGGER.info("Message: " + message.getClass().getSimpleName());
                         if (message.getMessageType() == MessageType.LOGIN_REQUEST) {
                             try {
                                 socketServer.addClient(message.getNickname(), this);
