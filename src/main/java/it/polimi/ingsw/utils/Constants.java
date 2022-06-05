@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class Constants implements Serializable {
 
+    public static final int CONNECTION_TIMEOUT_SERVER = 10000;
+    public static final int CONNECTION_TIMEOUT_CLIENT = 12000;
+
     public static final int CHARACTERS_NUM = 3;
     public static final int NUM_COLORS = 5;
     public static final int NUM_TABLES = 5;

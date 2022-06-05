@@ -5,12 +5,17 @@ import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.observers.Observer;
 import it.polimi.ingsw.observers.ViewObserver;
+import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.cli.CommandLineInterface;
 
 import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This client-side class allows the client (by using a CLI or a GUI) to communicate with the server via the network.
@@ -24,6 +29,7 @@ public class ClientController implements ViewObserver, Observer {
     private Client client;
     private String nickname;
     private ExecutorService taskQueue;
+    private final ScheduledExecutorService pinger;
 
     /**
      * Client controller constructor.
@@ -34,6 +40,7 @@ public class ClientController implements ViewObserver, Observer {
     public ClientController(View view) {
         this.view = view;
         this.taskQueue = Executors.newSingleThreadExecutor();
+        this.pinger = Executors.newSingleThreadScheduledExecutor();
     }
 
     /**
@@ -48,10 +55,19 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateServerData(String address, int port) {
         try {
             client = new SocketClient(address, port);
+            pinger.scheduleAtFixedRate(this::isReachable, 0, 1000, TimeUnit.MILLISECONDS);
+            ((SocketClient) client).setReadExecutionQueue(Executors.newSingleThreadExecutor());
             client.addObserver(this);
             client.readMessage();
             taskQueue.execute(view::askNickname);
-        } catch (IOException e) {
+        }
+        catch(SocketException e){
+            System.out.println("Either the server or the network is unreachable. Please try again.");
+            taskQueue.shutdownNow();
+            taskQueue = Executors.newSingleThreadExecutor();
+            taskQueue.execute(view::askServerData);
+        }
+        catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -297,7 +313,7 @@ public class ClientController implements ViewObserver, Observer {
             case DISCONNECTION:
                 taskQueue.shutdownNow();
                 taskQueue = Executors.newSingleThreadExecutor();
-                view.showDisconnectionMessage(((DisconnectionMessage) message).getMessageStr());
+                taskQueue.execute(() -> view.showDisconnectionMessage(((DisconnectionMessage) message).getMessageStr()));
                 break;
             default: //should never be reached
                 break;
@@ -330,6 +346,24 @@ public class ClientController implements ViewObserver, Observer {
             return port >= 1 && port <= 65535;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    public void isReachable(){
+        try{
+            boolean reachable;
+            reachable = ((SocketClient) client).getSocket().getInetAddress().isReachable(Constants.CONNECTION_TIMEOUT_CLIENT);
+            if(!reachable){
+                System.out.println("The server is no more reachable. Please restart the app and try again.");
+                client.disconnect();
+                pinger.shutdownNow();
+                taskQueue.shutdownNow();
+                Thread.currentThread().interrupt();
+                System.exit(1);
+            }
+        }
+        catch(IOException e){
+            throw new RuntimeException(e);
         }
     }
 

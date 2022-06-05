@@ -107,7 +107,7 @@ class GameControllerExpertModeTest {
             assertEquals(3, p1.getCoinsWallet());
             assertEquals(3, g.getBoard().getNumOfVetos());
             assertEquals(3, c1.getCost());
-            assertTrue(g.getBoard().getIslands().getIslandFromID(5).hasVeto());
+            assertTrue(g.getBoard().getIslands().getIslandFromID(5).hasVetoTile());
 
             gc.getMessage(new MotherNatureStepsMessage(gc.getGame().getCurrentPlayer().getNickname(), 2));
 
@@ -159,7 +159,7 @@ class GameControllerExpertModeTest {
         p1.setCoinsWallet(5);
 
         try {
-            gc.handleCharacterCardChoice(new CharacterCardMessageString("Matteo", 9, "green"));
+            gc.handleCharacterCardChoice(new CharacterCardMessageString("Matteo", 9, "GREEN"));
         } catch (TryAgainException e) {
             e.printStackTrace();
         }

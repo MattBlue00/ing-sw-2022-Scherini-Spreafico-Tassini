@@ -2,31 +2,39 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 import java.io.Serializable;
-import java.util.Optional;
+
+/**
+ * Allows the player to trigger a special version of the islandConquerCheck method, which does not count into
+ * the influence the towers' effect.
+ */
 
 public class Centaur extends CharacterCard implements Serializable {
 
-    /*
-        CHARACTER CARD DESCRIPTION:
-        The centaur allows the player to trigger a special version of the islandConquerCheck method, which
-        does not count into the influence the towers' effect.
-    */
+    /**
+     * Character Card constructor.
+     */
 
     public Centaur() {
         super(6, 3);
     }
 
-    // Does not need parameters
+    /**
+     * Allows the {@link Centaur} to do his effect.
+     *
+     * @param game the game (Expert mode) in which the {@link Centaur} will do his effect.
+     * @throws TryAgainException if the method somehow tries to get data from a non-existent island
+     * (it should never be thrown, so it is safely ignorable).
+     */
+
     public void doEffect(GameExpertMode game) throws TryAgainException {
 
         //checks if an island can be conquered without counting the towers number
 
         Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
-        if(selectedIsland.hasVeto()) {
-            selectedIsland.setVeto(false);
+        if(selectedIsland.hasVetoTile()) {
+            selectedIsland.setHasVetoTile(false);
             game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
             return;
         }

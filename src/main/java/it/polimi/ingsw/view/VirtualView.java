@@ -12,8 +12,16 @@ public class VirtualView implements View, Observer {
 
     private final ClientHandler clientHandler;
 
+    /**
+     * Virtual view constructor.
+     */
     public VirtualView(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
+    }
+
+    @Override
+    public void askServerData() {
+
     }
 
     @Override

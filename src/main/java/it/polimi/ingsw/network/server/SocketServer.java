@@ -2,13 +2,17 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.network.message.Message;
+import it.polimi.ingsw.utils.Constants;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.network.server.Server.LOGGER;
 
 public class SocketServer implements Runnable{
 
@@ -32,23 +36,24 @@ public class SocketServer implements Runnable{
     @Override
     public void run() {
         try {
-            serverSocket = new ServerSocket(port);
-            Server.LOGGER.info("Server running on port: "+port);
+            serverSocket = new ServerSocket(port, 100, InetAddress.getLocalHost());
+            LOGGER.info("Server running on port: "+port + "\nServer address: " + serverSocket.getInetAddress());
         } catch (IOException ex) {
-            Server.LOGGER.severe("Error initializing serverSocket" + ex.getClass().getSimpleName() +
+            LOGGER.severe("Error initializing serverSocket.\n" + ex.getClass().getSimpleName() +
                     ": " + ex.getMessage());
         }
-        while(!Thread.currentThread().isInterrupted()){
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Socket client = serverSocket.accept();
                 SocketClientHandler clientHandler = new SocketClientHandler(this, client);
-                Thread thread = new Thread(clientHandler, "ss_handler: "+client.getInetAddress());
+                Thread thread = new Thread(clientHandler, "ss_handler: " + client.getInetAddress());
                 thread.start();
-                //pinger.scheduleAtFixedRate(() -> isReachable(),0, 1000, TimeUnit.MILLISECONDS);
+                pinger.scheduleAtFixedRate(this::isReachable, 0, 1000, TimeUnit.MILLISECONDS);
             } catch (IOException ex) {
-                Server.LOGGER.severe("Connection ended" + ex.getClass().getSimpleName() + ": " + ex.getMessage());
+                LOGGER.severe("Connection ended.\n" + ex.getClass().getSimpleName() + ": " + ex.getMessage());
             }
         }
+        LOGGER.severe("Server is offline.\n");
     }
 
     public Server getServer() {
@@ -68,15 +73,18 @@ public class SocketServer implements Runnable{
     }
 
     public void isReachable(){
-        server.getClientHandlerMap().forEach( (string, clientHandler) -> {
+        server.getClientHandlerMap().forEach( (name, clientHandler) -> {
             try {
                 boolean reachable;
-                reachable = clientHandler.getSocketClient().getInetAddress().isReachable(10000);
+                reachable = clientHandler.getSocketClient().getInetAddress().isReachable(Constants.CONNECTION_TIMEOUT_SERVER);
                 if(!reachable){
-                   onDisconnect(clientHandler); }
+                    LOGGER.severe(name + " disconnected: connection timed out");
+                    onDisconnect(clientHandler);
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e); }
+                LOGGER.severe("Something went wrong.\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
+                throw new RuntimeException(e);
             }
-        );
+        });
     }
 }

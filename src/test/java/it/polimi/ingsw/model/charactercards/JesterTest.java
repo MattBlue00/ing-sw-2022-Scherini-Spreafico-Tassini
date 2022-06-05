@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JesterTest {
 
     @Test
-    public void JesterTest(){
+    public void jesterTest(){
 
         GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());

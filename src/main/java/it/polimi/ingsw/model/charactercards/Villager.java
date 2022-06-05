@@ -2,40 +2,50 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 import java.io.Serializable;
-import java.util.Optional;
+
+/**
+ * Allows the player to call a special version of the islandConquerCheck method, which allows them to take
+ * a chosen color out of the regular influence algorithm.
+ */
 
 public class Villager extends CharacterCard implements StringCard, Serializable {
 
-    /*
-        CHARACTER CARD DESCRIPTION:
-        The villager allows the player to call a special version of the islandConquerCheck method, which allows the
-        player to take a chosen color out of the regular influenceCalc algorithm.
-    */
+    private Color colorToExclude;
 
-    Color colorToExclude;
+    /**
+     * Character Card constructor.
+     */
 
     public Villager() {
         super(9, 3);
     }
 
+    /**
+     * Sets the parameter of the {@link Villager}.
+     *
+     * @param par the parameter to set.
+     */
 
     @Override
     public void doOnClick(String par) {
-        setColorToExclude(Color.valueOf(par.toUpperCase()));
+        this.colorToExclude = Color.valueOf(par);
     }
 
-    public void setColorToExclude(Color colorToExclude) {
-        this.colorToExclude = colorToExclude;
-    }
+    /**
+     * Allows the {@link Villager} to do his effect.
+     *
+     * @param game the game (Expert mode) in which the {@link Villager} will do his effect.
+     * @throws TryAgainException if a non-existent island is somehow accessed or if a non-existent color is somehow
+     * provided as a parameter.
+     */
 
     public void doEffect(GameExpertMode game) throws TryAgainException {
 
         Island selectedIsland = game.getBoard().getIslands().getIslandFromID(game.getBoard().getMotherNaturePos());
-        if(selectedIsland.hasVeto()) {
-            selectedIsland.setVeto(false);
+        if(selectedIsland.hasVetoTile()) {
+            selectedIsland.setHasVetoTile(false);
             game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
             return;
         }
