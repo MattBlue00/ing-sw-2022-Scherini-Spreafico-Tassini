@@ -96,9 +96,18 @@ public class Server{
             }
             else if(message.getMessageType() == MessageType.JOIN_GAME) {
                 try {
-                    gameControllerMap.get(((JoinGameMessage) message).getGameID()).
-                            addPlayerToQueue(message.getNickname(), clientHandlerMap.get(message.getNickname()).getVirtualView());
-                    clientHandlerMap.get(message.getNickname()).getVirtualView().askWizardID();
+                    if(gameControllerMap.get(((JoinGameMessage) message).getGameID()).getGameQueue().size() ==
+                            gameControllerMap.get(((JoinGameMessage) message).getGameID()).getGame().getPlayersNumber()){
+                        clientHandlerMap.get(message.getNickname()).getVirtualView().
+                                showGenericMessage("The game number " + ((JoinGameMessage) message).getGameID() + " is full." +
+                                        "\nPlease create a new game or choose another one.");
+                        clientHandlerMap.get(message.getNickname()).getVirtualView().askCreateOrJoin();
+                    }
+                    else{
+                        gameControllerMap.get(((JoinGameMessage) message).getGameID()).
+                                addPlayerToQueue(message.getNickname(), clientHandlerMap.get(message.getNickname()).getVirtualView());
+                        clientHandlerMap.get(message.getNickname()).getVirtualView().askWizardID();
+                    }
                 }catch (NullPointerException e){
                     clientHandlerMap.get(message.getNickname()).getVirtualView().showGenericMessage("This game ID does not exists...");
                     clientHandlerMap.get(message.getNickname()).getVirtualView().askGameNumber();

@@ -7,20 +7,29 @@ import it.polimi.ingsw.exceptions.NonExistentColorException;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Allows the player to call a special version of the profCheck method, which reassigns the professor even if
+ * the current player has the same amount of students of the same color of the current owner of the professor.
+ */
+
 public class Innkeeper extends CharacterCard implements Serializable {
 
-    /*
-        CHARACTER CARD DESCRIPTION:
-        The innkeeper allows the player to call a special version of the method profCheck, which reassigns the
-        professor even if the current player has the same amount of students of the same color of the current owner
-        of the professor.
-    */
+    /**
+     * Character Card constructor.
+     */
 
     public Innkeeper() {
         super(2, 2);
     }
 
-    // no parameters
+    /**
+     * Allows the {@link Innkeeper} to do his effect.
+     *
+     * @param game the game (Expert mode) in which the {@link Innkeeper} will do his effect.
+     * @throws TryAgainException if a non-existent table is somehow accessed (it should never be thrown, so it is
+     * safely ignorable).
+     */
+
     @Override
     public void doEffect(GameExpertMode game) throws TryAgainException {
 

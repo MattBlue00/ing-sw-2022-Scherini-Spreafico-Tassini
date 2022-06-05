@@ -11,25 +11,39 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Allows the player to switch from 0 to 2 students between the hall and the dining room.
+ */
+
 public class Bard extends CharacterCard implements ArrayListStringCard, Serializable {
 
-    /*
-        CHARACTER CARD DESCRIPTION:
-        The bard allows the player to switch up to 2 students between the hall and the dining room.
-    */
-
     private List<String> students;
+
+    /**
+     * Character Card constructor.
+     */
 
     public Bard() {
         super(10, 1);
     }
 
+    /**
+     * Sets the parameter of the {@link Bard}.
+     *
+     * @param par the parameter to set.
+     */
 
     @Override
     public void doOnClick(List<String> par) {
         this.students = new ArrayList<>(par);
     }
 
+    /**
+     * Allows the {@link Bard} to do his effect.
+     *
+     * @param game the game (Expert mode) in which the {@link Bard} will do his effect.
+     * @throws TryAgainException if at least one of the specified students does not exist or can't be moved.
+     */
 
     public void doEffect(GameExpertMode game) throws TryAgainException {
 

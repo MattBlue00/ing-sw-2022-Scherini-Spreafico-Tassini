@@ -8,10 +8,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.controller.GameControllerExpertMode;
+
+/**
+ * This class is the core of the game model, as it holds all the values that describe its status. Each game is
+ * controlled by a {@link GameController}, which triggers all the status changes (note that this class acts as some
+ * sort of "interface" between the "physical" elements of the game and the controller). This class contains all the
+ * necessary values to play a Normal mode match. For Expert mode matches, see the {@link GameExpertMode} model and
+ * the related {@link GameControllerExpertMode}.
+ */
 
 public class Game implements Serializable {
-
-    // game variables
 
     private int playersNumber;
     private List<Player> players;
@@ -21,6 +29,13 @@ public class Game implements Serializable {
     private int maxSteps;
     private final Constants constants;
 
+    /**
+     * Game constructor.
+     *
+     * @param playersNumber the number of players of the match.
+     * @param constants the useful constants to set for this game.
+     */
+
     public Game(int playersNumber, Constants constants) {
         this.constants = constants;
         this.playersNumber = playersNumber;
@@ -29,73 +44,160 @@ public class Game implements Serializable {
         this.roundNumber = 1;
     }
 
-    // Getter and setter methods
+    /**
+     * Returns the game's number of players.
+     *
+     * @return an {@code int} representing the number of players.
+     */
 
     public int getPlayersNumber() {
         return playersNumber;
     }
 
+    /**
+     * Returns a list containing the players participating in the game.
+     *
+     * @return a list of the players participating in the game.
+     */
+
     public List<Player> getPlayers() {
         return players;
     }
+
+    /**
+     * Sets the list of players participating in the game.
+     *
+     * @param players the new list of players participating in the game.
+     */
 
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
+    /**
+     * Returns the player currently playing.
+     *
+     * @return the {@link Player} currently playing.
+     */
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    /**
+     * Sets the new current player.
+     *
+     * @param currentPlayer the new current {@link Player}.
+     */
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * Returns the maximum number of Mother Nature steps allowed by the current player's last Assistant Card played.
+     *
+     * @return an {@code int} representing the maximum number of Mother Nature steps allowed by the current player's
+     * last Assistant Card played.
+     */
+
     public int getMaxSteps() {
         return maxSteps;
     }
+
+    /**
+     * Sets the new maximum number of Mother Nature steps allowed by the current player's last Assistant Card played.
+     *
+     * @param maxSteps the new number of steps.
+     */
 
     public void setMaxSteps(int maxSteps) {
         this.maxSteps = maxSteps;
     }
 
+    /**
+     * Returns the game board.
+     *
+     * @return the game's {@link GameBoard}.
+     */
+
     public GameBoard getBoard() {
         return board;
     }
+
+    /**
+     * Sets the game's number of players
+     *
+     * @param playersNumber an {@code int} representing the new number of players.
+     */
 
     public void setPlayersNumber(int playersNumber) {
         this.playersNumber = playersNumber;
     }
 
+    /**
+     * Returns the current game round number.
+     *
+     * @return an {@code int} representing the current round number.
+     */
+
     public int getRoundNumber() {
         return roundNumber;
     }
+
+    /**
+     * Sets the new game round number.
+     *
+     * @param roundNumber an {@code int} representing the new round number.
+     */
 
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
 
+    /**
+     * Returns the set of {@link Constants} specific to this game.
+     *
+     * @return the constants unique to this game's players' number.
+     */
+
     public Constants getConstants(){
         return constants;
     }
 
-    // Game methods
-
-    /*
-        This method starts the chain of events that take a certain number of students, equal to the max number of students
-        the cloud can have, from the studentBag and puts them on the clouds, one at a time
+    /**
+     * Calls the {@link GameBoard} method which refills the cloud with the bag students, once each of them is empty.
+     *
+     * @throws EmptyBagException if no student is present in the students' bag.
      */
+
     public void refillClouds() throws EmptyBagException {
         board.refillClouds();
     }
 
-    /*
-        A player can move 3 students from their Halls each turn
-        At the end of the movement phase profCheck() is called
+    /**
+     * Calls the {@link Player} method which takes a student from their hall and moves it onto the specified island.
+     *
+     * @param color the color of the student to move.
+     * @param islandID the ID of the island to move the student to.
+     * @throws IslandNotFoundException if the provided ID does not correspond to any of the existing islands.
+     * @throws StudentNotFoundException if the provided color does not match to any of the player's hall students'
+     * colors.
      */
+
     public void playerMovesStudent(String color, int islandID) throws IslandNotFoundException, StudentNotFoundException {
             currentPlayer.moveStudent(board.getIslands().getIslandFromID(islandID), color);
     }
+
+    /**
+     * Calls the {@link Player} method which takes a student from their hall and moves it to the correct table.
+     *
+     * @param color the color of the student to move.
+     * @throws FullTableException if the table of the provided color is full.
+     * @throws StudentNotFoundException if the provided color does not match to any of the player's hall students'
+     * colors.
+     * @throws NonExistentColorException if the player somehow manages to provide a non-existent color as a parameter.
+     */
 
     public void playerMovesStudent(String color) throws FullTableException, StudentNotFoundException,
             NonExistentColorException {
@@ -103,17 +205,26 @@ public class Game implements Serializable {
         profCheck();
     }
 
-    /*
-        This method is needed to make overriding possible in GameExpertMode.
-        If the game is played with the basic rules, it just calls the profCheckAlgorithm method.
+    /**
+     * Makes overriding possible in {@link GameExpertMode}. If the game is played in Normal mode, calls the
+     * profCheckAlgorithm method.
+     *
+     * @throws NonExistentColorException if the method somehow tries to access to tables of non-existing colors (it
+     * should never happen, so it is safely ignorable).
      */
+
     public void profCheck() throws NonExistentColorException{
         profCheckAlgorithm(getPlayers());
     }
 
-    /*
-        This method reassigns the professors if the necessary conditions are reached.
+    /**
+     * Reassigns the professors if the necessary conditions are reached.
+     *
+     * @param players the list of the playing players whose tables need to be checked.
+     * @throws NonExistentColorException if the method somehow tries to access to tables of non-existing colors (it
+     * should never happen, so it is safely ignorable).
      */
+
     public static void profCheckAlgorithm(List<Player> players) throws NonExistentColorException{
 
         Color[] colors = Color.values();
@@ -167,9 +278,15 @@ public class Game implements Serializable {
 
     }
 
-    /*
-        This method allows Mother Nature to move of up to the given steps.
+    /**
+     * Allows Mother Nature to move of the given steps, if possible.
+     *
+     * @param steps the desired number of steps.
+     * @throws InvalidNumberOfStepsException if the provided number of steps violates the game's rules.
+     * @throws IslandNotFoundException if the method somehow tries to access to non-existing islands (it should never
+     * happen, so it is safely ignorable).
      */
+
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException, IslandNotFoundException {
 
         int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
@@ -181,21 +298,35 @@ public class Game implements Serializable {
 
     }
 
-    /*
-        This method triggers the chain of methods which decides whether the island where Mother Nature is will be
-        conquered by a player.
+    /**
+     * Triggers the chain of methods which decides whether the island where Mother Nature is will be conquered by
+     * the current player.
+     *
+     * @param islandID the ID of the island to check.
+     * @throws IslandNotFoundException if the provided ID does not correspond to any of the existing islands.
      */
+
     public void islandConquerCheck(int islandID) throws IslandNotFoundException {
         board.islandConquerCheck(currentPlayer, islandID);
     }
 
-    /*
-        This method starts the chain of event that take all the students from
-        a chosen cloud and put them into the hall of the current player
+    /**
+     * Triggers the chain of methods that moves all the students from the chosen cloud into the hall of the current
+     * player, if possible.
+     *
+     * @param cloudID the ID of the chosen cloud.
+     * @throws EmptyCloudException if the chosen cloud is empty (which means it has already been chosen on the same
+     * round).
      */
+
     public void takeStudentsFromCloud(int cloudID) throws EmptyCloudException {
         board.takeStudentsFromCloud(cloudID, currentPlayer);
     }
+
+    /**
+     * Fills the players' halls with the right amount of students and shuffles the players' order at the beginning of
+     * the match, in order to start the game properly.
+     */
 
     public void startGame(){
         for(int i = 0; i < constants.MAX_HALL_STUDENTS; i++) {
@@ -209,11 +340,19 @@ public class Game implements Serializable {
         currentPlayer = players.get(0);
     }
 
-    // Debug methods
+    /**
+     * Adds a {@link Player} to the game.
+     *
+     * @param player the player to add.
+     */
 
     public void addPlayer(Player player){
         players.add(player);
     }
+
+    /**
+     * Allows the view to properly show the game status (Normal mode).
+     */
 
     public void showGameBoard(){
 
@@ -301,6 +440,10 @@ public class Game implements Serializable {
 
     }
 
+    /**
+     * Allows the view to properly show the current player's Assistant Card deck.
+     */
+
     public void showDeck(){
         List<AssistantCard> deck = this.currentPlayer.getDeck();
         System.out.println("Assistant cards in the deck: ");
@@ -310,6 +453,10 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Allows the view to properly show the Assistant Cards played by the players at the end of a Planning Phase.
+     */
+
     public void showAssistantCardsPlayed(){
         players.forEach(p -> System.out.println(p.getNickname() + " has played: "
                 + p.getLastAssistantCardPlayed().getName() +
@@ -317,6 +464,10 @@ public class Game implements Serializable {
                 ", Weight: " + p.getLastAssistantCardPlayed().getWeight() + ")"));
         System.out.println("--------------------");
     }
+
+    /**
+     * Allows the view to properly show the players' order at the beginning of an Action Phase.
+     */
 
     public void showPlayersOrder(){
         System.out.println("The players' order is: ");
