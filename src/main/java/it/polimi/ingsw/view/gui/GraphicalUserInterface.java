@@ -104,7 +104,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected) {
-
+        Platform.runLater(() -> sceneController.showAlert("Player "+nicknameDisconnected+" has disconnected"));
     }
 
     public String printExistingGames(Map<Integer, GameController> existingGames){
