@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.gui.scenes.GameBoardSceneController;
 import javafx.application.Platform;
 
 import java.util.List;
@@ -94,22 +95,39 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGameStatusFirstActionPhase(Game game) {
-
+        //GameBoardSceneController boardSceneController = getBoardSceneController();
+        //Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
     }
 
     @Override
     public void showGameStatus(Game game) {
-
+        //GameBoardSceneController boardSceneController = getBoardSceneController();
+        //Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
     }
 
     @Override
     public void showDeck(Game game) {
-
+        GameBoardSceneController boardSceneController = getBoardSceneController();
+        Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
     }
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected) {
         Platform.runLater(() -> sceneController.showAlert("Player "+nicknameDisconnected+" has disconnected"));
+        Platform.runLater(() -> sceneController.changeRootPane(observers, "lobby_scene.fxml"));
+    }
+
+    private GameBoardSceneController getBoardSceneController() {
+        GameBoardSceneController boardSceneController;
+        try {
+            boardSceneController = (GameBoardSceneController) sceneController.getCurrentController();
+        } catch (ClassCastException e) {
+            boardSceneController = new GameBoardSceneController();
+            boardSceneController.addAllObservers(observers);
+            GameBoardSceneController finalBsc = boardSceneController;
+            Platform.runLater(() -> sceneController.changeRootPane(finalBsc, "gameBoard_scene.fxml"));
+        }
+        return boardSceneController;
     }
 
     public String printExistingGames(Map<Integer, GameController> existingGames){

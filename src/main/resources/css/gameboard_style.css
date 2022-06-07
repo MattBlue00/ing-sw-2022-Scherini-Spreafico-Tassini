@@ -1,0 +1,15 @@
+.background{
+    -fx-background-color: linear-gradient(from 0% 25% to 100% 100%, #090979, #00d4ff);
+    -fx-background-size: cover;
+}
+
+.island{
+    -fx-background-image: url("/img/island.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-cursor: hand;
+}
+
+.text_label{
+    -fx-text-fill: white;
+}

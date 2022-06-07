@@ -19,6 +19,10 @@ public class SceneController extends ViewObservable {
     private Scene currentScene;
     private GenericSceneController currentController;
 
+    public GenericSceneController getCurrentController() {
+        return currentController;
+    }
+
     public Scene getCurrentScene() {
         return currentScene;
     }
@@ -40,7 +44,7 @@ public class SceneController extends ViewObservable {
             controller = loader.getController();
             ((ViewObservable) controller).addAllObservers(observers);
             currentController = controller;
-
+            root.setId("");
             currentScene = new Scene(root);
 
             currentScene.setRoot(root);
@@ -52,12 +56,11 @@ public class SceneController extends ViewObservable {
     public void changeRootPane(GenericSceneController controller, String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("/fxml/" + fxml));
-
             // Setting the controller BEFORE the load() method.
             loader.setController(controller);
             currentController = controller;
             Parent root = loader.load();
-
+            root.setId("pane");
             currentScene.setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
