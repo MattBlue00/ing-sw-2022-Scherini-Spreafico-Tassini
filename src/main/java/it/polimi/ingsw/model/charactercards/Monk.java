@@ -60,7 +60,10 @@ public class Monk extends CharacterCard implements StringIntCard, Serializable {
         for (int i = 0; i < 4; i++) {
             if (students[i].getColor().toString().equals(chosenColor)) {
                 game.getBoard().getIslands().getIslandFromID(chosenIsland).addStudent(students[i]);
-                students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                try {
+                    students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                }
+                catch(IndexOutOfBoundsException ignored){}
                 done = true;
                 break;
             }

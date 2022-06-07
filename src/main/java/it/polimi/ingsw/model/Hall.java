@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The Hall is a part of the {@link School}. It holds the students that may be moved to the School's dining room or
+ * The Hall is a third of the {@link School}. It holds the students that may be moved to the School's dining room or
  * to one of the game's islands.
  */
 

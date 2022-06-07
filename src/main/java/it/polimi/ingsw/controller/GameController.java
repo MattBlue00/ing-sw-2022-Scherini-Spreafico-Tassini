@@ -561,7 +561,6 @@ public class GameController implements Serializable {
      */
 
     public void nextPlayerActionPhase(){
-        winCheck();
         game.setCurrentPlayer(game.getPlayers().get(currentPlayerIndex));
         movesLeft = game.getConstants().PLAYER_MOVES;
         playerActionPhaseDone = false;
@@ -574,12 +573,18 @@ public class GameController implements Serializable {
     }
 
     /**
-     * Sets the controller's variables in order to let the players play the next round properly.
+     * Sets the controller's variables in order to let the players play the next round properly. If the game board's
+     * students' bag is empty, instantly ends the game.
      */
 
     public void nextRound(){
         try{
+            if(isStudentBagEmpty())
+                declareWinningPlayer();
             game.refillClouds();
+        }
+        catch(TieException e){
+            endGame();
         }
         catch(EmptyBagException ex){
             LOGGER.info(ex.getClass().getSimpleName() + ": " + ex.getMessage());
@@ -731,6 +736,7 @@ public class GameController implements Serializable {
     public void handleMotherNature(Message receivedMessage)
             throws InvalidNumberOfStepsException, IslandNotFoundException {
         game.moveMotherNature(((MotherNatureStepsMessage) receivedMessage).getSteps());
+        winCheck();
         if (!virtualViewMap.isEmpty())
             broadcastUpdateMessage(game.getCurrentPlayer().getNickname() + " has moved Mother Nature to Island "
                     + game.getBoard().getMotherNaturePos() + "!");
@@ -754,16 +760,19 @@ public class GameController implements Serializable {
     }
 
     /**
-     * Ends the game if one of the three win conditions is true.
+     * Instantly ends the game if there are less than four islands on the game board, if a player has emptied its
+     * tower room or if the round number 10 has ended.
      */
 
-    // TODO: need to discuss where to check, how to declare the winner and how to stop the game
+    // TODO: need to discuss how to declare the winner and how to stop the game
     public void winCheck(){
         try {
-            if(noTowersLeftCheck() || isStudentBagEmpty() || lessThanFourIslandsCheck())
-                LOGGER.info(END_STATE+game.getCurrentPlayer().getNickname());
-            if (game.getRoundNumber() == 10 && game.getCurrentPlayer().equals(game.getPlayers().get(game.getPlayers().size() - 1)))
-                LOGGER.info(END_STATE + declareWinningPlayer().getNickname());
+            if(noTowersLeftCheck() || lessThanFourIslandsCheck() ||
+                    (game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber())) {
+                LOGGER.info(END_STATE + game.getCurrentPlayer().getNickname());
+                declareWinningPlayer();
+                endGame();
+            }
         }
         catch(TieException e){
             broadcastGenericMessage(e.getMessage());
@@ -786,13 +795,8 @@ public class GameController implements Serializable {
      * @return {@code true} if the game's students' bag is empty, {@code false} otherwise.
      */
 
-    public boolean isStudentBagEmpty() throws TieException {
-        if(game.getBoard().getStudentsBag().size() == 0){
-            Player winningPlayer = declareWinningPlayer();
-            LOGGER.info(END_STATE+winningPlayer);
-            return true;
-        }
-        return false;
+    public boolean isStudentBagEmpty(){
+        return game.getBoard().getStudentsBag().size() == 0;
     }
 
     /**
@@ -801,25 +805,17 @@ public class GameController implements Serializable {
      * @return {@code true} if the game board's archipelagos has less than four islands, {@code false} otherwise.
      */
 
-    public boolean lessThanFourIslandsCheck() throws TieException {
-        if(game.getBoard().getIslands().getSize() <= 3){
-            Player winningPlayer = declareWinningPlayer();
-            LOGGER.info(END_STATE+winningPlayer);
-            return true;
-        }
-        return false;
+    public boolean lessThanFourIslandsCheck(){
+        return game.getBoard().getIslands().getSize() <= 3;
     }
 
     /**
-     * Returns which player has won the game. The player who wins the game is the player who has the fewer amount of
+     * Honors the player that has won the game. The player who wins the game is the player who has the fewer amount of
      * towers left in their tower room. In case of tie, the winning player is the one with the biggest amount of
      * professors. In the very rare case of another tie, there's no winning player, and an exception is thrown.
-     *
-     * @return the winning player.
-     * @throws TieException if no winning player can be declared.
      */
 
-    public Player declareWinningPlayer() throws TieException{
+    public void declareWinningPlayer() throws TieException{
         List<Player> players = game.getPlayers();
         Player winningPlayer = players.get(0);
         int minTowers = players.get(0).getSchool().getTowerRoom().getTowersLeft();
@@ -853,7 +849,7 @@ public class GameController implements Serializable {
                 }
             }
         }
-        return winningPlayer;
+        broadcastGenericMessage(winningPlayer.getNickname() + " has won the game! Congratulations!");
     }
 
     /**
@@ -948,4 +944,14 @@ public class GameController implements Serializable {
     public void showDeck(VirtualView virtualView){
         virtualView.showDeck(this.game);
     }
+
+    public void endGame(){
+        LOGGER.info("The game number " + gameControllerID + " has ended.");
+        for(VirtualView vv : virtualViewMap.values()){
+            vv.showGameStatus(this.game);
+        }
+        /* TODO: how to handle endGame with GUI? Should we give time to the players to watch the final game board
+            or should we instantly close the app? */
+    }
+
 }
