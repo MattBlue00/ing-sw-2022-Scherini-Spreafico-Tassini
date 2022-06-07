@@ -5,82 +5,88 @@ import it.polimi.ingsw.model.Game;
 
 import java.util.Map;
 
+/**
+ * Defines a generic view to be implemented by each view type (e.g. CLI, GUI in JavaFX, ...).
+ */
 public interface View {
 
     /**
-     * Sends a message to the client to ask what server they want to try to connect to.
+     * Asks the client informations about what server they want to try to connect to.
      */
 
     void askServerData();
 
     /**
-     * Sends a message to the client to ask which nickname they want to use.
+     * Asks the client which nickname they want to use.
+     * If it is unique the client is connected to the server, else they are asked to choose a different nickname.
      */
 
     void askNickname();
 
     /**
-     * Sends a message to the client to ask if they want to create or join a game.
+     * Asks the client if they want to create or join a game.
      */
 
     void askCreateOrJoin();
 
     /**
-     * Sends a message to the client to ask the game info: number of players and game mode.
+     * Asks the client about the game info: number of players and game mode.
      */
 
     void askGameInfo();
 
     /**
-     * Sends a message to the client to ask the gameID (which must be unique).
+     * Asks the client the gameID (which must be unique).
+     * If it is unique a new game is created, else they are asked to choose a different gameID.
      */
 
     void askGameNumber();
 
     /**
-     * Sends a message to the client to ask which WizardID they want to choose (must be unique).
+     * Asks the client which WizardID they want to choose (must be unique).
+     * If it is unique the client is added to the game, else they are asked to choose a different Wizard.
      */
 
     void askWizardID();
 
     /**
-     * Sends a message to the client to ask which AssistantCard they want to play.
+     * Asks the client which AssistantCard they want to play.
      */
 
     void askAssistantCard();
 
     /**
-     * Sends a message to the client to ask where they want to move the student (on an island or on the correspondent table).
+     * Asks the client where they want to move the student (on an island or on the correspondent table).
      */
 
     void askMoveStudent();
 
     /**
-     * Sends a message to the client to ask how many steps MotherNature will have to be moved.
+     * Asks the client how many steps MotherNature will have to be moved.
      */
 
     void askMotherNatureSteps();
 
     /**
-     * Sends a message to the client to ask which cloudID they want to choose.
+     * Asks the client which cloudID they want to choose.
      */
 
     void askCloud();
 
     /**
-     * When in GameExpertMode sends a message to the client to ask which CharacterCard they want to play.
+     * When in GameExpertMode asks the client which CharacterCard they want to play.
      */
 
     void askCharacterCard();
 
     /**
-     * When in GameExpertMode sends a message to the client to ask if they want to play a CharacterCard or to move a student.
+     * When in GameExpertMode asks the client if they want to play a CharacterCard or to move a student.
      */
 
     void askAction();
 
     /**
-     * Sends a  generic message to the client.
+     * Shows a generic message to the client.
      *
      * @param message the message that will be shown to the client.
      */
@@ -124,9 +130,10 @@ public interface View {
     void showDisconnectionMessage(String message);
 
     /**
-     * Shows a phase update message to the client
+     * Shows the client in which round fase they are.
+     * If {@code isActionPhase} is {@code true} then it will show the action phase, else it will show the planning phase.
      *
-     * @param message the message that will be shown to the client.
+     * @param isActionPhase
      */
 
     void showPhaseUpdate(boolean isActionPhase);

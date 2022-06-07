@@ -5,6 +5,7 @@ import it.polimi.ingsw.controller.GameControllerFactory;
 import it.polimi.ingsw.controller.GameState;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.exceptions.WrongMessageSentException;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.message.CreateGameMessage;
 import it.polimi.ingsw.network.message.JoinGameMessage;
@@ -17,9 +18,12 @@ import it.polimi.ingsw.view.VirtualView;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Main server class that starts a socket server.
+ * It can handle different types of connections.
+ */
 public class Server{
 
-    private GameControllerFactory gameControllerFactory;
     private final Map<Integer,GameController> gameControllerMap;
     public static final Logger LOGGER = Logger.getLogger(Server.class.getName());
     private final Object lock; //LOCK for synchronization
@@ -31,14 +35,24 @@ public class Server{
         this.gameControllerMap = new HashMap<>();
     }
 
+    /**
+     * Method used to implement the correct {@code GameController}.
+     * It's a factory method, returns a {@code GameController}.
+     *
+     * @param receivedMessage
+     * @return {@code GameController}
+     */
     public GameController initController(Message receivedMessage){
-        this.gameControllerFactory = new GameControllerFactory();
+        GameControllerFactory gameControllerFactory = new GameControllerFactory();
         return gameControllerFactory.getGameController(receivedMessage);
     }
 
-    /*
-        Add a new client to the server.
-        If the client's nickname has already been chosen throw a new Exception.
+    /**
+     * Adds a client to be managed by the server instance.
+     *
+     * @param nickname the nickname associated with the client.
+     * @param clientHandler the ClientHandler associated with the client.
+     * @throws TryAgainException when the client's nickname has already been chosen.
      */
     public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException{
         clientHandler.setVirtualView(new VirtualView(clientHandler));
@@ -50,20 +64,24 @@ public class Server{
         throw new TryAgainException("Error: nickname already exists");
     }
 
-    /*
-        Remove a client from the server
+    /**
+     * Removes a client given his nickname.
+     *
+     * @param nickname the VirtualView to be removed.
      */
     public void removeClient(String nickname){
         clientHandlerMap.remove(nickname);
         LOGGER.severe("Removed " + nickname + " from the client list.");
     }
 
-    /*
+    /**
         This method creates a new GameController associated to the gameNumber.
-        If the gameNumber is already in the list throws a new Exception.
         Then the method gets from the message the number of players and calls
-        GameController.prepareGame(playerNum), to create a new game with the
+        {@code GameController.prepareGame(playerNum)} to create a new game with the
         number of players declared in the message.
+
+     @param message message with the number of players
+     @throws WrongMessageSentException If the gameNumber is already in the list
      */
     public void createNewGameController(Message message) throws WrongMessageSentException {
         int gameNumber = ((CreateGameMessage) message).getGameNumber();
@@ -82,7 +100,7 @@ public class Server{
         clientHandlerMap.get(nickname).getVirtualView().askGameInfo();
     }
 
-    /*
+    /**
         This method is divided in three parts:
         1)  If the server receives a CreateGameMessage then a new GameController
             is created and the creator automatically join the game.
@@ -187,7 +205,11 @@ public class Server{
                     Server.LOGGER.severe("GameController " + gameID + " removed from gameControllerMap." +
                             "\n--- Game finished ---");
                 } else if (gameID != -1 && gameControllerMap.get(gameID).getGameState().equals(GameState.SETUP)) {
+                    Game game = gameControllerMap.get(gameID).getGame();
                     gameControllerMap.get(gameID).removePlayerFromQueue(nick);
+                    Player playerToRemove = game.getPlayerFromNickname(nick);
+                    if(playerToRemove != null)
+                        gameControllerMap.get(gameID).getGame().getPlayers().remove(playerToRemove);
                 }
                 removeClient(nick);
             }

@@ -1,19 +1,29 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * Message used to notify a disconnection to the other players.
+ */
 public class DisconnectionMessage extends Message{
 
-    /*
-     * Message to notify a disconnection to the other players.
+    private static final long serialVersionUID = -5422965079989607600L;
+    private final String text;
+
+    /**
+     * Default constructor.
+     *
+     * @param text message that will be shown to the clients
      */
-        private static final long serialVersionUID = -5422965079989607600L;
-        private final String messageStr;
-
-        public DisconnectionMessage(String messageStr) {
-            super(null, MessageType.DISCONNECTION);
-            this.messageStr = messageStr;
-        }
-
-        public String getMessageStr() {
-            return messageStr;
-        }
+    public DisconnectionMessage(String text) {
+        super(null, MessageType.DISCONNECTION);
+        this.text = text;
     }
+
+    /**
+     * This method returns the message's text.
+     *
+     * @return {@code text}
+     */
+    public String getMessageStr() {
+            return text;
+        }
+}

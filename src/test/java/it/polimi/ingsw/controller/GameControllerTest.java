@@ -212,21 +212,12 @@ class GameControllerTest {
         gameController.getGame().getPlayers().get(1).getSchool().getTowerRoom().setTowersLeft(1);
         gameController.getGame().getPlayers().get(2).getSchool().getTowerRoom().setTowersLeft(4);
 
-        try {
-            assertTrue(gameController.isStudentBagEmpty());
-        } catch (TieException e) {
-            throw new RuntimeException(e);
-        }
+        assertTrue(gameController.isStudentBagEmpty());
 
         List<Student> students = new ArrayList<>();
         students.add(new Student(Color.RED));
         gameController.getGame().getBoard().setStudentsBag(students);
-        try {
-            assertFalse(gameController.isStudentBagEmpty());
-        } catch (TieException e) {
-            throw new RuntimeException(e);
-        }
-
+        assertFalse(gameController.isStudentBagEmpty());
     }
 
     @Test

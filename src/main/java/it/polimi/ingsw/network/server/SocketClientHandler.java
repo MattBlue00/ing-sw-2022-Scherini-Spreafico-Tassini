@@ -96,6 +96,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }catch(IOException | ClassNotFoundException ex){
             Server.LOGGER.severe("Invalid stream from client. \n" +
                     ex.getClass().getSimpleName() + ": " + ex.getMessage());
+            Server.LOGGER.severe(ex.toString());
         } finally {
             disconnect();
         }
