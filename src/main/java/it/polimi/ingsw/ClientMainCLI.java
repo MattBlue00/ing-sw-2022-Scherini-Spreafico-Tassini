@@ -11,4 +11,5 @@ public class ClientMainCLI {
         cli.addObserver(clientController);
         cli.init();
     }
+
 }

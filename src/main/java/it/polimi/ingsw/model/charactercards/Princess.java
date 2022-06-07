@@ -59,12 +59,15 @@ public class Princess extends CharacterCard implements StringCard, Serializable 
                 game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
                         students[i], game.getCurrentPlayer()
                 );
-                students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                try {
+                    students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                }
+                catch(IndexOutOfBoundsException ignored){}
                 done = true;
                 break;
             }
         }
-        if(!done)
+        if (!done)
             throw new StudentNotFoundException("There's no such student on the card!");
     }
 
