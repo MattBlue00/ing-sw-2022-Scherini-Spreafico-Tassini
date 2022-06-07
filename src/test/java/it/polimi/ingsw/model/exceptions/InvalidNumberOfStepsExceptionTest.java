@@ -16,7 +16,7 @@ class InvalidNumberOfStepsExceptionTest {
         Player p1 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
         g1.addPlayer(p1);
         g1.setCurrentPlayer(p1);
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.CAT));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.CAT));
 
         assertThrows(InvalidNumberOfStepsException.class,
                 () -> g1.moveMotherNature(3));

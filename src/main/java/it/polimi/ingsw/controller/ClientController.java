@@ -62,7 +62,7 @@ public class ClientController implements ViewObserver, Observer {
             taskQueue.execute(view::askNickname);
         }
         catch(SocketException e){
-            System.out.println("Either the server or the network is unreachable. Please try again.");
+            view.showGenericMessage("Either the server or the network is unreachable. Please try again.");
             taskQueue.shutdownNow();
             taskQueue = Executors.newSingleThreadExecutor();
             taskQueue.execute(view::askServerData);
@@ -298,6 +298,9 @@ public class ClientController implements ViewObserver, Observer {
             case EXISTING_GAMES:
                 taskQueue.execute(()-> view.showExistingGames(((ShowExistingGamesMessage) message).getExistingGames()));
                 break;
+            case GAME_PHASE:
+                taskQueue.execute(() -> view.showPhaseUpdate(((GamePhaseMessage) message).isActionPhase()));
+                break;
             case GAME_STATUS_FIRST_ACTION_PHASE:
                 taskQueue.execute(() -> view.showGameStatusFirstActionPhase(((GameStatusFirstActionPhaseMessage) message).getGame()));
                 break;
@@ -349,12 +352,16 @@ public class ClientController implements ViewObserver, Observer {
         }
     }
 
+    /**
+     * Checks if the server is reachable. If it isn't, displays a message and closes the app.
+     */
+
     public void isReachable(){
         try{
             boolean reachable;
             reachable = ((SocketClient) client).getSocket().getInetAddress().isReachable(Constants.CONNECTION_TIMEOUT_CLIENT);
             if(!reachable){
-                System.out.println("The server is no more reachable. Please restart the app and try again.");
+                view.showGenericMessage("The server is no more reachable. Please restart the app and try again.");
                 client.disconnect();
                 pinger.shutdownNow();
                 taskQueue.shutdownNow();

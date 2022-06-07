@@ -4,16 +4,11 @@ import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.server.Server;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.view.VirtualView;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import static it.polimi.ingsw.network.server.Server.LOGGER;
 
@@ -399,9 +394,8 @@ public class GameController implements Serializable {
     public void startGame(){
         game.startGame();
         LOGGER.info("Game " + game + " has been initialized!");
-        broadcastGenericMessage("Get ready to play!");
-        broadcastGenericMessage(
-                ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
+        broadcastGameBoard();
+        broadcastPhaseUpdate(false);
         setGameState(GameState.IN_GAME);
         // For old tests
         if(!virtualViewMap.isEmpty()) {
@@ -452,8 +446,7 @@ public class GameController implements Serializable {
         movesLeft = game.getConstants().PLAYER_MOVES;
         if(!virtualViewMap.isEmpty()) {
             LOGGER.info("Action Phase is about to start.");
-            broadcastGenericMessage(
-                    ANSIConstants.ANSI_BOLD + "-- ACTION PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
+            broadcastPhaseUpdate(true);
             broadcastGameStatusFirstActionPhase();
             broadcastWaitingMessage();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askMoveStudent();
@@ -599,12 +592,11 @@ public class GameController implements Serializable {
         motherNatureMoved = false;
         game.setRoundNumber(game.getRoundNumber() + 1);
         for(Player player : game.getPlayers())
-            player.resetLastAssistantCardPlayed();
+            player.resetLatestAssistantCardPlayed();
         if(!virtualViewMap.isEmpty()) {
             LOGGER.info("Planning Phase is about to start.");
             broadcastGameBoard();
-            broadcastGenericMessage(
-                    ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + game.getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
+            broadcastPhaseUpdate(false);
             showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
             broadcastWaitingMessage();
             virtualViewMap.get(game.getCurrentPlayer().getNickname()).askAssistantCard();
@@ -660,8 +652,8 @@ public class GameController implements Serializable {
         List<Player> players = game.getPlayers();
         List<AssistantCard> cardsPlayed = new ArrayList<>(players.size());
         for(Player player : players){
-            if(player.getLastAssistantCardPlayed() != null)
-                cardsPlayed.add(player.getLastAssistantCardPlayed());
+            if(player.getLatestAssistantCardPlayed() != null)
+                cardsPlayed.add(player.getLatestAssistantCardPlayed());
         }
         for(AssistantCard card : cardsPlayed){
             if(card.getName().equals(cardName)){
@@ -687,8 +679,8 @@ public class GameController implements Serializable {
     public void setOrder(){
         List<Player> players = game.getPlayers();
         for(int i=0; i<game.getPlayersNumber()-1;i++){
-            if(players.get(i).getLastAssistantCardPlayed().getWeight() >
-                    players.get(i+1).getLastAssistantCardPlayed().getWeight()) {
+            if(players.get(i).getLatestAssistantCardPlayed().getWeight() >
+                    players.get(i+1).getLatestAssistantCardPlayed().getWeight()) {
                 Collections.swap(players, i, i+1);
             }
         }
@@ -911,6 +903,18 @@ public class GameController implements Serializable {
         for (VirtualView vv : virtualViewMap.values()) {
             if(!vv.equals(virtualViewMap.get(game.getCurrentPlayer().getNickname())))
                 vv.showGenericMessage("UPDATE: " + message);
+        }
+    }
+
+    /**
+     * Notifies all the players of a phase change.
+     *
+     * @param isActionPhase {@code true} if the new current phase is the Action Phase, {@code false} otherwise.
+     */
+
+    public void broadcastPhaseUpdate(boolean isActionPhase){
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showPhaseUpdate(isActionPhase);
         }
     }
 

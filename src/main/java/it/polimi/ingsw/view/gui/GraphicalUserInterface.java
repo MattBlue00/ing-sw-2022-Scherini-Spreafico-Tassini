@@ -53,6 +53,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void showPhaseUpdate(boolean isActionPhase) {
+
+    }
+
+    @Override
     public void askAssistantCard() {
 
     }

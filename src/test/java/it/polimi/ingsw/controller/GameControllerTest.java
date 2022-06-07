@@ -44,12 +44,12 @@ class GameControllerTest {
 
         gameController.handleAssistantCardChoice(new AssistantCardMessage(user, cardName));
 
-        if(gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed() == null)
+        if(gameController.getGame().getCurrentPlayer().getLatestAssistantCardPlayed() == null)
             System.out.println("ERROR");
 
-        assertEquals(cardName, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getName());
-        assertEquals(5, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getWeight());
-        assertEquals(3, gameController.getGame().getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
+        assertEquals(cardName, gameController.getGame().getCurrentPlayer().getLatestAssistantCardPlayed().getName());
+        assertEquals(5, gameController.getGame().getCurrentPlayer().getLatestAssistantCardPlayed().getWeight());
+        assertEquals(3, gameController.getGame().getCurrentPlayer().getLatestAssistantCardPlayed().getMotherNatureSteps());
         assertEquals(9, gameController.getGame().getCurrentPlayer().getDeck().size());
     }
 
@@ -132,7 +132,7 @@ class GameControllerTest {
         Message message = new MotherNatureStepsMessage(user,steps);
         gameController.getGame().setCurrentPlayer(player);
 
-        player.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
+        player.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
 
         Random rand = new Random();
         int randomPos = rand.nextInt((12)+1);
@@ -284,10 +284,10 @@ class GameControllerTest {
         }
         catch(Exception ignored){}
 
-        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed() == null)
+        if(gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed() == null)
             System.out.println("ASSISTANT ERROR");
 
-        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
+        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed().getName());
         assertThrows(WrongTurnException.class,
                 () -> gc.getMessage(new AssistantCardMessage("Matteo", "FOX")));
 
@@ -295,7 +295,7 @@ class GameControllerTest {
             gc.getMessage(new AssistantCardMessage("Ludo", "FOX"));
         }
         catch(Exception ignored){}
-        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
+        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed().getName());
 
         assertTrue(gc.getPlanningPhaseDone());
         assertEquals(0, gc.getCurrentPlayerIndex());
@@ -433,15 +433,15 @@ class GameControllerTest {
 
         p1.playAssistantCard("CHEETAH");
         gc.getGame().setCurrentPlayer(p2);
-        assertEquals("CHEETAH", p1.getLastAssistantCardPlayed().getName());
+        assertEquals("CHEETAH", p1.getLatestAssistantCardPlayed().getName());
         assertFalse(gc.isAssistantCardPlayable("CHEETAH"));
-        p1.resetLastAssistantCardPlayed();
+        p1.resetLatestAssistantCardPlayed();
         gc.getGame().setCurrentPlayer(p1);
 
         // Case 2: Player 1 plays FOX, player 2 has no other choice than playing FOX, so he plays it
 
         p1.playAssistantCard("FOX");
-        assertEquals("FOX", p1.getLastAssistantCardPlayed().getName());
+        assertEquals("FOX", p1.getLatestAssistantCardPlayed().getName());
         gc.getGame().setCurrentPlayer(p2);
         List<AssistantCard> deck = new ArrayList<>(1);
         deck.add(new AssistantCard(AssistantType.FOX));

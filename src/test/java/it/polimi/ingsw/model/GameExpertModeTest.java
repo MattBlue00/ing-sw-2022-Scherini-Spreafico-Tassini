@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,7 +124,7 @@ class GameExpertModeTest {
 
         g1.getBoard().setMotherNaturePos(1);
         g1.setCurrentPlayer(p1);
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OCTOPUS));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.OCTOPUS));
 
         try{
             g1.moveMotherNature(3); // from island 1 to 4
@@ -136,7 +135,7 @@ class GameExpertModeTest {
 
         assertEquals(4, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
 
         try{
             g1.moveMotherNature(5); // from island 4 to 9
@@ -147,7 +146,7 @@ class GameExpertModeTest {
 
         assertEquals(9, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.ELEPHANT));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.ELEPHANT));
 
         try{
             g1.moveMotherNature(1); // from island 9 to 10
@@ -156,7 +155,7 @@ class GameExpertModeTest {
 
         assertEquals(10, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.DOG));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.DOG));
 
         try{
             g1.moveMotherNature(3); // from island 10 to 1
@@ -165,7 +164,7 @@ class GameExpertModeTest {
 
         assertEquals(1, g1.getBoard().getMotherNaturePos());
 
-        p1.setLastAssistantCardPlayed(new AssistantCard(AssistantType.OSTRICH));
+        p1.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.OSTRICH));
 
         try{
             g1.moveMotherNature(1); // from island 1 to 2
