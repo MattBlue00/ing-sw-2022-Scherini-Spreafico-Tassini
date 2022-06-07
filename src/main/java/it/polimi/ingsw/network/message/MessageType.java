@@ -1,5 +1,8 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * This enum contains all the message type available and used by the server and clients.
+ */
 public enum MessageType {
     LOGIN_REQUEST,
     JOIN_GAME,
@@ -12,7 +15,6 @@ public enum MessageType {
     MOVE_TO_ISLAND_REPLY,
     CHARACTER_CARD_REPLY,
     WIZARD_ID,
-    SUCCESS_MESSAGE,
     ERROR_MESSAGE,
     GENERIC,
     ASK_TYPE,

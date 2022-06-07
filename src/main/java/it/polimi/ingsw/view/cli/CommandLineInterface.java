@@ -12,15 +12,28 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * This class offers a User Interface to the user via terminal. It is an implementation of the {@link View}.
+ */
 public class CommandLineInterface extends ViewObservable implements View {
 
     private final PrintStream out;
     private Thread inputThread;
 
+    /**
+     * CommandLineInterface constructor.
+     */
+
     public CommandLineInterface() {
         this.out = System.out;
     }
 
+    /**
+     * Reads a line from the standard input.
+     *
+     * @return the string read from the input.
+     * @throws ExecutionException if the input stream thread is interrupted.
+     */
     private String readLine() throws ExecutionException{
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
         inputThread = new Thread(futureTask);
@@ -36,6 +49,9 @@ public class CommandLineInterface extends ViewObservable implements View {
         return input;
     }
 
+    /**
+     * This method shows the client the Eriantys logo and starts the method chain to connect to the server.
+     */
     public void init(){
         out.println("   ('-.  _  .-')             ('-.         .-') _  .-') _                 .-')    \n" +
                 " _(  OO)( \\( -O )           ( OO ).-.    ( OO ) )(  OO) )               ( OO ).  \n" +
@@ -51,6 +67,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         askServerData();
     }
 
+    @Override
     public void askServerData(){
         String address;
         String port;
@@ -228,6 +245,7 @@ public class CommandLineInterface extends ViewObservable implements View {
         } catch (NullPointerException ignored){}
     }
 
+    @Override
     public void askMoveStudent(){
 
         try {
@@ -541,10 +559,18 @@ public class CommandLineInterface extends ViewObservable implements View {
         out.println(message);
     }
 
+    /**
+     * This method is used to clear the interface.
+     */
     public void clearInterface(){
         out.flush();
     }
 
+    /**
+     * This method checks if the given input is valid.
+     * @param color the string to check
+     * @return {@code true} if the input is valid, {@code false} otherwise.
+     */
     private boolean isColorInvalid(String color){
         if (!color.equals("YELLOW") && !color.equals("BLUE") && !color.equals("GREEN")
                 && !color.equals("RED") && !color.equals("PINK")) {

@@ -475,4 +475,18 @@ public class Game implements Serializable {
         System.out.println("--------------------");
     }
 
+    /**
+     * This method returns the player whose nickname is {@code nick}
+     *
+     * @param nick is the nickname given
+     * @return {@link Player} that has the given nickname
+     */
+    public Player getPlayerFromNickname(String nick){
+        Player p = null;
+        for (Player player : getPlayers()){
+            if(player.getNickname().equals(nick))
+                p = player;
+        }
+        return p;
+    }
 }
