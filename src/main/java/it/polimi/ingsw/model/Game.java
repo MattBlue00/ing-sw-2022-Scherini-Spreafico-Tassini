@@ -289,7 +289,7 @@ public class Game implements Serializable {
 
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException, IslandNotFoundException {
 
-        int max_steps = currentPlayer.getLastAssistantCardPlayed().getMotherNatureSteps();
+        int max_steps = currentPlayer.getLatestAssistantCardPlayed().getMotherNatureSteps();
 
         if(steps > max_steps || steps < Constants.MIN_NUM_OF_STEPS)
             throw new InvalidNumberOfStepsException("You can't move Mother Nature of " + steps + " steps! Maximum allowed: " + max_steps);
@@ -459,9 +459,9 @@ public class Game implements Serializable {
 
     public void showAssistantCardsPlayed(){
         players.forEach(p -> System.out.println(p.getNickname() + " has played: "
-                + p.getLastAssistantCardPlayed().getName() +
-                " (Mother Nature steps: " + p.getLastAssistantCardPlayed().getMotherNatureSteps() +
-                ", Weight: " + p.getLastAssistantCardPlayed().getWeight() + ")"));
+                + p.getLatestAssistantCardPlayed().getName() +
+                " (Mother Nature steps: " + p.getLatestAssistantCardPlayed().getMotherNatureSteps() +
+                ", Weight: " + p.getLatestAssistantCardPlayed().getWeight() + ")"));
         System.out.println("--------------------");
     }
 

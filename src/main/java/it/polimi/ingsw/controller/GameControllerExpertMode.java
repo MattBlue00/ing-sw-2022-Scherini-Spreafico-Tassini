@@ -6,9 +6,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.network.message.*;
 import it.polimi.ingsw.network.server.Server;
-import it.polimi.ingsw.utils.ANSIConstants;
 
-import java.io.Serializable;
 import java.util.NoSuchElementException;
 
 import static it.polimi.ingsw.network.server.Server.LOGGER;
@@ -235,8 +233,7 @@ public class GameControllerExpertMode extends GameController{
         setMovesLeft(getGame().getConstants().PLAYER_MOVES);
         if(!getVirtualViewMap().isEmpty()) {
             LOGGER.info("Action Phase is about to start.");
-            broadcastGenericMessage(
-                    ANSIConstants.ANSI_BOLD + "-- ACTION PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
+            broadcastPhaseUpdate(true);
             broadcastGameStatusFirstActionPhase();
             broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAction();
@@ -286,12 +283,11 @@ public class GameControllerExpertMode extends GameController{
         setMotherNatureMoved(false);
         getGame().setRoundNumber(getGame().getRoundNumber() + 1);
         for(Player player : getGame().getPlayers())
-            player.resetLastAssistantCardPlayed();
+            player.resetLatestAssistantCardPlayed();
         if(!getVirtualViewMap().isEmpty()) {
             LOGGER.info("Planning Phase is about to start.");
             broadcastGameBoard();
-            broadcastGenericMessage(
-                    ANSIConstants.ANSI_BOLD + "-- PLANNING PHASE of round " + getGame().getRoundNumber() + " --" + ANSIConstants.ANSI_RESET);
+            broadcastPhaseUpdate(false);
             showDeck(getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()));
             broadcastWaitingMessage();
             getVirtualViewMap().get(getGame().getCurrentPlayer().getNickname()).askAssistantCard();

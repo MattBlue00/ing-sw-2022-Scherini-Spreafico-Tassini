@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
+import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.view.View;
 
 import java.io.PrintStream;
@@ -22,11 +23,9 @@ public class CommandLineInterface extends ViewObservable implements View {
 
     private String readLine() throws ExecutionException{
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
-
         inputThread = new Thread(futureTask);
         inputThread.start();
         String input = null;
-
         try {
             input = futureTask.get();
         }
@@ -154,7 +153,7 @@ public class CommandLineInterface extends ViewObservable implements View {
             while (!str.equals("EXPERT") && !str.equals("NORMAL")){
                     out.println("The given input is not correct, please retry. " +
                         "\nChoose the type of game you want to play [ For Expert mode type EXPERT, for normal mode type NORMAL ] : ");
-                str = readLine();
+                str = readLine().toUpperCase();
             }
             boolean expertMode = str.equals("EXPERT");
             int numOfPlayers = 0;
@@ -506,6 +505,15 @@ public class CommandLineInterface extends ViewObservable implements View {
                 }catch (IndexOutOfBoundsException e){out.println("WAITING FOR PLAYERS TO JOIN");}
             }
         }
+    }
+
+    @Override
+    public void showPhaseUpdate(boolean isActionPhase) {
+        clearInterface();
+        if(isActionPhase)
+            out.println(ANSIConstants.ANSI_BOLD + "------ ACTION PHASE ------" + ANSIConstants.ANSI_RESET);
+        else
+            out.println(ANSIConstants.ANSI_BOLD + "------ PLANNING PHASE ------" + ANSIConstants.ANSI_RESET);
     }
 
     @Override
