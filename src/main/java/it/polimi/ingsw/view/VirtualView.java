@@ -8,6 +8,11 @@ import it.polimi.ingsw.observers.Observer;
 
 import java.util.Map;
 
+/**
+ * This class hides the network implementation from the controller.
+ * The controller calls methods from this class as if it was a normal view.
+ * Instead, a network protocol is used to communicate with the real view on the client side.
+ */
 public class VirtualView implements View, Observer {
 
     private final ClientHandler clientHandler;
@@ -23,9 +28,7 @@ public class VirtualView implements View, Observer {
     }
 
     @Override
-    public void askServerData() {
-
-    }
+    public void askServerData() {}
 
     @Override
     public void askNickname() {

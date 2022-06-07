@@ -247,7 +247,6 @@ public class GameControllerExpertMode extends GameController{
 
     @Override
     public void nextPlayerActionPhase(){
-        winCheck();
         getGame().getCurrentPlayer().setCharacterCardAlreadyPlayed(false);
         getGame().setCurrentPlayer(getGame().getPlayers().get(getCurrentPlayerIndex()));
         setMovesLeft(getGame().getConstants().PLAYER_MOVES);
@@ -262,13 +261,19 @@ public class GameControllerExpertMode extends GameController{
 
     /**
      * Sets the controller's variables in order to let the players play the next round properly. This overridden
-     * version handles one more variable, specific to the Expert mode.
+     * version handles one more variable, specific to the Expert mode. If the game board's students' bag is empty,
+     * instantly ends the game.
      */
 
     @Override
     public void nextRound(){
         try{
+            if(isStudentBagEmpty())
+                declareWinningPlayer();
             getGame().refillClouds();
+        }
+        catch(TieException e){
+            endGame();
         }
         catch(EmptyBagException ex){
             LOGGER.info(ex.getClass().getSimpleName() + ": " + ex.getMessage());

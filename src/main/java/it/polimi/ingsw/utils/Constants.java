@@ -2,6 +2,9 @@ package it.polimi.ingsw.utils;
 
 import java.io.Serializable;
 
+/**
+ * Class that defines the constants used in the game.
+ */
 public class Constants implements Serializable {
 
     public static final int CONNECTION_TIMEOUT_SERVER = 10000;
@@ -22,6 +25,10 @@ public class Constants implements Serializable {
     public int MAX_CLOUD_STUDENTS;
     public int PLAYER_MOVES;
 
+    /**
+     * Default constructor.
+     * @param playersNumber
+     */
     public Constants(int playersNumber){
         if(playersNumber == 2){
             MAX_HALL_STUDENTS = 7;

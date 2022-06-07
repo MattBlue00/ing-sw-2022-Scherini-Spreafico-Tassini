@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * The table is a part of the dining room, which is a third of a {@link School}. In each school, there's a table for
+ * every existent {@link Color}. It can hold up to 10 students of the same color, and a coin is awarded to the school's
+ * owner every three students of the same color (once a coin for a certain amount of students is obtained, it can't be
+ * obtained again if - for example - the player loses their third red student and earns it back afterwards).
+ */
+
 public class Table implements Serializable {
 
     private final Color color;
@@ -16,6 +23,11 @@ public class Table implements Serializable {
     private List<Student> students;
     private boolean[] coinsAvailable = new boolean[Constants.COINS_AVAILABLE_PER_TABLE];
 
+    /**
+     * Table constructor.
+     *
+     * @param color the color of the table.
+     */
 
     public Table(Color color) {
         this.color = color;
@@ -26,29 +38,63 @@ public class Table implements Serializable {
         }
     }
 
-    // Getter and setter methods
+    /**
+     * Returns the color of the table.
+     *
+     * @return the {@link Color} of the table.
+     */
 
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Returns the number of students currently seated at the table.
+     *
+     * @return an {@code int} corresponding to the number of students currently seated at the table.
+     */
+
     public int getNumOfStudents(){
         return students.size();
     }
+
+    /**
+     * Returns a list of the students currently seated at the table.
+     *
+     * @return a list of the students currently seated at the table.
+     */
 
     public List<Student> getStudents() {
         return students;
     }
 
+    /**
+     * Checks if the head of the table has a professor.
+     *
+     * @return {@code true} if it has, {@code false} otherwise.
+     */
+
     public boolean getHasProfessor() {
         return hasProfessor;
     }
+
+    /**
+     * Sets the boolean flag to {@code true} if the head of the table has now a professor, {@code false} otherwise.
+     *
+     * @param hasProfessor the new flag.
+     */
 
     public void setHasProfessor(boolean hasProfessor) {
         this.hasProfessor = hasProfessor;
     }
 
-    // Table methods
+    /**
+     * Adds a student to the table, if possible.
+     *
+     * @param addedStudent the {@link Student} to add.
+     * @param player the {@link Player} whose coins' wallet will be updated if conditions are met.
+     * @throws FullTableException if the table has reached its maximum capacity.
+     */
 
     public void addStudent(Student addedStudent, Player player) throws
             FullTableException {
@@ -64,9 +110,12 @@ public class Table implements Serializable {
 
     }
 
-    /*
-        This method assign a player a coin if the required condition is respected.
+    /**
+     * Returns the number of coins to assign to the player (0 or 1) after the addition of a student.
+     *
+     * @return 0 or 1, as a {@code int}.
      */
+
     public int coinCheck(){
 
         int size = this.students.size();
@@ -81,6 +130,13 @@ public class Table implements Serializable {
         else return 0;
 
     }
+
+    /**
+     * Removes a student from the table and returns it, if possible.
+     *
+     * @return the removed {@link Student}.
+     * @throws StudentNotFoundException if the table is empty.
+     */
 
     public Student removeStudent() throws StudentNotFoundException {
 

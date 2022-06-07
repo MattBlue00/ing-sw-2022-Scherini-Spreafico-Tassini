@@ -60,15 +60,11 @@ public class ClientController implements ViewObserver, Observer {
             client.addObserver(this);
             client.readMessage();
             taskQueue.execute(view::askNickname);
-        }
-        catch(SocketException e){
+        } catch(IOException e){
             view.showGenericMessage("Either the server or the network is unreachable. Please try again.");
             taskQueue.shutdownNow();
             taskQueue = Executors.newSingleThreadExecutor();
             taskQueue.execute(view::askServerData);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

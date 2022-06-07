@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.charactercards;
 
+import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.GameExpertMode;
@@ -50,8 +51,11 @@ public class Thief extends CharacterCard implements StringCard, Serializable {
         for (Player player : game.getPlayers()) {
             int count = 3;
             while (player.getSchool().getTable(this.chosenColor).getStudents().size() > 0 && count > 0) {
-                Student student = player.getSchool().getTable(this.chosenColor).removeStudent();
-                game.getBoard().getStudentsBag().add(student);
+                try {
+                    Student student = player.getSchool().getTable(this.chosenColor).removeStudent();
+                    game.getBoard().getStudentsBag().add(student);
+                }
+                catch(StudentNotFoundException ignored){}
                 count--;
             }
         }

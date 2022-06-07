@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils;
 
+/**
+ * Class that implements the color constants used in the game
+ */
 public class ANSIConstants {
 
     public static final String ANSI_RESET = "\u001B[0m";

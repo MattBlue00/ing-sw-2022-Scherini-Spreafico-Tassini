@@ -11,6 +11,9 @@ import java.util.concurrent.Callable;
 public class InputReadTask implements Callable<String> {
     private final BufferedReader br;
 
+    /**
+     * Constructor of InputReadTask
+     */
     public InputReadTask() {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
