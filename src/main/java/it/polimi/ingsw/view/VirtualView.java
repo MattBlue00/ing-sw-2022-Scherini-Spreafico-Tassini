@@ -14,7 +14,10 @@ public class VirtualView implements View, Observer {
 
     /**
      * Virtual view constructor.
+     *
+     * @param clientHandler the {@link ClientHandler} to send messages to.
      */
+
     public VirtualView(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
     }
@@ -108,4 +111,7 @@ public class VirtualView implements View, Observer {
     @Override
     public void showDisconnectionMessage(String message) { clientHandler.sendMessage(new DisconnectionMessage(message)); }
 
+    public void showPhaseUpdate(boolean isActionPhase) {
+        clientHandler.sendMessage(new GamePhaseMessage(isActionPhase));
+    }
 }

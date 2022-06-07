@@ -33,7 +33,7 @@ public class PostmanTest {
 
         try{
 
-            p1.setLastAssistantCardPlayed(card_1);
+            p1.setLatestAssistantCardPlayed(card_1);
             g1.playerPlaysCharacterCard(4);
 
             assertTrue(cards[0].getIsActive());

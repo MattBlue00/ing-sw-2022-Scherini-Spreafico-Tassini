@@ -112,7 +112,7 @@ public class GameExpertMode extends Game implements Serializable {
     @Override
     public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
-        setMaxSteps(getCurrentPlayer().getLastAssistantCardPlayed().getMotherNatureSteps());
+        setMaxSteps(getCurrentPlayer().getLatestAssistantCardPlayed().getMotherNatureSteps());
         for (CharacterCard card : characters) {
             if (card.getId() == 4 && card.getIsActive()) {
                 try {
