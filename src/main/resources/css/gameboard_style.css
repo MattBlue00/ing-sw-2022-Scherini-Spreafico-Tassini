@@ -13,3 +13,12 @@
 .text_label{
     -fx-text-fill: white;
 }
+
+ImageView{
+    -fx-cursor: hand;
+}
+
+ImageView:hover {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}

@@ -14,6 +14,7 @@ import java.util.Map;
 public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
+    private GameBoardSceneController bsc;
 
     public GraphicalUserInterface(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -60,7 +61,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askAssistantCard() {
-
+        Platform.runLater(() -> bsc.showDeck());
     }
 
     @Override
@@ -100,20 +101,19 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGameStatusFirstActionPhase(Game game) {
-        //GameBoardSceneController boardSceneController = getBoardSceneController();
-        //Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
+
     }
 
     @Override
     public void showGameStatus(Game game) {
-        //GameBoardSceneController boardSceneController = getBoardSceneController();
-        //Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
+        GameBoardSceneController boardSceneController = getBoardSceneController();
+        boardSceneController.setGame(game);
+        Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
     }
 
     @Override
     public void showDeck(Game game) {
-        GameBoardSceneController boardSceneController = getBoardSceneController();
-        Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
+
     }
 
     @Override
@@ -130,6 +130,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
             boardSceneController = new GameBoardSceneController();
             boardSceneController.addAllObservers(observers);
             GameBoardSceneController finalBsc = boardSceneController;
+            this.bsc = boardSceneController;
             Platform.runLater(() -> sceneController.changeRootPane(finalBsc, "gameBoard_scene.fxml"));
         }
         return boardSceneController;

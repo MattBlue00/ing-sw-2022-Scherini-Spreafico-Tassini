@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 
 import java.util.Map;
 
@@ -126,7 +127,7 @@ public interface View {
     /**
      * Shows a phase update message to the client
      *
-     * @param message the message that will be shown to the client.
+     * @param isActionPhase the message that will be shown to the client.
      */
 
     void showPhaseUpdate(boolean isActionPhase);
