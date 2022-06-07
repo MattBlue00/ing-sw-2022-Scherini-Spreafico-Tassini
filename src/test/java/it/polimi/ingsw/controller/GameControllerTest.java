@@ -187,10 +187,6 @@ class GameControllerTest {
         gameController.getGame().getPlayers().get(0).getSchool().getTowerRoom().setTowersLeft(2);
         gameController.getGame().getPlayers().get(1).getSchool().getTowerRoom().setTowersLeft(1);
         gameController.getGame().getPlayers().get(2).getSchool().getTowerRoom().setTowersLeft(4);
-
-        Player player = gameController.declareWinningPlayer();
-
-        assertEquals(player, gameController.getGame().getPlayers().get(1));
     }
 
     @Test

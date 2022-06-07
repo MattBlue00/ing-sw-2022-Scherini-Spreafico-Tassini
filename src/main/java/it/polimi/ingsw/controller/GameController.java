@@ -815,7 +815,7 @@ public class GameController implements Serializable {
      * professors. In the very rare case of another tie, there's no winning player, and an exception is thrown.
      */
 
-    public Player declareWinningPlayer() throws TieException{
+    public void declareWinningPlayer() throws TieException{
         List<Player> players = game.getPlayers();
         Player winningPlayer = players.get(0);
         int minTowers = players.get(0).getSchool().getTowerRoom().getTowersLeft();
@@ -850,7 +850,6 @@ public class GameController implements Serializable {
             }
         }
         broadcastGenericMessage(winningPlayer.getNickname() + " has won the game! Congratulations!");
-        return winningPlayer;
     }
 
     /**
