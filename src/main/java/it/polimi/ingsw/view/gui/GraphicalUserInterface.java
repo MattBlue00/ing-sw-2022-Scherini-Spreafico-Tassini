@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.gui.scenes.GameBoardSceneController;
 import javafx.application.Platform;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
+    private GameBoardSceneController bsc;
 
     public GraphicalUserInterface(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -59,7 +61,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askAssistantCard() {
-
+        Platform.runLater(() -> bsc.showDeck());
     }
 
     @Override
@@ -104,7 +106,9 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGameStatus(Game game) {
-
+        GameBoardSceneController boardSceneController = getBoardSceneController();
+        boardSceneController.setGame(game);
+        Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
     }
 
     @Override
@@ -114,7 +118,22 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showDisconnectionMessage(String nicknameDisconnected) {
+        Platform.runLater(() -> sceneController.showAlert("Player "+nicknameDisconnected+" has disconnected"));
+        Platform.runLater(() -> sceneController.changeRootPane(observers, "lobby_scene.fxml"));
+    }
 
+    private GameBoardSceneController getBoardSceneController() {
+        GameBoardSceneController boardSceneController;
+        try {
+            boardSceneController = (GameBoardSceneController) sceneController.getCurrentController();
+        } catch (ClassCastException e) {
+            boardSceneController = new GameBoardSceneController();
+            boardSceneController.addAllObservers(observers);
+            GameBoardSceneController finalBsc = boardSceneController;
+            this.bsc = boardSceneController;
+            Platform.runLater(() -> sceneController.changeRootPane(finalBsc, "gameBoard_scene.fxml"));
+        }
+        return boardSceneController;
     }
 
     public String printExistingGames(Map<Integer, GameController> existingGames){

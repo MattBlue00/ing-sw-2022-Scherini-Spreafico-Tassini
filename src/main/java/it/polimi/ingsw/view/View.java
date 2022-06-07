@@ -2,6 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 
 import java.util.Map;
 

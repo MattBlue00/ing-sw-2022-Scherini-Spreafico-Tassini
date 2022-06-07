@@ -47,10 +47,9 @@ public class ClientGUIMain extends Application {
 
         stage.getIcons().add(icon);
         stage.setTitle("Eriantys");
-        stage.setMinHeight(500);
-        stage.setMinWidth(500);
         stage.setHeight(600);
         stage.setWidth(600);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -63,10 +62,14 @@ public class ClientGUIMain extends Application {
 
     public void changeScene(Scene scene){
         stage.setScene(scene);
-        stage.setWidth(600);
-        stage.setHeight(600);
-        stage.setMinHeight(500);
-        stage.setMinWidth(500);
+
+        if(scene.getRoot().getId().equals("pane")){
+            stage.setWidth(1600);
+            stage.setHeight(1050);
+        }else{
+            stage.setWidth(600);
+            stage.setHeight(600);
+        }
         stage.show();
     }
 
