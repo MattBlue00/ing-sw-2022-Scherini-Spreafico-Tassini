@@ -7,8 +7,6 @@ import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest{
@@ -24,10 +22,10 @@ public class PlayerTest{
 
         player.playAssistantCard("FOX");
 
-        if(game.getCurrentPlayer().getLastAssistantCardPlayed() == null)
+        if(game.getCurrentPlayer().getLatestAssistantCardPlayed() == null)
             System.out.println("ERROR in: " + this.getClass());
 
-        assertEquals("FOX", game.getCurrentPlayer().getLastAssistantCardPlayed().getName());
+        assertEquals("FOX", game.getCurrentPlayer().getLatestAssistantCardPlayed().getName());
     }
 
     @Test

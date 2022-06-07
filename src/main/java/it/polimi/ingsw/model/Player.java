@@ -26,7 +26,7 @@ public class Player implements Serializable {
     private List<AssistantCard> deck;
     private School school;
     private int coinsWallet;
-    private AssistantCard lastAssistantCardPlayed;
+    private AssistantCard latestAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;
 
     /**
@@ -56,90 +56,185 @@ public class Player implements Serializable {
         this.deck.add(new AssistantCard(AssistantType.TURTLE));
 
         this.school = new School(constants);
-        this.lastAssistantCardPlayed = null;
+        this.latestAssistantCardPlayed = null;
         this.characterCardAlreadyPlayed = false;
     }
 
-    // Getter and setter methods
+    /**
+     * Returns a list of the Assistant Cards currently present in the player's deck.
+     *
+     * @return a list of the Assistant Cards currently present in the player's deck.
+     */
 
     public List<AssistantCard> getDeck() {
         return deck;
     }
 
+    /**
+     * Updates the list of the Assistant Cards currently present in the player's deck.
+     *
+     * @param deck the new deck of Assistant Cards.
+     */
+
+    public void setDeck(List<AssistantCard> deck) {
+        this.deck = deck;
+    }
+
+    /**
+     * Returns the player's nickname.
+     *
+     * @return a {@link String} containing the player's nickname.
+     */
+
     public String getNickname() {
         return nickname;
     }
+
+    /**
+     * Returns the player's number of coins.
+     *
+     * @return an {@code int} representing the number of coins in the player's wallet.
+     */
 
     public int getCoinsWallet() {
         return coinsWallet;
     }
 
+    /**
+     * Updates the player's number of coins.
+     *
+     * @param coinsWallet an {@code int} representing the new number of coins in the player's wallet.
+     */
+
     public void setCoinsWallet(int coinsWallet) {
         this.coinsWallet = coinsWallet;
     }
+
+    /**
+     * Returns the player's {@link School}.
+     *
+     * @return the player's {@link School}.
+     */
 
     public School getSchool() {
         return school;
     }
 
+    /**
+     * Returns the player's wizard ID.
+     *
+     * @return the ID of the wizard the player is embodying.
+     */
+
     public Wizard getWizardID() { return wizardID; }
 
-    public AssistantCard getLastAssistantCardPlayed() {
-        return lastAssistantCardPlayed;
+    /**
+     * Returns the Assistant Card played by the player in the current round.
+     *
+     * @return the latest {@link AssistantCard} played.
+     */
+
+    public AssistantCard getLatestAssistantCardPlayed() {
+        return latestAssistantCardPlayed;
     }
 
-    public void setLastAssistantCardPlayed(AssistantCard lastAssistantCardPlayed) {
-        this.lastAssistantCardPlayed = lastAssistantCardPlayed;
+    /**
+     * Updates the Assistant Card played by the player in the current round.
+     *
+     * @param latestAssistantCardPlayed the latest {@link AssistantCard} played.
+     */
+
+    public void setLatestAssistantCardPlayed(AssistantCard latestAssistantCardPlayed) {
+        this.latestAssistantCardPlayed = latestAssistantCardPlayed;
     }
 
-    public void resetLastAssistantCardPlayed(){
-        this.lastAssistantCardPlayed = null;
+    /**
+     * Resets (sets back to null) the attribute latestAssistantCardPlayed so that the game controller can properly
+     * handle the Planning Phase (when deciding if a player can - or cannot - play a specific Assistant Card).
+     */
+
+    public void resetLatestAssistantCardPlayed(){
+        this.latestAssistantCardPlayed = null;
     }
+
+    /**
+     * Checks if the player has already played a Character Card in the current round.
+     *
+     * @return {@code true} if the player has, {@code false} otherwise.
+     */
 
     public boolean getCharacterCardAlreadyPlayed() {
         return characterCardAlreadyPlayed;
     }
 
+    /**
+     * Updates the boolean flag to {@code true} if the player has just played a Character Card, to {@code false} if a
+     * new round has just begun.
+     *
+     * @param characterCardAlreadyPlayed the new flag.
+     */
+
     public void setCharacterCardAlreadyPlayed(boolean characterCardAlreadyPlayed) {
         this.characterCardAlreadyPlayed = characterCardAlreadyPlayed;
     }
 
-    // Player methods
-
-    /*
-        Find the chosen card in the deck
-        set it as lastCardPlayed
-        remove it from player's deck
+    /**
+     * Finds the chosen card in the deck, sets the latestAssistantCardPlayed accordingly and removes it from the
+     * player's deck. The game controller won't call this method if it finds out that the chosen card can't be played.
+     *
+     * @param cardName the name of the card the player has chosen to play.
      */
+
     public void playAssistantCard(String cardName) {
         AssistantCard chosenCard = getAssistantCardFromName(cardName);
-        this.lastAssistantCardPlayed = chosenCard;
+        this.latestAssistantCardPlayed = chosenCard;
         getDeck().remove(chosenCard);
     }
 
-    /*
-        Find all cards with the name equals to the parameter,
-        hypothesis: deck does not contain cards with same name.
+    /**
+     * Returns the {@link AssistantCard} in the player's deck whose name is identical to the one provided as a
+     * parameter.
+     *
+     * @param cardName the Assistant Card's name.
+     * @return the desired card.
      */
+
     public AssistantCard getAssistantCardFromName(String cardName){
         Optional <AssistantCard> assistantCard  =
                 getDeck().stream().filter(card -> card.getName().equals(cardName)).findFirst();
         return assistantCard.orElse(null);
     }
-    // TODO: findFirst returns an Optional, better check
+
+    /**
+     * Moves a student of the chosen color to the chosen island, if possible.
+     *
+     * @param island the island to move the student to.
+     * @param color the color of the student to move.
+     * @throws StudentNotFoundException if a student of the chosen color does not exist in the player's hall.
+     */
 
     public void moveStudent(Island island, String color) throws StudentNotFoundException {
         this.school.moveStudentToIsland(island, color);
     }
+
+    /**
+     * Moves a student of the chosen color to the proper table in the player's {@link School}.
+     *
+     * @param color the color of the student to move.
+     * @throws StudentNotFoundException if a student of the chosen color does not exist in the player's hall.
+     * @throws NonExistentColorException if a non-existent color is somehow provided (view input controls should
+     * prevent this exception to be thrown).
+     * @throws FullTableException if the table of the chosen color is full.
+     */
 
     public void moveStudent(String color) throws
             StudentNotFoundException, NonExistentColorException, FullTableException {
         this.school.moveStudentToTable(this, color);
     }
 
-    /*public void moveStudentToHall(String color) throws NonExistentColorException {
-        this.school.moveStudentToHall(this, color);
-    }*/
+    /**
+     * Allows the view to properly show the player's school.
+     */
 
     public void showSchool(){
 
@@ -227,9 +322,4 @@ public class Player implements Serializable {
         System.out.println("--------------------");
     }
 
-    // Debug methods
-
-    public void setDeck(List<AssistantCard> deck) {
-        this.deck = deck;
-    }
 }

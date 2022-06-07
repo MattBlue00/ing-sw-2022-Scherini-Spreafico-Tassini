@@ -39,15 +39,15 @@ class GameControllerExpertModeTest {
         }
         catch(Exception ignored){}
 
-        if(gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed() == null)
+        if(gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed() == null)
             System.out.println("ERROR in: " + this.getClass());
 
-        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
+        assertEquals("TURTLE", gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed().getName());
         try {
             gc.getMessage(new AssistantCardMessage(gc.getGame().getCurrentPlayer().getNickname(), "FOX"));
         }
         catch(Exception ignored){}
-        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLastAssistantCardPlayed().getName());
+        assertEquals("FOX", gc.getGame().getPlayers().get(0).getLatestAssistantCardPlayed().getName());
 
         assertTrue(gc.getPlanningPhaseDone());
         assertEquals(0, gc.getCurrentPlayerIndex());
