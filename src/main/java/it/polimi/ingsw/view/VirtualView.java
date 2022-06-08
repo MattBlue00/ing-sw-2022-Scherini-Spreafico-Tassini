@@ -117,4 +117,9 @@ public class VirtualView implements View, Observer {
     public void showPhaseUpdate(boolean isActionPhase) {
         clientHandler.sendMessage(new GamePhaseMessage(isActionPhase));
     }
+
+    @Override
+    public void showUpdateMessage(String s) {
+        clientHandler.sendMessage(new UpdateMessage(s));
+    }
 }

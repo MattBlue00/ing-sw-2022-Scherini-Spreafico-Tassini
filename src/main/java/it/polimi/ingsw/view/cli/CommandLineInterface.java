@@ -535,6 +535,11 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void showUpdateMessage(String s) {
+        out.println(s);
+    }
+
+    @Override
     public void showGameStatusFirstActionPhase(Game game) {
         clearInterface();
         game.showAssistantCardsPlayed();

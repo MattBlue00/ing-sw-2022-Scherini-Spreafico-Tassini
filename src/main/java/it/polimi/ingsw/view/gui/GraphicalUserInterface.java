@@ -60,6 +60,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
+    public void showUpdateMessage(String s) {
+        Platform.runLater(() -> bsc.showUpdate(s));
+    }
+
+    @Override
     public void askAssistantCard() {
         Platform.runLater(() -> bsc.showDeck());
     }

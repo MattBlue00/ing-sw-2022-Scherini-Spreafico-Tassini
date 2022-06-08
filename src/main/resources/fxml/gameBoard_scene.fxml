@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="1050.0" prefWidth="1650.0" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="deck" layoutX="24.0" layoutY="989.0" prefHeight="118.0" prefWidth="901.0">
+      <GridPane fx:id="deck" layoutX="36.0" layoutY="889.0" prefHeight="118.0" prefWidth="901.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,6 +70,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <Label fx:id="updateLabel" layoutX="546.0" layoutY="370.0" prefHeight="113.0" prefWidth="497.0" />
    </children>
     <stylesheets>
         <URL value="@../css/gameboard_style.css" />

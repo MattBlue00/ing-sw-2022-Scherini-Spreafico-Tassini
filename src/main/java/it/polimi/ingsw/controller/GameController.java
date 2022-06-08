@@ -898,7 +898,7 @@ public class GameController implements Serializable {
     public void broadcastUpdateMessage(String message){
         for (VirtualView vv : virtualViewMap.values()) {
             if(!vv.equals(virtualViewMap.get(game.getCurrentPlayer().getNickname())))
-                vv.showGenericMessage("UPDATE: " + message);
+                vv.showUpdateMessage("UPDATE: " + message);
         }
     }
 

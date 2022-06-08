@@ -139,4 +139,5 @@ public interface View {
 
     void showPhaseUpdate(boolean isActionPhase);
 
+    void showUpdateMessage(String s);
 }

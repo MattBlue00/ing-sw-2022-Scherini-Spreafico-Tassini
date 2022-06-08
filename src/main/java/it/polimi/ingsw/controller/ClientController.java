@@ -309,6 +309,9 @@ public class ClientController implements ViewObserver, Observer {
             case GENERIC:
                 taskQueue.execute(() -> view.showGenericMessage(message.toString()));
                 break;
+            case UPDATE:
+                taskQueue.execute(() -> view.showUpdateMessage(message.toString()));
+                break;
             case DISCONNECTION:
                 taskQueue.shutdownNow();
                 taskQueue = Executors.newSingleThreadExecutor();

@@ -24,5 +24,5 @@ public enum MessageType {
     ACTION_CHOICE,
     EXISTING_GAMES,
     DISCONNECTION,
-    GAME_PHASE
+    UPDATE, GAME_PHASE
 }

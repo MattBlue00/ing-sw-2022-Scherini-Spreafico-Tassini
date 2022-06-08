@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,6 +24,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private List<GridPane> islands;
     @FXML
     private List<Image> characterCards;
+    @FXML
+    private Label updateLabel;
     private Game game;
 
     public void setGame(Game game) {
@@ -37,13 +40,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
             ImageView cardImage = (ImageView) node;
             playCard(cardId);
-            cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/yellow_wizard.jpg"))));
-
+            String wizard_path = game.getCurrentPlayer().getWizardID().toString().toLowerCase();
+            cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
         });
     }
 
     public void showDeck(){
-        for(int i=0; i<10; i++){
+        for(int i = 0; i<10; i++){
             String imagePath = "/img/Assistenti/Assistente"+(i+1)+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
@@ -56,6 +59,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         String cardName = game.getCurrentPlayer().getDeck().get(cardId).getName();
         System.out.println(cardName);
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
+    }
+
+    public void showUpdate(String updateMessage){
+        updateLabel.setText(updateMessage);
     }
 
 }
