@@ -30,7 +30,7 @@ public class GameController implements Serializable {
     protected static final String INVALID_STATE = "Invalid game state.";
     protected static final String END_STATE = "The game has ended, the winner is: ";
     private final List<String> gameQueue;
-    private transient Map<String, VirtualView> virtualViewMap;
+    private final transient Map<String, VirtualView> virtualViewMap;
 
     /**
      * Game controller constructor.
@@ -885,7 +885,7 @@ public class GameController implements Serializable {
     public void broadcastWaitingMessage(){
         for (VirtualView vv : virtualViewMap.values()) {
             if(!vv.equals(virtualViewMap.get(game.getCurrentPlayer().getNickname())))
-                vv.showGenericMessage("It's " + game.getCurrentPlayer().getNickname() + "'s turn. Please wait.");
+                vv.showUpdateMessage("It's " + game.getCurrentPlayer().getNickname() + "'s turn. Please wait.");
         }
     }
 

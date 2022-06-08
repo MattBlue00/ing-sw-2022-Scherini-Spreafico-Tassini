@@ -39,8 +39,8 @@ public class Server{
      * Method used to implement the correct {@code GameController}.
      * It's a factory method, returns a {@code GameController}.
      *
-     * @param receivedMessage
-     * @return {@code GameController}
+     * @param receivedMessage message passed to the factory.
+     * @return {@code GameController}.
      */
     public GameController initController(Message receivedMessage){
         GameControllerFactory gameControllerFactory = new GameControllerFactory();
@@ -80,8 +80,8 @@ public class Server{
         {@code GameController.prepareGame(playerNum)} to create a new game with the
         number of players declared in the message.
 
-     @param message message with the number of players
-     @throws WrongMessageSentException If the gameNumber is already in the list
+     @param message message with the number of players.
+     @throws WrongMessageSentException If the gameNumber is already in the list.
      */
     public void createNewGameController(Message message) throws WrongMessageSentException {
         int gameNumber = ((CreateGameMessage) message).getGameNumber();
@@ -101,13 +101,16 @@ public class Server{
     }
 
     /**
-        This method is divided in three parts:
-        1)  If the server receives a CreateGameMessage then a new GameController
-            is created and the creator automatically join the game.
-        2)  If the server receives a JoinGameMessage then the client is added to the chosen
-            existing game.
-        3) Else the message is passed to the correct gameController
+     * This method is divided in three parts:
+     *  1)  If the server receives a CreateGameMessage then a new GameController.
+     *      is created and the creator automatically join the game.
+     *  2)  If the server receives a JoinGameMessage then the client is added to the chosen
+     *      existing game.
+     *  3) Else the message is passed to the correct gameController.
+     *
+     * @param message message that will be controlled as said before.
      */
+
     public void getMessage(Message message){
         try {
             if(message.getMessageType() == MessageType.CREATE_GAME) {
@@ -146,16 +149,29 @@ public class Server{
         }
     }
 
+    /**
+     * Returns the actual {@code gameControllerMap}.
+     *
+     * @return the actual {@code gameControllerMap}.
+     */
     public Map<Integer, GameController> getGameControllerMap() {
         return gameControllerMap;
     }
-
+    /**
+     * Returns the actual {@code clientHandlerMap}.
+     *
+     * @return the actual {@code clientHandlerMap}.
+     */
     public Map<String, ClientHandler> getClientHandlerMap() { return clientHandlerMap; }
 
-    /*
-                returns the gameID associated to a nickname, if it doesn't exists
-                returns -1.
-            */
+    /**
+     *  returns the gameID associated to a nickname, if it doesn't
+     *  exist returns -1.
+     *
+     * @param nickname the nickname of the {@link Player} present in the {@link GameController} to get.
+     * @return the {@code GameController} associated to a {@code nickname}.
+     */
+
     private int getGameIDFromNickname(String nickname){
         return gameControllerMap.entrySet()
                 .stream()
@@ -166,8 +182,11 @@ public class Server{
     }
 
 
-    /*
-        return the nickname associated to a clientHandler
+    /**
+     * Return the nickname associated to a {@code clientHandler}.
+     *
+     * @param clientHandler the clientHandler of the {@code Player} to get.
+     * @return the {@code nickname} associated to the {@code clientHandler}.
      */
     private String getNicknameFromClientHandler(ClientHandler clientHandler) {
         return clientHandlerMap.entrySet()
@@ -178,6 +197,13 @@ public class Server{
                 .orElse(null);
     }
 
+    /**
+     * This method handles what happens when a client disconnect from the server.
+     * The method must eliminate the {@link GameController} from the {@code gameControllerMap}.
+     * then removes the {@code nickname} and the {@code clientHandler}.
+     *
+     * @param clientHandler {@code clientHandler} that has disconnected.
+     */
     public void onDisconnect(ClientHandler clientHandler){
         synchronized (lock){
             String nick = getNicknameFromClientHandler(clientHandler);

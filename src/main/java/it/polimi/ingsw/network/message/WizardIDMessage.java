@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.message;
 
 /**
+ * /**
+ * The message extends {@link Message}.
  * This Message class is used to select a WizardID.
  */
 public class WizardIDMessage extends Message{

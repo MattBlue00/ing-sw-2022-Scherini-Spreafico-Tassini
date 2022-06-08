@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
+ * The message extends {@link Message}.
  * Message used by the client to request a login to the server.
  */
 public class LoginRequest extends Message{

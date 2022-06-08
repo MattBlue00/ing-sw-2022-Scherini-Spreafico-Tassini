@@ -15,7 +15,7 @@ import java.util.Optional;
 public class Hall implements Serializable {
 
     private final int capacity;
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     /**
      * Hall constructor.

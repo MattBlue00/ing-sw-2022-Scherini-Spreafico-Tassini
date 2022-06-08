@@ -21,7 +21,7 @@ public class Island implements Serializable {
     private Player owner;
     private final int id;
     private int numOfTowers;
-    private List<Student> students;
+    private final List<Student> students;
     private Island prev; // to iterate the DoublyLinkedList islands
     private Island next; // to iterate the DoublyLinkedList islands
     private boolean hasVetoTile; // when the flag is true, it's not possible to calculate the influences

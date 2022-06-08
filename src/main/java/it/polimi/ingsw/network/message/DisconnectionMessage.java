@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
+ * The message extends {@link Message}.
  * Message used to notify a disconnection to the other players.
  */
 public class DisconnectionMessage extends Message{

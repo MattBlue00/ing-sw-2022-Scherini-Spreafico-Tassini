@@ -1,5 +1,11 @@
 package it.polimi.ingsw.network.message;
 
+/**
+ * The message extends {@link Message}.
+ * It is used to send how many steps a client
+ * chooses to move mother nature.
+ */
+
 public class MotherNatureStepsMessage extends Message{
 
     private final int steps;

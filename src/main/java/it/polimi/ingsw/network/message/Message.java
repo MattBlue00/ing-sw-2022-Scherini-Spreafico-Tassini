@@ -16,8 +16,8 @@ public abstract class Message implements Serializable {
     /**
      * Default constructor.
      *
-     * @param nickname client's nickname
-     * @param messageType message type
+     * @param nickname client's nickname.
+     * @param messageType message type.
      */
     public Message(String nickname, MessageType messageType){
         this.nickname = nickname;

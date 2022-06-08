@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class AssistantCard implements Serializable {
 
-    private AssistantType assistantType;
+    private final AssistantType assistantType;
 
     /**
      * Assistant Card constructor.

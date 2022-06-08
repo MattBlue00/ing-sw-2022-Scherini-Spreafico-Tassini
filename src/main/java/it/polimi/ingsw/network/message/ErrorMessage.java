@@ -5,7 +5,7 @@ package it.polimi.ingsw.network.message;
  */
 public class ErrorMessage extends Message{
 
-    private String error;
+    private final String error;
 
     /**
      * Default constructor.

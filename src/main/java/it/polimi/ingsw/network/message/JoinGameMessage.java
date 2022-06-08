@@ -1,11 +1,12 @@
 package it.polimi.ingsw.network.message;
 
 /**
+ * The message extends {@link Message}.
  * Message class used by the client to choose a game to join.
  */
 public class JoinGameMessage extends Message{
 
-    private int gameID;
+    private final int gameID;
 
     /**
      * Default constructor.

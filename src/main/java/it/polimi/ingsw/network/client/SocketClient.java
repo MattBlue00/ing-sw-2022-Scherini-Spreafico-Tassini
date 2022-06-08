@@ -2,19 +2,20 @@ package it.polimi.ingsw.network.client;
 
 import it.polimi.ingsw.network.message.ErrorMessage;
 import it.polimi.ingsw.network.message.Message;
-import it.polimi.ingsw.utils.Constants;
+import it.polimi.ingsw.network.server.Server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
+
+/**
+ * The implementation of the Client interface.
+ * It can send and receive messages from and to a {@link Server}
+ */
 public class SocketClient extends Client{
 
     private final Socket socket;
@@ -31,10 +32,11 @@ public class SocketClient extends Client{
     }
 
 
-    /*
-        The method sends the message passed as parameter (from the view)
-        to the server.
-        (Messages are serializable Objects so we use out.WriteObject)
+    /**
+     * The method sends the message passed as parameter (from the view)
+     * to the server.
+     * (Messages are serializable Objects so we use out.WriteObject).
+     * @param message the message to send.
      */
     @Override
     public void sendMessage(Message message) {
@@ -47,6 +49,10 @@ public class SocketClient extends Client{
         }
     }
 
+    /**
+     *  The method reads messages from the {@link Server} asynchronously
+     *  using {@link ExecutorService}.
+     */
     @Override
     public void readMessage() {
         readExecutionQueue.execute(() -> {
@@ -63,6 +69,9 @@ public class SocketClient extends Client{
         });
     }
 
+    /**
+     * The method makes the Client disconnect from the {@link Server}
+     */
     @Override
     public void disconnect() {
         try {
@@ -78,10 +87,18 @@ public class SocketClient extends Client{
         }
     }
 
+    /**
+     *
+     * @return the actual Socket.
+     */
     public Socket getSocket() {
         return socket;
     }
 
+    /**
+     * Sets the {@link ExecutorService}.
+     * @param readExecutionQueue the {@link ExecutorService} to set.
+     */
     public void setReadExecutionQueue(ExecutorService readExecutionQueue) {
         this.readExecutionQueue = readExecutionQueue;
     }

@@ -6,7 +6,7 @@
 .island{
     -fx-background-image: url("/img/island.png");
     -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
+    -fx-background-size: 120px;
     -fx-cursor: hand;
 }
 

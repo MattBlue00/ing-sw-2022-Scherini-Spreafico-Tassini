@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class Jester extends CharacterCard implements ArrayListStringCard, Serializable {
 
-    private List<Student> studentsOnTheCard = new ArrayList<>();
+    private final List<Student> studentsOnTheCard = new ArrayList<>();
     private List<String> studentsToMove;
 
     /**
