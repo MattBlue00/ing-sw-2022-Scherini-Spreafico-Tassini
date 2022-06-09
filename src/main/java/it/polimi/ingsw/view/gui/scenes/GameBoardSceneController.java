@@ -2,12 +2,15 @@ package it.polimi.ingsw.view.gui.scenes;
 
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.observers.ViewObservable;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 
 import java.util.List;
@@ -25,7 +28,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private List<Image> characterCards;
     @FXML
-    private Label updateLabel;
+    private TextFlow history;
     private Game game;
 
     public void setGame(Game game) {
@@ -34,35 +37,39 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     @FXML
     public void initialize(){
-        deck.setOnMouseClicked(e -> {
-            Node node = (Node) e.getTarget();
-            int cardId = GridPane.getColumnIndex(node);
-
-            ImageView cardImage = (ImageView) node;
-            playCard(cardId);
-            String wizard_path = game.getCurrentPlayer().getWizardID().toString().toLowerCase();
-            cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
-        });
+        deck.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickAssistantCard);
     }
 
     public void showDeck(){
+        deck.setDisable(false);
         for(int i = 0; i<10; i++){
             String imagePath = "/img/Assistenti/Assistente"+(i+1)+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
-            image.setFitWidth(80);
+            image.setFitWidth(85);
             deck.add(image, i, 0);
         }
     }
 
+    public void onClickAssistantCard(Event e){
+        deck.setDisable(true);
+        Node node = (Node) e.getTarget();
+        int cardId = GridPane.getColumnIndex(node);
+
+        ImageView cardImage = (ImageView) node;
+        playCard(cardId);
+        String wizard_path = game.getCurrentPlayer().getWizardID().toString().toLowerCase();
+        cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
+    }
+
     private void playCard(int cardId) {
         String cardName = game.getCurrentPlayer().getDeck().get(cardId).getName();
-        System.out.println(cardName);
+        showUpdate("You played: "+cardName);
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
     }
 
     public void showUpdate(String updateMessage){
-        updateLabel.setText(updateMessage);
+        Text message = new Text(updateMessage+"\n");
+        history.getChildren().add(message);
     }
-
 }

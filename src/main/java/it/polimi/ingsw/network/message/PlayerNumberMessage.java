@@ -1,10 +1,19 @@
 package it.polimi.ingsw.network.message;
 
-//TODO: delete this class
+/**
+ * this class is used just for testing purposes.
+ * It is used to simply send the number of players of a Game.
+ */
 public class PlayerNumberMessage extends Message{
 
-    private int playerNumber;
+    private final int playerNumber;
 
+    /**
+     * Default constructor.
+     *
+     * @param nickname the serialized Model.
+     * @param playerNumber the chosen color String.
+     */
     public PlayerNumberMessage(String nickname, int playerNumber) {
         super(nickname, MessageType.PLAYER_NUMBER_REPLY);
         this.playerNumber = playerNumber;

@@ -20,8 +20,8 @@ public class Table implements Serializable {
 
     private final Color color;
     private boolean hasProfessor;
-    private List<Student> students;
-    private boolean[] coinsAvailable = new boolean[Constants.COINS_AVAILABLE_PER_TABLE];
+    private final List<Student> students;
+    private final boolean[] coinsAvailable = new boolean[Constants.COINS_AVAILABLE_PER_TABLE];
 
     /**
      * Table constructor.

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
+import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.utils.Constants;
 
@@ -14,6 +15,10 @@ import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.network.server.Server.LOGGER;
 
+/**
+ * SocketServer class, it implements the Socket on
+ * computer local address and specified PORT.
+ */
 public class SocketServer implements Runnable{
 
     private final Server server;
@@ -27,11 +32,11 @@ public class SocketServer implements Runnable{
         this.pinger = Executors.newSingleThreadScheduledExecutor();
     }
 
-    /*
-        Create a new ServerSocket associated to the chosen port.
-        Threads will accept different clients (each one has a Socket client)
-        New Thread is created with the associated ClientHandler.
-        In the end the thread starts.
+    /**
+     * Create a new {@link ServerSocket} associated to the chosen port.
+     * Threads will accept different clients (each one has a Socket client).
+     * New Thread is created with the associated ClientHandler.
+     * In the end the thread starts.
      */
     @Override
     public void run() {
@@ -56,22 +61,42 @@ public class SocketServer implements Runnable{
         LOGGER.severe("Server is offline.\n");
     }
 
+    /**
+     * @return the {@link Server}
+     */
     public Server getServer() {
         return server;
     }
 
+    /**
+     *
+     * @param nickname the nickname of the client to connect.
+     * @param clientHandler the {@link ClientHandler} to Associate.
+     * @throws TryAgainException when the {@link Client}'s nickname has already been chosen.
+     */
     public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException {
         server.addClient(nickname, clientHandler);
     }
 
+    /**
+     *
+     * @param message received from {@link SocketClientHandler} to send to the {@link Server}.
+     */
     public void getMessage(Message message){
         server.getMessage(message);
     }
 
+    /**
+     *
+     * @param clientHandler to pass to the server.
+     */
     public void onDisconnect(ClientHandler clientHandler){
         server.onDisconnect(clientHandler);
     }
 
+    /**
+     * Checks if all Clients are reachable.
+     */
     public void isReachable(){
         server.getClientHandlerMap().forEach( (name, clientHandler) -> {
             try {

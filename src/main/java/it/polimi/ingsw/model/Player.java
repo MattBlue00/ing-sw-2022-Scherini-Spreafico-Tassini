@@ -24,7 +24,7 @@ public class Player implements Serializable {
     private final Wizard wizardID;
     private final String nickname;
     private List<AssistantCard> deck;
-    private School school;
+    private final School school;
     private int coinsWallet;
     private AssistantCard latestAssistantCardPlayed;
     private boolean characterCardAlreadyPlayed;

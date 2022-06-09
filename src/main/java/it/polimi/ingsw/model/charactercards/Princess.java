@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Princess extends CharacterCard implements StringCard, Serializable {
 
-    private Student[] students;
+    private final Student[] students;
     private String chosenColor;
 
     /**

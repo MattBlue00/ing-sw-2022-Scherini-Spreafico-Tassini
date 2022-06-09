@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Monk extends CharacterCard implements StringIntCard, Serializable {
 
-    private Student[] students;
+    private final Student[] students;
     private String chosenColor;
     private int chosenIsland;
 

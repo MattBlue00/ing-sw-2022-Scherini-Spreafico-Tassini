@@ -15,9 +15,9 @@ import java.io.Serializable;
 
 public class School implements Serializable {
 
-    private Table tables[];
-    private TowerRoom towerRoom;
-    private Hall hall;
+    private final Table[] tables;
+    private final TowerRoom towerRoom;
+    private final Hall hall;
 
     /**
      * School constructor.

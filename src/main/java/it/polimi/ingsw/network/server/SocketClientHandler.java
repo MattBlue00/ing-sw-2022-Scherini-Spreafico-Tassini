@@ -1,6 +1,9 @@
 package it.polimi.ingsw.network.server;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.TryAgainException;
+import it.polimi.ingsw.network.client.Client;
+import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
 import it.polimi.ingsw.view.VirtualView;
@@ -10,6 +13,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * ClientHandler implementation that handles the communication
+ * between a Client and the Server.
+ */
 public class SocketClientHandler implements ClientHandler, Runnable{
 
     private final Socket client;
@@ -39,17 +46,33 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
+    /**
+     *
+     * @param virtualView the VirtualView that ha to be set.
+     */
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
 
+    /**
+     *
+     * @return the actual {@link VirtualView}
+     */
     public VirtualView getVirtualView() {
         return virtualView;
     }
 
+    /**
+     *
+     * @return the actual {@link SocketClient}
+     */
     @Override
     public Socket getSocketClient() { return client; }
 
+    /**
+     * The run method starts the {@link SocketClientHandler}
+     * to handle the connection with the {@link SocketClient}
+     */
     @Override
     public void run() {
         try {
@@ -61,11 +84,12 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
-    /*
-        The method reads messages from the associated client after deserializing
-        the message, if it is a login request it adds the client to our client list
-        else it just sends the message to the socketServer -> Server -> GameController
-        FIXME: During testing it launches an Exception despite working correctly
+    /**
+     * The method reads messages from the associated client after deserializing
+     * the message, if it is a login request it adds the {@link SocketClient} to our client list
+     * else it just sends the message to the {@link SocketServer} -> {@link Server} -> {@link GameController}.
+     *
+     * @throws IOException if there are IOErrors.
      */
     public void handleClientConnection() throws IOException {
         Server.LOGGER.info("Client connected from " + client.getInetAddress());
@@ -102,14 +126,17 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
-    /*
-        boolean, return true if the client is connected.
+    /**
+     * Returns true if the {@link SocketClient} is connected.
      */
     @Override
     public boolean isConnected() {
         return this.connected;
     }
 
+    /**
+     * {@link SocketClientHandler} disconnect method
+     */
     @Override
     public void disconnect() {
         if (connected) {
@@ -126,6 +153,11 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
+    /**
+     * Send a message to the associated {@link SocketClient}
+     *
+     * @param message the message to be sent.
+     */
     @Override
     public void sendMessage(Message message) {
         try {

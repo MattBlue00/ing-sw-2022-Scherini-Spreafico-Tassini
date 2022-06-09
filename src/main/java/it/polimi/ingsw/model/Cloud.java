@@ -16,7 +16,7 @@ import java.util.List;
 public class Cloud implements Serializable {
 
     private final int capacity;
-    private ArrayList<Student> students;
+    private final ArrayList<Student> students;
 
     /**
      * Cloud constructor.
