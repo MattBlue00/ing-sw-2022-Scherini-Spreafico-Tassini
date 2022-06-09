@@ -57,12 +57,14 @@ public class Villager extends CharacterCard implements StringCard, Serializable 
                 int calcOwner = selectedIsland.influenceCalc(owner, colorToExclude);
                 GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
+                game.getBoard().setMotherNaturePos(selectedIsland.getId());
             }
         }
         else{
             int calcCurrent = selectedIsland.influenceCalc(currentPlayer, colorToExclude);
             GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
                     game.getBoard().getIslands());
+            game.getBoard().setMotherNaturePos(selectedIsland.getId());
         }
 
     }

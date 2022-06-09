@@ -37,6 +37,16 @@ public class DoublyLinkedList implements Serializable {
     }
 
     /**
+     * Returns the {@link Island} in the head of the list.
+     *
+     * @return the {@link Island} in the head of the list.
+     */
+
+    public Island getHead() {
+        return head;
+    }
+
+    /**
      * Adds an island at the bottom of the list. If the list is empty, adds the first element and set the "prev" and
      * "next" pointers towards the same island.
      *
@@ -79,11 +89,13 @@ public class DoublyLinkedList implements Serializable {
             island.setNumOfTowers(island.getNumOfTowers() + prev.getNumOfTowers());
             prev.getStudents().forEach(island::addStudent);
             removeIsland(prev);
+            GameBoard.reassignIslandIDs(this);
         }
         if(next.getOwner() != null && next.getOwner().equals(island.getOwner())){
             island.setNumOfTowers(island.getNumOfTowers() + next.getNumOfTowers());
             next.getStudents().forEach(island::addStudent);
             removeIsland(next);
+            GameBoard.reassignIslandIDs(this);
         }
     }
 
@@ -123,5 +135,6 @@ public class DoublyLinkedList implements Serializable {
         }
         throw new IslandNotFoundException("No Island " + islandID + " was found.");
     }
+
 
 }

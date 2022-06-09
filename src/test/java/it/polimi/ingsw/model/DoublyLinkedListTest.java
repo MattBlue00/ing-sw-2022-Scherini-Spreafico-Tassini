@@ -37,7 +37,7 @@ class DoublyLinkedListTest {
             g1.islandConquerCheck(2);
 
             assertEquals(11, g1.getBoard().getIslands().getSize());
-            assertEquals(Optional.of(p1), g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertEquals(p1, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
 
         }
         catch(NonExistentColorException | FullTableException | IslandNotFoundException ignored){}

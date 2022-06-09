@@ -46,12 +46,14 @@ public class Centaur extends CharacterCard implements Serializable {
                 int calcOwner = selectedIsland.influenceCalcWithoutTowers(owner);
                 GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
+                game.getBoard().setMotherNaturePos(selectedIsland.getId());
             }
         }
         else{
             int calcCurrent = selectedIsland.influenceCalcWithoutTowers(currentPlayer);
             GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
                     game.getBoard().getIslands());
+            game.getBoard().setMotherNaturePos(selectedIsland.getId());
         }
 
     }

@@ -6,6 +6,11 @@ import it.polimi.ingsw.exceptions.EmptyCloudException;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameBoardTest{
@@ -79,6 +84,40 @@ public class GameBoardTest{
                 else
                     assertEquals(0, currentIsland.getStudents().size());
             } catch (IslandNotFoundException ignored){}
+        }
+
+    }
+
+    @Test
+    public void testReassignIslandIDs(){
+
+        Random random = new Random();
+        List<Integer> positions = new ArrayList<>(3);
+        for(int i = 0; i < 3; i++) {
+            int num;
+            do {
+                num = random.nextInt(12) + 1;
+            } while (positions.contains(num));
+            positions.add(num);
+        }
+
+        DoublyLinkedList islands = new DoublyLinkedList();
+        try {
+            islands.removeIsland(islands.getIslandFromID(positions.get(0)));
+            islands.removeIsland(islands.getIslandFromID(positions.get(1)));
+            islands.removeIsland(islands.getIslandFromID(positions.get(2)));
+        } catch (IslandNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(9, islands.getSize());
+        GameBoard.reassignIslandIDs(islands);
+        for(int i = 1; i < islands.getSize(); i++){
+            try {
+                assertEquals(islands.getIslandFromID(i).getId(), islands.getIslandFromID(i).getNext().getId() - 1);
+            } catch (IslandNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

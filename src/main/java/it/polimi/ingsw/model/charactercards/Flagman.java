@@ -1,8 +1,7 @@
 package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
-import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.model.GameExpertMode;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 
 import java.io.Serializable;
@@ -44,7 +43,26 @@ public class Flagman extends CharacterCard implements IntCard, Serializable {
 
     @Override
     public void doEffect(GameExpertMode game) throws TryAgainException {
-        game.getBoard().islandConquerCheck(game.getCurrentPlayer(), this.islandID);
+        if(game.getBoard().getIslands().getIslandFromID(islandID).hasVetoTile()) {
+            game.getBoard().getIslands().getIslandFromID(islandID).setHasVetoTile(false);
+            game.getBoard().setNumOfVetos(game.getBoard().getNumOfVetos() + 1);
+            return;
+        }
+        Island selectedIsland = game.getBoard().getIslands().getIslandFromID(islandID);
+        Player owner = selectedIsland.getOwner();
+        if(owner != null) {
+            if (!owner.equals(game.getCurrentPlayer())) {
+                int calcCurrent = selectedIsland.influenceCalc(game.getCurrentPlayer());
+                int calcOwner = selectedIsland.influenceCalc(owner);
+                GameBoard.islandConquerAlgorithm(game.getCurrentPlayer(), selectedIsland,
+                        calcCurrent, calcOwner, game.getBoard().getIslands());
+            }
+        }
+        else{
+            int calcCurrent = selectedIsland.influenceCalc(game.getCurrentPlayer());
+            GameBoard.islandConquerAlgorithm(game.getCurrentPlayer(), selectedIsland,
+                    calcCurrent, 0, game.getBoard().getIslands());
+        }
     }
 
 
