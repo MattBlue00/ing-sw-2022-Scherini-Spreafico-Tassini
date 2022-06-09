@@ -125,6 +125,37 @@ public class GameBoard implements Serializable {
     public DoublyLinkedList getIslands() { return islands; }
 
     /**
+     * Returns the cloud of the given index (if the index is 0, the cloud is the 1st).
+     *
+     * @param i an {@code int} representing the index of the cloud to return.
+     * @return the desired {@link Cloud}.
+     */
+
+    public Cloud getCloud(int i) {
+        return clouds[i];
+    }
+
+    /**
+     * Returns the bag of students of the game board.
+     *
+     * @return a list containing all the students of the bag.
+     */
+
+    public List<Student> getStudentsBag() {
+        return studentsBag;
+    }
+
+    /**
+     * Sets the bag of students of the game board.
+     *
+     * @param bag a list containing the new students of the bag.
+     */
+
+    public void setStudentsBag(List<Student> bag){
+        this.studentsBag = bag;
+    }
+
+    /**
      * Returns the number of veto tiles available on the game board (Expert mode exclusive).
      *
      * @return an {@code int} representing the number of veto tiles available (0-4).
@@ -207,11 +238,13 @@ public class GameBoard implements Serializable {
                 int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
                 int calcOwner = selectedIsland.influenceCalc(owner);
                 islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner, islands);
+                motherNaturePos = selectedIsland.getId();
             }
         }
         else{
             int calcCurrent = selectedIsland.influenceCalc(currentPlayer);
             islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0, islands);
+            motherNaturePos = selectedIsland.getId();
         }
 
     }
@@ -254,34 +287,21 @@ public class GameBoard implements Serializable {
     }
 
     /**
-     * Returns the cloud of the given index (if the index is 0, the cloud is the 1st).
-     *
-     * @param i an {@code int} representing the index of the cloud to return.
-     * @return the desired {@link Cloud}.
+     * Reassigns the IDs of the islands after a merge operation.
      */
 
-    public Cloud getCloud(int i) {
-        return clouds[i];
-    }
+    public static void reassignIslandIDs(DoublyLinkedList islands){
 
-    /**
-     * Returns the bag of students of the game board.
-     *
-     * @return a list containing all the students of the bag.
-     */
+        Island head = islands.getHead();
+        if(head.getId() != 1)
+            head.setId(1);
+        Island currentIsland = head;
+        do{
+            if(!(currentIsland.getId() == currentIsland.getNext().getId() - 1))
+                currentIsland.getNext().setId(currentIsland.getId() + 1);
+            currentIsland = currentIsland.getNext();
+        }while(!currentIsland.getNext().equals(head));
 
-    public List<Student> getStudentsBag() {
-        return studentsBag;
-    }
-
-    /**
-     * Sets the bag of students of the game board.
-     *
-     * @param bag a list containing the new students of the bag.
-     */
-
-    public void setStudentsBag(List<Student> bag){
-        this.studentsBag = bag;
     }
 
 }

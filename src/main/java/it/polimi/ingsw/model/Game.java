@@ -481,6 +481,7 @@ public class Game implements Serializable {
      * @param nick is the nickname given
      * @return {@link Player} that has the given nickname
      */
+
     public Player getPlayerFromNickname(String nick){
         Player p = null;
         for (Player player : getPlayers()){

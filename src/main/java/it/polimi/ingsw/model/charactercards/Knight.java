@@ -46,12 +46,14 @@ public class Knight extends CharacterCard implements Serializable {
                 int calcOwner = selectedIsland.influenceCalc(owner);
                 GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, calcOwner,
                         game.getBoard().getIslands());
+                game.getBoard().setMotherNaturePos(selectedIsland.getId());
             }
         }
         else{
             int calcCurrent = selectedIsland.influenceCalc(currentPlayer) + 2;
             GameBoard.islandConquerAlgorithm(currentPlayer, selectedIsland, calcCurrent, 0,
                     game.getBoard().getIslands());
+            game.getBoard().setMotherNaturePos(selectedIsland.getId());
         }
 
     }

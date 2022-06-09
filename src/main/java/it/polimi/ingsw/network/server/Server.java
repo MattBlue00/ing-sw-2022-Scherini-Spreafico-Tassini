@@ -165,7 +165,7 @@ public class Server{
     public Map<String, ClientHandler> getClientHandlerMap() { return clientHandlerMap; }
 
     /**
-     *  returns the gameID associated to a nickname, if it doesn't
+     *  Returns the gameID associated to a nickname, if it doesn't
      *  exist returns -1.
      *
      * @param nickname the nickname of the {@link Player} present in the {@link GameController} to get.
@@ -183,7 +183,7 @@ public class Server{
 
 
     /**
-     * Return the nickname associated to a {@code clientHandler}.
+     * Returns the nickname associated to a {@code clientHandler}.
      *
      * @param clientHandler the clientHandler of the {@code Player} to get.
      * @return the {@code nickname} associated to the {@code clientHandler}.

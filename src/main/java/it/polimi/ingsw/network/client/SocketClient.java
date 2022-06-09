@@ -36,6 +36,7 @@ public class SocketClient extends Client{
      * The method sends the message passed as parameter (from the view)
      * to the server.
      * (Messages are serializable Objects so we use out.WriteObject).
+     *
      * @param message the message to send.
      */
     @Override
@@ -88,6 +89,7 @@ public class SocketClient extends Client{
     }
 
     /**
+     * Returns the actual Socket.
      *
      * @return the actual Socket.
      */
@@ -97,6 +99,7 @@ public class SocketClient extends Client{
 
     /**
      * Sets the {@link ExecutorService}.
+     *
      * @param readExecutionQueue the {@link ExecutorService} to set.
      */
     public void setReadExecutionQueue(ExecutorService readExecutionQueue) {

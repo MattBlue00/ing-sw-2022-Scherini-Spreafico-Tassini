@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Island implements Serializable {
 
     private Player owner;
-    private final int id;
+    private int id;
     private int numOfTowers;
     private final List<Student> students;
     private Island prev; // to iterate the DoublyLinkedList islands
@@ -48,6 +48,16 @@ public class Island implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    /**
+     * Updates the ID of the island.
+     *
+     * @param id an {@code int} representing the new ID of the island.
+     */
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

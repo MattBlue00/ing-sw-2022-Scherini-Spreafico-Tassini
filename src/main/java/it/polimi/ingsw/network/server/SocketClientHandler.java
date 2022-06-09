@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.server;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.exceptions.TryAgainException;
-import it.polimi.ingsw.network.client.Client;
 import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
@@ -47,30 +46,33 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
+     * Sets the {@link VirtualView}.
      *
-     * @param virtualView the VirtualView that ha to be set.
+     * @param virtualView the {@link VirtualView} that has to be set.
      */
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
 
     /**
+     * Returns the {@link VirtualView}.
      *
-     * @return the actual {@link VirtualView}
+     * @return the actual {@link VirtualView}.
      */
     public VirtualView getVirtualView() {
         return virtualView;
     }
 
     /**
+     * Returns the {@link SocketClient}.
      *
-     * @return the actual {@link SocketClient}
+     * @return the actual {@link SocketClient}.
      */
     @Override
     public Socket getSocketClient() { return client; }
 
     /**
-     * The run method starts the {@link SocketClientHandler}
+     * Starts the {@link SocketClientHandler}
      * to handle the connection with the {@link SocketClient}
      */
     @Override
@@ -85,9 +87,9 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
-     * The method reads messages from the associated client after deserializing
-     * the message, if it is a login request it adds the {@link SocketClient} to our client list
-     * else it just sends the message to the {@link SocketServer} -> {@link Server} -> {@link GameController}.
+     * Reads messages from the associated client after deserializing the message; if it is a login request, it adds
+     * the {@link SocketClient} to the client list, otherwise it just sends the message to the {@link SocketServer}
+     * -> {@link Server} -> {@link GameController}.
      *
      * @throws IOException if there are IOErrors.
      */
@@ -120,7 +122,6 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }catch(IOException | ClassNotFoundException ex){
             Server.LOGGER.severe("Invalid stream from client. \n" +
                     ex.getClass().getSimpleName() + ": " + ex.getMessage());
-            Server.LOGGER.severe(ex.toString());
         } finally {
             disconnect();
         }
@@ -135,7 +136,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
-     * {@link SocketClientHandler} disconnect method
+     * {@link SocketClientHandler} disconnect method.
      */
     @Override
     public void disconnect() {
