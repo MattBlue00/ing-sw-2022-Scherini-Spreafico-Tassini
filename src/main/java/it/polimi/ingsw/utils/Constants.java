@@ -21,6 +21,7 @@ public class Constants implements Serializable {
     public static final int STUDENTS_PER_COLOR = 26;
 
     public int MAX_HALL_STUDENTS;
+    public int NUM_CLOUDS;
     public int MAX_TOWERS;
     public int MAX_CLOUD_STUDENTS;
     public int PLAYER_MOVES;
@@ -35,12 +36,14 @@ public class Constants implements Serializable {
             MAX_TOWERS = 8;
             MAX_CLOUD_STUDENTS = 3;
             PLAYER_MOVES = 3;
+            NUM_CLOUDS = 2;
         }
         else{
             MAX_HALL_STUDENTS = 9;
             MAX_TOWERS = 6;
             MAX_CLOUD_STUDENTS = 4;
             PLAYER_MOVES = 4;
+            NUM_CLOUDS = 3;
         }
     }
 

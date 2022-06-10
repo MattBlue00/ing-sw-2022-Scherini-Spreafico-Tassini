@@ -1,10 +1,14 @@
 package it.polimi.ingsw.view.gui.scenes;
 
+import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.observers.ViewObservable;
+import it.polimi.ingsw.utils.Constants;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,9 +30,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private List<GridPane> islands;
     @FXML
-    private List<Image> characterCards;
+    private GridPane characterCards;
     @FXML
     private TextFlow history;
+    @FXML
+    private GridPane clouds;
     private Game game;
 
     public void setGame(Game game) {
@@ -38,6 +44,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     public void initialize(){
         deck.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickAssistantCard);
+        //clouds.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
+        //characterCards.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCharacterCard);
     }
 
     public void showDeck(){
@@ -72,4 +80,58 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         Text message = new Text(updateMessage+"\n");
         history.getChildren().add(message);
     }
+
+    public void onClickCloud(Event e){
+        clouds.setDisable(true);
+        Node node = (Node) e.getTarget();
+        int cloudId = GridPane.getColumnIndex(node);
+
+        chooseCloud(cloudId);
+    }
+
+    private void chooseCloud(int cloudId){
+        showUpdate("Cloud chosen: " + cloudId);
+        notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudId));
+    }
+
+    public void showClouds(){
+        clouds.setDisable(false);
+        for(int i = 0; i < game.getConstants().NUM_CLOUDS ; i++){
+            String imagePath = "/img/cloud_card.png";
+            ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+            image.setPreserveRatio(true);
+            image.setFitWidth(85); //TODO: check if it's a correct width
+            clouds.add(image, i, 0);
+        }
+    }
+
+    public void onClickCharacterCard(Event e){
+        characterCards.setDisable(true);
+        Node node = (Node) e.getTarget();
+        int characterCardId = GridPane.getColumnIndex(node);
+
+        playCharacterCard(characterCardId);
+    }
+
+    private void playCharacterCard(int characterCard){
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCard).toString();
+        showUpdate("You played: " + cardName);
+        if(characterCard == 2){
+            notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(characterCard));
+        }
+    }
+
+    public void showCharacterCards(){
+        characterCards.setDisable(false);
+        CharacterCard[] charactersCard = ((GameExpertMode) game).getCharacters();
+        for(int i = 0; i<3; i++){
+            int characterCardId = charactersCard[i].getId();
+            String imagePath = "/img/Personaggi/CarteTOT_front"+(characterCardId)+".png";
+            ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+            image.setPreserveRatio(true);
+            image.setFitWidth(85); //TODO: check if it's a correct width
+            characterCards.add(image, i, 0);
+        }
+    }
+
 }

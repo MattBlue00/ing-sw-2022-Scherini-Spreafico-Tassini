@@ -25,9 +25,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void askServerData() {
-
-    }
+    public void askServerData() { }
 
     @Override
     public void askNickname() {
@@ -81,12 +79,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCloud() {
-
+        Platform.runLater(() -> bsc.showClouds());
     }
 
     @Override
     public void askCharacterCard() {
-
+        Platform.runLater(() -> bsc.showCharacterCards());
     }
 
     @Override
