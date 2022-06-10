@@ -1,14 +1,12 @@
-package it.polimi.ingsw.view.gui.scenes;
+package it.polimi.ingsw.view.gui.scenecontrollers;
 
 import it.polimi.ingsw.model.CharacterCard;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.observers.ViewObservable;
-import it.polimi.ingsw.utils.Constants;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -50,8 +48,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void showDeck(){
         deck.setDisable(false);
+        history.getChildren().add(new Text("Please play an Assistant Card.\n"));
         for(int i = 0; i<10; i++){
-            String imagePath = "/img/Assistenti/Assistente"+(i+1)+".png";
+            String imagePath = "/img/assistants/assistant" +(i+1)+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85);
@@ -66,13 +65,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int cardId = GridPane.getColumnIndex(node);
 
         ImageView cardImage = (ImageView) node;
-        playCard(cardId);
+        playAssistantCard(cardId);
         String wizard_path = game.getCurrentPlayer().getWizardID().toString().toLowerCase();
         cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
         cardImage.getStyleClass().set(0,"");
     }
 
-    private void playCard(int cardId) {
+    private void playAssistantCard(int cardId) {
         String cardName = game.getCurrentPlayer().getDeck().get(cardId).getName();
         showUpdate("You played: "+cardName);
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
@@ -128,7 +127,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         CharacterCard[] charactersCard = ((GameExpertMode) game).getCharacters();
         for(int i = 0; i<3; i++){
             int characterCardId = charactersCard[i].getId();
-            String imagePath = "/img/Personaggi/CarteTOT_front"+(characterCardId)+".png";
+            String imagePath = "/img/characters/character_front" +(characterCardId)+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85); //TODO: check if it's a correct width

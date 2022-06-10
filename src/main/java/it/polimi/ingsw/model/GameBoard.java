@@ -89,7 +89,7 @@ public class GameBoard implements Serializable {
 
         // building and filling the clouds with students
 
-        for(int i = 0; i<playersNumber; i++) {
+        for(int i = 0; i<constants.NUM_CLOUDS; i++) {
             clouds[i] = new Cloud(constants.MAX_CLOUD_STUDENTS);
             for(int j = 0; j<clouds[i].getCapacity(); j++)
                 clouds[i].addStudent(studentsBag.remove(studentsBag.size() - 1));
@@ -195,7 +195,10 @@ public class GameBoard implements Serializable {
      */
 
     public void moveMotherNature(int steps){
-        setMotherNaturePos((getMotherNaturePos() + steps)%(islands.getSize()));
+        int newMotherNaturePosition = (getMotherNaturePos() + steps)%(islands.getSize());
+        if(newMotherNaturePosition == 0)
+            newMotherNaturePosition = getMotherNaturePos() + steps;
+        setMotherNaturePos(newMotherNaturePosition);
     }
 
     /**

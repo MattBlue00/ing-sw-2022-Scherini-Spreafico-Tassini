@@ -106,9 +106,8 @@ public class SocketClientHandler implements ClientHandler, Runnable{
                             try {
                                 socketServer.addClient(message.getNickname(), this);
                                 virtualView.showExistingGames(socketServer.getServer().getGameControllerMap());
-                                virtualView.askCreateOrJoin();
                             } catch (TryAgainException e) {
-                                Server.LOGGER.severe("Nickname has already been chosen.");
+                                Server.LOGGER.warning("Nickname has already been chosen.");
                                 virtualView.showGenericMessage("Nickname has already been chosen.");
                                 virtualView.askNickname();
                             }
@@ -155,7 +154,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
-     * Send a message to the associated {@link SocketClient}
+     * Sends a message to the associated {@link SocketClient}
      *
      * @param message the message to be sent.
      */
@@ -173,4 +172,18 @@ public class SocketClientHandler implements ClientHandler, Runnable{
         }
     }
 
+    @Override
+    public void sendMessageAndQuit(Message message) {
+        try {
+            synchronized (outputLock) {
+                out.writeObject(message);
+                out.reset();
+                Server.LOGGER.info("Sent: "+message.getClass().getSimpleName());
+                socketServer.onQuit(this);
+            }
+        } catch (IOException ex) {
+            Server.LOGGER.severe(ex.getClass().getSimpleName() + ": " + ex.getMessage());
+            disconnect();
+        }
+    }
 }

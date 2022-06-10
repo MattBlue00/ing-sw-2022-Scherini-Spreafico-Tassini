@@ -65,12 +65,15 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Serial
             Optional<Student> cardStudentOptional =
                     this.studentsOnTheCard.stream().filter(x -> x.getColor().equals(color2)).findFirst();
 
-            if(cardStudentOptional.isEmpty())
+            if(cardStudentOptional.isEmpty()) {
+                game.getCurrentPlayer().getSchool().getHall().addStudent(hallStudent);
                 throw new StudentNotFoundException("There's no " + color2 + " student on the card!");
+            }
 
             Student cardStudent = cardStudentOptional.get();
             game.getCurrentPlayer().getSchool().getHall().addStudent(cardStudent);
-            this.getStudentsOnTheCard().add(hallStudent);
+            this.studentsOnTheCard.remove(cardStudent);
+            this.studentsOnTheCard.add(hallStudent);
 
             maxNumOfChanges = maxNumOfChanges - 2;
         }

@@ -10,24 +10,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Label styleClass="text_label" text="Eriantys" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
    <right>
-      <VBox alignment="TOP_RIGHT" prefHeight="329.0" prefWidth="300.0" BorderPane.alignment="TOP_LEFT">
+      <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="395.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Label styleClass="text_label" text="Schools">
                <font>
@@ -68,41 +59,85 @@
       </VBox>
    </right>
    <bottom>
-      <VBox BorderPane.alignment="CENTER">
+      <HBox BorderPane.alignment="CENTER">
          <children>
-            <Label styleClass="text_label" text="Assistant Cards deck">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" />
-               </VBox.margin>
-            </Label>
-            <GridPane fx:id="deck" hgap="1.0" maxWidth="860.0" prefHeight="125.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </GridPane>
+            <VBox>
+               <children>
+                  <Label styleClass="text_label" text="Assistant Cards">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <GridPane fx:id="deck" hgap="1.0" maxWidth="860.0" prefHeight="125.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+               <HBox.margin>
+                  <Insets right="80.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="200.0">
+               <children>
+                  <Label styleClass="text_label" text="Character Cards">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../img/coin.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../img/coin.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <image>
+                              <Image url="@../img/coin.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </bottom>
    <left>
-      <VBox prefHeight="542.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="530.0" prefWidth="206.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Label styleClass="text_label" text="History">
                <font>
@@ -117,7 +152,7 @@
             </Label>
             <ScrollPane prefHeight="299.0" prefWidth="132.0">
                <content>
-                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="302.0" prefWidth="176.0">
+                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="302.0" prefWidth="174.0">
                      <children>
                         <TextFlow fx:id="history" layoutY="4.0" prefHeight="298.0" prefWidth="174.0">
                            <padding>
@@ -131,13 +166,24 @@
                   <Insets left="15.0" />
                </VBox.margin>
             </ScrollPane>
+            <Label styleClass="text_label" text="Coins">
+               <VBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
    </left>
    <center>
       <AnchorPane prefHeight="542.0" prefWidth="730.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="island1" layoutX="96.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+            <GridPane fx:id="island1" layoutX="106.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="151.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -150,8 +196,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
             </GridPane>
-            <GridPane fx:id="island11" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+            <GridPane fx:id="island2" layoutX="96.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -164,8 +217,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
             </GridPane>
-            <GridPane fx:id="island111" layoutX="365.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+            <GridPane fx:id="island3" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -178,11 +238,268 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island4" layoutX="460.0" layoutY="40.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="11.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island5" layoutX="365.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="11.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island6" layoutX="375.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="151.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island7" layoutX="385.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="291.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island8" layoutX="480.0" layoutY="60.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="411.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island9" layoutX="470.0" layoutY="50.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="411.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island10" layoutX="257.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="411.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island11" layoutX="247.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="411.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="island12" layoutX="116.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="291.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/island.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="cloud1" layoutX="260.0" layoutY="226.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="236.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/cloud_card.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="cloud3" layoutX="270.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="236.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/cloud_card.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <GridPane fx:id="cloud2" layoutX="270.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="236.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/cloud_card.png" />
+                     </image>
+                  </ImageView>
+               </children>
             </GridPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </AnchorPane>
    </center>
    <stylesheets>
       <URL value="@../css/gameboard_style.css" />
    </stylesheets>
+   <top>
+      <ImageView fitHeight="50.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../img/eriantys_text_logo.png" />
+         </image>
+      </ImageView>
+   </top>
 </BorderPane>

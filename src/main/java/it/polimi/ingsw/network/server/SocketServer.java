@@ -87,11 +87,21 @@ public class SocketServer implements Runnable{
     }
 
     /**
+     * Notifies the Server of a client's disconnection.
      *
-     * @param clientHandler to pass to the server.
+     * @param clientHandler the {@link ClientHandler} to pass to the server.
      */
     public void onDisconnect(ClientHandler clientHandler){
         server.onDisconnect(clientHandler);
+    }
+
+    /**
+     * Notifies the Server that the client has ended a game.
+     *
+     * @param clientHandler the {@link ClientHandler} to pass to the server.
+     */
+    public void onQuit(ClientHandler clientHandler){
+        server.onQuit(clientHandler);
     }
 
     /**

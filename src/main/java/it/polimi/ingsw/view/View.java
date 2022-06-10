@@ -2,7 +2,7 @@ package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.GameBoard;
 
 import java.util.Map;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 public interface View {
 
     /**
-     * Asks the client informations about what server they want to try to connect to.
+     * Asks the client information about what server they want to try to connect to.
      */
 
     void askServerData();
@@ -131,13 +131,26 @@ public interface View {
     void showDisconnectionMessage(String message);
 
     /**
-     * Shows the client in which round fase they are.
+     * Shows the client in which round phase they are.
      * If {@code isActionPhase} is {@code true} then it will show the action phase, else it will show the planning phase.
      *
-     * @param isActionPhase
+     * @param isActionPhase the flag corresponding to the right phase.
      */
 
     void showPhaseUpdate(boolean isActionPhase);
 
+    /**
+     * Shows the client what happened on the {@link GameBoard}.
+     *
+     * @param s the update to notify.
+     */
+
     void showUpdateMessage(String s);
+
+    /**
+     * Closes the client's app.
+     */
+
+    void quit();
+
 }

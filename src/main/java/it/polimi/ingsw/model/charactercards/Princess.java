@@ -55,17 +55,21 @@ public class Princess extends CharacterCard implements StringCard, Serializable 
     public void doEffect(GameExpertMode game) throws TryAgainException {
         boolean done = false;
         for (int i = 0; i < 4; i++) {
-            if (students[i].getColor().toString().equals(chosenColor)) {
-                game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
-                        students[i], game.getCurrentPlayer()
-                );
-                try {
-                    students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+            try {
+                if (students[i].getColor().toString().equals(chosenColor)) {
+                    game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
+                            students[i], game.getCurrentPlayer()
+                    );
+                    try {
+                        students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
+                    } catch (IndexOutOfBoundsException e) {
+                        students[i] = null;
+                    }
+                    done = true;
+                    break;
                 }
-                catch(IndexOutOfBoundsException ignored){}
-                done = true;
-                break;
             }
+            catch(NullPointerException ignored){}
         }
         if (!done)
             throw new StudentNotFoundException("There's no such student on the card!");

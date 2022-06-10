@@ -273,7 +273,7 @@ public class GameControllerExpertMode extends GameController{
             getGame().refillClouds();
         }
         catch(TieException e){
-            endGame();
+            quit();
         }
         catch(EmptyBagException ex){
             LOGGER.info(ex.getClass().getSimpleName() + ": " + ex.getMessage());

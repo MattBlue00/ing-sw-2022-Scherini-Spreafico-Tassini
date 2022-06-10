@@ -10,6 +10,7 @@ import it.polimi.ingsw.utils.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Allows the player to switch from 0 to 2 students between the hall and the dining room.
@@ -54,19 +55,29 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
             Color color1 = Color.valueOf(students.get(maxNumOfChanges-2));
             Color color2 = Color.valueOf(students.get(maxNumOfChanges-1));
 
-                Student hallStudent =
-                        game.getCurrentPlayer().getSchool().getHall().removeStudent(color1.toString());
-
-                Student tableStudent =
-                        game.getCurrentPlayer().getSchool().getTable(color2.toString()).removeStudent();
-
-                if(game.getCurrentPlayer().getSchool().getTable(color1.toString()).getNumOfStudents()
+            if(game.getCurrentPlayer().getSchool().getTable(color1.toString()).getNumOfStudents()
                     >= Constants.TABLE_LENGTH)
-                    throw new FullTableException("The " + color1 + " table is full!");
+                throw new FullTableException("The " + color1 + " table is full!");
 
-                game.getCurrentPlayer().getSchool().getHall().addStudent(tableStudent);
-                game.getCurrentPlayer().getSchool().getTable(hallStudent.getColor().toString())
-                        .addStudent(hallStudent, game.getCurrentPlayer());
+            Optional<Student> hallStudent =
+                    game.getCurrentPlayer().getSchool().getHall().getStudents().
+                            stream().filter(x -> x.getColor().equals(color1)).findFirst();
+
+            if(hallStudent.isEmpty())
+                throw new StudentNotFoundException("There's no " + color1 + " student in the hall!");
+
+            Optional<Student> tableStudent =
+                    game.getCurrentPlayer().getSchool().getTable(color2.toString()).getStudents().
+                            stream().filter(x -> x.getColor().equals(color2)).findFirst();
+
+            if(tableStudent.isEmpty())
+                throw new StudentNotFoundException("The " + color2 + " table is empty!");
+
+            game.getCurrentPlayer().getSchool().getHall().addStudent(tableStudent.get());
+            game.getCurrentPlayer().getSchool().getTable(color2.toString()).removeStudent();
+            game.getCurrentPlayer().getSchool().getTable(hallStudent.get().getColor().toString())
+                    .addStudent(hallStudent.get(), game.getCurrentPlayer());
+            game.getCurrentPlayer().getSchool().getHall().removeStudent(hallStudent.get().getColor().toString());
 
             maxNumOfChanges=maxNumOfChanges-2;
         }
