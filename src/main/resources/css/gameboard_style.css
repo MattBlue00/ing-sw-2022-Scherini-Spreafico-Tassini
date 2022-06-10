@@ -14,11 +14,10 @@
     -fx-text-fill: white;
 }
 
-ImageView{
+.clickable{
     -fx-cursor: hand;
 }
 
-ImageView:hover {
-    -fx-border-color: red;
-    -fx-border-width: 2px;
+.clickable:hover {
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
 }
