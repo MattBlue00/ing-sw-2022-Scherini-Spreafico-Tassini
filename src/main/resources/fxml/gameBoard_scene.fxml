@@ -1,94 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="68.0" layoutY="790.0" styleClass="text_label" text="Assistant Cards deck">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <Label styleClass="text_label" text="Eriantys" BorderPane.alignment="CENTER">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
       </Label>
-      <HBox layoutX="900.0" layoutY="241.0" prefHeight="150.0" prefWidth="311.0">
+   </top>
+   <right>
+      <VBox alignment="TOP_RIGHT" prefHeight="329.0" prefWidth="300.0" BorderPane.alignment="TOP_LEFT">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" />
+            <Label styleClass="text_label" text="Schools">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fitHeight="75.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/school_raw.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fitHeight="74.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/school_raw.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fitHeight="176.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/school_raw.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ImageView>
          </children>
-      </HBox>
-      <TextFlow prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="1410.0" layoutY="381.0" styleClass="text_label" text="Characters Card">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="61.0" layoutY="49.0" styleClass="text_label" text="Islands">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="1401.0" layoutY="61.0" styleClass="text_label" text="Schools">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ScrollPane layoutX="1409.0" layoutY="648.0" prefHeight="322.0" prefWidth="478.0">
-        <content>
-          <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="324.0" prefWidth="429.0">
-               <children>
-                  <TextFlow fx:id="history" layoutY="4.0" prefHeight="307.0" prefWidth="421.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <Label layoutX="1409.0" layoutY="608.0" styleClass="text_label" text="History">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <GridPane fx:id="island1" layoutX="85.0" layoutY="106.0" prefHeight="103.0" prefWidth="148.0" styleClass="island">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-      <GridPane fx:id="deck" layoutX="66.0" layoutY="851.0" prefHeight="120.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-   </children>
-    <stylesheets>
-        <URL value="@../css/gameboard_style.css" />
-    </stylesheets>
-</AnchorPane>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="text_label" text="Assistant Cards deck">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" />
+               </VBox.margin>
+            </Label>
+            <GridPane fx:id="deck" hgap="1.0" maxWidth="860.0" prefHeight="125.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </GridPane>
+         </children>
+      </VBox>
+   </bottom>
+   <left>
+      <VBox prefHeight="542.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="text_label" text="History">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
+            </Label>
+            <ScrollPane prefHeight="299.0" prefWidth="132.0">
+               <content>
+                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="302.0" prefWidth="176.0">
+                     <children>
+                        <TextFlow fx:id="history" layoutY="4.0" prefHeight="298.0" prefWidth="174.0">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </TextFlow>
+                     </children>
+                  </AnchorPane>
+               </content>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="542.0" prefWidth="730.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane fx:id="island1" layoutX="96.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="island11" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="island111" layoutX="365.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <stylesheets>
+      <URL value="@../css/gameboard_style.css" />
+   </stylesheets>
+</BorderPane>

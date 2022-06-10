@@ -56,6 +56,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             image.setPreserveRatio(true);
             image.setFitWidth(85);
             deck.add(image, i, 0);
+            image.getStyleClass().set(0,"clickable");
         }
     }
 
@@ -68,6 +69,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         playCard(cardId);
         String wizard_path = game.getCurrentPlayer().getWizardID().toString().toLowerCase();
         cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
+        cardImage.getStyleClass().set(0,"");
     }
 
     private void playCard(int cardId) {
