@@ -29,21 +29,28 @@ public interface ClientHandler {
     void sendMessage(Message message);
 
     /**
-     * This method sets the {@code VirtualView}
+     *  Sends a message to the client and removes the clients and the game controller from the Server.
+     *
+     *  @param message the message to be sent.
+     */
+    void sendMessageAndQuit(Message message);
+
+    /**
+     * Sets the {@code VirtualView}.
      *
      * @param virtualView the VirtualView that ha to be set.
      */
     void setVirtualView(VirtualView virtualView);
 
     /**
-     * This methods returns the {@code VirtualView}.
+     * Returns the {@code VirtualView}.
      *
      * @return {@link VirtualView}
      */
     VirtualView getVirtualView();
 
     /**
-     * This methods returns the {@code socketClient}.
+     * Returns the {@code socketClient}.
      *
      * @return {@link Socket}
      */

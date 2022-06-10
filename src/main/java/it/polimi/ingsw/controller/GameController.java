@@ -351,7 +351,7 @@ public class GameController implements Serializable {
     /**
      * Removes a player from the queue (given the nickname).
      *
-     * @param nickname is the nickname of the player who disconnected
+     * @param nickname the nickname of the player to remove.
      */
     public void removePlayerFromQueue(String nickname){
         this.gameQueue.remove(nickname);
@@ -584,7 +584,7 @@ public class GameController implements Serializable {
             game.refillClouds();
         }
         catch(TieException e){
-            endGame();
+            quit();
         }
         catch(EmptyBagException ex){
             LOGGER.info(ex.getClass().getSimpleName() + ": " + ex.getMessage());
@@ -771,7 +771,7 @@ public class GameController implements Serializable {
                     (game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber())) {
                 LOGGER.info(END_STATE + game.getCurrentPlayer().getNickname());
                 declareWinningPlayer();
-                endGame();
+                quit();
             }
         }
         catch(TieException e){
@@ -945,13 +945,17 @@ public class GameController implements Serializable {
         virtualView.showDeck(this.game);
     }
 
-    public void endGame(){
+    /**
+     * Ends the game by closing the client apps and removing the game controller from the Server.
+     */
+
+    public void quit(){
         LOGGER.info("The game number " + gameControllerID + " has ended.");
         for(VirtualView vv : virtualViewMap.values()){
             vv.showGameStatus(this.game);
+            gameQueue.remove(gameQueue.get(0)); // useful to trigger the game controller removal in the Server
+            vv.quit();
         }
-        /* TODO: how to handle endGame with GUI? Should we give time to the players to watch the final game board
-            or should we instantly close the app? */
     }
 
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" minHeight="600.0" minWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenes.NicknameSceneController">
+<VBox alignment="CENTER" minHeight="600.0" minWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenecontrollers.NicknameSceneController">
     <stylesheets>
         <URL value="@../css/menu_style.css" />
     </stylesheets>

@@ -2,10 +2,8 @@ package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.observers.ViewObserver;
-import it.polimi.ingsw.view.gui.scenes.GenericSceneController;
-import javafx.event.Event;
+import it.polimi.ingsw.view.gui.scenecontrollers.GenericSceneController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 

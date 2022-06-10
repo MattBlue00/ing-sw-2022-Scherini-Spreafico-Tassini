@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.gui.scenes;
+package it.polimi.ingsw.view.gui.scenecontrollers;
 
 import it.polimi.ingsw.observers.ViewObservable;
 import javafx.event.Event;

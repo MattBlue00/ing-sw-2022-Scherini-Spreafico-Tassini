@@ -523,6 +523,7 @@ public class CommandLineInterface extends ViewObservable implements View {
                 }catch (IndexOutOfBoundsException e){out.println("WAITING FOR PLAYERS TO JOIN");}
             }
         }
+        askCreateOrJoin();
     }
 
     @Override
@@ -562,6 +563,16 @@ public class CommandLineInterface extends ViewObservable implements View {
     public void showDisconnectionMessage(String message) {
         clearInterface();
         out.println(message);
+    }
+
+    /**
+     * Closes the app.
+     */
+
+    @Override
+    public void quit() {
+        out.println("To play another game, please restart the app. Thank you for playing!");
+        System.exit(0);
     }
 
     /**

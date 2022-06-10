@@ -71,7 +71,7 @@ public class Server{
      */
     public void removeClient(String nickname){
         clientHandlerMap.remove(nickname);
-        LOGGER.severe("Removed " + nickname + " from the client list.");
+        LOGGER.info("Removed " + nickname + " from the client list.");
     }
 
     /**
@@ -224,10 +224,8 @@ public class Server{
                         }
                     }
                     gameControllerMap.remove(gameID);
-                    for(View view : viewsToNotify) {
+                    for(View view : viewsToNotify)
                         view.showExistingGames(gameControllerMap);
-                        view.askCreateOrJoin();
-                    }
                     Server.LOGGER.severe("GameController " + gameID + " removed from gameControllerMap." +
                             "\n--- Game finished ---");
                 } else if (gameID != -1 && gameControllerMap.get(gameID).getGameState().equals(GameState.SETUP)) {
@@ -241,4 +239,17 @@ public class Server{
             }
         }
     }
+
+    public void onQuit(ClientHandler clientHandler){
+        synchronized (lock){
+            String nick = getNicknameFromClientHandler(clientHandler);
+            if(nick != null){
+                int gameID = getGameIDFromNickname(nick);
+                if(gameControllerMap.get(gameID).getGameQueue().size() == 0)
+                    gameControllerMap.remove(gameID);
+                removeClient(nick);
+            }
+        }
+    }
+
 }

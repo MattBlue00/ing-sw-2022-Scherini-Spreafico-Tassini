@@ -5,8 +5,11 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.view.View;
-import it.polimi.ingsw.view.gui.scenes.GameBoardSceneController;
+import it.polimi.ingsw.view.gui.scenecontrollers.GameBoardSceneController;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +17,7 @@ import java.util.Map;
 public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
-    private GameBoardSceneController bsc;
+    private GameBoardSceneController boardController;
 
     public GraphicalUserInterface(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -59,12 +62,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showUpdateMessage(String s) {
-        Platform.runLater(() -> bsc.showUpdate(s));
+        Platform.runLater(() -> boardController.showUpdate(s));
     }
 
     @Override
     public void askAssistantCard() {
-        Platform.runLater(() -> bsc.showDeck());
+        Platform.runLater(() -> boardController.showDeck());
     }
 
     @Override
@@ -79,12 +82,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCloud() {
-        Platform.runLater(() -> bsc.showClouds());
+        Platform.runLater(() -> boardController.showClouds());
     }
 
     @Override
     public void askCharacterCard() {
-        Platform.runLater(() -> bsc.showCharacterCards());
+        Platform.runLater(() -> boardController.showCharacterCards());
     }
 
     @Override
@@ -99,6 +102,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showExistingGames(Map<Integer, GameController> existingGames) {
+        askCreateOrJoin();
         Platform.runLater(()-> sceneController.showAlert(printExistingGames(existingGames)));
     }
 
@@ -133,7 +137,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
             boardSceneController = new GameBoardSceneController();
             boardSceneController.addAllObservers(observers);
             GameBoardSceneController finalBsc = boardSceneController;
-            this.bsc = boardSceneController;
+            this.boardController = boardSceneController;
             Platform.runLater(() -> sceneController.changeRootPane(finalBsc, "gameBoard_scene.fxml"));
         }
         return boardSceneController;
@@ -163,4 +167,10 @@ public class GraphicalUserInterface extends ViewObservable implements View {
         }
         return str;
     }
+
+    @Override
+    public void quit() {
+        // TODO: i don't really know what to do here
+    }
+
 }

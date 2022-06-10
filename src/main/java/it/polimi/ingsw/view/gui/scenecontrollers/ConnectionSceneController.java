@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.gui.scenes;
+package it.polimi.ingsw.view.gui.scenecontrollers;
 
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.observers.ViewObservable;
@@ -6,7 +6,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 

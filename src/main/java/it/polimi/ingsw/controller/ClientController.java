@@ -7,10 +7,8 @@ import it.polimi.ingsw.observers.Observer;
 import it.polimi.ingsw.observers.ViewObserver;
 import it.polimi.ingsw.utils.Constants;
 import it.polimi.ingsw.view.View;
-import it.polimi.ingsw.view.cli.CommandLineInterface;
 
 import java.io.IOException;
-import java.net.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -316,6 +314,10 @@ public class ClientController implements ViewObserver, Observer {
                 taskQueue.shutdownNow();
                 taskQueue = Executors.newSingleThreadExecutor();
                 taskQueue.execute(() -> view.showDisconnectionMessage(((DisconnectionMessage) message).getMessageStr()));
+                break;
+            case END_GAME:
+                taskQueue.execute(view::quit);
+                taskQueue.shutdown();
                 break;
             default: //should never be reached
                 break;
