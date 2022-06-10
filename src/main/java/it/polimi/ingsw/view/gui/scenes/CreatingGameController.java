@@ -32,7 +32,7 @@ public class CreatingGameController extends ViewObservable implements GenericSce
         try {
             gameID = Integer.parseInt(this.gameID.getText());
             playerNumber = Integer.parseInt(this.playerNumber.getText());
-            if(playerNumber!=2 && playerNumber !=3) throw new TryAgainException("error in player number");
+            if(playerNumber!=2 && playerNumber !=3) throw new TryAgainException("Error in player number");
             gameMode = this.gameMode.isSelected();
             notifyObserver(viewObserver -> viewObserver.onUpdateGameInfo(gameID, gameMode, playerNumber));
         }catch (NumberFormatException | TryAgainException err){

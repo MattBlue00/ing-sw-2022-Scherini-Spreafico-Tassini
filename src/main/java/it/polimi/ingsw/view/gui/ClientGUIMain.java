@@ -66,7 +66,6 @@ public class ClientGUIMain extends Application {
         if(scene.getRoot().getId().equals("pane")){
             stage.setWidth(1366);
             stage.setHeight(768);
-
         }else{
             stage.setWidth(600);
             stage.setHeight(600);
