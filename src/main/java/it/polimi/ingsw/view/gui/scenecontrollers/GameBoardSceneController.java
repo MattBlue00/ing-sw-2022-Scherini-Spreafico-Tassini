@@ -7,6 +7,7 @@ import it.polimi.ingsw.observers.ViewObservable;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,7 +33,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private TextFlow history;
     @FXML
-    private GridPane clouds;
+    private GridPane cloud1;
+    @FXML
+    private GridPane cloud2;
+    @FXML
+    private GridPane cloud3;
+    @FXML
+    private Label green_students_island2;
     private Game game;
 
     public void setGame(Game game) {
@@ -42,7 +49,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     public void initialize(){
         deck.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickAssistantCard);
-        //clouds.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
+        cloud1.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
+        cloud2.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
+        cloud3.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         //characterCards.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCharacterCard);
     }
 
@@ -82,12 +91,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         history.getChildren().add(message);
     }
 
-    public void onClickCloud(Event e){
-        clouds.setDisable(true);
-        Node node = (Node) e.getTarget();
-        int cloudId = GridPane.getColumnIndex(node);
+    //TODO: method needs to be improved
+    public void showStudents(String number){
+        green_students_island2.setText(number);
+    }
 
-        chooseCloud(cloudId);
+    public void onClickCloud(Event e){
+        cloud1.setDisable(true);
+        cloud2.setDisable(true);
+        cloud3.setDisable(true);
+        Node node = (Node) e.getTarget();
+        if(node.equals(cloud1))
+            chooseCloud(0);
+        else if (node.equals(cloud2))
+            chooseCloud(1);
+        else chooseCloud(2);
     }
 
     private void chooseCloud(int cloudId){
@@ -96,14 +114,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void showClouds(){
-        clouds.setDisable(false);
-        for(int i = 0; i < game.getConstants().NUM_CLOUDS ; i++){
-            String imagePath = "/img/cloud_card.png";
-            ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-            image.setPreserveRatio(true);
-            image.setFitWidth(85); //TODO: check if it's a correct width
-            clouds.add(image, i, 0);
-        }
+        cloud1.setDisable(false);
+        cloud2.setDisable(false);
+        if(game.getConstants().NUM_CLOUDS == 3)
+            cloud3.setDisable(false);
+        else cloud3.setDisable(true);
     }
 
     public void onClickCharacterCard(Event e){
@@ -133,6 +148,22 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             image.setFitWidth(85); //TODO: check if it's a correct width
             characterCards.add(image, i, 0);
         }
+    }
+
+    public void showIslands(){
+        island1.setDisable(false);
+        island2.setDisable(false);
+        green_students_island2.setDisable(true);
+        island3.setDisable(false);
+        island4.setDisable(false);
+        island5.setDisable(false);
+        island6.setDisable(false);
+        island7.setDisable(false);
+        island8.setDisable(false);
+        island9.setDisable(false);
+        island10.setDisable(false);
+        island11.setDisable(false);
+        island12.setDisable(false);
     }
 
 }

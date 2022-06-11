@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -197,10 +198,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -218,11 +259,54 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="green_students_island2" text="Label" GridPane.columnIndex="2" />
                </children>
             </GridPane>
             <GridPane fx:id="island3" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="11.0">
@@ -239,10 +323,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -260,10 +384,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -281,10 +445,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -302,10 +506,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -323,10 +567,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -344,10 +628,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -365,10 +689,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -386,10 +750,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -407,10 +811,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
@@ -428,10 +872,50 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../img/island.png" />
                      </image>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_green.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_red.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_yellow.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_pink.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../img/student_blue.png" />
+                     </image>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" />
+                     </effect>
                   </ImageView>
                </children>
             </GridPane>
