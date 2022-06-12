@@ -18,6 +18,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     private final SceneController sceneController;
     private GameBoardSceneController boardController;
+    private String nickname;
 
     public GraphicalUserInterface(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -25,6 +26,11 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     public SceneController getSceneController() {
         return sceneController;
+    }
+
+    @Override
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Override
@@ -67,12 +73,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askAssistantCard() {
-        Platform.runLater(() -> boardController.showDeck());
+        Platform.runLater(() -> boardController.activateAssistantCardChoice());
     }
 
     @Override
     public void askMoveStudent() {
-
+        Platform.runLater(() -> boardController.activateCloudChoice());
     }
 
     @Override
@@ -82,12 +88,12 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCloud() {
-        Platform.runLater(() -> boardController.showClouds());
+        Platform.runLater(() -> boardController.activateCloudChoice());
     }
 
     @Override
     public void askCharacterCard() {
-        Platform.runLater(() -> boardController.showCharacterCards());
+        Platform.runLater(() -> boardController.activateCharacterCards());
     }
 
     @Override
@@ -115,7 +121,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     public void showGameStatus(Game game) {
         GameBoardSceneController boardSceneController = getBoardSceneController();
         boardSceneController.setGame(game);
-        Platform.runLater(() -> sceneController.changeRootPane(boardSceneController, "gameBoard_scene.fxml"));
+        boardSceneController.setNickname(nickname);
+        Platform.runLater(boardSceneController::renderGameBoard);
     }
 
     @Override

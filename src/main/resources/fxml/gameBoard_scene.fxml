@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
@@ -153,9 +154,9 @@
             </Label>
             <ScrollPane prefHeight="299.0" prefWidth="132.0">
                <content>
-                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefHeight="302.0" prefWidth="174.0">
+                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefWidth="174.0">
                      <children>
-                        <TextFlow fx:id="history" layoutY="4.0" prefHeight="298.0" prefWidth="174.0">
+                        <TextFlow fx:id="history" layoutY="4.0" prefWidth="174.0">
                            <padding>
                               <Insets left="10.0" />
                            </padding>
@@ -919,57 +920,36 @@
                   </ImageView>
                </children>
             </GridPane>
-            <GridPane fx:id="cloud1" layoutX="260.0" layoutY="226.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="236.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <AnchorPane layoutX="170.0" layoutY="222.0" prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/cloud_card.png" />
                      </image>
                   </ImageView>
+                  <TilePane fx:id="cloud1" hgap="10.0" layoutX="20.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
                </children>
-            </GridPane>
-            <GridPane fx:id="cloud3" layoutX="270.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="236.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            </AnchorPane>
+            <AnchorPane layoutX="450.0" layoutY="219.0" prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/cloud_card.png" />
                      </image>
                   </ImageView>
+                  <TilePane fx:id="cloud2" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
                </children>
-            </GridPane>
-            <GridPane fx:id="cloud2" layoutX="270.0" layoutY="236.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="236.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            </AnchorPane>
+            <AnchorPane fx:id="extraCloud" layoutX="310.0" layoutY="217.0" prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/cloud_card.png" />
                      </image>
                   </ImageView>
+                  <TilePane fx:id="cloud3" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
                </children>
-            </GridPane>
+            </AnchorPane>
          </children>
          <BorderPane.margin>
             <Insets />

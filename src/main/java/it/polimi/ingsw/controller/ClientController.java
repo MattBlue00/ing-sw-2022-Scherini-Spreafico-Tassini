@@ -76,6 +76,7 @@ public class ClientController implements ViewObserver, Observer {
     public void onUpdateNickname(String nickname) {
         this.nickname = nickname;
         client.sendMessage(new LoginRequest(this.nickname));
+        taskQueue.execute(() -> view.setNickname(nickname));
     }
 
     /**

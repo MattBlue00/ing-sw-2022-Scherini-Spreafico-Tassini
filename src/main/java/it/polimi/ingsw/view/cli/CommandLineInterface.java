@@ -575,6 +575,11 @@ public class CommandLineInterface extends ViewObservable implements View {
         System.exit(0);
     }
 
+    @Override
+    public void setNickname(String nickname) {
+
+    }
+
     /**
      * This method is used to clear the interface.
      */
