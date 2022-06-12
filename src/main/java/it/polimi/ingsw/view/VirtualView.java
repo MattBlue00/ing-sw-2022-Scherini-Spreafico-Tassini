@@ -128,4 +128,9 @@ public class VirtualView implements View, Observer {
         clientHandler.sendMessageAndQuit(new EndGameMessage());
     }
 
+    @Override
+    public void setNickname(String nickname) {
+
+    }
+
 }

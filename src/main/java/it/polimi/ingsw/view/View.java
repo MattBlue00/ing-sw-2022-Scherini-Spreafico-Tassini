@@ -153,4 +153,5 @@ public interface View {
 
     void quit();
 
+    void setNickname(String nickname);
 }
