@@ -78,7 +78,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askMoveStudent() {
-        Platform.runLater(() -> boardController.activateCloudChoice());
+        //TODO: need to implement the right method!
+        //Platform.runLater() -> boardController.activateMoveStudent());
     }
 
     @Override
@@ -98,7 +99,13 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askAction() {
-
+        if(boardController.getGame().getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+            askMoveStudent();
+        }
+        else {
+            askMoveStudent();
+            askCharacterCard();
+        }
     }
 
     @Override
@@ -146,6 +153,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
             GameBoardSceneController finalBsc = boardSceneController;
             this.boardController = boardSceneController;
             Platform.runLater(() -> sceneController.changeRootPane(finalBsc, "gameBoard_scene.fxml"));
+            Platform.runLater(finalBsc::startGameBoard);
         }
         return boardSceneController;
     }
