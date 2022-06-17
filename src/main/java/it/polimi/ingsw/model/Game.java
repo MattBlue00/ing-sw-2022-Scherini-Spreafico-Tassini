@@ -346,13 +346,13 @@ public class Game implements Serializable {
             }
         }
 
+        Collections.shuffle(players);
+        currentPlayer = players.get(0);
+
         towersColor.put(players.get(0), TowerColor.BLACK);
         towersColor.put(players.get(1), TowerColor.WHITE);
         if(players.size() == 3)
             towersColor.put(players.get(2), TowerColor.GREY);
-
-        Collections.shuffle(players);
-        currentPlayer = players.get(0);
     }
 
     /**
@@ -398,16 +398,11 @@ public class Game implements Serializable {
                 System.out.println(currentIsland.getNumOfTowers() + " towers");
                 System.out.println("Owner: " + ownerNickname);
 
-                yellowStudents =
-                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
-                blueStudents =
-                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
-                greenStudents =
-                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
-                redStudents =
-                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
-                pinkStudents =
-                        (int) currentIsland.getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                yellowStudents = currentIsland.getNumOfStudentsOfColor("YELLOW");
+                blueStudents = currentIsland.getNumOfStudentsOfColor("BLUE");
+                greenStudents = currentIsland.getNumOfStudentsOfColor("GREEN");
+                redStudents = currentIsland.getNumOfStudentsOfColor("RED");
+                pinkStudents = currentIsland.getNumOfStudentsOfColor("PINK");
 
                 System.out.println("Students: " +
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
