@@ -287,9 +287,6 @@
                         <DropShadow blurType="TWO_PASS_BOX" />
                      </effect>
                   </ImageView>
-                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label fx:id="green_students_island2" text="Label" GridPane.columnIndex="2" />
                </children>
             </GridPane>
             <GridPane fx:id="island3" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="11.0">

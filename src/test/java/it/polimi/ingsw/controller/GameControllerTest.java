@@ -54,7 +54,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void testSetOrder(){
+    public void testSetOrderWithTwoPlayers(){
         GameController gameController = new GameController();
         PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 2);
 
@@ -74,6 +74,38 @@ class GameControllerTest {
 
         assertEquals(players.get(0).getNickname(), "Matteo");
         assertEquals(players.get(1).getNickname(), "Samuele");
+    }
+
+    @Test
+    public void testSetOrderWithThreePlayers(){
+        GameController gameController = new GameController();
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
+
+        gameController.prepareGame(message.getPlayerNumber());
+
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(Wizard.YELLOW_WIZARD, "Samuele", gameController.
+                getGame().getConstants()));
+        players.add(new Player(Wizard.BLUE_WIZARD, "Matteo", gameController.
+                getGame().getConstants()));
+        players.add(new Player(Wizard.PINK_WIZARD, "Ludo", gameController.
+                getGame().getConstants()));
+
+        gameController.getGame().setPlayers(players);
+
+        assertEquals(players.get(0).getNickname(), "Samuele");
+        assertEquals(players.get(1).getNickname(), "Matteo");
+        assertEquals(players.get(2).getNickname(), "Ludo");
+
+        players.get(0).playAssistantCard("TURTLE"); // weight = 10
+        players.get(1).playAssistantCard("DOG"); // weight = 8
+        players.get(2).playAssistantCard("CAT"); // weight = 3
+
+        gameController.setOrder();
+
+        assertEquals(players.get(0).getNickname(), "Ludo");
+        assertEquals(players.get(1).getNickname(), "Matteo");
+        assertEquals(players.get(2).getNickname(), "Samuele");
     }
 
     @Test

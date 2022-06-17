@@ -89,7 +89,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askCloud() {
-        Platform.runLater(() -> boardController.activateCloudChoice());
+        Platform.runLater(() -> boardController.activateIslands());
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void showGameStatusFirstActionPhase(Game game) {
-
+        showGameStatus(game);
     }
 
     @Override

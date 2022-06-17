@@ -683,10 +683,12 @@ public class GameController implements Serializable {
 
     public void setOrder(){
         List<Player> players = game.getPlayers();
-        for(int i=0; i<game.getPlayersNumber()-1;i++){
-            if(players.get(i).getLatestAssistantCardPlayed().getWeight() >
-                    players.get(i+1).getLatestAssistantCardPlayed().getWeight()) {
-                Collections.swap(players, i, i+1);
+        for(int i = 0; i < game.getPlayersNumber(); i++){
+            for (int j = i+1; j < game.getPlayersNumber(); j++){
+                if(players.get(i).getLatestAssistantCardPlayed().getWeight() >
+                        players.get(j).getLatestAssistantCardPlayed().getWeight()) {
+                    Collections.swap(players, i, j);
+                }
             }
         }
         game.setPlayers(players);

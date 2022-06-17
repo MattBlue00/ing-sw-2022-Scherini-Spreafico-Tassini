@@ -5,9 +5,8 @@ import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.GameControllerExpertMode;
 
@@ -28,6 +27,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private int maxSteps;
     private final Constants constants;
+    private final Map<Player, TowerColor> towersColor;
 
     /**
      * Game constructor.
@@ -42,6 +42,7 @@ public class Game implements Serializable {
         this.players = new ArrayList<>();
         this.board = new GameBoard(playersNumber, constants);
         this.roundNumber = 1;
+        this.towersColor = new HashMap<>();
     }
 
     /**
@@ -166,10 +167,19 @@ public class Game implements Serializable {
     }
 
     /**
+     * Returns the {@code towersColor} {@link HashMap}, used to associate a {@link TowerColor} to a player
+     *
+     * @return {@code towersColor}
+     */
+    public Map<Player, TowerColor> getTowersColor() { return towersColor; }
+
+    /**
      * Calls the {@link GameBoard} method which refills the cloud with the bag students, once each of them is empty.
      *
      * @throws EmptyBagException if no student is present in the students' bag.
      */
+
+
 
     public void refillClouds() throws EmptyBagException {
         board.refillClouds();
@@ -335,6 +345,11 @@ public class Game implements Serializable {
                         (board.getStudentsBag().size() - 1));
             }
         }
+
+        towersColor.put(players.get(0), TowerColor.BLACK);
+        towersColor.put(players.get(1), TowerColor.WHITE);
+        if(players.size() == 3)
+            towersColor.put(players.get(2), TowerColor.GREY);
 
         Collections.shuffle(players);
         currentPlayer = players.get(0);

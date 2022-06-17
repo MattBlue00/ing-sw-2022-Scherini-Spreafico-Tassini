@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.charactercards.Centaur;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The Island is one of the "physical" elements of the game. Two or more islands form an archipelagos, which has a
@@ -314,4 +315,14 @@ public class Island implements Serializable {
 
     }
 
+
+    /**
+     * This method is used to know the students number of a specific color on an island.
+     *
+     * @param color {@link Color} selected
+     * @return students number
+     */
+    public int getNumOfStudentsOfColor(String color){
+        return (int) students.stream().filter(x -> x.getColor().toString().equals(color)).count();
+    };
 }
