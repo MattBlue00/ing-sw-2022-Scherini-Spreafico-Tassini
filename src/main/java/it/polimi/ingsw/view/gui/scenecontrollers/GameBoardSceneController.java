@@ -1,13 +1,13 @@
 package it.polimi.ingsw.view.gui.scenecontrollers;
 
-import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GameExpertMode;
-import it.polimi.ingsw.model.Student;
+import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.observers.ViewObservable;
+import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
+import javafx.scene.transform.MatrixType;
 
 
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private GridPane characterCards;
     @FXML
+    private GridPane island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12;
+    @FXML
     private TextFlow history;
     @FXML
     private TilePane cloud1, cloud2, cloud3;
@@ -47,6 +50,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final List<TilePane> clouds;
     private final List<GridPane> islands;
     private final List<Text> costs;
+    private final Text [][] studentsOnIsland;
 
 
     public GameBoardSceneController(){
@@ -55,6 +59,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         costs = new ArrayList<>();
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++)
             costs.add(new Text());
+        studentsOnIsland = new Text[12][5];
+        for(int i = 0; i < 12; i++){
+            for(int j = 0; j < 5; j++){
+                studentsOnIsland[i][j] = new Text("0");
+            }
+        }
     }
 
     public void setGame(Game game) {
@@ -79,7 +89,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cloud3.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         if(game instanceof GameExpertMode)
             characterCards.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCharacterCard);
-
+        for (GridPane island : islands)
+            island.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickIsland);
     }
 
     public void startGameBoard() {
@@ -92,6 +103,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         } else {
             extraCloud.setVisible(false);
         }
+
+        initializeIslands();
 
         if(game instanceof GameExpertMode){
             CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
@@ -136,7 +149,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     public void renderGameBoard(){
         showDeck();
-        //showIslands();
+        showIslands();
         if(game instanceof GameExpertMode) showCharacterCards();
         //showPersonalSchool();
         //ShowSchools();
@@ -150,6 +163,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85);
+            //image.setStyle("-fx-opacity: dropshadow(two-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
             deck.add(image, i, 0);
         }
     }
@@ -181,8 +195,43 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void showIslands(){
-        for(GridPane island : islands)
+
+        int i = 1;
+        int j = 0;
+        for(GridPane island : islands){
             island.setDisable(false);
+            island.getChildren().removeIf(text -> text instanceof Text);
+            try {
+                Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
+                for (Color color : Color.values()) {
+                    int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
+                    studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
+                    studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
+                    studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
+                    Text text = studentsOnIsland[i-1][j];
+                    island.add(text,2, j);
+                    j++;
+
+                 /*   if (currentIsland.getNumOfTowers() != 0){
+                        Player player = currentIsland.getOwner();
+                        TowerColor towerColor = game.getTowersColor().get(player);
+                        ImageView towers = new ImageView(new Image("img/"+towerColor.toString().toLowerCase()+"_tower.png"));
+                        towers.setFitWidth(20);
+                        towers.setPreserveRatio(true);
+
+                        island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 2 && GridPane.getRowIndex(node) == 0);
+
+                        island.add(towers,0,1);
+                        Text towersNumber = new Text(String.valueOf(currentIsland.getNumOfTowers()));
+                        island.add(towersNumber,0,2);
+                    } */
+                }
+            } catch (IslandNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+            j = 0;
+        }
     }
 
 
@@ -215,6 +264,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cloud.setDisable(true);
     }
 
+    //TODO: implement method
+    public void onClickIsland(Event e){
+        Node node = (Node) e.getTarget();
+    }
+
     public void onClickCharacterCard(Event e){
         Node node = (Node) e.getTarget();
         int columnIndex = GridPane.getColumnIndex(node);
@@ -229,6 +283,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             img.getStyleClass().set(0,"clickable");
         }
         deck.setDisable(false);
+    }
+
+    public void activateIslands(){
+        for (GridPane island : islands){
+            island.getStyleClass().add("clickable");
+            island.setDisable(false);
+        }
     }
 
     public void activateCloudChoice(){
@@ -264,6 +325,44 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
             showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
+        }
+    }
+
+    private void initializeIslands(){
+
+        islands.add(island1);
+        islands.add(island2);
+        islands.add(island3);
+        islands.add(island4);
+        islands.add(island5);
+        islands.add(island6);
+        islands.add(island7);
+        islands.add(island8);
+        islands.add(island9);
+        islands.add(island10);
+        islands.add(island11);
+        islands.add(island12);
+
+        int i = 1;
+        int j = 0;
+        for(GridPane island : islands){
+            island.setDisable(false);
+            try {
+                Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
+                for (Color color : Color.values()) {
+                    int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
+                    studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
+                    studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
+                    studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
+                    Text text = studentsOnIsland[i-1][j];
+                    island.add(text, 2, j);
+                    j++;
+                }
+            } catch (IslandNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+            j = 0;
         }
     }
 
