@@ -171,6 +171,7 @@ public class Game implements Serializable {
      *
      * @return {@code towersColor}
      */
+
     public Map<Player, TowerColor> getTowersColor() { return towersColor; }
 
     /**
@@ -178,8 +179,6 @@ public class Game implements Serializable {
      *
      * @throws EmptyBagException if no student is present in the students' bag.
      */
-
-
 
     public void refillClouds() throws EmptyBagException {
         board.refillClouds();

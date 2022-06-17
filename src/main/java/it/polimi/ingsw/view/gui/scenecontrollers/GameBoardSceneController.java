@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui.scenecontrollers;
 
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
+import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.utils.Constants;
@@ -38,6 +39,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private TilePane cloud1, cloud2, cloud3;
     @FXML
     private AnchorPane extraCloud;
+    @FXML
+    private GridPane playerHall, playerDiningHall, playerProfTable, playerTowerRoom;
     private Game game;
     private String nickname;
     private final List<TilePane> clouds;
@@ -97,6 +100,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void startGameBoard() {
+
         clouds.add(cloud1);
         clouds.add(cloud2);
 
@@ -108,44 +112,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
 
         initializeIslands();
+        updatePlayerSchool();
 
-        if(game instanceof GameExpertMode){
-            CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
-            for (int i = 0; i < Constants.CHARACTERS_NUM; i++) {
+        if(game instanceof GameExpertMode)
+            initializeCharacterCards();
 
-                int characterCardId = cards[i].getId();
-                String imagePath = "/img/characters/character_front" + (characterCardId) + ".jpg";
-                ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-                image.setPreserveRatio(true);
-                image.setFitWidth(85);
-                characterCards.add(image, i, 0);
-
-                String coinPath = "/img/coin.png";
-                Pane pane = new Pane();
-                ImageView coin = new ImageView(new Image(String.valueOf(getClass().getResource(coinPath))));
-                coin.setPreserveRatio(true);
-                coin.setFitWidth(40);
-                DropShadow coinEffect = new DropShadow();
-                coinEffect.setBlurType(BlurType.ONE_PASS_BOX);
-                coin.setEffect(coinEffect);
-                coin.setDisable(true);
-                pane.getChildren().add(coin);
-                GridPane.setValignment(pane, VPos.TOP);
-
-                Text cost = costs.get(i);
-                cost.setText(String.valueOf(cards[i].getCost()));
-                cost.setFill(Paint.valueOf("WHITE"));
-                cost.setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 16.0));
-                cost.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
-                cost.setTextAlignment(TextAlignment.CENTER);
-                cost.setDisable(true);
-                cost.setX(cost.getX() + 16.0);
-                cost.setY(cost.getY() + 27.0);
-                pane.getChildren().add(cost);
-                characterCards.add(pane, i, 0);
-
-            }
-        }
     }
 
     // Components
@@ -153,10 +124,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void renderGameBoard(){
         showDeck();
         showIslands();
-        if(game instanceof GameExpertMode) showCharacterCards();
+        if(game instanceof GameExpertMode) updateCharacterCards();
         //showPersonalSchool();
         //ShowSchools();
         showClouds();
+        updatePlayerSchool();
     }
 
     private void showDeck(){
@@ -188,7 +160,85 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    private void showCharacterCards(){
+    private void updatePlayerSchool(){
+
+        int i = 0;
+        int j = 1;
+        playerHall.getChildren().clear();
+        playerHall.setDisable(true);
+        for(Student student : game.getPlayerFromNickname(nickname).getSchool().getHall().getStudents()){
+            String color = student.getColor().toString();
+            ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+            studentImage.setFitWidth(20);
+            studentImage.setPreserveRatio(true);
+            playerHall.add(studentImage, j, i);
+            if(j==1) {
+                i++;
+                j = 0;
+            }
+            else
+                j++;
+        }
+
+        playerDiningHall.getChildren().clear();
+        playerDiningHall.setDisable(true);
+        i = 0;
+        j = 0;
+        for(Color color : Color.values()) {
+            try {
+                Table table = game.getPlayerFromNickname(nickname).getSchool().getTable(color.toString());
+                for(Student ignored : table.getStudents()){
+                    ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+                    studentImage.setFitWidth(20);
+                    studentImage.setPreserveRatio(true);
+                    playerDiningHall.add(studentImage, j, i);
+                    j++;
+                }
+            } catch (NonExistentColorException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+            j = 0;
+        }
+
+        playerProfTable.getChildren().clear();
+        playerProfTable.setDisable(true);
+        i = 0;
+        for(Color color : Color.values()){
+            try {
+                if(game.getPlayerFromNickname(nickname).getSchool().getTable(color.toString()).getHasProfessor()){
+                    ImageView studentImage = new ImageView(new Image("img/prof_"+color+".png"));
+                    studentImage.setFitWidth(20);
+                    studentImage.setPreserveRatio(true);
+                    playerDiningHall.add(studentImage, 0, i);
+                }
+            } catch (NonExistentColorException e) {
+                throw new RuntimeException(e);
+            }
+            i++;
+        }
+
+        playerTowerRoom.getChildren().clear();
+        playerTowerRoom.setDisable(true);
+        i = 0;
+        j = 0;
+        String towerColor = game.getTowersColor().get(game.getPlayerFromNickname(nickname)).toString().toLowerCase();
+        for(int towers = 0; towers < game.getPlayerFromNickname(nickname).getSchool().getTowerRoom().getTowersLeft(); towers++){
+            ImageView studentImage = new ImageView(new Image("img/"+towerColor+"_tower.png"));
+            studentImage.setFitWidth(30);
+            studentImage.setPreserveRatio(true);
+            playerTowerRoom.add(studentImage, j, i);
+            if(j==1){
+                i++;
+                j = 0;
+            }
+            else
+                j++;
+        }
+
+    }
+
+    private void updateCharacterCards(){
         characterCards.setDisable(true);
         CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
         for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
@@ -368,4 +418,43 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public Game getGame() {
         return game;
     }
+
+    private void initializeCharacterCards(){
+        CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
+        for (int i = 0; i < Constants.CHARACTERS_NUM; i++) {
+
+            int characterCardId = cards[i].getId();
+            String imagePath = "/img/characters/character_front" + (characterCardId) + ".jpg";
+            ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+            image.setPreserveRatio(true);
+            image.setFitWidth(85);
+            characterCards.add(image, i, 0);
+
+            String coinPath = "/img/coin.png";
+            Pane pane = new Pane();
+            ImageView coin = new ImageView(new Image(String.valueOf(getClass().getResource(coinPath))));
+            coin.setPreserveRatio(true);
+            coin.setFitWidth(40);
+            DropShadow coinEffect = new DropShadow();
+            coinEffect.setBlurType(BlurType.ONE_PASS_BOX);
+            coin.setEffect(coinEffect);
+            coin.setDisable(true);
+            pane.getChildren().add(coin);
+            GridPane.setValignment(pane, VPos.TOP);
+
+            Text cost = costs.get(i);
+            cost.setText(String.valueOf(cards[i].getCost()));
+            cost.setFill(Paint.valueOf("WHITE"));
+            cost.setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 16.0));
+            cost.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
+            cost.setTextAlignment(TextAlignment.CENTER);
+            cost.setDisable(true);
+            cost.setX(cost.getX() + 16.0);
+            cost.setY(cost.getY() + 27.0);
+            pane.getChildren().add(cost);
+            characterCards.add(pane, i, 0);
+
+        }
+    }
+
 }
