@@ -3,16 +3,11 @@ package it.polimi.ingsw.view.gui.scenecontrollers;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.observers.ViewObservable;
-import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.utils.Constants;
-import javafx.application.ConditionalFeature;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -24,11 +19,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
-import javafx.scene.transform.MatrixType;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
@@ -50,7 +43,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final List<TilePane> clouds;
     private final List<GridPane> islands;
     private final List<Text> costs;
-    private final Text [][] studentsOnIsland;
+    private final Text[][] studentsOnIsland;
+    private final ImageView[] towerOnIsland; // used for the tower image on each island
+    private final Text[] towersNumberOnIsland; // used for the towers number on each island
 
 
     public GameBoardSceneController(){
@@ -64,6 +59,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             for(int j = 0; j < 5; j++){
                 studentsOnIsland[i][j] = new Text("0");
             }
+        }
+        towerOnIsland = new ImageView[12];
+        for (int i = 0; i < 12; i++){
+            towerOnIsland[i] = new ImageView();
+        }
+        towersNumberOnIsland = new Text[12];
+        for (int i = 0; i < 12; i++){
+            towersNumberOnIsland[i] = new Text();
         }
     }
 
@@ -163,7 +166,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85);
-            //image.setStyle("-fx-opacity: dropshadow(two-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
             deck.add(image, i, 0);
         }
     }
@@ -200,7 +202,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int j = 0;
         for(GridPane island : islands){
             island.setDisable(false);
-            island.getChildren().removeIf(text -> text instanceof Text);
             try {
                 Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
                 for (Color color : Color.values()) {
@@ -208,23 +209,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
                     studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
                     studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
-                    Text text = studentsOnIsland[i-1][j];
-                    island.add(text,2, j);
                     j++;
 
-                 /*   if (currentIsland.getNumOfTowers() != 0){
+                 if (currentIsland.getNumOfTowers() != 0){
                         Player player = currentIsland.getOwner();
                         TowerColor towerColor = game.getTowersColor().get(player);
-                        ImageView towers = new ImageView(new Image("img/"+towerColor.toString().toLowerCase()+"_tower.png"));
-                        towers.setFitWidth(20);
-                        towers.setPreserveRatio(true);
-
-                        island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 2 && GridPane.getRowIndex(node) == 0);
-
-                        island.add(towers,0,1);
-                        Text towersNumber = new Text(String.valueOf(currentIsland.getNumOfTowers()));
-                        island.add(towersNumber,0,2);
-                    } */
+                        ImageView towerImage = new ImageView(new Image("img/"+towerColor.toString().toLowerCase()+"_tower.png"));
+                        towerImage.setFitWidth(20);
+                        towerImage.setPreserveRatio(true);
+                        towerOnIsland[i-1] = towerImage;
+                        towersNumberOnIsland[i-1].setText(String.valueOf(currentIsland.getNumOfTowers()));
+                        towersNumberOnIsland[i-1].setFill(Paint.valueOf("WHITE"));
+                        towersNumberOnIsland[i-1].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
+                    }
                 }
             } catch (IslandNotFoundException e) {
                 throw new RuntimeException(e);
@@ -361,6 +358,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             } catch (IslandNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            island.add(towerOnIsland[i-1],0,1);
+            island.add(towersNumberOnIsland[i-1],0,2);
             i++;
             j = 0;
         }
