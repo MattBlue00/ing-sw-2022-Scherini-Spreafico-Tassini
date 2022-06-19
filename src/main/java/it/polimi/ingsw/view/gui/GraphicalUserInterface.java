@@ -79,17 +79,17 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     @Override
     public void askMoveStudent() {
         //TODO: need to implement the right method!
-        //Platform.runLater() -> boardController.activateMoveStudent());
+        Platform.runLater(() -> boardController.activateMoveStudent());
     }
 
     @Override
     public void askMotherNatureSteps() {
-
+        Platform.runLater(() -> boardController.activateIslands());
     }
 
     @Override
     public void askCloud() {
-        Platform.runLater(() -> boardController.activateIslands());
+        Platform.runLater(() -> boardController.activateCloudChoice());
     }
 
     @Override

@@ -49,6 +49,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final Text[][] studentsOnIsland;
     private final ImageView[] towerOnIsland; // used for the tower image on each island
     private final Text[] towersNumberOnIsland; // used for the towers number on each island
+    private int motherNatureOldPosition;
+    private String studentToMoveColor;
+    private boolean moveStudentPhase;
 
 
     public GameBoardSceneController(){
@@ -71,6 +74,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         for (int i = 0; i < 12; i++){
             towersNumberOnIsland[i] = new Text();
         }
+        moveStudentPhase = false;
+        studentToMoveColor = null;
     }
 
     public void setGame(Game game) {
@@ -91,6 +96,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         deck.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickAssistantCard);
         cloud1.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         cloud2.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
+        playerHall.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickPlayerHall);
+        playerDiningHall.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickPlayerDiningHall);
         if(game.getPlayersNumber()==3)
             cloud3.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         if(game instanceof GameExpertMode)
@@ -208,9 +215,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             try {
                 if(game.getPlayerFromNickname(nickname).getSchool().getTable(color.toString()).getHasProfessor()){
                     ImageView studentImage = new ImageView(new Image("img/prof_"+color+".png"));
-                    studentImage.setFitWidth(20);
+                    studentImage.setFitWidth(25);
                     studentImage.setPreserveRatio(true);
-                    playerDiningHall.add(studentImage, 0, i);
+                    playerProfTable.add(studentImage, 0, i);
                 }
             } catch (NonExistentColorException e) {
                 throw new RuntimeException(e);
@@ -251,14 +258,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int i = 1;
         int j = 0;
         for(GridPane island : islands){
-            island.setDisable(false);
+            island.setDisable(true);
             try {
                 Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
                 for (Color color : Color.values()) {
-                    int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
-                    studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
-                    studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
-                    studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
+                    setStudentsOnIsland(i, j, currentIsland, color);
                     j++;
 
                  if (currentIsland.getNumOfTowers() != 0){
@@ -272,6 +276,26 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                         towersNumberOnIsland[i-1].setFill(Paint.valueOf("WHITE"));
                         towersNumberOnIsland[i-1].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
                     }
+
+                 if (i == motherNatureOldPosition && i != game.getBoard().getMotherNaturePos())
+                        island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 0);
+
+                 if (game.getBoard().getMotherNaturePos() == i){
+                     setMotherNature(island);
+                 }
+
+                 if (currentIsland.hasVetoTile()){
+                     String imagePath = "/img/deny_island_icon.png";
+                     ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+                     vetoTile.setFitWidth(20);
+                     vetoTile.setPreserveRatio(true);
+                     island.add(vetoTile,0,1);
+                 }
+
+                 if (!currentIsland.hasVetoTile()){
+                     island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 1 && node instanceof ImageView);
+                 }
+
                 }
             } catch (IslandNotFoundException e) {
                 throw new RuntimeException(e);
@@ -279,6 +303,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             i++;
             j = 0;
         }
+        motherNatureOldPosition = game.getBoard().getMotherNaturePos();
     }
 
 
@@ -300,6 +325,51 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         cardImage.getStyleClass().set(0,"");
     }
 
+    public void onClickPlayerHall(Event e){
+        Node node = (Node) e.getTarget();
+        if(node instanceof ImageView) {
+
+            String tempUrl = ((ImageView) node).getImage().getUrl().toLowerCase();
+
+            if (tempUrl.contains("student")) {
+
+                if (tempUrl.contains("student_green")) {
+                    studentToMoveColor = "GREEN";
+                } else if (tempUrl.contains("student_yellow")) {
+                    studentToMoveColor = "YELLOW";
+                } else if (tempUrl.contains("student_red")) {
+                    studentToMoveColor = "RED";
+                } else if (tempUrl.contains("student_pink")) {
+                    studentToMoveColor = "PINK";
+                } else if (tempUrl.contains("student_blue")) {
+                    studentToMoveColor = "BLUE";
+                }
+
+                moveStudentPhase = true;
+                activateIslands();
+                activatePlayerDiningHall();
+
+                playerHall.getChildren().forEach( student -> {
+                    if(student instanceof ImageView && ((ImageView) student).getImage().getUrl().equalsIgnoreCase("student")){
+                        student.getStyleClass().remove("clickable");
+                        student.setDisable(true);
+                    }
+                });
+                playerHall.setDisable(true);
+            }
+            else{
+                studentToMoveColor = null;
+            }
+        }
+    }
+
+
+    public void onClickPlayerDiningHall(Event e) {
+        moveStudentToDiningHall(studentToMoveColor);
+        playerDiningHall.setDisable(true);
+        playerDiningHall.getStyleClass().remove("clickable");
+    }
+
     public void onClickCloud(Event e){
         Node node = (Node) e.getTarget();
         if(node.equals(cloud1))
@@ -314,6 +384,57 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     //TODO: implement method
     public void onClickIsland(Event e){
         Node node = (Node) e.getTarget();
+        int islandChosenId = -1;
+
+        // used for debugging
+        System.out.println("Island chosen id: "+islandChosenId+ " prima prova");
+
+        if (node.equals(island1)){
+            islandChosenId = 1;
+        }
+        else if (node.equals(island2)) {
+            islandChosenId = 2;
+        }
+        else if (node.equals(island3)) {
+            islandChosenId = 3;
+        }
+        else if (node.equals(island4)) {
+            islandChosenId = 4;
+        }
+        else if (node.equals(island5)) {
+            islandChosenId = 5;
+        }
+        else if (node.equals(island6)) {
+            islandChosenId = 6;
+        }
+        else if (node.equals(island7)) {
+            islandChosenId = 7;
+        }
+        else if (node.equals(island8)) {
+            islandChosenId = 8;
+        }
+        else if (node.equals(island9)) {
+            islandChosenId = 9;
+        }
+        else if (node.equals(island10)) {
+            islandChosenId = 10;
+        }
+        else if (node.equals(island11)) {
+            islandChosenId = 11;
+        }
+        else if (node.equals(island12)) {
+            islandChosenId = 12;
+        }
+
+        //used for debugging
+        System.out.println("Island chosen id: "+islandChosenId+ " seconda prova");
+
+        if (moveStudentPhase && islandChosenId != -1)
+            moveStudentToIsland(studentToMoveColor, islandChosenId);
+        else if (!moveStudentPhase && islandChosenId != -1)
+            moveMotherNature(islandChosenId);
+
+        islands.forEach(island -> island.getStyleClass().remove("clickable"));
     }
 
     public void onClickCharacterCard(Event e){
@@ -333,10 +454,31 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void activateIslands(){
-        for (GridPane island : islands){
+        //prima c'era GridPane
+        for (Node island : islands){
             island.getStyleClass().add("clickable");
+          /*  island.getChildren().forEach( image -> {
+                if(image instanceof ImageView && ((ImageView) image).getImage().getUrl().toLowerCase().contains("island")){
+                    image.getStyleClass().add("clickable");
+                }
+            }); */
             island.setDisable(false);
         }
+    }
+
+    public void activatePlayerDiningHall(){
+        playerDiningHall.getStyleClass().add("clickable");
+        playerDiningHall.setDisable(false);
+    }
+
+    public void activateMoveStudent() {
+        playerHall.setDisable(false);
+        playerHall.getChildren().forEach( student -> {
+            if(student instanceof ImageView && ((ImageView) student).getImage().getUrl().contains("student")){
+                student.getStyleClass().add("clickable");
+                student.setDisable(false);
+            }
+        });
     }
 
     public void activateCloudChoice(){
@@ -365,6 +507,22 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudId));
     }
 
+    private void moveStudentToDiningHall(String color){
+        notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(color));
+        moveStudentPhase = false;
+        studentToMoveColor = null;
+    }
+
+    private void moveStudentToIsland(String color, int islandId){
+        notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(color, islandId));
+        moveStudentPhase = false;
+        studentToMoveColor = null;
+    }
+
+    private void moveMotherNature(int islandChosenId){
+        int steps = islandChosenId - game.getBoard().getMotherNaturePos();
+        notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(steps));
+    }
 
     private void playCharacterCard(int characterCard){
         String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCard).getClass().getSimpleName();
@@ -393,26 +551,48 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int i = 1;
         int j = 0;
         for(GridPane island : islands){
-            island.setDisable(false);
+            island.setDisable(true);
             try {
                 Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
                 for (Color color : Color.values()) {
-                    int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
-                    studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
-                    studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
-                    studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
+                    setStudentsOnIsland(i, j, currentIsland, color);
                     Text text = studentsOnIsland[i-1][j];
                     island.add(text, 2, j);
+
+                    if (game.getBoard().getMotherNaturePos() == i){
+                        motherNatureOldPosition = i;
+                        setMotherNature(island);
+                    }
                     j++;
                 }
             } catch (IslandNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            island.add(towerOnIsland[i-1],0,1);
-            island.add(towersNumberOnIsland[i-1],0,2);
+            island.add(towerOnIsland[i-1],0,2);
+            island.add(towersNumberOnIsland[i-1],0,3);
             i++;
             j = 0;
         }
+    }
+
+    private void setMotherNature(GridPane island) {
+
+        String imagePath = "/img/mother_nature.png";
+        ImageView motherNature = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+        motherNature.setFitWidth(42);
+        motherNature.setPreserveRatio(true);
+        motherNature.setStyle("-fx-effect: dropshadow(one-pass-box, rgba(70,70,70,70), 10, 0, 0, 0);");
+        motherNature.setY(-40);
+        motherNature.setY(+15);
+        motherNature.getStyleClass().add("clickable");
+        island.add(motherNature,0,0);
+    }
+
+    private void setStudentsOnIsland(int i, int j, Island currentIsland, Color color) {
+        int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
+        studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
+        studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
+        studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
     }
 
     public Game getGame() {
