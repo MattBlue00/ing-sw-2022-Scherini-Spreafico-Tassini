@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class Healer extends CharacterCard implements IntCard, Serializable {
 
-    int islandID;
+    private int islandID;
 
     /**
      * Character Card constructor.
@@ -45,7 +45,7 @@ public class Healer extends CharacterCard implements IntCard, Serializable {
 
     @Override
     public void doEffect(GameExpertMode game) throws TryAgainException {
-        if(game.getBoard().getNumOfVetos() < 1)
+        if(game.getBoard().getNumOfVetos() <= 0)
             throw new NoVetoTilesException("There are no veto tiles available!");
         else {
             game.getBoard().getIslands().getIslandFromID(this.islandID).setHasVetoTile(true);

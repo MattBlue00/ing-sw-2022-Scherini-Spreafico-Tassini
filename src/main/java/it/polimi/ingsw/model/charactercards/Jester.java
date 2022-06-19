@@ -20,9 +20,9 @@ import java.util.Optional;
  * Allows the player to switch from 0 to 3 students between the hall and the students on the card.
  */
 
-public class Jester extends CharacterCard implements ArrayListStringCard, Serializable {
+public class Jester extends CharacterCard implements ArrayListStringCard, StudentsCard, Serializable {
 
-    private final List<Student> studentsOnTheCard = new ArrayList<>();
+    private final List<Student> studentsOnTheCard;
     private List<String> studentsToMove;
 
     /**
@@ -33,6 +33,7 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Serial
 
     public Jester(List<Student> studentsBag) {
         super(7, 1);
+        studentsOnTheCard = new ArrayList<>();
         for(int i = 0; i < 6; i++)
             this.studentsOnTheCard.add(studentsBag.remove(studentsBag.size() - 1));
     }

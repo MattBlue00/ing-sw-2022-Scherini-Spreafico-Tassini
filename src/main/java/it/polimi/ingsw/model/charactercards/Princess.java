@@ -8,13 +8,14 @@ import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Allows the player to move a specified student from the card to the appropriate table.
  */
 
-public class Princess extends CharacterCard implements StringCard, Serializable {
+public class Princess extends CharacterCard implements StringCard, StudentsCard, Serializable {
 
     private final Student[] students;
     private String chosenColor;
@@ -83,6 +84,17 @@ public class Princess extends CharacterCard implements StringCard, Serializable 
 
     public Student[] getStudents(){
         return students;
+    }
+
+    /**
+     * Returns a list containing the students currently present on the card.
+     *
+     * @return a list containing the students currently present on the card.
+     */
+
+    @Override
+    public List<Student> getStudentsOnTheCard() {
+        return new ArrayList<>(List.of(students));
     }
 
     /**
