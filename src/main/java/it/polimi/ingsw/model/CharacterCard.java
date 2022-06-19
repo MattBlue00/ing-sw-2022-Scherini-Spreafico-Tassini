@@ -94,12 +94,6 @@ public abstract class CharacterCard implements Serializable {
     public abstract void doEffect(GameExpertMode game) throws TryAgainException;
 
     /**
-     * Allows the view to properly show the students on the card.
-     */
-
-    public void showStudentsOnTheCard(){}
-
-    /**
      * Updates the card's cost and its status once its effect has ended.
      */
 

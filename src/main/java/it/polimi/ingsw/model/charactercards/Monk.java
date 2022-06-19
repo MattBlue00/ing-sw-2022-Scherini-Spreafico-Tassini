@@ -8,13 +8,15 @@ import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Allows the player to move a specified student from the card to a specified island.
  */
 
-public class Monk extends CharacterCard implements StringIntCard, Serializable {
+public class Monk extends CharacterCard implements StringIntCard, StudentsCard, Serializable {
 
     private final Student[] students;
     private String chosenColor;
@@ -78,8 +80,18 @@ public class Monk extends CharacterCard implements StringIntCard, Serializable {
      * @return an array containing the students currently present on the card.
      */
 
-    public Student[] getStudents(){
+    public Student[] getStudents() {
         return students;
+    }
+
+    /**
+     * Returns a list containing the students currently present on the card.
+     *
+     * @return a list containing the students currently present on the card.
+     */
+
+    public List<Student> getStudentsOnTheCard(){
+        return new ArrayList<>(List.of(students));
     }
 
     /**
