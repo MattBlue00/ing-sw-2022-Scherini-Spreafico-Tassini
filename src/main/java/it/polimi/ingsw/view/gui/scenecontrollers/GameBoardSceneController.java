@@ -26,10 +26,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
 
@@ -54,6 +51,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             opposingProfTable1, opposingProfTable2, opposingTowerRoom1, opposingTowerRoom2;
     @FXML
     private Label playerNickname, opposingNickname1, opposingNickname2;
+    @FXML
+    private GridPane walletGridPane;
+    @FXML
+    private Label coinsLabel;
     private Game game;
     private String nickname;
     private final List<TilePane> clouds;
@@ -62,6 +63,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final List<Label> opposingNicknameLabels;
     private final List<GridPane> islands;
     private final List<Text> costs;
+    private final Node[] playersWallet;
+    private final Text[] coins;
+    private List<Player> playersCoins;
     private final Text[][] studentsOnIsland;
     private final ImageView[] towerOnIsland; // used for the tower image on each island
     private final Text[] towersNumberOnIsland; // used for the towers number on each island
@@ -71,7 +75,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final Text numOfVetos;
     private final TilePane[] studentsOnTheCards;
 
-    public GameBoardSceneController(){
+    public GameBoardSceneController() {
         clouds = new ArrayList<>();
         islands = new ArrayList<>();
         costs = new ArrayList<>();
@@ -80,25 +84,28 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         opposingSchool2 = new ArrayList<>();
         opposingNicknameLabels = new ArrayList<>();
         studentsOnTheCards = new TilePane[3];
-        for(int i = 0; i < Constants.CHARACTERS_NUM; i++)
+        for (int i = 0; i < Constants.CHARACTERS_NUM; i++)
             costs.add(new Text());
         studentsOnIsland = new Text[12][5];
-        for(int i = 0; i < 12; i++){
-            for(int j = 0; j < 5; j++){
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 5; j++) {
                 studentsOnIsland[i][j] = new Text("0");
             }
         }
         towerOnIsland = new ImageView[12];
-        for (int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             towerOnIsland[i] = new ImageView();
         }
         towersNumberOnIsland = new Text[12];
-        for (int i = 0; i < 12; i++){
+        for (int i = 0; i < 12; i++) {
             towersNumberOnIsland[i] = new Text();
         }
         moveStudentPhase = false;
         studentToMoveColor = null;
         numOfVetos = new Text();
+        playersWallet = new Node[3];
+        coins = new Text[3];
+        playersCoins = new ArrayList<>();
     }
 
     public void setGame(Game game) {
@@ -162,9 +169,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
         updatePlayerSchool();
 
-        if(game instanceof GameExpertMode)
+        if(game instanceof GameExpertMode) {
             initializeCharacterCards();
-
+            initializeCoinsWallet();
+        }
+        else {
+            coinsLabel.setVisible(false);
+        }
     }
 
     // Components
@@ -176,6 +187,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             updateCharacterCardCosts();
             updateVetoTiles();
             updateStudentsOnCards();
+            updatePlayersWallet();
         }
         showClouds();
         updatePlayerSchool();
@@ -401,6 +413,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     }
 
+    private void updatePlayersWallet(){
+        for (int i = 0; i < game.getPlayersNumber(); i++){
+            Player currentPlayer = game.getPlayerFromNickname(playersCoins.get(i).getNickname());
+            coins[i].setText(String.valueOf(currentPlayer.getCoinsWallet()));
+            coins[i].setDisable(true);
+        }
+    }
+
     private void updateCharacterCardCosts(){
         characterCards.setDisable(true);
         CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
@@ -448,37 +468,42 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     setStudentsOnIsland(i, j, currentIsland, color);
                     j++;
 
-                 if (currentIsland.getNumOfTowers() != 0){
+                    if (currentIsland.getNumOfTowers() != 0){
                         Player player = currentIsland.getOwner();
-                        TowerColor towerColor = game.getTowersColor().get(player);
-                        ImageView towerImage = new ImageView(new Image("img/"+towerColor.toString().toLowerCase()+"_tower.png"));
-                        towerImage.setFitWidth(20);
-                        towerImage.setPreserveRatio(true);
-                        towerOnIsland[i-1] = towerImage;
-                        towersNumberOnIsland[i-1].setText(String.valueOf(currentIsland.getNumOfTowers()));
+                        String towerColor = game.getTowersColor().get(player).toString().toLowerCase();
+                        Image towerImage = new Image("img/"+towerColor+"_tower.png");
+                        towerOnIsland[i-1].setImage(towerImage);
+                        towerOnIsland[i-1].setFitWidth(38);
+                        towerOnIsland[i-1].setPreserveRatio(true);
+                        towerOnIsland[i-1].setX(56);
+                        towerOnIsland[i-1].setY(40);
+                        if (towerColor.equalsIgnoreCase("white")){
+                            towerOnIsland[i-1].setStyle("-fx-effect: dropshadow(one-pass-box, rgba(80,80,80,80), 10, 0, 0, 0);");
+                        }
+                        towersNumberOnIsland[i-1].setText("     "+ currentIsland.getNumOfTowers());
                         towersNumberOnIsland[i-1].setFill(Paint.valueOf("WHITE"));
+                        towersNumberOnIsland[i-1].setTextAlignment(TextAlignment.RIGHT);
                         towersNumberOnIsland[i-1].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
                     }
 
-                 if (i == motherNatureOldPosition && i != game.getBoard().getMotherNaturePos())
+                    if (i == motherNatureOldPosition && i != game.getBoard().getMotherNaturePos())
                         island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 0);
 
-                 if (game.getBoard().getMotherNaturePos() == i){
-                     setMotherNature(island);
-                 }
+                    if (game.getBoard().getMotherNaturePos() == i){
+                        setMotherNature(island);
+                    }
 
-                 if (currentIsland.hasVetoTile()){
-                     String imagePath = "/img/deny_island_icon.png";
-                     ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-                     vetoTile.setFitWidth(20);
-                     vetoTile.setPreserveRatio(true);
-                     island.add(vetoTile,0,1);
-                 }
+                    if (currentIsland.hasVetoTile()){
+                         String imagePath = "/img/deny_island_icon.png";
+                         ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+                         vetoTile.setFitWidth(20);
+                         vetoTile.setPreserveRatio(true);
+                         island.add(vetoTile,0,1);
+                    }
 
-                 if (!currentIsland.hasVetoTile()){
-                     island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 1 && node instanceof ImageView);
-                 }
-
+                    if (!currentIsland.hasVetoTile()){
+                        island.getChildren().removeIf( node -> GridPane.getColumnIndex(node) == 0 && GridPane.getRowIndex(node) == 1 && node instanceof ImageView);
+                    }
                 }
             } catch (IslandNotFoundException e) {
                 throw new RuntimeException(e);
@@ -845,7 +870,52 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 studentsOnTheCards[i].setDisable(true);
                 characterCards.add(studentsOnTheCards[i], i, 0);
             }
+        }
+    }
 
+    private void initializeCoinsWallet() {
+
+        playersCoins.add(0, game.getPlayerFromNickname(nickname));
+        for (Player player : game.getPlayers()){
+            if (!player.getNickname().equals(nickname)){
+                playersCoins.add(player);
+            }
+        }
+        for (int i = 0; i < game.getPlayersNumber(); i++) {
+
+            coins[i] = new Text(String.valueOf(playersCoins.get(i).getCoinsWallet()));
+
+            Text playerNickname = new Text("      "+playersCoins.get(i).getNickname());
+            playerNickname.setFill(Paint.valueOf("WHITE"));
+            playerNickname.setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 14.0));
+            playerNickname.setTextAlignment(TextAlignment.CENTER);
+            playerNickname.setDisable(true);
+
+            String coinPath = "/img/coin.png";
+            Pane coinPane = new Pane();
+            ImageView coin = new ImageView(new Image(String.valueOf(getClass().getResource(coinPath))));
+            coin.setPreserveRatio(true);
+            coin.setFitWidth(38);
+            DropShadow coinEffect = new DropShadow();
+            coinEffect.setBlurType(BlurType.ONE_PASS_BOX);
+            coin.setEffect(coinEffect);
+            coin.setY(2.0);
+            coinPane.getChildren().add(coin);
+            coin.setDisable(true);
+
+            coins[i].setFill(Paint.valueOf("WHITE"));
+            coins[i].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 14.0));
+            coins[i].setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
+            coins[i].setTextAlignment(TextAlignment.CENTER);
+            coins[i].setDisable(true);
+            coins[i].setX(coin.getX() + 16.0);
+            coins[i].setY(coin.getY() + 27.0);
+            coinPane.getChildren().add(coins[i]);
+
+            playersWallet[i] = coinPane;
+            playersWallet[i].setDisable(true);
+            walletGridPane.add(playerNickname,0,i);
+            walletGridPane.add(playersWallet[i],1,i);
         }
     }
 
