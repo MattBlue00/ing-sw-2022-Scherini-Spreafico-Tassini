@@ -74,8 +74,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private boolean moveStudentPhase;
     private final Text numOfVetos;
     private final TilePane[] studentsOnTheCards;
+    private final List<AssistantCard> assintantCards;
 
     public GameBoardSceneController() {
+        assintantCards = new ArrayList<>();
         clouds = new ArrayList<>();
         islands = new ArrayList<>();
         costs = new ArrayList<>();
@@ -132,14 +134,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cloud3.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         if(game instanceof GameExpertMode)
             characterCards.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCharacterCard);
-        for (GridPane island : islands)
-            island.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickIsland);
     }
 
     public void startGameBoard() {
 
         clouds.add(cloud1);
         clouds.add(cloud2);
+
+        assintantCards.addAll(game.getPlayerFromNickname(nickname).getDeck());
 
         opposingSchool1.add(opposingHall1);
         opposingSchool1.add(opposingDiningRoom1);
@@ -164,7 +166,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             opposingSchool2Pane.setVisible(false);
             opposingNickname2.setVisible(false);
         }
-
         initializeIslands();
 
         updatePlayerSchool();
@@ -181,7 +182,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     // Components
 
     public void renderGameBoard(){
-        showDeck();
         showIslands();
         if(game instanceof GameExpertMode) {
             updateCharacterCardCosts();
@@ -196,13 +196,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     private void showDeck(){
+        deck.getChildren().clear();
         deck.setDisable(true);
-        for(int i = 0; i<game.getPlayerFromNickname(nickname).getDeck().size(); i++){
-            String imagePath = "/img/assistants/assistant" +(i+1)+".png";
+        for(AssistantCard assistantCard : game.getPlayerFromNickname(nickname).getDeck()){
+            String imagePath = "/img/assistants/assistant" +(assistantCard.getWeight())+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85);
-            deck.add(image, i, 0);
+            deck.add(image, assistantCard.getWeight()-1, 0);
         }
     }
 
@@ -462,6 +463,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         int j = 0;
         for(GridPane island : islands){
             island.setDisable(true);
+            island.setOnMouseClicked(this::onClickIsland);
             try {
                 Island currentIsland = game.getBoard().getIslands().getIslandFromID(i);
                 for (Color color : Color.values()) {
@@ -523,14 +525,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     // Events
     public void onClickAssistantCard(Event e){
-        deck.setDisable(true);
         Node node = (Node) e.getTarget();
-        int cardId = GridPane.getColumnIndex(node);
-        ImageView cardImage = (ImageView) node;
-        playAssistantCard(cardId);
-        String wizard_path = game.getPlayerFromNickname(getNickname()).getWizardID().toString().toLowerCase();
-        cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/"+wizard_path+".jpg"))));
-        cardImage.getStyleClass().set(0,"");
+        try{
+            int cardId = GridPane.getColumnIndex(node);
+            deck.setDisable(true);
+
+            System.out.println("Entered pos: "+cardId);
+
+            playAssistantCard(cardId);
+            ImageView cardImage = (ImageView) node;
+            String wizard_path = game.getPlayerFromNickname(getNickname()).getWizardID().toString().toLowerCase();
+            cardImage.setImage(new Image(String.valueOf(getClass().getResource("/img/wizards/" + wizard_path + ".jpg"))));
+            cardImage.getStyleClass().set(0, "");
+        }catch(NullPointerException e1){ System.out.println("entered null value");}
     }
 
     public void onClickPlayerHall(Event e){
@@ -592,10 +599,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     //TODO: implement method
     public void onClickIsland(Event e){
         Node node = (Node) e.getTarget();
+        if(node.getParent()!=null){
+            node = node.getParent();
+        }
         int islandChosenId = -1;
 
         // used for debugging
-        System.out.println("Island chosen id: "+islandChosenId+ " prima prova");
+        //System.out.println("Island chosen id: "+islandChosenId+ " prima prova");
 
         if (node.equals(island1)){
             islandChosenId = 1;
@@ -635,7 +645,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
 
         //used for debugging
-        System.out.println("Island chosen id: "+islandChosenId+ " seconda prova");
+        //System.out.println("Island chosen id: "+islandChosenId+ " seconda prova");
 
         if (moveStudentPhase && islandChosenId != -1)
             moveStudentToIsland(studentToMoveColor, islandChosenId);
@@ -654,6 +664,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     // Activations from GUI class (askMessage result)
     public void activateAssistantCardChoice(){
+        showDeck();
         showUpdate("Select the Assistant Card you want to play.");
         for(Node img : deck.getChildren()){
             img.getStyleClass().set(0,"clickable");
@@ -707,7 +718,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
 
     private void playAssistantCard(int cardId) {
-        String cardName = game.getCurrentPlayer().getDeck().get(cardId).getName();
+        String cardName = assintantCards.get(cardId).getName();
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
     }
 
