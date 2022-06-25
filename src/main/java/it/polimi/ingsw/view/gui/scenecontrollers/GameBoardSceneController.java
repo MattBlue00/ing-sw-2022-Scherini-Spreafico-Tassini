@@ -55,6 +55,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private GridPane walletGridPane;
     @FXML
     private Label coinsLabel;
+    @FXML
+    private Label characterCardsLabel;
     private Game game;
     private String nickname;
     private final List<TilePane> clouds;
@@ -65,11 +67,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final List<Text> costs;
     private final Node[] playersWallet;
     private final Text[] coins;
-    private List<Player> playersCoins;
+    private final List<Player> playersCoins;
     private final Text[][] studentsOnIsland;
     private final ImageView[] towerOnIsland; // used for the tower image on each island
     private final Text[] towersNumberOnIsland; // used for the towers number on each island
     private int motherNatureOldPosition;
+    private int characterCardSelected;
     private String studentToMoveColor;
     private boolean moveStudentPhase;
     private final Text numOfVetos;
@@ -173,9 +176,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(game instanceof GameExpertMode) {
             initializeCharacterCards();
             initializeCoinsWallet();
+            characterCardSelected = -1;
         }
         else {
             coinsLabel.setVisible(false);
+            characterCardsLabel.setVisible(false);
         }
     }
 
@@ -508,7 +513,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     }
                 }
             } catch (IslandNotFoundException e) {
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
+                mergeIslands();
             }
             i++;
             j = 0;
@@ -577,7 +583,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             }
         }
     }
-
 
     public void onClickPlayerDiningHall(Event e) {
         moveStudentToDiningHall(studentToMoveColor);
@@ -651,6 +656,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             moveStudentToIsland(studentToMoveColor, islandChosenId);
         else if (!moveStudentPhase && islandChosenId != -1)
             moveMotherNature(islandChosenId);
+        else if (characterCardSelected != -1 && !moveStudentPhase) {
+            playCharacterCardInt(islandChosenId);
+        }
 
         islands.forEach(island -> island.getStyleClass().remove("clickable"));
     }
@@ -659,7 +667,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         Node node = (Node) e.getTarget();
         int columnIndex = GridPane.getColumnIndex(node);
         int characterCardID = (((GameExpertMode) game).getCharacters())[columnIndex].getId();
-        playCharacterCard(characterCardID);
+        if(characterCardID == 5){
+            characterCardSelected = 5;
+           activateIslands();
+        }
+        else playCharacterCard(characterCardID);
     }
 
     // Activations from GUI class (askMessage result)
@@ -710,7 +722,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void activateCharacterCards(){
         showUpdate("You can also play a Character Card.");
         for(Node img : characterCards.getChildren()){
-            if(!(img instanceof TilePane))
+            if(!(img instanceof TilePane) )
                 img.getStyleClass().add("clickable");
         }
         characterCards.setDisable(false);
@@ -751,6 +763,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             characterCards.setDisable(true);
             showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
         }
+    }
+
+    private void playCharacterCardInt(int islandChosenId){
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardSelected).getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(characterCardSelected, islandChosenId));
+        if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+            characterCards.setDisable(true);
+            showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
+        }
+        characterCardSelected = -1;
     }
 
     private void initializeIslands(){
@@ -815,10 +837,18 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
     }
 
+    /**
+     * Getter method used to return the {@code game}
+     *
+     * @return {@code game}
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Method used to initialize the character cards: it will show each character card with its cost
+     */
     private void initializeCharacterCards(){
         CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
         for (int i = 0; i < Constants.CHARACTERS_NUM; i++) {
@@ -884,6 +914,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Used to initialize the coin box: the gui will show each player with their coins
+     */
     private void initializeCoinsWallet() {
 
         playersCoins.add(0, game.getPlayerFromNickname(nickname));
@@ -928,6 +961,57 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             walletGridPane.add(playerNickname,0,i);
             walletGridPane.add(playersWallet[i],1,i);
         }
+    }
+
+    /**
+     * Used to set as invisible and not clickable the islands that are merged
+     */
+    private void mergeIslands(){
+        switch (game.getBoard().getIslands().getSize()) {
+            case 11 -> {
+                disableIsland(island12);
+            }
+            case 10 -> {
+                disableIsland(island11);
+            }
+            case 9 -> {
+                    disableIsland(island10);
+            }
+            case 8 -> {
+                disableIsland(island9);
+            }
+            case 7 -> {
+                disableIsland(island8);
+            }
+            case 6 -> {
+                disableIsland(island7);
+            }
+            case 5 -> {
+                disableIsland(island6);
+            }
+            case 4 -> {
+                disableIsland(island5);
+            }
+            case 3 -> {
+                disableIsland(island4);
+            }
+        }
+    }
+
+    /**
+     * Used to set a specific island as invisible to the user and not clickable
+     *
+     * @param island to set invisible
+     */
+    private void disableIsland(GridPane island) {
+        island.setVisible(false);
+        island.setDisable(true);
+        island.getStyleClass().remove("clickable");
+        island.getChildren().forEach(node -> {
+            node.setDisable(true);
+            node.setVisible(false);
+            node.getStyleClass().remove("clickable");
+        });
     }
 
 }
