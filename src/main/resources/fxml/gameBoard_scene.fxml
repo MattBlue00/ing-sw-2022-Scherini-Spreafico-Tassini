@@ -316,7 +316,7 @@
             </VBox>
             <VBox prefHeight="200.0">
                <children>
-                  <Label styleClass="text_label" text="Character Cards">
+                  <Label id="characterCardsLabel" fx:id="characterCardsLabel" styleClass="text_label" text="Character Cards">
                      <font>
                         <Font size="16.0" />
                      </font>
