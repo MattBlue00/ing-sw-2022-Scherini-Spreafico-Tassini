@@ -78,22 +78,25 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void askMoveStudent() {
-        //TODO: need to implement the right method!
+        Platform.runLater(() -> boardController.showUpdate("You can pick students from your hall."));
         Platform.runLater(() -> boardController.activateMoveStudent());
     }
 
     @Override
     public void askMotherNatureSteps() {
+        Platform.runLater(() -> boardController.showUpdate("Where do you want to move Mother Nature?"));
         Platform.runLater(() -> boardController.activateIslands());
     }
 
     @Override
     public void askCloud() {
+        Platform.runLater(() -> boardController.showUpdate("Which cloud do you want to pick students from?"));
         Platform.runLater(() -> boardController.activateCloudChoice());
     }
 
     @Override
     public void askCharacterCard() {
+        Platform.runLater(() -> boardController.showUpdate("You can also play a Character Card."));
         Platform.runLater(() -> boardController.activateCharacterCards());
     }
 
@@ -138,8 +141,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     }
 
     @Override
-    public void showDisconnectionMessage(String nicknameDisconnected) {
-        Platform.runLater(() -> sceneController.showAlert("Player "+nicknameDisconnected+" has disconnected"));
+    public void showDisconnectionMessage(String message) {
+        Platform.runLater(() -> sceneController.showAlert(message));
         Platform.runLater(() -> sceneController.changeRootPane(observers, "lobby_scene.fxml"));
     }
 
@@ -185,7 +188,8 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void quit() {
-        // TODO: i don't really know what to do here
+        Platform.exit();
+        System.exit(0);
     }
 
 }

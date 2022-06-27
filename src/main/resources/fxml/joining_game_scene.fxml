@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
-<VBox alignment="CENTER" spacing="20" styleClass="background" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenecontrollers.JoiningGameController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenecontrollers.JoiningGameController">
     <stylesheets>
         <URL value="@../css/menu_style.css" />
     </stylesheets>
-    <VBox styleClass="form" alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0">
-        <Label text="Insert Game ID" styleClass="title"/>
-        <Label contentDisplay="RIGHT" prefHeight="25.0" prefWidth="129.0" text="Game ID:">
-            <graphic>
-                <TextField fx:id="gameID" prefHeight="25.0" prefWidth="76.0" />
-            </graphic>
-        </Label>
-        <Button fx:id="joinGame" styleClass="btn" mnemonicParsing="false" text="JOIN GAME" />
+    <VBox alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0" styleClass="form">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0">
+         <children>
+              <Label layoutX="116.0" layoutY="68.0" styleClass="title" text="INSERT THE GAME ID">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="108.0" layoutY="126.0" prefHeight="25.0" prefWidth="80.0" text="Game ID:" />
+                <TextField fx:id="gameID" layoutX="200.0" layoutY="125.0" prefHeight="26.0" prefWidth="65.0" />
+              <Button fx:id="joinGame" layoutX="118.0" layoutY="188.0" mnemonicParsing="false" styleClass="btn" text="JOIN THE GAME" />
+         </children>
+      </AnchorPane>
     </VBox>
 </VBox>
-

@@ -20,8 +20,8 @@
             <Font size="14.0" />
          </font></Label>
         <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10">
-            <Button fx:id="createBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="282.0" styleClass="btn" text="CREATE NEW GAME" />
-            <Button fx:id="joinBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="283.0" styleClass="btn" text="JOIN EXISTING GAME" />
+            <Button fx:id="createBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="282.0" styleClass="btn" text="CREATE A NEW GAME" />
+            <Button fx:id="joinBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="283.0" styleClass="btn" text="JOIN AN EXISTING GAME" />
         </VBox>
     </VBox>
 </VBox>

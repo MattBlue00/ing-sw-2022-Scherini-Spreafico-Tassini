@@ -3,7 +3,10 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
+import it.polimi.ingsw.network.server.ClientHandler;
+import it.polimi.ingsw.network.server.SocketClientHandler;
 import it.polimi.ingsw.utils.Constants;
+import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -203,7 +206,7 @@ class GameControllerTest {
     }
 
     @Test
-    public void testDeclareWinningPlayer() throws TieException {
+    public void testDeclareWinningPlayer(){
         GameController gameController = new GameController();
         PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
 
@@ -217,8 +220,47 @@ class GameControllerTest {
                 gameController.getGame().getConstants()));
 
         gameController.getGame().getPlayers().get(0).getSchool().getTowerRoom().setTowersLeft(2);
-        gameController.getGame().getPlayers().get(1).getSchool().getTowerRoom().setTowersLeft(1);
+        gameController.getGame().getPlayers().get(1).getSchool().getTowerRoom().setTowersLeft(0);
         gameController.getGame().getPlayers().get(2).getSchool().getTowerRoom().setTowersLeft(4);
+
+        assertDoesNotThrow(gameController::declareWinningPlayer);
+    }
+
+    @Test
+    public void testTie(){
+        GameController gameController = new GameController();
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
+
+        gameController.prepareGame(message.getPlayerNumber());
+
+        gameController.getGame().addPlayer(new Player(Wizard.YELLOW_WIZARD,"Samuele",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.PINK_WIZARD,"Ludovica",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD,"Matteo",
+                gameController.getGame().getConstants()));
+
+        assertThrows(TieException.class, gameController::declareWinningPlayer);
+    }
+
+    @Test
+    public void test10RoundsCompletedAndTie(){
+        GameController gameController = new GameController();
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
+
+        gameController.prepareGame(message.getPlayerNumber());
+
+        gameController.getGame().addPlayer(new Player(Wizard.YELLOW_WIZARD,"Samuele",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.PINK_WIZARD,"Ludovica",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD,"Matteo",
+                gameController.getGame().getConstants()));
+
+        gameController.getGame().setRoundNumber(11);
+        gameController.getGame().setCurrentPlayer(gameController.getGame().getPlayers().get(0));
+
+        assertDoesNotThrow(gameController::winCheck);
     }
 
     @Test
@@ -467,6 +509,67 @@ class GameControllerTest {
         p2.setDeck(deck);
         assertEquals(1, p2.getDeck().size());
         assertTrue(gc.isAssistantCardPlayable("FOX"));
+
+    }
+
+    @Test
+    public void testCatchActionPhase(){
+        GameController gameController = new GameController();
+        PlayerNumberMessage message = new PlayerNumberMessage("Samuele", 3);
+
+        gameController.prepareGame(message.getPlayerNumber());
+
+        gameController.getGame().addPlayer(new Player(Wizard.YELLOW_WIZARD,"Samuele",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.PINK_WIZARD,"Ludovica",
+                gameController.getGame().getConstants()));
+        gameController.getGame().addPlayer(new Player(Wizard.BLUE_WIZARD,"Matteo",
+                gameController.getGame().getConstants()));
+
+        gameController.setGameState(GameState.IN_GAME);
+        gameController.getGame().setCurrentPlayer(gameController.getGame().getPlayerFromNickname("Samuele"));
+        try {
+            gameController.getMessage(new AssistantCardMessage("Samuele", "CHEETAH"));
+            gameController.getMessage(new AssistantCardMessage("Ludovica", "CAT"));
+            gameController.getMessage(new AssistantCardMessage("Matteo", "DOG"));
+        } catch (TryAgainException e) {
+            throw new RuntimeException(e);
+        }
+
+        Player currentPlayer = gameController.getGame().getCurrentPlayer();
+        try {
+            for(int i = 0; i < Constants.TABLE_LENGTH; i++)
+                currentPlayer.getSchool().getTable(Color.BLUE.toString()).addStudent(new Student(Color.BLUE),currentPlayer);
+            currentPlayer.getSchool().getHall().addStudent(new Student(Color.BLUE));
+        } catch (FullTableException | NonExistentColorException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertDoesNotThrow(
+                () -> gameController.getMessage(new MoveToTableMessage(currentPlayer.getNickname(), Color.BLUE.toString())));
+        gameController.setMovesLeft(0);
+        assertDoesNotThrow(
+                () -> gameController.getMessage(new MotherNatureStepsMessage(currentPlayer.getNickname(), 8)));
+        gameController.setMotherNatureMoved(true);
+        assertDoesNotThrow(
+                (() -> gameController.getMessage(new CloudChoiceMessage(currentPlayer.getNickname(), 4))));
+        try {
+            gameController.getGame().takeStudentsFromCloud(1);
+        } catch (EmptyCloudException e) {
+            throw new RuntimeException(e);
+        }
+        assertDoesNotThrow(
+                () -> gameController.getMessage(new CloudChoiceMessage(currentPlayer.getNickname(), 1)));
+
+    }
+
+    @Test
+    public void testSetGame(){
+
+        GameController gc = new GameController();
+        Game g = new Game(2, new Constants(2));
+        gc.setGame(g);
+        assertEquals(gc.getGame(), g);
 
     }
 

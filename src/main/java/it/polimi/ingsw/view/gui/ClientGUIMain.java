@@ -50,7 +50,7 @@ public class ClientGUIMain extends Application {
         stage.setTitle("Eriantys");
         stage.setHeight(600);
         stage.setWidth(600);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {event.consume(); quit();});
         stage.show();
@@ -68,7 +68,6 @@ public class ClientGUIMain extends Application {
         if(scene.getRoot().getId().equals("pane")){
             stage.setWidth(1341);
             stage.setHeight(789.5);
-            stage.setResizable(true);
             stage.centerOnScreen();
         }else{
             stage.setWidth(600);

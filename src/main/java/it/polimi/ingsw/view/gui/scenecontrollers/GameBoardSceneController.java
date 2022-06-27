@@ -3,10 +3,13 @@ package it.polimi.ingsw.view.gui.scenecontrollers;
 import it.polimi.ingsw.exceptions.IslandNotFoundException;
 import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.charactercards.Healer;
-import it.polimi.ingsw.model.charactercards.StudentsCard;
+import it.polimi.ingsw.model.charactercards.*;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.utils.Constants;
+import it.polimi.ingsw.view.gui.popupcontrollers.BardPopupController;
+import it.polimi.ingsw.view.gui.popupcontrollers.ColorPopupController;
+import it.polimi.ingsw.view.gui.popupcontrollers.JesterPopupController;
+import it.polimi.ingsw.view.gui.popupcontrollers.StudentsPopupController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -26,6 +29,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
@@ -72,7 +76,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private final ImageView[] towerOnIsland; // used for the tower image on each island
     private final Text[] towersNumberOnIsland; // used for the towers number on each island
     private int motherNatureOldPosition;
-    private int characterCardSelected;
+    private CharacterCard lastCharacterCardPlayed;
     private String studentToMoveColor;
     private boolean moveStudentPhase;
     private final Text numOfVetos;
@@ -127,12 +131,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     @FXML
     public void initialize(){
-
         deck.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickAssistantCard);
         cloud1.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         cloud2.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         playerHall.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickPlayerHall);
-        playerDiningRoom.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickPlayerDiningHall);
+        playerDiningRoom.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickPlayerDiningRoom);
         if(game.getPlayersNumber()==3)
             cloud3.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCloud);
         if(game instanceof GameExpertMode)
@@ -140,6 +143,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void startGameBoard() {
+
+        showDeck();
 
         clouds.add(cloud1);
         clouds.add(cloud2);
@@ -176,7 +181,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         if(game instanceof GameExpertMode) {
             initializeCharacterCards();
             initializeCoinsWallet();
-            characterCardSelected = -1;
+            lastCharacterCardPlayed = null;
         }
         else {
             coinsLabel.setVisible(false);
@@ -501,9 +506,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     }
 
                     if (currentIsland.hasVetoTile()){
-                         String imagePath = "/img/deny_island_icon.png";
+                         String imagePath = "/img/veto.png";
                          ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-                         vetoTile.setFitWidth(20);
+                         vetoTile.setFitWidth(30);
                          vetoTile.setPreserveRatio(true);
                          island.add(vetoTile,0,1);
                     }
@@ -535,9 +540,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         try{
             int cardId = GridPane.getColumnIndex(node);
             deck.setDisable(true);
-
-            System.out.println("Entered pos: "+cardId);
-
             playAssistantCard(cardId);
             ImageView cardImage = (ImageView) node;
             String wizard_path = game.getPlayerFromNickname(getNickname()).getWizardID().toString().toLowerCase();
@@ -568,7 +570,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
                 moveStudentPhase = true;
                 activateIslands();
-                activatePlayerDiningHall();
+                activatePlayerDiningRoom();
 
                 playerHall.getChildren().forEach( student -> {
                     if(student instanceof ImageView && ((ImageView) student).getImage().getUrl().equalsIgnoreCase("student")){
@@ -584,8 +586,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    public void onClickPlayerDiningHall(Event e) {
-        moveStudentToDiningHall(studentToMoveColor);
+    public void onClickPlayerDiningRoom(Event e) {
+        moveStudentToDiningRoom(studentToMoveColor);
         playerDiningRoom.setDisable(true);
         playerDiningRoom.getStyleClass().remove("clickable");
     }
@@ -652,13 +654,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         //used for debugging
         //System.out.println("Island chosen id: "+islandChosenId+ " seconda prova");
 
-        if (moveStudentPhase && islandChosenId != -1)
+        if (lastCharacterCardPlayed != null) {
+            if(lastCharacterCardPlayed instanceof StringIntCard)
+                playCharacterCardStringInt(studentToMoveColor, islandChosenId);
+            else
+                playCharacterCardInt(islandChosenId);
+        }
+        else if (moveStudentPhase && islandChosenId != -1)
             moveStudentToIsland(studentToMoveColor, islandChosenId);
         else if (!moveStudentPhase && islandChosenId != -1)
             moveMotherNature(islandChosenId);
-        else if (characterCardSelected != -1 && !moveStudentPhase) {
-            playCharacterCardInt(islandChosenId);
-        }
 
         islands.forEach(island -> island.getStyleClass().remove("clickable"));
     }
@@ -667,9 +672,32 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         Node node = (Node) e.getTarget();
         int columnIndex = GridPane.getColumnIndex(node);
         int characterCardID = (((GameExpertMode) game).getCharacters())[columnIndex].getId();
-        if(characterCardID == 5){
-            characterCardSelected = 5;
-           activateIslands();
+        lastCharacterCardPlayed = ((GameExpertMode) game).getCharacters()[columnIndex];
+        if(lastCharacterCardPlayed instanceof StudentsCard &&
+                !(lastCharacterCardPlayed instanceof Jester)){
+            StudentsPopupController spc = new StudentsPopupController();
+            spc.setStudents(((StudentsCard) lastCharacterCardPlayed).getStudentsOnTheCard());
+            studentToMoveColor = spc.display();
+            if(lastCharacterCardPlayed instanceof StringIntCard)
+                activateIslands();
+            else
+                playCharacterCardString(lastCharacterCardPlayed.getId(), studentToMoveColor);
+        }
+        else if(lastCharacterCardPlayed instanceof IntCard){
+            activateIslands();
+        }
+        else if(lastCharacterCardPlayed instanceof StringCard){
+            String colorChosen = new ColorPopupController().display();
+            playCharacterCardString(characterCardID, colorChosen);
+        }
+        else if(lastCharacterCardPlayed instanceof ArrayListStringCard){
+            ArrayList<String> parameter;
+            if(!(lastCharacterCardPlayed instanceof StudentsCard))
+                parameter = new BardPopupController().display();
+            else
+                parameter = new JesterPopupController(((StudentsCard) lastCharacterCardPlayed).getStudentsOnTheCard()).display();
+            if(parameter != null)
+                playCharacterCardArrayListString(characterCardID, parameter);
         }
         else playCharacterCard(characterCardID);
     }
@@ -697,7 +725,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    public void activatePlayerDiningHall(){
+    public void activatePlayerDiningRoom(){
         playerDiningRoom.getStyleClass().add("clickable");
         playerDiningRoom.setDisable(false);
     }
@@ -720,7 +748,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     public void activateCharacterCards(){
-        showUpdate("You can also play a Character Card.");
         for(Node img : characterCards.getChildren()){
             if(!(img instanceof TilePane) )
                 img.getStyleClass().add("clickable");
@@ -732,28 +759,45 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private void playAssistantCard(int cardId) {
         String cardName = assintantCards.get(cardId).getName();
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
+        if(game.getPlayerFromNickname(nickname).getLatestAssistantCardPlayed() != null)
+            showUpdate("You have played the " + cardName + " Assistant Card!");
     }
 
 
     private void chooseCloud(int cloudId){
         notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudId));
+        if(game.getPlayerFromNickname(nickname).getSchool().getHall().getStudents().size() == game.getConstants().MAX_HALL_STUDENTS)
+            showUpdate(nickname + " has chosen a cloud!");
     }
 
-    private void moveStudentToDiningHall(String color){
+    private void moveStudentToDiningRoom(String color){
         notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(color));
+        showUpdate(game.getCurrentPlayer().getNickname() + " has moved a " + color + " student to" +
+                " the dining room!");
         moveStudentPhase = false;
         studentToMoveColor = null;
     }
 
     private void moveStudentToIsland(String color, int islandId){
         notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(color, islandId));
+        showUpdate(game.getCurrentPlayer().getNickname() + " has moved a " + color + " student to" +
+                " the island number " + islandId + "!");
         moveStudentPhase = false;
         studentToMoveColor = null;
     }
 
     private void moveMotherNature(int islandChosenId){
         int steps = islandChosenId - game.getBoard().getMotherNaturePos();
-        notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(steps));
+        if(steps < 0){
+            int stepsToDoBeforeFinalIsland = game.getBoard().getIslands().getSize() - game.getBoard().getMotherNaturePos();
+            steps = stepsToDoBeforeFinalIsland + islandChosenId;
+        }
+        int oldPosition = game.getBoard().getMotherNaturePos();
+        int finalSteps = steps;
+        notifyObserver(viewObserver -> viewObserver.onUpdateMotherNatureSteps(finalSteps));
+        if(oldPosition != game.getBoard().getMotherNaturePos())
+            showUpdate(game.getCurrentPlayer().getNickname() + " has moved Mother Nature to island number " +
+                islandChosenId + "!");
     }
 
     private void playCharacterCard(int characterCard){
@@ -763,16 +807,48 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             characterCards.setDisable(true);
             showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
         }
+        lastCharacterCardPlayed = null;
     }
 
     private void playCharacterCardInt(int islandChosenId){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardSelected).getClass().getSimpleName();
-        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(characterCardSelected, islandChosenId));
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(lastCharacterCardPlayed.getId()).getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(lastCharacterCardPlayed.getId(), islandChosenId));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
             showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
         }
-        characterCardSelected = -1;
+        lastCharacterCardPlayed = null;
+    }
+
+    private void playCharacterCardString(int characterCardId, String chosenColor){
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardId).getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardString(lastCharacterCardPlayed.getId(), chosenColor));
+        if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+            characterCards.setDisable(true);
+            showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
+        }
+        lastCharacterCardPlayed = null;
+    }
+
+    private void playCharacterCardStringInt(String chosenColor, int islandChosenId){
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(lastCharacterCardPlayed.getId()).getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardStringInt(lastCharacterCardPlayed.getId(), chosenColor, islandChosenId));
+        if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+            characterCards.setDisable(true);
+            showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
+        }
+        lastCharacterCardPlayed = null;
+        studentToMoveColor = null;
+    }
+
+    private void playCharacterCardArrayListString(int characterCardId, ArrayList<String> parameter){
+        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardId).getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardArrayListString(lastCharacterCardPlayed.getId(), parameter));
+        if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
+            characterCards.setDisable(true);
+            showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
+        }
+        lastCharacterCardPlayed = null;
     }
 
     private void initializeIslands(){
@@ -898,6 +974,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 numOfVetos.setTextAlignment(TextAlignment.CENTER);
                 numOfVetos.setDisable(true);
                 vetoPane.getChildren().add(numOfVetos);
+                vetoPane.setDisable(true);
 
                 characterCards.add(vetoPane, i, 0);
 
@@ -943,7 +1020,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             DropShadow coinEffect = new DropShadow();
             coinEffect.setBlurType(BlurType.ONE_PASS_BOX);
             coin.setEffect(coinEffect);
-            coin.setY(2.0);
+            //coin.setY(2.0);
             coinPane.getChildren().add(coin);
             coin.setDisable(true);
 
@@ -953,7 +1030,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             coins[i].setTextAlignment(TextAlignment.CENTER);
             coins[i].setDisable(true);
             coins[i].setX(coin.getX() + 16.0);
-            coins[i].setY(coin.getY() + 27.0);
+            coins[i].setY(coin.getY() + 25.0);
             coinPane.getChildren().add(coins[i]);
 
             playersWallet[i] = coinPane;
@@ -968,33 +1045,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
      */
     private void mergeIslands(){
         switch (game.getBoard().getIslands().getSize()) {
-            case 11 -> {
-                disableIsland(island12);
-            }
-            case 10 -> {
-                disableIsland(island11);
-            }
-            case 9 -> {
-                    disableIsland(island10);
-            }
-            case 8 -> {
-                disableIsland(island9);
-            }
-            case 7 -> {
-                disableIsland(island8);
-            }
-            case 6 -> {
-                disableIsland(island7);
-            }
-            case 5 -> {
-                disableIsland(island6);
-            }
-            case 4 -> {
-                disableIsland(island5);
-            }
-            case 3 -> {
-                disableIsland(island4);
-            }
+            case 11 -> disableIsland(island12);
+            case 10 -> disableIsland(island11);
+            case 9 -> disableIsland(island10);
+            case 8 -> disableIsland(island9);
+            case 7 -> disableIsland(island8);
+            case 6 -> disableIsland(island7);
+            case 5 -> disableIsland(island6);
+            case 4 -> disableIsland(island5);
+            case 3 -> disableIsland(island4);
         }
     }
 
