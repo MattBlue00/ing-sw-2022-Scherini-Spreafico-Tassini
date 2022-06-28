@@ -338,7 +338,7 @@ public class GameExpertMode extends Game implements Serializable {
                 if(characters[i] instanceof StudentsCard)
                     ((StudentsCard) characters[i]).showStudentsOnTheCard();
                 if(characters[i] instanceof Healer)
-                    System.out.println("\t\tVeto tiles available: " + getBoard().getNumOfVetos());
+                    System.out.print("\t\tVeto tiles available: " + getBoard().getNumOfVetos());
                 if(characters[i].getIsActive())
                     System.out.println("\t\tACTIVE NOW");
                 else

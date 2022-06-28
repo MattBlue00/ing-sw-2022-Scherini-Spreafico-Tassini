@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="popupBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Card students:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <GridPane fx:id="studentsBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="400.0" AnchorPane.topAnchor="40.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <Label alignment="CENTER" layoutY="111.0" prefHeight="40.0" prefWidth="200.0" text="Hall students:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="200.0" layoutY="111.0" prefHeight="40.0" prefWidth="200.0" text="Card students:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="hallStudent1" layoutX="25.0" layoutY="161.0" prefWidth="150.0" />
+      <Label layoutX="184.0" layoutY="166.0" text="&lt;---&gt;" />
+      <ChoiceBox fx:id="cardStudent1" layoutX="225.0" layoutY="161.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="hallStudent2" layoutX="25.0" layoutY="205.0" prefWidth="150.0" />
+      <Label layoutX="184.0" layoutY="210.0" text="&lt;---&gt;" />
+      <ChoiceBox fx:id="cardStudent2" layoutX="225.0" layoutY="205.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="hallStudent3" layoutX="25.0" layoutY="248.0" prefWidth="150.0" />
+      <Label layoutX="184.0" layoutY="253.0" text="&lt;---&gt;" />
+      <ChoiceBox fx:id="cardStudent3" layoutX="225.0" layoutY="248.0" prefWidth="150.0" />
+      <Button fx:id="confirm" layoutX="170.0" layoutY="295.0" mnemonicParsing="false" text="Confirm" />
+   </children>
+</AnchorPane>

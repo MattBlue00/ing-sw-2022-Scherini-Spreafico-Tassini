@@ -212,8 +212,7 @@ public class Server{
                 if(gameID != -1 && gameControllerMap.get(gameID).getGameState().equals(GameState.IN_GAME)) {
                     gameControllerMap.get(gameID).getVirtualViewMap().remove(nick);
                     gameControllerMap.get(gameID).broadcastDisconnectionMessage("Player " + nick +
-                            " disconnected from the game.\n"
-                            + ANSIConstants.ANSI_BOLD + "----- GAME FINISHED -----" + ANSIConstants.ANSI_RESET);
+                            " disconnected from the game.\nThe game is interrupted.");
                     List<View> viewsToNotify = new ArrayList<>();
                     for (Player player : gameControllerMap.get(gameID).getGame().getPlayers()){
                         if(!player.getNickname().equals(nick)){

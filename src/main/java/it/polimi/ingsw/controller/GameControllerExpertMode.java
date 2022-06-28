@@ -212,6 +212,7 @@ public class GameControllerExpertMode extends GameController{
             }
 
             ((GameExpertMode) getGame()).playerPlaysCharacterCard(chosenCardID);
+            getGame().profCheck();
             if(!getVirtualViewMap().isEmpty())
                 broadcastUpdateMessage(getGame().getCurrentPlayer().getNickname() + " has played the " +
                         ((GameExpertMode) getGame()).getCharacterCardByID(chosenCardID).getClass().getSimpleName() + " Character Card!");

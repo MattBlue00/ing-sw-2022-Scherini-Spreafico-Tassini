@@ -377,7 +377,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <GridPane id="walletGridPane" fx:id="walletGridPane" alignment="CENTER">
+            <GridPane id="walletGridPane" fx:id="walletGridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="94.0" prefWidth="196.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -390,6 +390,9 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
             </GridPane>
          </children>
          <BorderPane.margin>

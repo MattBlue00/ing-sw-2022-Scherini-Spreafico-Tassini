@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" styleClass="background" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenecontrollers.ConnectionSceneController">
-    <VBox alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0" styleClass="form">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" spacing="20.0" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.scenecontrollers.ConnectionSceneController">
+    <VBox alignment="CENTER" maxHeight="400.0" maxWidth="400.0" minHeight="260.0" minWidth="260.0" prefHeight="260.0" prefWidth="400.0" spacing="20.0" styleClass="form">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-
-    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="337.0" text="ADDRESS: ">
-      <graphic>
-         <TextField fx:id="ipAddressField" prefHeight="22.0" prefWidth="247.0" text="127.0.0.1" />
-      </graphic></Label>
-    <Label contentDisplay="RIGHT" prefHeight="39.0" prefWidth="335.0" text="PORT: ">
-        <graphic>
-            <TextField fx:id="portField" prefHeight="25.0" prefWidth="267.0" styleClass="textField" text="12345" />
-        </graphic></Label>
-    <Button fx:id="connectionBtn" text="CONNECT" styleClass="btn"/>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="400.0">
+         <children>
+      
+          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="52.0" prefHeight="39.0" prefWidth="70.0" text="ADDRESS: " />
+         <TextField fx:id="ipAddressField" layoutX="165.0" layoutY="59.0" prefHeight="26.0" prefWidth="150.0" text="127.0.0.1" />
+          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="103.0" prefHeight="39.0" prefWidth="70.0" text="PORT: " />
+            <TextField fx:id="portField" layoutX="165.0" layoutY="109.0" prefHeight="26.0" prefWidth="150.0" styleClass="textField" text="12345" />
+          <Button fx:id="connectionBtn" layoutX="138.0" layoutY="177.0" styleClass="btn" text="CONNECT" />
+         </children>
+      </AnchorPane>
     </VBox>
     <stylesheets>
         <URL value="@../css/menu_style.css" />
