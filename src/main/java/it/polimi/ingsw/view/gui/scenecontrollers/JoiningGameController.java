@@ -8,16 +8,31 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * This scene controller handles the scene in which the client joins an existing game.
+ */
+
 public class JoiningGameController extends ViewObservable implements GenericSceneController{
+
     @FXML
-    TextField gameID;
+    private TextField gameID;
     @FXML
-    Button joinGame;
+    private Button joinGame;
+
+    /**
+     * Properly initializes the scene.
+     */
 
     @FXML
     public void initialize(){
         joinGame.addEventHandler(MouseEvent.MOUSE_CLICKED, this::joinGame);
     }
+
+    /**
+     * When the "join game" button is clicked, tries to make the client join the chosen game.
+     *
+     * @param e the event that triggers the method.
+     */
 
     public void joinGame(Event e){
         int gameID;

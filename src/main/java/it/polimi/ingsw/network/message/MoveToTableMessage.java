@@ -1,10 +1,9 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * The message extends {@link Message}.
- * It is used when a player tries to move a student
- * to the Table with the same color of the student during the action phase.
+ * This {@link Message} is used to communicate which student the player wishes to move to its table.
  */
+
 public class MoveToTableMessage extends Message{
 
     private final String color;
@@ -12,13 +11,20 @@ public class MoveToTableMessage extends Message{
     /**
      * Default constructor.
      *
-     * @param nickname the serialized Model.
-     * @param color the chosen color String.
+     * @param nickname client's nickname.
+     * @param color the {@link String} representation of the chosen color.
      */
+
     public MoveToTableMessage(String nickname, String color) {
         super(nickname, MessageType.MOVE_TO_TABLE_REPLY);
         this.color = color;
     }
+
+    /**
+     * Returns the chosen student's color.
+     *
+     * @return a {@link String} representation of the chosen student's color.
+     */
 
     public String getColor() {
         return color;

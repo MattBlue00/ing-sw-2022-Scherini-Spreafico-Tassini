@@ -5,14 +5,16 @@ import java.util.ArrayList;
 /**
  * Custom observer interface for views. It supports different types of notification.
  */
+
 public interface ViewObserver {
 
     /**
      * Creates a new connection to the server with the updated info.
      *
-     * @param address server address
-     * @param port server port
+     * @param address server address.
+     * @param port server port.
      */
+
     void onUpdateServerData(String address, int port);
 
     /**
@@ -20,6 +22,7 @@ public interface ViewObserver {
      *
      * @param nickname the nickname the client wants to (try to) login with.
      */
+
     void onUpdateNickname(String nickname);
 
     /**
@@ -28,6 +31,7 @@ public interface ViewObserver {
      *
      * @param choice the choice made by the client.
      */
+
     void onUpdateCreateOrJoin(String choice);
 
     /**
@@ -37,6 +41,7 @@ public interface ViewObserver {
      * @param mode the game mode of the game the client wishes to create ({@code false} -> NORMAL, {@code true} -> EXPERT).
      * @param numOfPlayers the maximum number of players of the game the client wishes to create.
      */
+
     void onUpdateGameInfo(int gameNumber, boolean mode, int numOfPlayers);
 
     /**
@@ -44,6 +49,7 @@ public interface ViewObserver {
      *
      * @param gameNumber the ID of the game the client wishes to join.
      */
+
     void onUpdateGameNumber(int gameNumber);
 
     /**
@@ -51,6 +57,7 @@ public interface ViewObserver {
      *
      * @param wizardID the {@code String} representing the WizardID the client wishes to embody.
      */
+
     void onUpdateWizardID(String wizardID);
 
     /**
@@ -58,6 +65,7 @@ public interface ViewObserver {
      *
      * @param assistantCard the Assistant Card the client wishes to play.
      */
+
     void onUpdateAssistantCard(String assistantCard);
 
     /**
@@ -67,6 +75,7 @@ public interface ViewObserver {
      * @param color the color of the student the client wishes to move.
      * @param islandID the ID of the island the client wishes to move the student onto.
      */
+
     void onUpdateIslandStudentMove(String color, int islandID);
 
     /**
@@ -74,6 +83,7 @@ public interface ViewObserver {
      *
      * @param color the color of the student the client wishes to move to its table.
      */
+
     void onUpdateTableStudentMove(String color);
 
     /**
@@ -81,6 +91,7 @@ public interface ViewObserver {
      *
      * @param steps the steps the client wishes Mother Nature to move of.
      */
+
     void onUpdateMotherNatureSteps(int steps);
 
     /**
@@ -88,6 +99,7 @@ public interface ViewObserver {
      *
      * @param cloudID the ID of the cloud the client wishes to take students from.
      */
+
     void onUpdateCloudChoice(int cloudID);
 
     /**
@@ -96,6 +108,7 @@ public interface ViewObserver {
      *
      * @param characterCardID the ID of the Character Card the client wishes to play.
      */
+
     void onUpdateCharacterCard(int characterCardID);
 
     /**
@@ -105,6 +118,7 @@ public interface ViewObserver {
      * @param characterCardID the ID of the Character Card the client wishes to play.
      * @param par the required {@code int} parameter (its meaning changes from card to card).
      */
+
     void onUpdateCharacterCardInt(int characterCardID, int par);
 
     /**
@@ -114,6 +128,7 @@ public interface ViewObserver {
      * @param characterCardID the ID of the Character Card the client wishes to play.
      * @param par the required {@code String} parameter (its meaning changes from card to card).
      */
+
     void onUpdateCharacterCardString(int characterCardID, String par);
 
     /**
@@ -124,6 +139,7 @@ public interface ViewObserver {
      * @param par1 the required {@code String} parameter.
      * @param par2 the required {@code int} parameter.
      */
+
     void onUpdateCharacterCardStringInt(int characterCardID, String par1, int par2);
 
     /**
@@ -133,6 +149,7 @@ public interface ViewObserver {
      * @param characterCardID the ID of the Character Card the client wishes to play.
      * @param list the required list of {@code String} parameters (its meaning changes from card to card).
      */
+
     void onUpdateCharacterCardArrayListString(int characterCardID, ArrayList<String> list);
 
     /**
@@ -141,6 +158,7 @@ public interface ViewObserver {
      *
      * @param choice the choice made by the client.
      * */
+
     void onUpdateActionChoice(String choice);
 
 }

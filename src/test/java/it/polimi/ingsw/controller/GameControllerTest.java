@@ -3,10 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.network.message.*;
-import it.polimi.ingsw.network.server.ClientHandler;
-import it.polimi.ingsw.network.server.SocketClientHandler;
 import it.polimi.ingsw.utils.Constants;
-import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -131,8 +128,6 @@ class GameControllerTest {
         Player player = new Player(Wizard.GREEN_WIZARD, user, gameController.getGame().getConstants());
         Message message = new MoveToIslandMessage(player.getNickname(), "BLUE", 1);
 
-
-
         gameController.getGame().setCurrentPlayer(player);
         gameController.getGame().getCurrentPlayer().getSchool().getHall().addStudent(new Student(Color.BLUE));
 
@@ -170,7 +165,7 @@ class GameControllerTest {
         player.setLatestAssistantCardPlayed(new AssistantCard(AssistantType.TURTLE));
 
         Random rand = new Random();
-        int randomPos = rand.nextInt((12)+1);
+        int randomPos = rand.nextInt((12))+1;
         gameController.getGame().getBoard().setMotherNaturePos(randomPos);
         try {
             gameController.handleMotherNature(message);
@@ -179,8 +174,11 @@ class GameControllerTest {
         } catch (IslandNotFoundException e) {
             e.printStackTrace();
         }
+        int pos = (randomPos + steps)%Constants.MAX_NUM_OF_ISLANDS;
+        if(pos%Constants.MAX_NUM_OF_ISLANDS == 0)
+            pos = 12;
 
-        assertEquals((randomPos+steps)%12, gameController.getGame().getBoard().getMotherNaturePos());
+        assertEquals(pos, gameController.getGame().getBoard().getMotherNaturePos());
     }
 
     @Test
@@ -479,6 +477,7 @@ class GameControllerTest {
         This test verifies that players never occur in errors when playing Assistant Card, especially when facing
         borderline cases (detailed in the test method).
      */
+
     @Test
     public void isAssistantCardPlayableTest(){
 

@@ -2,7 +2,9 @@ package it.polimi.ingsw.view.gui.popupcontrollers;
 
 import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Student;
-import javafx.event.ActionEvent;
+import it.polimi.ingsw.model.charactercards.Bard;
+import it.polimi.ingsw.model.charactercards.Jester;
+import it.polimi.ingsw.view.gui.PopupController;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,7 +21,11 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JesterPopupController extends PopupController{
+/**
+ * This popup controller is specifically designed for the {@link Jester}, and controls the popup.
+ */
+
+public class JesterPopupController extends PopupController {
 
     @FXML
     private AnchorPane popupBox;
@@ -27,11 +33,23 @@ public class JesterPopupController extends PopupController{
     private List<Student> students;
     private boolean quit;
 
+    /**
+     * JesterPopupController constructor.
+     *
+     * @param students the list of students on the {@link Jester}.
+     */
+
     public JesterPopupController(List<Student> students) {
         super();
         parameter = new ArrayList<>();
         this.students = students;
     }
+
+    /**
+     * Sets the choice made by the player via the popup.
+     *
+     * @param e the event that triggered the setting.
+     */
 
     public void setParameter(Event e){
         for(Node node : popupBox.getChildren()) {
@@ -44,6 +62,10 @@ public class JesterPopupController extends PopupController{
             parameter = null;
         getWindow().close();
     }
+
+    /**
+     * Properly initializes the popup.
+     */
 
     @FXML
     public void initialize(){
@@ -59,7 +81,7 @@ public class JesterPopupController extends PopupController{
             if(node instanceof GridPane){
                 int i = 0;
                 for(Student student : students){
-                    ImageView studentImage = new ImageView(new Image("img/student_"+student.getColor().toString()+".png"));
+                    ImageView studentImage = new ImageView(new Image("/img/student_"+student.color().toString().toLowerCase()+".png"));
                     studentImage.setFitWidth(65);
                     studentImage.setPreserveRatio(true);
                     ((GridPane) node).add(studentImage, i, 0);
@@ -68,6 +90,12 @@ public class JesterPopupController extends PopupController{
             }
         }
     }
+
+    /**
+     * Displays the popup.
+     *
+     * @return an {@link ArrayList} of {@link String} representing the choice made by the player.
+     */
 
     @Override
     public ArrayList<String> display() {
@@ -92,6 +120,11 @@ public class JesterPopupController extends PopupController{
         else
             return parameter;
     }
+
+    /**
+     * Handles the closing request of the popup. Since the {@link Bard} may work even with no parameter, this is
+     * needed to avoid undesired coin loss.
+     */
 
     private void quit(){
         quit = true;

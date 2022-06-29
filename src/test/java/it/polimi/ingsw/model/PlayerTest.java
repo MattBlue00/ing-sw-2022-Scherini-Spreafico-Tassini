@@ -76,7 +76,7 @@ public class PlayerTest{
 
         assertEquals("FOX", p1.getAssistantCardFromName("FOX").getName());
         p1.playAssistantCard("FOX");
-        assertEquals(null, p1.getAssistantCardFromName("FOX"));
+        assertNull(p1.getAssistantCardFromName("FOX"));
     }
 
     @Test

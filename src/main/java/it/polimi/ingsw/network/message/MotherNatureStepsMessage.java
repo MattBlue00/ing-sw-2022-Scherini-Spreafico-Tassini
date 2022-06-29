@@ -1,9 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * The message extends {@link Message}.
- * It is used to send how many steps a client
- * chooses to move mother nature.
+ * This {@link Message} is used to communicate how many steps the player wishes Mother Nature to move of.
  */
 
 public class MotherNatureStepsMessage extends Message{
@@ -13,18 +11,21 @@ public class MotherNatureStepsMessage extends Message{
     /**
      * Default constructor.
      *
-     * @param nickname client's nickname
-     * @param steps Mother Nature's steps
+     * @param nickname client's nickname.
+     * @param steps Mother Nature's chosen steps.
      */
+
     public MotherNatureStepsMessage(String nickname, int steps) {
         super(nickname, MessageType.MOTHER_NATURE_STEPS_REPLY);
         this.steps = steps;
     }
 
     /**
-     * This method returns Mother Nature's steps.
-     * @return {@code steps}
+     * Returns Mother Nature's chosen steps.
+     *
+     * @return an {@code int} representing Mother Nature's chosen steps.
      */
+
     public int getSteps() {
         return steps;
     }

@@ -1,29 +1,34 @@
 package it.polimi.ingsw.network.message;
 
+import java.io.Serial;
+
 /**
- * The message extends {@link Message}.
- * Message used to notify a disconnection to the other players.
+ * This {@link Message} is used to communicate to the connected players that a player has disconnected.
  */
+
 public class DisconnectionMessage extends Message{
 
+    @Serial
     private static final long serialVersionUID = -5422965079989607600L;
     private final String text;
 
     /**
      * Default constructor.
      *
-     * @param text message that will be shown to the clients
+     * @param text the message that will be shown to the clients.
      */
+
     public DisconnectionMessage(String text) {
         super(null, MessageType.DISCONNECTION);
         this.text = text;
     }
 
     /**
-     * This method returns the message's text.
+     * Returns the message's text.
      *
-     * @return {@code text}
+     * @return the message's text.
      */
+
     public String getMessageStr() {
             return text;
         }

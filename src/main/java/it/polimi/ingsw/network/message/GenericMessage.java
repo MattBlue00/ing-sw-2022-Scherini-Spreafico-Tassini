@@ -1,23 +1,29 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * The message extends {@link Message}.
- * It is used to send clients a generic String Message.
- * It can contain information about game status or back-end events.
+ * This {@link Message} is used to communicate to the clients generic messages that need to be notified.
  */
+
 public class GenericMessage extends Message{
+
     private final String messageContent;
 
     /**
      * Default constructor.
      *
-     * @param messageContent the String to send.
+     * @param messageContent the {@link String} to send.
      */
+
     public GenericMessage(String messageContent) {
         super(null, MessageType.GENERIC);
         this.messageContent = messageContent;
     }
 
+    /**
+     * Returns the content of the message.
+     *
+     * @return the content of the message.
+     */
 
     @Override
     public String toString() {

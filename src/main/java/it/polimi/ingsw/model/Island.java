@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.charactercards.Centaur;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The Island is one of the "physical" elements of the game. Two or more islands form an archipelagos, which has a
@@ -275,7 +274,7 @@ public class Island implements Serializable {
 
         for(Student student : students){
             // check if the professor (with the same color of the student) is present in the player's school
-            if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
+            if(currentPlayer.getSchool().getTable(student.color().toString()).getHasProfessor()){
                 validStudents++;
             }
         }
@@ -302,10 +301,10 @@ public class Island implements Serializable {
         for(Student student : students){
 
             // skips the desired color
-            if(student.getColor().equals(color)) continue;
+            if(student.color().equals(color)) continue;
 
             // check if the professor (with the same color of the student) is present in the player's school
-            if(currentPlayer.getSchool().getTable(student.getColor().toString()).getHasProfessor()){
+            if(currentPlayer.getSchool().getTable(student.color().toString()).getHasProfessor()){
                 validStudents++;
             }
 
@@ -315,14 +314,14 @@ public class Island implements Serializable {
 
     }
 
-
     /**
-     * This method is used to know the students number of a specific color on an island.
+     * Returns the number of students of a specific color on the island.
      *
-     * @param color {@link Color} selected
-     * @return students number
+     * @param color the given {@link Color}.
+     * @return an {@code int} representing the number of students of the given color.
      */
+
     public int getNumOfStudentsOfColor(String color){
-        return (int) students.stream().filter(x -> x.getColor().toString().equals(color)).count();
-    };
+        return (int) students.stream().filter(x -> x.color().toString().equals(color)).count();
+    }
 }

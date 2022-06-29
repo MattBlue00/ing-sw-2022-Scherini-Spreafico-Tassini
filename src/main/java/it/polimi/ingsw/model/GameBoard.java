@@ -291,6 +291,8 @@ public class GameBoard implements Serializable {
 
     /**
      * Reassigns the IDs of the islands after a merge operation.
+     *
+     * @param islands the data structure which needs ID reassignment.
      */
 
     public static void reassignIslandIDs(DoublyLinkedList islands){

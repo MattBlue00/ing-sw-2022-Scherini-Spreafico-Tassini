@@ -7,8 +7,9 @@ import it.polimi.ingsw.model.GameBoard;
 import java.util.Map;
 
 /**
- * Defines a generic view to be implemented by each view type (e.g. CLI, GUI in JavaFX, ...).
+ * This interface defines a generic view to be implemented by each view type (e.g. CLI, GUI in JavaFX, ...).
  */
+
 public interface View {
 
     /**
@@ -19,7 +20,7 @@ public interface View {
 
     /**
      * Asks the client which nickname they want to use.
-     * If it is unique the client is connected to the server, else they are asked to choose a different nickname.
+     * If it is unique, the client joins the lobby; otherwise, they are asked to choose a different nickname.
      */
 
     void askNickname();
@@ -51,7 +52,7 @@ public interface View {
     void askWizardID();
 
     /**
-     * Asks the client which AssistantCard they want to play.
+     * Asks the client which Assistant Card they want to play.
      */
 
     void askAssistantCard();
@@ -63,25 +64,25 @@ public interface View {
     void askMoveStudent();
 
     /**
-     * Asks the client how many steps MotherNature will have to be moved.
+     * Asks the client how many steps they wish to move Mother Nature of.
      */
 
     void askMotherNatureSteps();
 
     /**
-     * Asks the client which cloudID they want to choose.
+     * Asks the client which cloud they want to choose.
      */
 
     void askCloud();
 
     /**
-     * When in GameExpertMode asks the client which CharacterCard they want to play.
+     * Asks the client which Character Card they want to play (Expert mode exclusive).
      */
 
     void askCharacterCard();
 
     /**
-     * When in GameExpertMode asks the client if they want to play a CharacterCard or to move a student.
+     * Asks the client if they want to play a CharacterCard or to move a student (Expert mode exclusive).
      */
 
     void askAction();
@@ -95,13 +96,13 @@ public interface View {
     void showGenericMessage(String message);
 
     /**
-     * Shows to the client the existing games they can join.
+     * Shows to the client the existing games they may join.
      */
 
     void showExistingGames(Map<Integer, GameController> existingGames);
 
     /**
-     * Shows the last AssistantCards played, the GameBoard and the players' order.
+     * Shows to the client the latest Assistant Cards played, the Game Board and the players' order.
      *
      * @param game the game whose status needs to be shown.
      */
@@ -109,7 +110,9 @@ public interface View {
     void showGameStatusFirstActionPhase(Game game);
 
     /**
-     * Shows the current GameBoard to the client.
+     * Shows the current Game Board to the client.
+     *
+     * @param game the game whose status needs to be shown.
      */
 
     void showGameStatus(Game game);
@@ -132,9 +135,9 @@ public interface View {
 
     /**
      * Shows the client in which round phase they are.
-     * If {@code isActionPhase} is {@code true} then it will show the action phase, else it will show the planning phase.
      *
-     * @param isActionPhase the flag corresponding to the right phase.
+     * @param isActionPhase {@code true} if the current player is about to play the Action Phase, {@code false}
+     *        otherwise.
      */
 
     void showPhaseUpdate(boolean isActionPhase);
@@ -152,6 +155,12 @@ public interface View {
      */
 
     void quit();
+
+    /**
+     * Sets the view user's nickname.
+     *
+     * @param nickname the nickname chosen by the client.
+     */
 
     void setNickname(String nickname);
 }

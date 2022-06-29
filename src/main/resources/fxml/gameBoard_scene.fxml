@@ -20,1165 +20,949 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <right>
-      <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="395.0" BorderPane.alignment="TOP_LEFT">
-         <children>
-            <Label styleClass="text_label" text="Schools">
-               <font>
+       <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="395.0" BorderPane.alignment="TOP_LEFT">
+           <BorderPane.margin>
+               <Insets right="10.0" />
+           </BorderPane.margin>
+           <Label styleClass="text_label" text="Schools">
+              <font>
                   <Font size="16.0" />
-               </font>
-               <VBox.margin>
+              </font>
+              <VBox.margin>
                   <Insets bottom="15.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="opposingNickname2" text="PlayerSchool" textFill="WHITE">
-               <font>
+              </VBox.margin>
+           </Label>
+           <Label fx:id="opposingNickname2" text="PlayerSchool" textFill="WHITE">
+              <font>
                   <Font size="14.0" />
-               </font>
-            </Label>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
+              </font>
+           </Label>
+           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
                <VBox.margin>
-                  <Insets bottom="15.0" />
+                   <Insets bottom="15.0" />
                </VBox.margin>
-               <children>
-                  <AnchorPane fx:id="opposingSchool2Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
-                     <children>
-                        <ImageView fitHeight="75.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/school_raw.png" />
-                           </image>
-                        </ImageView>
-                        <GridPane fx:id="opposingHall2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="20.0" AnchorPane.leftAnchor="4.5" AnchorPane.topAnchor="7.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingDiningRoom2" hgap="1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="80.0" vgap="0.5" AnchorPane.leftAnchor="31.5" AnchorPane.topAnchor="7.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingProfTable2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="9.0" vgap="1.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="7.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingTowerRoom2" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="25.0" vgap="1.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="13.5">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-            <Label fx:id="opposingNickname1" text="PlayerSchool" textFill="WHITE">
-               <font>
+               <AnchorPane fx:id="opposingSchool2Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
+                   <ImageView fitHeight="75.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@../img/school_raw.png" />
+                   </ImageView>
+                   <GridPane fx:id="opposingHall2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="20.0" AnchorPane.leftAnchor="4.5" AnchorPane.topAnchor="7.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingDiningRoom2" hgap="1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="80.0" vgap="0.5" AnchorPane.leftAnchor="31.5" AnchorPane.topAnchor="8.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingProfTable2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="9.0" vgap="1.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="7.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingTowerRoom2" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="25.0" vgap="1.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="13.5">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+               </AnchorPane>
+           </HBox>
+           <Label fx:id="opposingNickname1" text="PlayerSchool" textFill="WHITE">
+              <font>
                   <Font size="14.0" />
-               </font>
-            </Label>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
+              </font>
+           </Label>
+           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
                <VBox.margin>
-                  <Insets bottom="15.0" />
+                   <Insets bottom="15.0" />
                </VBox.margin>
-               <children>
-                  <AnchorPane fx:id="opposingSchool1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
-                     <children>
-                        <ImageView fitHeight="74.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/school_raw.png" />
-                           </image>
-                        </ImageView>
-                        <GridPane fx:id="opposingHall1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="20.0" AnchorPane.leftAnchor="4.5" AnchorPane.topAnchor="7.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingDiningRoom1" hgap="1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="80.0" vgap="0.5" AnchorPane.leftAnchor="31.5" AnchorPane.topAnchor="7.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingProfTable1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="9.0" vgap="1.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="7.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="opposingTowerRoom1" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="25.0" vgap="1.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="13.5">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-            <Label fx:id="playerNickname" text="PlayerSchool" textFill="WHITE">
-               <font>
+               <AnchorPane fx:id="opposingSchool1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="170.0">
+                   <ImageView fitHeight="74.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@../img/school_raw.png" />
+                   </ImageView>
+                   <GridPane fx:id="opposingHall1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="20.0" AnchorPane.leftAnchor="4.5" AnchorPane.topAnchor="7.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingDiningRoom1" hgap="1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="80.0" vgap="0.5" AnchorPane.leftAnchor="31.5" AnchorPane.topAnchor="8.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="7.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingProfTable1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="9.0" vgap="1.0" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="7.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="opposingTowerRoom1" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="25.0" vgap="1.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="13.5">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+               </AnchorPane>
+           </HBox>
+           <Label fx:id="playerNickname" text="PlayerSchool" textFill="WHITE">
+              <font>
                   <Font size="14.0" />
-               </font>
-               <VBox.margin>
+              </font>
+              <VBox.margin>
                   <Insets />
-               </VBox.margin>
-            </Label>
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="395.0">
-               <children>
-                  <AnchorPane fx:id="playerSchool" prefHeight="176.0" prefWidth="395.0">
-                     <children>
-                        <ImageView fitHeight="176.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/school_raw.png" />
-                           </image>
-                        </ImageView>
-                        <GridPane fx:id="playerHall" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="41.0" vgap="1.0" AnchorPane.leftAnchor="12.5" AnchorPane.topAnchor="17.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="playerDiningRoom" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="188.0" vgap="1.0" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="17.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="playerProfTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="20.0" vgap="1.0" AnchorPane.leftAnchor="278.5" AnchorPane.topAnchor="17.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <GridPane fx:id="playerTowerRoom" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="60.0" vgap="1.0" AnchorPane.leftAnchor="317.0" AnchorPane.topAnchor="30.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets right="10.0" />
-         </BorderPane.margin>
-      </VBox>
+              </VBox.margin>
+           </Label>
+           <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="395.0">
+               <AnchorPane fx:id="playerSchool" prefHeight="176.0" prefWidth="395.0">
+                   <ImageView fitHeight="176.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true">
+                       <Image url="@../img/school_raw.png" />
+                   </ImageView>
+                   <GridPane fx:id="playerHall" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="41.0" vgap="1.0" AnchorPane.leftAnchor="12.5" AnchorPane.topAnchor="17.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="playerDiningRoom" hgap="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="188.0" vgap="1.0" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="17.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="playerProfTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="20.0" vgap="1.0" AnchorPane.leftAnchor="278.5" AnchorPane.topAnchor="17.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+                   <GridPane fx:id="playerTowerRoom" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="60.0" vgap="1.0" AnchorPane.leftAnchor="317.0" AnchorPane.topAnchor="30.0">
+                       <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                   </GridPane>
+               </AnchorPane>
+           </HBox>
+       </VBox>
    </right>
    <bottom>
-      <HBox BorderPane.alignment="CENTER">
-         <children>
-            <VBox>
-               <children>
-                  <Label styleClass="text_label" text="Assistant Cards">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="15.0" left="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <GridPane fx:id="deck" hgap="1.0" maxWidth="860.0" prefHeight="125.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </GridPane>
-               </children>
+       <HBox BorderPane.alignment="CENTER">
+           <VBox>
                <HBox.margin>
-                  <Insets right="80.0" />
+                   <Insets right="80.0" />
                </HBox.margin>
-            </VBox>
-            <VBox prefHeight="200.0">
-               <children>
-                  <Label id="characterCardsLabel" fx:id="characterCardsLabel" styleClass="text_label" text="Character Cards">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <GridPane fx:id="characterCards" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="125.0" prefWidth="255.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="85.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </GridPane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+               <Label styleClass="text_label" text="Assistant Cards">
+                   <font>
+                       <Font size="16.0" />
+                   </font>
+                   <VBox.margin>
+                       <Insets bottom="15.0" left="20.0" />
+                   </VBox.margin>
+               </Label>
+               <GridPane fx:id="deck" hgap="1.0" maxWidth="860.0" prefHeight="125.0">
+                   <columnConstraints>
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="85" />
+                   </columnConstraints>
+                   <rowConstraints>
+                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   </rowConstraints>
+                   <padding>
+                       <Insets left="10.0" />
+                   </padding>
+                   <VBox.margin>
+                       <Insets left="10.0" />
+                   </VBox.margin>
+               </GridPane>
+           </VBox>
+           <VBox prefHeight="200.0">
+               <Label id="characterCardsLabel" fx:id="characterCardsLabel" styleClass="text_label" text="Character Cards">
+                   <font>
+                       <Font size="16.0" />
+                   </font>
+               </Label>
+               <GridPane fx:id="characterCards" hgap="1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="125.0" prefWidth="255.0">
+                   <columnConstraints>
+                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="85.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                   </columnConstraints>
+                   <rowConstraints>
+                       <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+                   </rowConstraints>
+                   <VBox.margin>
+                       <Insets top="15.0" />
+                   </VBox.margin>
+               </GridPane>
+           </VBox>
+       </HBox>
    </bottom>
    <left>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="530.0" prefWidth="206.0" BorderPane.alignment="TOP_LEFT">
-         <children>
-            <Label styleClass="text_label" text="History">
-               <font>
+       <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="530.0" prefWidth="206.0" BorderPane.alignment="TOP_LEFT">
+           <BorderPane.margin>
+               <Insets />
+           </BorderPane.margin>
+           <Label styleClass="text_label" text="History">
+              <font>
                   <Font size="16.0" />
-               </font>
-               <VBox.margin>
+              </font>
+              <VBox.margin>
                   <Insets left="20.0" />
-               </VBox.margin>
-               <padding>
+              </VBox.margin>
+              <padding>
                   <Insets bottom="15.0" />
-               </padding>
-            </Label>
-            <ScrollPane prefHeight="299.0" prefWidth="132.0">
-               <content>
-                  <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefWidth="174.0">
-                     <children>
-                        <TextFlow fx:id="history" layoutY="4.0" prefWidth="174.0">
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </TextFlow>
-                     </children>
-                  </AnchorPane>
-               </content>
+              </padding>
+           </Label>
+           <ScrollPane prefHeight="299.0" prefWidth="132.0">
                <VBox.margin>
-                  <Insets left="15.0" />
+                   <Insets left="15.0" />
                </VBox.margin>
-            </ScrollPane>
-            <Label id="coinsLabel" fx:id="coinsLabel" styleClass="text_label" text="Coins">
-               <VBox.margin>
+               <AnchorPane fx:id="historyPane" minHeight="0.0" minWidth="0.0" prefWidth="174.0">
+                   <TextFlow fx:id="history" layoutY="4.0" prefWidth="174.0">
+                       <padding>
+                           <Insets left="10.0" />
+                       </padding>
+                   </TextFlow>
+               </AnchorPane>
+           </ScrollPane>
+           <Label id="coinsLabel" fx:id="coinsLabel" styleClass="text_label" text="Coins">
+              <VBox.margin>
                   <Insets left="20.0" top="20.0" />
-               </VBox.margin>
-               <font>
+              </VBox.margin>
+              <font>
                   <Font size="16.0" />
-               </font>
-            </Label>
-            <GridPane id="walletGridPane" fx:id="walletGridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="94.0" prefWidth="196.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <opaqueInsets>
+              </font>
+           </Label>
+           <GridPane id="walletGridPane" fx:id="walletGridPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="94.0" prefWidth="196.0">
+               <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+              <opaqueInsets>
                   <Insets />
-               </opaqueInsets>
-               <VBox.margin>
+              </opaqueInsets>
+              <VBox.margin>
                   <Insets left="10.0" />
-               </VBox.margin>
-            </GridPane>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
+              </VBox.margin>
+           </GridPane>
+       </VBox>
    </left>
    <center>
-      <AnchorPane prefHeight="542.0" prefWidth="730.0" BorderPane.alignment="CENTER">
-         <children>
-            <GridPane fx:id="island1" layoutX="106.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="151.0">
+       <AnchorPane prefHeight="542.0" prefWidth="730.0" BorderPane.alignment="CENTER">
+           <BorderPane.margin>
+               <Insets />
+           </BorderPane.margin>
+           <GridPane fx:id="island1" layoutX="106.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="151.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island2" layoutX="96.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="11.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island2" layoutX="96.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island3" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="11.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island3" layoutX="237.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island4" layoutX="460.0" layoutY="40.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="11.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island5" layoutX="365.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="11.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island4" layoutX="460.0" layoutY="40.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island6" layoutX="375.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="151.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island5" layoutX="365.0" layoutY="80.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="11.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island7" layoutX="385.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="291.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island6" layoutX="375.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="151.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island8" layoutX="480.0" layoutY="60.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="411.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island7" layoutX="385.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="590.0" AnchorPane.topAnchor="291.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island9" layoutX="470.0" layoutY="50.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="411.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island8" layoutX="480.0" layoutY="60.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="520.0" AnchorPane.topAnchor="411.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island10" layoutX="257.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="411.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island9" layoutX="470.0" layoutY="50.0" prefHeight="120.0" prefWidth="120.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="411.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="40.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island11" layoutX="247.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="411.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island10" layoutX="257.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="411.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane fx:id="island12" layoutX="116.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="291.0">
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island11" layoutX="247.0" layoutY="90.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="411.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/island.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_green.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_red.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_yellow.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_pink.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                     <image>
-                        <Image url="@../img/student_blue.png" />
-                     </image>
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" />
-                     </effect>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <AnchorPane layoutX="170.0" layoutY="222.0" prefHeight="100.0" prefWidth="100.0">
-               <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/cloud_card.png" />
-                     </image>
-                  </ImageView>
-                  <TilePane fx:id="cloud1" hgap="10.0" layoutX="20.0" layoutY="20.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="450.0" layoutY="219.0" prefHeight="100.0" prefWidth="100.0">
-               <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/cloud_card.png" />
-                     </image>
-                  </ImageView>
-                  <TilePane fx:id="cloud2" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="extraCloud" layoutX="310.0" layoutY="217.0" prefHeight="100.0" prefWidth="100.0">
-               <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/cloud_card.png" />
-                     </image>
-                  </ImageView>
-                  <TilePane fx:id="cloud3" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
-               </children>
-            </AnchorPane>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </AnchorPane>
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <GridPane fx:id="island12" layoutX="116.0" layoutY="100.0" prefHeight="120.0" prefWidth="120.0" styleClass="island" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="291.0">
+               <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <ImageView fitHeight="165.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <Image url="@../img/island.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_green.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_red.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_yellow.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_pink.png" />
+               </ImageView>
+               <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                   <effect>
+                       <DropShadow blurType="TWO_PASS_BOX" />
+                   </effect>
+                   <Image url="@../img/student_blue.png" />
+               </ImageView>
+           </GridPane>
+           <AnchorPane layoutX="170.0" layoutY="222.0" prefHeight="100.0" prefWidth="100.0">
+               <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                   <Image url="@../img/cloud_card.png" />
+               </ImageView>
+               <TilePane fx:id="cloud1" hgap="10.0" layoutX="20.0" layoutY="20.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
+           </AnchorPane>
+           <AnchorPane layoutX="450.0" layoutY="219.0" prefHeight="100.0" prefWidth="100.0">
+               <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                   <Image url="@../img/cloud_card.png" />
+               </ImageView>
+               <TilePane fx:id="cloud2" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
+           </AnchorPane>
+           <AnchorPane fx:id="extraCloud" layoutX="310.0" layoutY="217.0" prefHeight="100.0" prefWidth="100.0">
+               <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="-10.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                   <Image url="@../img/cloud_card.png" />
+               </ImageView>
+               <TilePane fx:id="cloud3" hgap="10.0" layoutX="10.0" layoutY="25.0" prefHeight="60.0" prefWidth="60.0" vgap="5.0" />
+           </AnchorPane>
+       </AnchorPane>
    </center>
    <stylesheets>
       <URL value="@../css/gameboard_style.css" />
    </stylesheets>
    <top>
-      <ImageView fitHeight="50.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../img/eriantys_text_logo.png" />
-         </image>
-      </ImageView>
+       <ImageView fitHeight="50.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+           <Image url="@../img/eriantys_text_logo.png" />
+       </ImageView>
    </top>
 </BorderPane>

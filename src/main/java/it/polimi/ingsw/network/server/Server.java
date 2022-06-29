@@ -11,7 +11,6 @@ import it.polimi.ingsw.network.message.CreateGameMessage;
 import it.polimi.ingsw.network.message.JoinGameMessage;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
-import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 
@@ -22,6 +21,7 @@ import java.util.logging.Logger;
  * Main server class that starts a socket server.
  * It can handle different types of connections.
  */
+
 public class Server{
 
     private final Map<Integer,GameController> gameControllerMap;
@@ -42,6 +42,7 @@ public class Server{
      * @param receivedMessage message passed to the factory.
      * @return {@code GameController}.
      */
+
     public GameController initController(Message receivedMessage){
         GameControllerFactory gameControllerFactory = new GameControllerFactory();
         return gameControllerFactory.getGameController(receivedMessage);
@@ -52,8 +53,9 @@ public class Server{
      *
      * @param nickname the nickname associated with the client.
      * @param clientHandler the ClientHandler associated with the client.
-     * @throws TryAgainException when the client's nickname has already been chosen.
+     * @throws TryAgainException if the client's nickname has already been chosen.
      */
+
     public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException{
         clientHandler.setVirtualView(new VirtualView(clientHandler));
         if(!clientHandlerMap.containsKey(nickname)) {
@@ -69,20 +71,22 @@ public class Server{
      *
      * @param nickname the VirtualView to be removed.
      */
+
     public void removeClient(String nickname){
         clientHandlerMap.remove(nickname);
         LOGGER.info("Removed " + nickname + " from the client list.");
     }
 
     /**
-        This method creates a new GameController associated to the gameNumber.
-        Then the method gets from the message the number of players and calls
-        {@code GameController.prepareGame(playerNum)} to create a new game with the
-        number of players declared in the message.
-
-     @param message message with the number of players.
-     @throws WrongMessageSentException If the gameNumber is already in the list.
+     * This method creates a new GameController associated to the gameNumber.
+     * Then the method gets from the message the number of players and calls
+     * {@code GameController.prepareGame(playerNum)} to create a new game with the number of players declared in
+     * the message.
+     *
+     * @param message message with the number of players.
+     * @throws WrongMessageSentException if the gameNumber is already in the list.
      */
+
     public void createNewGameController(Message message) throws WrongMessageSentException {
         int gameNumber = ((CreateGameMessage) message).getGameNumber();
         int playerNum = ((CreateGameMessage) message).getPlayerNum();
@@ -154,19 +158,21 @@ public class Server{
      *
      * @return the actual {@code gameControllerMap}.
      */
+
     public Map<Integer, GameController> getGameControllerMap() {
         return gameControllerMap;
     }
+
     /**
      * Returns the actual {@code clientHandlerMap}.
      *
      * @return the actual {@code clientHandlerMap}.
      */
+
     public Map<String, ClientHandler> getClientHandlerMap() { return clientHandlerMap; }
 
     /**
-     *  Returns the gameID associated to a nickname, if it doesn't
-     *  exist returns -1.
+     *  Returns the gameID associated to a nickname; if it doesn't exist, returns -1.
      *
      * @param nickname the nickname of the {@link Player} present in the {@link GameController} to get.
      * @return the {@code GameController} associated to a {@code nickname}.
@@ -181,13 +187,13 @@ public class Server{
                 .orElse(-1);
     }
 
-
     /**
      * Returns the nickname associated to a {@code clientHandler}.
      *
      * @param clientHandler the clientHandler of the {@code Player} to get.
      * @return the {@code nickname} associated to the {@code clientHandler}.
      */
+
     private String getNicknameFromClientHandler(ClientHandler clientHandler) {
         return clientHandlerMap.entrySet()
                 .stream()
@@ -202,8 +208,9 @@ public class Server{
      * The method must eliminate the {@link GameController} from the {@code gameControllerMap}.
      * then removes the {@code nickname} and the {@code clientHandler}.
      *
-     * @param clientHandler {@code clientHandler} that has disconnected.
+     * @param clientHandler the {@link ClientHandler} that has disconnected.
      */
+
     public void onDisconnect(ClientHandler clientHandler){
         synchronized (lock){
             String nick = getNicknameFromClientHandler(clientHandler);
@@ -238,6 +245,14 @@ public class Server{
             }
         }
     }
+
+    /**
+     * Handles the end of a game at server-side. This means that the client of the player must be removed from the
+     * server, and that the game controller associated to the terminated game must be removed if all the players
+     * have eventually been safely removed.
+     *
+     * @param clientHandler the {@link ClientHandler} that has ended a game.
+     */
 
     public void onQuit(ClientHandler clientHandler){
         synchronized (lock){

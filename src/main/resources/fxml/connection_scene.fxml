@@ -13,16 +13,18 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="400.0">
-         <children>
-      
-          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="52.0" prefHeight="39.0" prefWidth="70.0" text="ADDRESS: " />
-         <TextField fx:id="ipAddressField" layoutX="165.0" layoutY="59.0" prefHeight="26.0" prefWidth="150.0" text="127.0.0.1" />
-          <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="103.0" prefHeight="39.0" prefWidth="70.0" text="PORT: " />
-            <TextField fx:id="portField" layoutX="165.0" layoutY="109.0" prefHeight="26.0" prefWidth="150.0" styleClass="textField" text="12345" />
-          <Button fx:id="connectionBtn" layoutX="138.0" layoutY="177.0" styleClass="btn" text="CONNECT" />
-         </children>
-      </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="260.0" prefWidth="400.0">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="52.0" prefHeight="39.0"
+                   prefWidth="70.0" text="ADDRESS: "/>
+            <TextField fx:id="ipAddressField" layoutX="165.0" layoutY="59.0" prefHeight="26.0" prefWidth="150.0"
+                       text="127.0.0.1"/>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="85.0" layoutY="103.0" prefHeight="39.0"
+                   prefWidth="70.0" text="PORT: "/>
+            <TextField fx:id="portField" layoutX="165.0" layoutY="109.0" prefHeight="26.0" prefWidth="150.0"
+                       styleClass="textField" text="12345"/>
+            <Button fx:id="connectionBtn" layoutX="138.0" layoutY="177.0" styleClass="btn" text="CONNECT"/>
+        </AnchorPane>
     </VBox>
     <stylesheets>
         <URL value="@../css/menu_style.css" />

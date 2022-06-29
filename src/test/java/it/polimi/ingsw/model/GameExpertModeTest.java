@@ -231,7 +231,7 @@ class GameExpertModeTest {
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException e){
             e.printStackTrace();

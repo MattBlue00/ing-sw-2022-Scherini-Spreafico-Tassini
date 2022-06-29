@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.charactercards;
 
 import it.polimi.ingsw.exceptions.*;
 import it.polimi.ingsw.model.CharacterCard;
-import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
@@ -57,8 +56,8 @@ public class Princess extends CharacterCard implements StringCard, StudentsCard,
         boolean done = false;
         for (int i = 0; i < 4; i++) {
             try {
-                if (students[i].getColor().toString().equals(chosenColor)) {
-                    game.getCurrentPlayer().getSchool().getTable(students[i].getColor().toString()).addStudent(
+                if (students[i].color().toString().equals(chosenColor)) {
+                    game.getCurrentPlayer().getSchool().getTable(students[i].color().toString()).addStudent(
                             students[i], game.getCurrentPlayer()
                     );
                     try {
@@ -108,13 +107,13 @@ public class Princess extends CharacterCard implements StringCard, StudentsCard,
         int yellowStudents = 0, blueStudents = 0, greenStudents = 0, redStudents = 0, pinkStudents = 0;
 
         for (int i = 0; i < 4; i++){
-            if(students[i].getColor().toString().equals("YELLOW"))
+            if(students[i].color().toString().equals("YELLOW"))
                 yellowStudents++;
-            else if(students[i].getColor().toString().equals("BLUE"))
+            else if(students[i].color().toString().equals("BLUE"))
                 blueStudents++;
-            else if(students[i].getColor().toString().equals("GREEN"))
+            else if(students[i].color().toString().equals("GREEN"))
                 greenStudents++;
-            else if(students[i].getColor().toString().equals("RED"))
+            else if(students[i].color().toString().equals("RED"))
                 redStudents++;
             else pinkStudents++;
         }

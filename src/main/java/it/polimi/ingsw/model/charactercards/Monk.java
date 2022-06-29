@@ -9,7 +9,6 @@ import it.polimi.ingsw.utils.ANSIConstants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,7 +59,7 @@ public class Monk extends CharacterCard implements StringIntCard, StudentsCard, 
     public void doEffect(GameExpertMode game) throws TryAgainException {
         boolean done = false;
         for (int i = 0; i < 4; i++) {
-            if (students[i].getColor().toString().equals(chosenColor)) {
+            if (students[i].color().toString().equals(chosenColor)) {
                 game.getBoard().getIslands().getIslandFromID(chosenIsland).addStudent(students[i]);
                 try {
                     students[i] = game.getBoard().getStudentsBag().remove(game.getBoard().getStudentsBag().size() - 1);
@@ -105,13 +104,13 @@ public class Monk extends CharacterCard implements StringIntCard, StudentsCard, 
         int yellowStudents = 0, blueStudents = 0, greenStudents = 0, redStudents = 0, pinkStudents = 0;
 
         for (int i = 0; i < 4; i++){
-            if(students[i].getColor().toString().equals("YELLOW"))
+            if(students[i].color().toString().equals("YELLOW"))
                 yellowStudents++;
-            else if(students[i].getColor().toString().equals("BLUE"))
+            else if(students[i].color().toString().equals("BLUE"))
                 blueStudents++;
-            else if(students[i].getColor().toString().equals("GREEN"))
+            else if(students[i].color().toString().equals("GREEN"))
                 greenStudents++;
-            else if(students[i].getColor().toString().equals("RED"))
+            else if(students[i].color().toString().equals("RED"))
                 redStudents++;
             else pinkStudents++;
         }

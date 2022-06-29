@@ -100,7 +100,7 @@ public class Table implements Serializable {
             FullTableException {
 
         if(students.size() >= Constants.TABLE_LENGTH)
-            throw new FullTableException("The " + addedStudent.getColor() + " table is full!");
+            throw new FullTableException("The " + addedStudent.color() + " table is full!");
 
         students.add(addedStudent);
         player.setCoinsWallet(

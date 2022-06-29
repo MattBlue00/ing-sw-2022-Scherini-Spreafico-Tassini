@@ -3,6 +3,7 @@ package it.polimi.ingsw.view.cli;
 import it.polimi.ingsw.controller.ClientController;
 import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.observers.ViewObservable;
 import it.polimi.ingsw.utils.ANSIConstants;
 import it.polimi.ingsw.view.View;
@@ -13,12 +14,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 /**
- * This class offers a User Interface to the user via terminal. It is an implementation of the {@link View}.
+ * This class offers a User Interface via terminal. It is an implementation of the {@link View}.
  */
+
 public class CommandLineInterface extends ViewObservable implements View {
 
     private final PrintStream out;
-    private Thread inputThread;
 
     /**
      * CommandLineInterface constructor.
@@ -34,9 +35,10 @@ public class CommandLineInterface extends ViewObservable implements View {
      * @return the string read from the input.
      * @throws ExecutionException if the input stream thread is interrupted.
      */
+
     private String readLine() throws ExecutionException{
         FutureTask<String> futureTask = new FutureTask<>(new InputReadTask());
-        inputThread = new Thread(futureTask);
+        Thread inputThread = new Thread(futureTask);
         inputThread.start();
         String input = null;
         try {
@@ -52,20 +54,26 @@ public class CommandLineInterface extends ViewObservable implements View {
     /**
      * This method shows the client the Eriantys logo and starts the method chain to connect to the server.
      */
+
     public void init(){
-        out.println("   ('-.  _  .-')             ('-.         .-') _  .-') _                 .-')    \n" +
-                " _(  OO)( \\( -O )           ( OO ).-.    ( OO ) )(  OO) )               ( OO ).  \n" +
-                "(,------.,------.  ,-.-')   / . --. /,--./ ,--,' /     '._  ,--.   ,--.(_)---\\_) \n" +
-                " |  .---'|   /`. ' |  |OO)  | \\-.  \\ |   \\ |  |\\ |'--...__)  \\  `.'  / /    _ |  \n" +
-                " |  |    |  /  | | |  |  \\.-'-'  |  ||    \\|  | )'--.  .--'.-')     /  \\  :` `.  \n" +
-                "(|  '--. |  |_.' | |  |(_/ \\| |_.'  ||  .     |/    |  |  (OO  \\   /    '..`''.) \n" +
-                " |  .--' |  .  '.',|  |_.'  |  .-.  ||  |\\    |     |  |   |   /  /\\_  .-._)   \\ \n" +
-                " |  `---.|  |\\  \\(_|  |     |  | |  ||  | \\   |     |  |   `-./  /.__) \\       / \n" +
-                " `------'`--' '--' `--'     `--' `--'`--'  `--'     `--'     `--'       `-----'  ");
+        out.println("""
+                   ('-.  _  .-')             ('-.         .-') _  .-') _                 .-')   \s
+                 _(  OO)( \\( -O )           ( OO ).-.    ( OO ) )(  OO) )               ( OO ). \s
+                (,------.,------.  ,-.-')   / . --. /,--./ ,--,' /     '._  ,--.   ,--.(_)---\\_)\s
+                 |  .---'|   /`. ' |  |OO)  | \\-.  \\ |   \\ |  |\\ |'--...__)  \\  `.'  / /    _ | \s
+                 |  |    |  /  | | |  |  \\.-'-'  |  ||    \\|  | )'--.  .--'.-')     /  \\  :` `. \s
+                (|  '--. |  |_.' | |  |(_/ \\| |_.'  ||  .     |/    |  |  (OO  \\   /    '..`''.)\s
+                 |  .--' |  .  '.',|  |_.'  |  .-.  ||  |\\    |     |  |   |   /  /\\_  .-._)   \\\s
+                 |  `---.|  |\\  \\(_|  |     |  | |  ||  | \\   |     |  |   `-./  /.__) \\       /\s
+                 `------'`--' '--' `--'     `--' `--'`--'  `--'     `--'     `--'       `-----' \s""");
 
         out.println("Welcome to Eriantys!\n");
         askServerData();
     }
+
+    /**
+     * Asks the client information about what server they want to try to connect to.
+     */
 
     @Override
     public void askServerData(){
@@ -116,6 +124,11 @@ public class CommandLineInterface extends ViewObservable implements View {
         notifyObserver(viewObserver -> viewObserver.onUpdateServerData(finalAddress, finalPortValue));
     }
 
+    /**
+     * Asks the client which nickname they want to use.
+     * If it is unique, the client joins the lobby; otherwise, they are asked to choose a different nickname.
+     */
+
     @Override
     public void askNickname() {
         out.println("Enter your nickname [must be unique] : ");
@@ -131,6 +144,10 @@ public class CommandLineInterface extends ViewObservable implements View {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Asks the client if they want to create or join a game.
+     */
 
     @Override
     public void askCreateOrJoin() {
@@ -148,6 +165,10 @@ public class CommandLineInterface extends ViewObservable implements View {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Asks the client about the game info: number of players and game mode.
+     */
 
     @Override
     public void askGameInfo() {
@@ -193,6 +214,11 @@ public class CommandLineInterface extends ViewObservable implements View {
         }
     }
 
+    /**
+     * Asks the client the gameID (which must be unique).
+     * If it is unique a new game is created, else they are asked to choose a different gameID.
+     */
+
     @Override
     public void askGameNumber() {
         try {
@@ -216,6 +242,11 @@ public class CommandLineInterface extends ViewObservable implements View {
         }
     }
 
+    /**
+     * Asks the client which WizardID they want to choose (must be unique).
+     * If it is unique the client is added to the game, else they are asked to choose a different Wizard.
+     */
+
     @Override
     public void askWizardID() {
         out.println("Choose your wizard for this game between [ BLUE_WIZARD | YELLOW_WIZARD | GREEN_WIZARD | PINK_WIZARD ] : ");
@@ -234,6 +265,10 @@ public class CommandLineInterface extends ViewObservable implements View {
         } catch (NullPointerException ignored){}
     }
 
+    /**
+     * Asks the client which Assistant Card they want to play.
+     */
+
     @Override
     public void askAssistantCard() {
         out.println("Select the Assistant Card you want to play: ");
@@ -244,6 +279,10 @@ public class CommandLineInterface extends ViewObservable implements View {
             throw new RuntimeException(e);
         } catch (NullPointerException ignored){}
     }
+
+    /**
+     * Asks the client where they want to move the student (on an island or on the correspondent table).
+     */
 
     @Override
     public void askMoveStudent(){
@@ -301,6 +340,10 @@ public class CommandLineInterface extends ViewObservable implements View {
         } catch (NullPointerException ignored){}
     }
 
+    /**
+     * Asks the client how many steps they wish to move Mother Nature of.
+     */
+
     @Override
     public void askMotherNatureSteps() {
 
@@ -331,6 +374,10 @@ public class CommandLineInterface extends ViewObservable implements View {
         catch (NullPointerException ignored){}
     }
 
+    /**
+     * Asks the client which cloud they want to choose.
+     */
+
     @Override
     public void askCloud() {
 
@@ -357,6 +404,10 @@ public class CommandLineInterface extends ViewObservable implements View {
             throw new RuntimeException(e);
         } catch (NullPointerException ignored){}
     }
+
+    /**
+     * Asks the client which Character Card they want to play (Expert mode exclusive).
+     */
 
     @Override
     public void askCharacterCard() {
@@ -479,6 +530,10 @@ public class CommandLineInterface extends ViewObservable implements View {
         }
     }
 
+    /**
+     * Asks the client if they want to play a CharacterCard or to move a student (Expert mode exclusive).
+     */
+
     @Override
     public void askAction() {
         out.println("What do you want to do? Please type STUDENT to move a student, CARD to play a Character Card: ");
@@ -496,10 +551,20 @@ public class CommandLineInterface extends ViewObservable implements View {
         } catch (NullPointerException ignored){}
     }
 
+    /**
+     * Shows a generic message to the client.
+     *
+     * @param message the message that will be shown to the client.
+     */
+
     @Override
     public void showGenericMessage(String message) {
         out.println(message);
     }
+
+    /**
+     * Shows to the client the existing games they may join.
+     */
 
     @Override
     public void showExistingGames(Map<Integer, GameController> existingGames) {
@@ -526,6 +591,13 @@ public class CommandLineInterface extends ViewObservable implements View {
         askCreateOrJoin();
     }
 
+    /**
+     * Shows the client in which round phase they are.
+     *
+     * @param isActionPhase {@code true} if the current player is about to play the Action Phase, {@code false}
+     *        otherwise.
+     */
+
     @Override
     public void showPhaseUpdate(boolean isActionPhase) {
         clearInterface();
@@ -535,10 +607,22 @@ public class CommandLineInterface extends ViewObservable implements View {
             out.println(ANSIConstants.ANSI_BOLD + "------ PLANNING PHASE ------" + ANSIConstants.ANSI_RESET);
     }
 
+    /**
+     * Shows the client what happened on the {@link GameBoard}.
+     *
+     * @param s the update to notify.
+     */
+
     @Override
     public void showUpdateMessage(String s) {
         out.println(s);
     }
+
+    /**
+     * Shows to the client the latest Assistant Cards played, the Game Board and the players' order.
+     *
+     * @param game the game whose status needs to be shown.
+     */
 
     @Override
     public void showGameStatusFirstActionPhase(Game game) {
@@ -548,16 +632,34 @@ public class CommandLineInterface extends ViewObservable implements View {
         game.showPlayersOrder();
     }
 
+    /**
+     * Shows the current Game Board to the client.
+     *
+     * @param game the game whose status needs to be shown.
+     */
+
     @Override
     public void showGameStatus(Game game) {
         clearInterface();
         game.showGameBoard();
     }
 
+    /**
+     * Shows to the client the AssistantCards they can play.
+     *
+     * @param game the game whose status needs to be shown.
+     */
+
     public void showDeck(Game game) {
         clearInterface();
         game.showDeck();
     }
+
+    /**
+     * Shows a disconnection message to the client.
+     *
+     * @param message the message that will be shown to the client.
+     */
 
     @Override
     public void showDisconnectionMessage(String message) {
@@ -566,7 +668,7 @@ public class CommandLineInterface extends ViewObservable implements View {
     }
 
     /**
-     * Closes the app.
+     * Closes the client's app.
      */
 
     @Override
@@ -575,23 +677,31 @@ public class CommandLineInterface extends ViewObservable implements View {
         System.exit(0);
     }
 
+    /**
+     * Sets the view user's nickname. This method is not used by the CLI.
+     *
+     * @param nickname the nickname chosen by the client.
+     */
+
     @Override
     public void setNickname(String nickname) {
-
     }
 
     /**
-     * This method is used to clear the interface.
+     * Clears the interface.
      */
+
     public void clearInterface(){
         out.flush();
     }
 
     /**
-     * This method checks if the given input is valid.
-     * @param color the string to check
+     * Checks if the given input is valid.
+     *
+     * @param color the string to check.
      * @return {@code true} if the input is valid, {@code false} otherwise.
      */
+
     private boolean isColorInvalid(String color){
         if (!color.equals("YELLOW") && !color.equals("BLUE") && !color.equals("GREEN")
                 && !color.equals("RED") && !color.equals("PINK")) {

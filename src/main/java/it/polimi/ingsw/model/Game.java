@@ -292,11 +292,9 @@ public class Game implements Serializable {
      *
      * @param steps the desired number of steps.
      * @throws InvalidNumberOfStepsException if the provided number of steps violates the game's rules.
-     * @throws IslandNotFoundException if the method somehow tries to access to non-existing islands (it should never
-     * happen, so it is safely ignorable).
      */
 
-    public void moveMotherNature(int steps) throws InvalidNumberOfStepsException, IslandNotFoundException {
+    public void moveMotherNature(int steps) throws InvalidNumberOfStepsException {
 
         int max_steps = currentPlayer.getLatestAssistantCardPlayed().getMotherNatureSteps();
 
@@ -365,7 +363,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the game status (Normal mode).
+     * Allows the CLI to properly show the game status (Normal mode).
      */
 
     public void showGameBoard(){
@@ -419,17 +417,16 @@ public class Game implements Serializable {
 
             for(int i = 0; i < playersNumber; i++) {
                 yellowStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.YELLOW)).count();
                 blueStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.BLUE)).count();
                 greenStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.GREEN)).count();
                 redStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.RED)).count();
                 pinkStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.PINK)).count();
 
-                //TODO: when the cloud number is asked, remember to save it decremented of 1!
                 System.out.print("CLOUD " + (i + 1) + ": ");
                 System.out.println(
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
@@ -450,7 +447,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the current player's Assistant Card deck.
+     * Allows the CLI to properly show the current player's Assistant Card deck.
      */
 
     public void showDeck(){
@@ -463,7 +460,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the Assistant Cards played by the players at the end of a Planning Phase.
+     * Allows the CLI to properly show the Assistant Cards played by the players at the end of a Planning Phase.
      */
 
     public void showAssistantCardsPlayed(){
@@ -475,7 +472,7 @@ public class Game implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the players' order at the beginning of an Action Phase.
+     * Allows the CLI to properly show the players' order at the beginning of an Action Phase.
      */
 
     public void showPlayersOrder(){
@@ -485,10 +482,10 @@ public class Game implements Serializable {
     }
 
     /**
-     * This method returns the player whose nickname is {@code nick}
+     * Returns the player of the given nickname.
      *
-     * @param nick is the nickname given
-     * @return {@link Player} that has the given nickname
+     * @param nick the given nickname.
+     * @return the {@link Player} of the given nickname.
      */
 
     public Player getPlayerFromNickname(String nick){

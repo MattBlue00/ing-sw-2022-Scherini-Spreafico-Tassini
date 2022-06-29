@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.charactercards;
 
-import it.polimi.ingsw.exceptions.FullTableException;
-import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.CharacterCard;
@@ -9,7 +7,6 @@ import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.GameExpertMode;
 import it.polimi.ingsw.model.Student;
 import it.polimi.ingsw.utils.ANSIConstants;
-import it.polimi.ingsw.utils.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,7 +61,7 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Studen
                     game.getCurrentPlayer().getSchool().getHall().removeStudent(color1.toString());
 
             Optional<Student> cardStudentOptional =
-                    this.studentsOnTheCard.stream().filter(x -> x.getColor().equals(color2)).findFirst();
+                    this.studentsOnTheCard.stream().filter(x -> x.color().equals(color2)).findFirst();
 
             if(cardStudentOptional.isEmpty()) {
                 game.getCurrentPlayer().getSchool().getHall().addStudent(hallStudent);
@@ -109,15 +106,15 @@ public class Jester extends CharacterCard implements ArrayListStringCard, Studen
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
 
         yellowStudents =
-                (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                (int) this.getStudentsOnTheCard().stream().filter(x -> x.color().equals(Color.YELLOW)).count();
         blueStudents =
-                (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                (int) this.getStudentsOnTheCard().stream().filter(x -> x.color().equals(Color.BLUE)).count();
         greenStudents =
-                (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                (int) this.getStudentsOnTheCard().stream().filter(x -> x.color().equals(Color.GREEN)).count();
         redStudents =
-                (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                (int) this.getStudentsOnTheCard().stream().filter(x -> x.color().equals(Color.RED)).count();
         pinkStudents =
-                (int) this.getStudentsOnTheCard().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                (int) this.getStudentsOnTheCard().stream().filter(x -> x.color().equals(Color.PINK)).count();
 
         System.out.print(
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +

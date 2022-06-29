@@ -1,8 +1,8 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * this class is used just for testing purposes.
- * It is used to simply send the number of players of a Game.
+ * This {@link Message} is used to communicate how many players a newborn game should have. It was used just for
+ * testing purposes.
  */
 public class PlayerNumberMessage extends Message{
 
@@ -11,13 +11,20 @@ public class PlayerNumberMessage extends Message{
     /**
      * Default constructor.
      *
-     * @param nickname the serialized Model.
-     * @param playerNumber the chosen color String.
+     * @param nickname client's nickname.
+     * @param playerNumber an {@code int} representing the chosen players' number.
      */
+
     public PlayerNumberMessage(String nickname, int playerNumber) {
         super(nickname, MessageType.PLAYER_NUMBER_REPLY);
         this.playerNumber = playerNumber;
     }
+
+    /**
+     * Returns the chosen players' number.
+     *
+     * @return an {@code int} representing the chosen players' number.
+     */
 
     public int getPlayerNumber() {
         return playerNumber;

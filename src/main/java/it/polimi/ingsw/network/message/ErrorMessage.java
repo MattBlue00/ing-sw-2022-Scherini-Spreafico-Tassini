@@ -1,19 +1,17 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * Message to notify an error to the client.
+ * This {@link Message} is used to communicate a generic error to the clients.
  */
-public class ErrorMessage extends Message{
 
-    private final String error;
+public class ErrorMessage extends Message{
 
     /**
      * Default constructor.
-     *
-     * @param error error text
      */
-    public ErrorMessage(String error) {
+
+    public ErrorMessage() {
         super(null, MessageType.ERROR_MESSAGE);
-        this.error = error;
     }
+
 }

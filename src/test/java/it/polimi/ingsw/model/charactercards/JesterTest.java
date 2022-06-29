@@ -67,9 +67,9 @@ class JesterTest {
             assertEquals(4, g1.getCurrentPlayer().getCoinsWallet());
             assertEquals(2, cards[0].getCost());
             assertEquals(s1, g1.getCurrentPlayer().getSchool().getHall().getStudents()
-                            .stream().filter(x -> x.getColor().toString().equals("BLUE")).findFirst().get());
+                            .stream().filter(x -> x.color().toString().equals("BLUE")).findFirst().get());
             assertEquals(s3, g1.getCurrentPlayer().getSchool().getHall().getStudents()
-                    .stream().filter(x -> x.getColor().toString().equals("RED")).findFirst().get());
+                    .stream().filter(x -> x.color().toString().equals("RED")).findFirst().get());
             assertTrue(((Jester) cards[0]).getStudentsOnTheCard().contains(s7));
             assertTrue(((Jester) cards[0]).getStudentsOnTheCard().contains(s8));
 
@@ -82,8 +82,6 @@ class JesterTest {
     @Test
     void showStudentsOnTheCardTest() {
         GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
-        Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
-        Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());
 
         CharacterCard[] cards = new CharacterCard[Constants.CHARACTERS_NUM];
         cards[0] = new Jester(g1.getBoard().getStudentsBag());
@@ -92,5 +90,6 @@ class JesterTest {
         g1.addCharacterCards(cards);
 
         ((Jester) cards[0]).showStudentsOnTheCard();
+        assertEquals(6, ((Jester) cards[0]).getStudentsOnTheCard().size());
     }
 }

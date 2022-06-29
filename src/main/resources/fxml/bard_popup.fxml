@@ -6,24 +6,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="popupBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.popupcontrollers.BardPopupController">
-   <children>
-      <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Hall students:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="200.0" prefHeight="40.0" prefWidth="200.0" text="Table students:">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="hallStudent1" layoutX="25.0" layoutY="44.0" prefWidth="150.0" />
-      <Label layoutX="184.0" layoutY="49.0" text="&lt;---&gt;" />
-      <ChoiceBox fx:id="tableStudent1" layoutX="225.0" layoutY="44.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="hallStudent2" layoutX="25.0" layoutY="85.0" prefWidth="150.0" />
-      <Label layoutX="184.0" layoutY="90.0" text="&lt;---&gt;" />
-      <ChoiceBox fx:id="tableStudent2" layoutX="225.0" layoutY="85.0" prefWidth="150.0" />
-      <Button fx:id="confirm" layoutX="170.0" layoutY="131.0" mnemonicParsing="false" text="Confirm" AnchorPane.bottomAnchor="20.0" />
-   </children>
+<AnchorPane fx:id="popupBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="175.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.view.gui.popupcontrollers.BardPopupController">
+   <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" text="Hall students:">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Label>
+   <Label alignment="CENTER" layoutX="200.0" prefHeight="40.0" prefWidth="200.0" text="Table students:">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Label>
+   <ChoiceBox layoutX="25.0" layoutY="44.0" prefWidth="150.0"/>
+   <Label layoutX="184.0" layoutY="49.0" text="&lt;---&gt;"/>
+   <ChoiceBox layoutX="225.0" layoutY="44.0" prefWidth="150.0"/>
+   <ChoiceBox layoutX="25.0" layoutY="85.0" prefWidth="150.0"/>
+   <Label layoutX="184.0" layoutY="90.0" text="&lt;---&gt;"/>
+   <ChoiceBox layoutX="225.0" layoutY="85.0" prefWidth="150.0"/>
+   <Button layoutX="170.0" layoutY="131.0" mnemonicParsing="false" text="Confirm"
+           AnchorPane.bottomAnchor="20.0"/>
 </AnchorPane>

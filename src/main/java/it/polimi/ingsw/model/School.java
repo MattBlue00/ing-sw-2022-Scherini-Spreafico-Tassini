@@ -32,7 +32,7 @@ public class School implements Serializable {
         for(int i = 0; i < Constants.NUM_TABLES; i++)
             tables[i] = new Table(colors[i]);
         // hall
-        this.hall = new Hall(constants.MAX_HALL_STUDENTS);
+        this.hall = new Hall();
         // tower room
         this.towerRoom = new TowerRoom(constants.MAX_TOWERS);
     }

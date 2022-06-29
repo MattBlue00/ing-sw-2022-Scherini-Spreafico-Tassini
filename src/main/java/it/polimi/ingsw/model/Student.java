@@ -11,16 +11,13 @@ import java.io.Serializable;
  * wins the game. Each student has a {@link Color}.
  */
 
-public class Student implements Serializable {
-
-    private final Color color;
+public record Student(Color color) implements Serializable {
 
     /**
      * Student constructor.
      */
 
-    public Student(Color color) {
-        this.color = color;
+    public Student {
     }
 
     /**
@@ -29,7 +26,8 @@ public class Student implements Serializable {
      * @return the {@link Color} of the student.
      */
 
-    public Color getColor() {
+    @Override
+    public Color color() {
         return color;
     }
 
@@ -39,7 +37,7 @@ public class Student implements Serializable {
      * @param player the given {@link Player}.
      */
 
-    public void moveToHall(Player player){
+    public void moveToHall(Player player) {
         player.getSchool().getHall().addStudent(this);
     }
 
@@ -49,7 +47,7 @@ public class Student implements Serializable {
      * @param island the {@link Island} to move the student to.
      */
 
-    public void moveToIsland(Island island){
+    public void moveToIsland(Island island) {
         island.addStudent(this);
     }
 
@@ -58,8 +56,8 @@ public class Student implements Serializable {
      *
      * @param player the given {@link Player}.
      * @throws NonExistentColorException if a table of a non-existent color is somehow accessed (it should never happen,
-     * so it is safely ignorable).
-     * @throws FullTableException if the table of the student's color from the given player's dining room is full.
+     *                                   so it is safely ignorable).
+     * @throws FullTableException        if the table of the student's color from the given player's dining room is full.
      */
 
     public void moveToTable(Player player) throws NonExistentColorException, FullTableException {

@@ -16,15 +16,22 @@ import java.util.concurrent.TimeUnit;
 import static it.polimi.ingsw.network.server.Server.LOGGER;
 
 /**
- * SocketServer class, it implements the Socket on
- * computer local address and specified PORT.
+ * This class implements the socket on the computer's local address and on a specified port.
  */
+
 public class SocketServer implements Runnable{
 
     private final Server server;
     private final int port;
     private ServerSocket serverSocket;
     private final ScheduledExecutorService pinger;
+
+    /**
+     * SocketServer constructor.
+     *
+     * @param server the {@link Server} related to the socket.
+     * @param port an {@code int} representing the chosen socket's port.
+     */
 
     public SocketServer(Server server, int port) {
         this.server = server;
@@ -33,11 +40,11 @@ public class SocketServer implements Runnable{
     }
 
     /**
-     * Create a new {@link ServerSocket} associated to the chosen port.
-     * Threads will accept different clients (each one has a Socket client).
-     * New Thread is created with the associated ClientHandler.
-     * In the end the thread starts.
+     * Create a new {@link ServerSocket} associated to the chosen port. The threads will accept different clients
+     * (each one has its own socket). A new thread is created with the associated {@link ClientHandler}, and
+     * eventually starts to run.
      */
+
     @Override
     public void run() {
         try {
@@ -62,26 +69,33 @@ public class SocketServer implements Runnable{
     }
 
     /**
-     * @return the {@link Server}
+     * Returns the Server associated to the socket.
+     *
+     * @return the {@link Server} associated to the socket.
      */
+
     public Server getServer() {
         return server;
     }
 
     /**
+     * Tells the Server to add a given client.
      *
      * @param nickname the nickname of the client to connect.
      * @param clientHandler the {@link ClientHandler} to Associate.
      * @throws TryAgainException when the {@link Client}'s nickname has already been chosen.
      */
+
     public void addClient(String nickname, ClientHandler clientHandler) throws TryAgainException {
         server.addClient(nickname, clientHandler);
     }
 
     /**
+     * Returns the message received from the client.
      *
      * @param message received from {@link SocketClientHandler} to send to the {@link Server}.
      */
+
     public void getMessage(Message message){
         server.getMessage(message);
     }
@@ -91,6 +105,7 @@ public class SocketServer implements Runnable{
      *
      * @param clientHandler the {@link ClientHandler} to pass to the server.
      */
+
     public void onDisconnect(ClientHandler clientHandler){
         server.onDisconnect(clientHandler);
     }
@@ -100,13 +115,15 @@ public class SocketServer implements Runnable{
      *
      * @param clientHandler the {@link ClientHandler} to pass to the server.
      */
+
     public void onQuit(ClientHandler clientHandler){
         server.onQuit(clientHandler);
     }
 
     /**
-     * Checks if all Clients are reachable.
+     * Checks if all the clients are reachable.
      */
+
     public void isReachable(){
         server.getClientHandlerMap().forEach( (name, clientHandler) -> {
             try {

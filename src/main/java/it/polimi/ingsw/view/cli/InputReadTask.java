@@ -6,17 +6,28 @@ import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 
 /**
- * This class is used to read the input stream and making the input kind of interruptible.
+ * This class is used to read the input stream and making the input kind of "interruptable".
  */
+
 public class InputReadTask implements Callable<String> {
+
     private final BufferedReader br;
 
     /**
-     * Constructor of InputReadTask
+     * InputReadTask constructor.
      */
+
     public InputReadTask() {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
+
+    /**
+     * Allows the thread to collect input, if there is any.
+     *
+     * @return the input collected.
+     * @throws IOException if an I/O error occurs.
+     * @throws InterruptedException if any other thread has interrupted this thread.
+     */
 
     @Override
     public String call() throws IOException, InterruptedException {

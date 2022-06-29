@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * This enum contains all the message type available and used by the server and clients.
+ * This enumeration contains all the message types available and used by the server and clients.
  */
 public enum MessageType {
     LOGIN_REQUEST,

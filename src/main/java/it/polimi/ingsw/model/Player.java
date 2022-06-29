@@ -233,7 +233,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the player's school.
+     * Allows the CLI to properly show the player's school.
      */
 
     public void showSchool(){
@@ -242,15 +242,15 @@ public class Player implements Serializable {
 
         int yellowStudents, blueStudents, greenStudents, redStudents, pinkStudents;
         yellowStudents =
-                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.color().equals(Color.YELLOW)).count();
         blueStudents =
-                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.color().equals(Color.BLUE)).count();
         greenStudents =
-                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.color().equals(Color.GREEN)).count();
         redStudents =
-                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.color().equals(Color.RED)).count();
         pinkStudents =
-                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                (int) this.getSchool().getHall().getStudents().stream().filter(x -> x.color().equals(Color.PINK)).count();
 
         System.out.println("Hall: " +
                 ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +
@@ -268,15 +268,15 @@ public class Player implements Serializable {
         try {
 
             yellowStudents =
-                    (int) this.getSchool().getTable("YELLOW").getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                    (int) this.getSchool().getTable("YELLOW").getStudents().stream().filter(x -> x.color().equals(Color.YELLOW)).count();
             blueStudents =
-                    (int) this.getSchool().getTable("BLUE").getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                    (int) this.getSchool().getTable("BLUE").getStudents().stream().filter(x -> x.color().equals(Color.BLUE)).count();
             greenStudents =
-                    (int) this.getSchool().getTable("GREEN").getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                    (int) this.getSchool().getTable("GREEN").getStudents().stream().filter(x -> x.color().equals(Color.GREEN)).count();
             redStudents =
-                    (int) this.getSchool().getTable("RED").getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                    (int) this.getSchool().getTable("RED").getStudents().stream().filter(x -> x.color().equals(Color.RED)).count();
             pinkStudents =
-                    (int) this.getSchool().getTable("PINK").getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                    (int) this.getSchool().getTable("PINK").getStudents().stream().filter(x -> x.color().equals(Color.PINK)).count();
         } catch(NonExistentColorException ignored){}
 
         System.out.println("Students per table: " +

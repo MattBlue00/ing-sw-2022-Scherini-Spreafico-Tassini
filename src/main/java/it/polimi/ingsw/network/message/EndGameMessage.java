@@ -1,8 +1,7 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * This message extends {@link Message}.
- * It is used to trigger the closing of the clients' app.
+ * This {@link Message} is used to communicate to the players that the match they are playing has ended.
  */
 
 public class EndGameMessage extends Message {

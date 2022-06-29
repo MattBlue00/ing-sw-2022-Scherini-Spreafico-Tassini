@@ -1,7 +1,9 @@
 package it.polimi.ingsw.network.message;
 
+import it.polimi.ingsw.network.server.Server;
+
 /**
- * Enum for type of Ask the Server makes.
+ * This enumeration contains the values that represent what the {@link Server} may be asking for.
  */
 public enum AskType {
     NICKNAME_NOT_UNIQUE,

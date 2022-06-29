@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameControllerExpertModeTest {
 
-    // TODO: need to test character cards
-
     @Test
     public void testGetMessageCaseInGame(){
         GameController gc = new GameControllerExpertMode();

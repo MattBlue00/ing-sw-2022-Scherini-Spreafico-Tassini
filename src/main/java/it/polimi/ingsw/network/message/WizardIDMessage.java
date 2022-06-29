@@ -1,30 +1,31 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * /**
- * The message extends {@link Message}.
- * This Message class is used to select a WizardID.
+ * This {@link Message} is used to communicate to the server the ID of the wizard chosen by the client.
  */
+
 public class WizardIDMessage extends Message{
 
-    String wizardID;
+    private final String wizardID;
 
     /**
      * WizardIDMessage constructor.
      *
      * @param nickname client's nickname
-     * @param wizardID wizard chosen
+     * @param wizardID the ID of the chosen wizard.
      */
+
     public WizardIDMessage(String nickname, String wizardID) {
         super(nickname, MessageType.WIZARD_ID);
         this.wizardID = wizardID;
     }
 
     /**
-     * This method returns the wizardID.
+     * Returns the ID of the chosen wizard.
      *
-     * @return {@code WizardID}
+     * @return the {@link String} representation of the ID of the chosen wizard.
      */
+
     public String getWizardID() {
         return wizardID;
     }
