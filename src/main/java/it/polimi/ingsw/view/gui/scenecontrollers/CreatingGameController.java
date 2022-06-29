@@ -10,20 +10,34 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * This scene controller handles the scene in which the client creates a game.
+ */
+
 public class CreatingGameController extends ViewObservable implements GenericSceneController{
     @FXML
-    TextField gameID;
+    private TextField gameID;
     @FXML
-    TextField playerNumber;
+    private TextField playerNumber;
     @FXML
-    CheckBox gameMode;
+    private CheckBox gameMode;
     @FXML
-    Button createGame;
+    private Button createGame;
+
+    /**
+     * Properly initializes the scene.
+     */
 
     @FXML
     public void initialize(){
         createGame.addEventHandler(MouseEvent.MOUSE_CLICKED, this::createGame);
     }
+
+    /**
+     * When the "create game" button is clicked, tries to create a game with the given parameters.
+     *
+     * @param e the event that triggers the method.
+     */
 
     public void createGame(Event e){
         int gameID;

@@ -35,7 +35,6 @@ public class GameTest{
 
     @Test
     public void playerMovesStudentToTable() throws NonExistentColorException {
-        // TODO: test playerMovesStudent (for islands and for tables)
         Game g1 = new Game(2, new Constants(2));
         Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
         Student s1 = new Student(Color.YELLOW);
@@ -47,7 +46,6 @@ public class GameTest{
         }catch(FullTableException | StudentNotFoundException ignored){}
 
         assertEquals(s1, p1.getSchool().getTable("YELLOW").getStudents().get(0));
-
     }
 
     @Test
@@ -188,7 +186,7 @@ public class GameTest{
             g1.moveMotherNature(1); // from island 1 to 2
             assertEquals(2, g1.getBoard().getMotherNaturePos());
         }
-        catch(InvalidNumberOfStepsException | IslandNotFoundException e){
+        catch(InvalidNumberOfStepsException e){
             e.printStackTrace();
         }
 
@@ -243,7 +241,7 @@ public class GameTest{
         try {
             g1.getBoard().getIslands().getIslandFromID(1).addStudent(s2);
             g1.islandConquerCheck(1);
-            assertEquals(null, g1.getBoard().getIslands().getIslandFromID(1).getOwner());
+            assertNull(g1.getBoard().getIslands().getIslandFromID(1).getOwner());
         }
         catch(IslandNotFoundException ignored){}
 

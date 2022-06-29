@@ -14,17 +14,14 @@ import java.util.Optional;
 
 public class Hall implements Serializable {
 
-    private final int capacity;
     private final ArrayList<Student> students;
 
     /**
      * Hall constructor.
      *
-     * @param capacity the maximum number of students that can be in the {@link Hall} at the same time.
      */
 
-    public Hall(int capacity) {
-        this.capacity = capacity;
+    public Hall() {
         students = new ArrayList<>();
     }
 
@@ -59,7 +56,7 @@ public class Hall implements Serializable {
     public Student removeStudent(String color) throws StudentNotFoundException {
 
         Optional<Student> studentToRemove =
-                this.students.stream().filter(student -> student.getColor().toString().equals(color)).findFirst();
+                this.students.stream().filter(student -> student.color().toString().equals(color)).findFirst();
 
         if(studentToRemove.isPresent()) {
             this.students.remove(studentToRemove.get());

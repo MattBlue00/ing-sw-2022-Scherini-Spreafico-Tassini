@@ -35,6 +35,7 @@ public class GameController implements Serializable {
     /**
      * Game controller constructor.
      */
+
     public GameController(){
         this.playerPlanningPhaseDone = false;
         this.planningPhaseDone = false;
@@ -766,7 +767,6 @@ public class GameController implements Serializable {
      * tower room or if the round number 10 has ended.
      */
 
-    // TODO: need to discuss how to declare the winner and how to stop the game
     public void winCheck(){
         try {
             if(noTowersLeftCheck() || lessThanFourIslandsCheck() ||

@@ -5,16 +5,13 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ThiefTest {
 
     @Test
-    public void ThiefTest() {
+    public void thiefTest() {
             GameExpertMode g1 = new GameExpertMode(2, new Constants(2));
             Player p1 = new Player(Wizard.PINK_WIZARD, "Ludo", g1.getConstants());
             Player p2 = new Player(Wizard.BLUE_WIZARD, "Matteo", g1.getConstants());

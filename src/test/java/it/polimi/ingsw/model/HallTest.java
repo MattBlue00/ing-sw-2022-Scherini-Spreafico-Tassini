@@ -9,7 +9,7 @@ public class HallTest {
     @Test
     public void testAddStudent() {
 
-        Hall hall = new Hall(7);
+        Hall hall = new Hall();
         Student s1 = new Student(Color.PINK);
 
         hall.addStudent(s1);
@@ -22,7 +22,7 @@ public class HallTest {
     @Test
     public void testRemoveStudent() {
 
-        Hall hall = new Hall(6);
+        Hall hall = new Hall();
         Student s1 = new Student(Color.PINK);
         Student s2 = new Student(Color.GREEN);
         Student s3 = new Student(Color.PINK);
@@ -37,7 +37,9 @@ public class HallTest {
             assertEquals(s1, s4);
             assertNotSame(s3, s4);
         }
-        catch(StudentNotFoundException e){}
+        catch(StudentNotFoundException e){
+            throw new RuntimeException();
+        }
 
     }
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.charactercards;
 import it.polimi.ingsw.exceptions.TryAgainException;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.exceptions.FullTableException;
-import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.exceptions.StudentNotFoundException;
 import it.polimi.ingsw.utils.Constants;
 
@@ -61,23 +60,23 @@ public class Bard extends CharacterCard implements ArrayListStringCard, Serializ
 
             Optional<Student> hallStudent =
                     game.getCurrentPlayer().getSchool().getHall().getStudents().
-                            stream().filter(x -> x.getColor().equals(color1)).findFirst();
+                            stream().filter(x -> x.color().equals(color1)).findFirst();
 
             if(hallStudent.isEmpty())
                 throw new StudentNotFoundException("There's no " + color1 + " student in the hall!");
 
             Optional<Student> tableStudent =
                     game.getCurrentPlayer().getSchool().getTable(color2.toString()).getStudents().
-                            stream().filter(x -> x.getColor().equals(color2)).findFirst();
+                            stream().filter(x -> x.color().equals(color2)).findFirst();
 
             if(tableStudent.isEmpty())
                 throw new StudentNotFoundException("The " + color2 + " table is empty!");
 
             game.getCurrentPlayer().getSchool().getHall().addStudent(tableStudent.get());
             game.getCurrentPlayer().getSchool().getTable(color2.toString()).removeStudent();
-            game.getCurrentPlayer().getSchool().getTable(hallStudent.get().getColor().toString())
+            game.getCurrentPlayer().getSchool().getTable(hallStudent.get().color().toString())
                     .addStudent(hallStudent.get(), game.getCurrentPlayer());
-            game.getCurrentPlayer().getSchool().getHall().removeStudent(hallStudent.get().getColor().toString());
+            game.getCurrentPlayer().getSchool().getHall().removeStudent(hallStudent.get().color().toString());
 
             maxNumOfChanges=maxNumOfChanges-2;
         }

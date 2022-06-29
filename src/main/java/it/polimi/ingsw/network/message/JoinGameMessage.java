@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network.message;
 
 /**
- * The message extends {@link Message}.
- * Message class used by the client to choose a game to join.
+ * This {@link Message} is used to communicate the ID of the game the client wishes to join.
  */
+
 public class JoinGameMessage extends Message{
 
     private final int gameID;
@@ -11,19 +11,21 @@ public class JoinGameMessage extends Message{
     /**
      * Default constructor.
      *
-     * @param nickname client's nickname
-     * @param gameID gameID of the game to join
+     * @param nickname client's nickname.
+     * @param gameID an {@code int} representing the ID of the game to join.
      */
+
     public JoinGameMessage(String nickname, int gameID) {
         super(nickname, MessageType.JOIN_GAME);
         this.gameID = gameID;
     }
 
     /**
-     * This method returns the gameID chosen.
+     * Returns the chosen game ID.
      * 
-     * @return {@code gameID}
+     * @return an {@code int} representing the chosen game ID.
      */
+
     public int getGameID() {
         return gameID;
     }

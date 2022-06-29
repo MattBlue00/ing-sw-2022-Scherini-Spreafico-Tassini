@@ -13,17 +13,18 @@
         <URL value="@../css/menu_style.css" />
     </stylesheets>
     <VBox alignment="CENTER" maxWidth="400.0" minHeight="200.0" spacing="20.0" styleClass="form">
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0">
-         <children>
-              <Label layoutX="116.0" layoutY="68.0" styleClass="title" text="INSERT THE GAME ID">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="108.0" layoutY="126.0" prefHeight="25.0" prefWidth="80.0" text="Game ID:" />
-                <TextField fx:id="gameID" layoutX="200.0" layoutY="125.0" prefHeight="26.0" prefWidth="65.0" />
-              <Button fx:id="joinGame" layoutX="118.0" layoutY="188.0" mnemonicParsing="false" styleClass="btn" text="JOIN THE GAME" />
-         </children>
-      </AnchorPane>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="300.0" prefWidth="400.0">
+            <Label layoutX="116.0" layoutY="68.0" styleClass="title" text="INSERT THE GAME ID">
+                <font>
+                    <Font size="16.0"/>
+                </font>
+          </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="108.0" layoutY="126.0" prefHeight="25.0"
+                   prefWidth="80.0" text="Game ID:"/>
+            <TextField fx:id="gameID" layoutX="200.0" layoutY="125.0" prefHeight="26.0" prefWidth="65.0"/>
+            <Button fx:id="joinGame" layoutX="118.0" layoutY="188.0" mnemonicParsing="false" styleClass="btn"
+                    text="JOIN THE GAME"/>
+        </AnchorPane>
     </VBox>
 </VBox>

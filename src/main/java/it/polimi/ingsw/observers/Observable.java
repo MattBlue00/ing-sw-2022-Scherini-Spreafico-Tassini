@@ -5,16 +5,29 @@ import it.polimi.ingsw.network.message.Message;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Observable<T> {
+/**
+ * This abstract class defines everything that an observable class should allow.
+ */
+
+public abstract class Observable {
+
     private final List<Observer> observers = new ArrayList<>();
+
+    /**
+     * Adds an observer to the class.
+     *
+     * @param obs the {@link Observer} to add.
+     */
 
     public void addObserver(Observer obs){
         observers.add(obs);
     }
 
-    public void removeObserver(Observer obs){
-        observers.remove(obs);
-    }
+    /**
+     * Notifies all the observing classes with a message.
+     *
+     * @param message the message to notify.
+     */
 
     public void notifyObservers(Message message){
         for(Observer obs : observers){

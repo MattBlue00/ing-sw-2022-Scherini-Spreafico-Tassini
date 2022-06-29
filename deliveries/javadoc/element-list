@@ -1,0 +1,16 @@
+module:it.polimi.ingsw
+it.polimi.ingsw
+it.polimi.ingsw.controller
+it.polimi.ingsw.exceptions
+it.polimi.ingsw.model
+it.polimi.ingsw.model.charactercards
+it.polimi.ingsw.network.client
+it.polimi.ingsw.network.message
+it.polimi.ingsw.network.server
+it.polimi.ingsw.observers
+it.polimi.ingsw.utils
+it.polimi.ingsw.view
+it.polimi.ingsw.view.cli
+it.polimi.ingsw.view.gui
+it.polimi.ingsw.view.gui.popupcontrollers
+it.polimi.ingsw.view.gui.scenecontrollers

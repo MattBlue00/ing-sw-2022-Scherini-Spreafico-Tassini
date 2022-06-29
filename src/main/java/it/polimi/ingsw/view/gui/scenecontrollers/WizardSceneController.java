@@ -6,15 +6,24 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * This scene controller handles the scene in which the client chooses a wizard before starting a game.
+ */
+
 public class WizardSceneController extends ViewObservable implements GenericSceneController{
+
     @FXML
-    ImageView blue_wizard;
+    private ImageView blue_wizard;
     @FXML
-    ImageView pink_wizard;
+    private ImageView pink_wizard;
     @FXML
-    ImageView green_wizard;
+    private ImageView green_wizard;
     @FXML
-    ImageView yellow_wizard;
+    private ImageView yellow_wizard;
+
+    /**
+     * Properly initializes the scene.
+     */
 
     public void initialize(){
         blue_wizard.addEventHandler(MouseEvent.MOUSE_CLICKED, this::blueWizardChoice);
@@ -23,15 +32,42 @@ public class WizardSceneController extends ViewObservable implements GenericScen
         yellow_wizard.addEventHandler(MouseEvent.MOUSE_CLICKED, this::yellowWizardChoice);
     }
 
+    /**
+     * When the blue wizard is clicked, tries to enter the game with the chosen wizard.
+     *
+     * @param e the event that triggers the method.
+     */
+
     public void blueWizardChoice(Event e){
         notifyObserver(viewObserver -> viewObserver.onUpdateWizardID("BLUE_WIZARD"));
     }
+
+    /**
+     * When the pink wizard is clicked, tries to enter the game with the chosen wizard.
+     *
+     * @param e the event that triggers the method.
+     */
+
     public void pinkWizardChoice(Event e){
         notifyObserver(viewObserver -> viewObserver.onUpdateWizardID("PINK_WIZARD"));
     }
+
+    /**
+     * When the green wizard is clicked, tries to enter the game with the chosen wizard.
+     *
+     * @param e the event that triggers the method.
+     */
+
     public void greenWizardChoice(Event e){
         notifyObserver(viewObserver -> viewObserver.onUpdateWizardID("GREEN_WIZARD"));
     }
+
+    /**
+     * When the yellow wizard is clicked, tries to enter the game with the chosen wizard.
+     *
+     * @param e the event that triggers the method.
+     */
+
     public void yellowWizardChoice(Event e){
         notifyObserver(viewObserver -> viewObserver.onUpdateWizardID("YELLOW_WIZARD"));
     }

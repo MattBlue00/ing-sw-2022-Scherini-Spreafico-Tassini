@@ -23,10 +23,19 @@ public class StudentTest{
 
     }
 
-    //TODO
-    //waiting for the method to be implemented
     @Test
     public void testMoveToIsland() {
+
+        Student s1 = new Student(Color.YELLOW);
+        Student s2 = new Student(Color.BLUE);
+        Island i1 = new Island(1);
+
+        s1.moveToIsland(i1);
+        s2.moveToIsland(i1);
+
+        assertTrue(i1.getStudents().contains(s1));
+        assertTrue(i1.getStudents().contains(s2));
+
     }
 
     @Test

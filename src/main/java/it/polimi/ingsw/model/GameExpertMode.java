@@ -107,6 +107,7 @@ public class GameExpertMode extends Game implements Serializable {
      * overridden one.
      *
      * @param steps an {@code int} representing the number of steps the player wishes Mother Nature to move of.
+     * @throws InvalidNumberOfStepsException if the provided number of steps violates the game's rules.
      */
 
     @Override
@@ -248,7 +249,7 @@ public class GameExpertMode extends Game implements Serializable {
     }
 
     /**
-     * Allows the view to properly show the game status (Expert mode).
+     * Allows the CLI to properly show the game status (Expert mode).
      */
 
     public void showGameBoard(){
@@ -309,17 +310,16 @@ public class GameExpertMode extends Game implements Serializable {
 
             for(int i = 0; i < getPlayersNumber(); i++) {
                 yellowStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.YELLOW)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.YELLOW)).count();
                 blueStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.BLUE)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.BLUE)).count();
                 greenStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.GREEN)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.GREEN)).count();
                 redStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.RED)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.RED)).count();
                 pinkStudents =
-                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.getColor().equals(Color.PINK)).count();
+                        (int) getBoard().getCloud(i).getStudents().stream().filter(x -> x.color().equals(Color.PINK)).count();
 
-                //TODO: when the cloud number is asked, remember to save it decremented of 1!
                 System.out.print("CLOUD " + (i + 1) + ": ");
                 System.out.println(
                         ANSIConstants.ANSI_YELLOW + yellowStudents + ANSIConstants.ANSI_RESET + " " +

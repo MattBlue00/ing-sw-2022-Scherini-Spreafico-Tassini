@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class FlagmanTest {
@@ -48,7 +46,6 @@ class FlagmanTest {
         catch(TryAgainException e){
             throw new RuntimeException(e);
         }
-
 
         // Test 1
 

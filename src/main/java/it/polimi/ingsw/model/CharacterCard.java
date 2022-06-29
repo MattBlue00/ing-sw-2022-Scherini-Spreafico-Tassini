@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.exceptions.TryAgainException;
-import it.polimi.ingsw.model.charactercards.Bard;
 
 import java.io.Serializable;
 

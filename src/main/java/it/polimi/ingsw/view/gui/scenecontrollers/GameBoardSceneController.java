@@ -28,9 +28,11 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.*;
 
-
-import java.lang.reflect.Array;
 import java.util.*;
+
+/**
+ * This scene controller controls the Game Board scene, updating all of its contents everytime a player does something.
+ */
 
 public class GameBoardSceneController extends ViewObservable implements GenericSceneController{
 
@@ -81,10 +83,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private boolean moveStudentPhase;
     private final Text numOfVetos;
     private final TilePane[] studentsOnTheCards;
-    private final List<AssistantCard> assintantCards;
+    private final List<AssistantCard> assistantCards;
+    private int numIslands;
+
+    /**
+     * GameBoardSceneController constructor.
+     */
 
     public GameBoardSceneController() {
-        assintantCards = new ArrayList<>();
+        assistantCards = new ArrayList<>();
         clouds = new ArrayList<>();
         islands = new ArrayList<>();
         costs = new ArrayList<>();
@@ -115,19 +122,52 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         playersWallet = new Node[3];
         coins = new Text[3];
         playersCoins = new ArrayList<>();
+        numIslands = Constants.MAX_NUM_OF_ISLANDS;
     }
+
+    /**
+     * Returns the {@link Game} whose data are displayed on the scene.
+     *
+     * @return the {@link Game} whose data are displayed on the scene.
+     */
+
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * Sets the {@link Game} whose data are displayed on the scene.
+     *
+     * @param game the {@link Game} whose data need to be displayed on the scene.
+     */
 
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     * Returns the nickname of the user.
+     *
+     * @return a {@link String} representing the nickname of the user.
+     */
+
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Sets the nickname of the user.
+     *
+     * @param nickname a {@link String} representing the nickname of the user.
+     */
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    /**
+     * Properly initializes the scene by adding the event handlers.
+     */
 
     @FXML
     public void initialize(){
@@ -142,14 +182,18 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             characterCards.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onClickCharacterCard);
     }
 
+    /**
+     * Builds the Game Board according to the given game.
+     */
+
     public void startGameBoard() {
 
-        showDeck();
+        renderDeck();
 
         clouds.add(cloud1);
         clouds.add(cloud2);
 
-        assintantCards.addAll(game.getPlayerFromNickname(nickname).getDeck());
+        assistantCards.addAll(game.getPlayerFromNickname(nickname).getDeck());
 
         opposingSchool1.add(opposingHall1);
         opposingSchool1.add(opposingDiningRoom1);
@@ -176,7 +220,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
         initializeIslands();
 
-        updatePlayerSchool();
+        renderPlayerSchool();
 
         if(game instanceof GameExpertMode) {
             initializeCharacterCards();
@@ -189,27 +233,35 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    // Components
+    /**
+     * Renders the Game Board with the up-to-date data.
+     */
 
     public void renderGameBoard(){
-        showIslands();
+        renderIslands();
+        renderClouds();
+        renderPlayerSchool();
+        renderOpposingSchools();
+        renderNicknameLabels();
         if(game instanceof GameExpertMode) {
-            updateCharacterCardCosts();
-            updateVetoTiles();
-            updateStudentsOnCards();
-            updatePlayersWallet();
+            renderCharacterCardCosts();
+            renderVetoTiles();
+            renderStudentsOnCards();
+            renderPlayersWallet();
         }
-        showClouds();
-        updatePlayerSchool();
-        updateOpposingSchools();
-        updateNicknameLabels();
     }
 
-    private void showDeck(){
+    /* RENDERING METHODS */
+
+    /**
+     * Renders the deck with the currently available Assistant Cards.
+     */
+
+    private void renderDeck(){
         deck.getChildren().clear();
         deck.setDisable(true);
         for(AssistantCard assistantCard : game.getPlayerFromNickname(nickname).getDeck()){
-            String imagePath = "/img/assistants/assistant" +(assistantCard.getWeight())+".png";
+            String imagePath = "/img/assistants/assistant"+(assistantCard.getWeight())+".png";
             ImageView image = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
             image.setPreserveRatio(true);
             image.setFitWidth(85);
@@ -217,33 +269,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    private void showClouds(){
+    /**
+     * Renders the player's school (the bigger one on the GUI) with the up-to-date information.
+     */
 
-        for(TilePane cloud : clouds){
-            cloud.getChildren().clear();
-        }
-
-        for(int i=0; i<clouds.size(); i++){
-            clouds.get(i).setDisable(true);
-            for(Student student : game.getBoard().getCloud(i).getStudents()){
-                String color = student.getColor().toString();
-                ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
-                studentImage.setFitWidth(20);
-                studentImage.setPreserveRatio(true);
-                clouds.get(i).getChildren().add(studentImage);
-            }
-        }
-    }
-
-    private void updatePlayerSchool(){
+    private void renderPlayerSchool(){
 
         int i = 0;
         int j = 1;
         playerHall.getChildren().clear();
         playerHall.setDisable(true);
         for(Student student : game.getPlayerFromNickname(nickname).getSchool().getHall().getStudents()){
-            String color = student.getColor().toString();
-            ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+            String color = student.color().toString().toLowerCase();
+            ImageView studentImage = new ImageView(new Image("/img/student_"+color+".png"));
             studentImage.setFitWidth(20);
             studentImage.setPreserveRatio(true);
             playerHall.add(studentImage, j, i);
@@ -263,7 +301,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             try {
                 Table table = game.getPlayerFromNickname(nickname).getSchool().getTable(color.toString());
                 for(Student ignored : table.getStudents()){
-                    ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+                    ImageView studentImage = new ImageView(new Image("/img/student_"+color.toString().toLowerCase()+".png"));
                     studentImage.setFitWidth(20);
                     studentImage.setPreserveRatio(true);
                     playerDiningRoom.add(studentImage, j, i);
@@ -282,7 +320,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         for(Color color : Color.values()){
             try {
                 if(game.getPlayerFromNickname(nickname).getSchool().getTable(color.toString()).getHasProfessor()){
-                    ImageView studentImage = new ImageView(new Image("img/prof_"+color+".png"));
+                    ImageView studentImage = new ImageView(new Image("/img/prof_"+color.toString().toLowerCase()+".png"));
                     studentImage.setFitWidth(20);
                     studentImage.setPreserveRatio(true);
                     studentImage.setRotate(90.0);
@@ -297,10 +335,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         playerTowerRoom.getChildren().clear();
         playerTowerRoom.setDisable(true);
         i = 0;
-        j = 0;
         String towerColor = game.getTowersColor().get(game.getPlayerFromNickname(nickname)).toString().toLowerCase();
         for(int towers = 0; towers < game.getPlayerFromNickname(nickname).getSchool().getTowerRoom().getTowersLeft(); towers++){
-            ImageView studentImage = new ImageView(new Image("img/"+towerColor+"_tower.png"));
+            ImageView studentImage = new ImageView(new Image("/img/"+ towerColor.toLowerCase()+"_tower.png"));
             studentImage.setFitWidth(30);
             studentImage.setPreserveRatio(true);
             playerTowerRoom.add(studentImage, j, i);
@@ -314,7 +351,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     }
 
-    private void updateOpposingSchools(){
+    /**
+     * Renders the opposing players' schools (the smaller ones) with the up-to-date information.
+     */
+
+    private void renderOpposingSchools(){
 
         List<String> players = new ArrayList<>();
         game.getPlayers().forEach(x -> players.add(x.getNickname()));
@@ -328,8 +369,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             hall.getChildren().clear();
             hall.setDisable(true);
             for(Student student : game.getPlayerFromNickname(players.get(playerIndex)).getSchool().getHall().getStudents()){
-                String color = student.getColor().toString();
-                ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+                String color = student.color().toString().toLowerCase();
+                ImageView studentImage = new ImageView(new Image("/img/student_"+color+".png"));
                 studentImage.setFitWidth(9);
                 studentImage.setPreserveRatio(true);
                 hall.add(studentImage, j, i);
@@ -350,7 +391,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 try {
                     Table table = game.getPlayerFromNickname(players.get(playerIndex)).getSchool().getTable(color.toString());
                     for(Student ignored : table.getStudents()){
-                        ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
+                        ImageView studentImage = new ImageView(new Image("/img/student_"+color.toString().toLowerCase()+".png"));
                         studentImage.setFitWidth(9);
                         studentImage.setPreserveRatio(true);
                         diningRoom.add(studentImage, j, i);
@@ -370,7 +411,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             for(Color color : Color.values()){
                 try {
                     if(game.getPlayerFromNickname(players.get(playerIndex)).getSchool().getTable(color.toString()).getHasProfessor()){
-                        ImageView studentImage = new ImageView(new Image("img/prof_"+color+".png"));
+                        ImageView studentImage = new ImageView(new Image("/img/prof_"+color.toString().toLowerCase()+".png"));
                         studentImage.setFitWidth(9);
                         studentImage.setPreserveRatio(true);
                         studentImage.setRotate(90.0);
@@ -386,12 +427,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             towerRoom.getChildren().clear();
             towerRoom.setDisable(true);
             i = 0;
-            j = 0;
             String towerColor = game.getTowersColor().get(game.getPlayerFromNickname(players.get(playerIndex))).
                     toString().toLowerCase();
             for(int towers = 0; towers < game.getPlayerFromNickname(players.get(playerIndex)).
                     getSchool().getTowerRoom().getTowersLeft(); towers++){
-                ImageView studentImage = new ImageView(new Image("img/"+towerColor+"_tower.png"));
+                ImageView studentImage = new ImageView(new Image("/img/"+towerColor.toLowerCase()+"_tower.png"));
                 studentImage.setFitWidth(12);
                 studentImage.setPreserveRatio(true);
                 towerRoom.add(studentImage, j, i);
@@ -408,7 +448,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     }
 
-    private void updateNicknameLabels(){
+    /**
+     * Renders the nickname labels over every player's school.
+     */
+
+    private void renderNicknameLabels(){
 
         List<String> players = new ArrayList<>();
         game.getPlayers().forEach(x -> players.add(x.getNickname()));
@@ -424,50 +468,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     }
 
-    private void updatePlayersWallet(){
-        for (int i = 0; i < game.getPlayersNumber(); i++){
-            Player currentPlayer = game.getPlayerFromNickname(playersCoins.get(i).getNickname());
-            coins[i].setText(String.valueOf(currentPlayer.getCoinsWallet()));
-            coins[i].setDisable(true);
-        }
-    }
+    /**
+     * Renders the islands on the Game Board with the up-to-date information.
+     */
 
-    private void updateCharacterCardCosts(){
-        characterCards.setDisable(true);
-        CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
-        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            costs.get(i).setText(String.valueOf(cards[i].getCost()));
-        }
-    }
-
-    private void updateVetoTiles(){
-        Optional<CharacterCard> vetoCard =
-            Arrays.stream(((GameExpertMode) game).getCharacters()).filter(x -> x instanceof Healer).findFirst();
-        if(vetoCard.isPresent()){
-            numOfVetos.setText(String.valueOf(game.getBoard().getNumOfVetos()));
-        }
-    }
-
-    private void updateStudentsOnCards(){
-
-        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
-            if(studentsOnTheCards[i]!=null) {
-                studentsOnTheCards[i].getChildren().clear();
-                CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
-                for(Student student : ((StudentsCard) cards[i]).getStudentsOnTheCard()){
-                    String color = student.getColor().toString();
-                    ImageView studentImage = new ImageView(new Image("img/student_"+color+".png"));
-                    studentImage.setFitWidth(11.5);
-                    studentImage.setStyle("-fx-effect: dropshadow(one-pass-box, rgb(255,255,255), 10, 0, 0, 0);");
-                    studentImage.setPreserveRatio(true);
-                    studentsOnTheCards[i].getChildren().add(studentImage);
-                }
-            }
-        }
-
-    }
-
-    public void showIslands(){
+    private void renderIslands(){
 
         int i = 1;
         int j = 0;
@@ -480,19 +485,23 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     setStudentsOnIsland(i, j, currentIsland, color);
                     j++;
 
+                    towerOnIsland[i-1].setImage(null);
+                    towersNumberOnIsland[i-1].setText("");
                     if (currentIsland.getNumOfTowers() != 0){
                         Player player = currentIsland.getOwner();
                         String towerColor = game.getTowersColor().get(player).toString().toLowerCase();
-                        Image towerImage = new Image("img/"+towerColor+"_tower.png");
+                        Image towerImage = new Image("/img/"+towerColor+"_tower.png");
                         towerOnIsland[i-1].setImage(towerImage);
-                        towerOnIsland[i-1].setFitWidth(38);
-                        towerOnIsland[i-1].setPreserveRatio(true);
-                        towerOnIsland[i-1].setX(56);
-                        towerOnIsland[i-1].setY(40);
-                        if (towerColor.equalsIgnoreCase("white")){
-                            towerOnIsland[i-1].setStyle("-fx-effect: dropshadow(one-pass-box, rgba(80,80,80,80), 10, 0, 0, 0);");
+                        if(towerColor.equals(TowerColor.WHITE.toString().toLowerCase())) {
+                            towerOnIsland[i-1].setFitWidth(35);
                         }
-                        towersNumberOnIsland[i-1].setText("     "+ currentIsland.getNumOfTowers());
+                        else
+                            towerOnIsland[i-1].setFitWidth(40);
+                        towerOnIsland[i-1].setPreserveRatio(true);
+                        towerOnIsland[i-1].setX(58);
+                        towerOnIsland[i-1].setY(38);
+                        towerOnIsland[i-1].setStyle("-fx-effect: dropshadow(one-pass-box, rgba(80,80,80,80), 10, 0, 0, 0);");
+                        towersNumberOnIsland[i-1].setText("       "+ currentIsland.getNumOfTowers());
                         towersNumberOnIsland[i-1].setFill(Paint.valueOf("WHITE"));
                         towersNumberOnIsland[i-1].setTextAlignment(TextAlignment.RIGHT);
                         towersNumberOnIsland[i-1].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
@@ -506,11 +515,11 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     }
 
                     if (currentIsland.hasVetoTile()){
-                         String imagePath = "/img/veto.png";
-                         ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-                         vetoTile.setFitWidth(30);
-                         vetoTile.setPreserveRatio(true);
-                         island.add(vetoTile,0,1);
+                        String imagePath = "/img/veto.png";
+                        ImageView vetoTile = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+                        vetoTile.setFitWidth(30);
+                        vetoTile.setPreserveRatio(true);
+                        island.add(vetoTile,0,1);
                     }
 
                     if (!currentIsland.hasVetoTile()){
@@ -518,8 +527,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                     }
                 }
             } catch (IslandNotFoundException e) {
-                //throw new RuntimeException(e);
-                mergeIslands();
+                if(numIslands > game.getBoard().getIslands().getSize())
+                    mergeIslands();
             }
             i++;
             j = 0;
@@ -527,14 +536,108 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         motherNatureOldPosition = game.getBoard().getMotherNaturePos();
     }
 
+    /**
+     * Renders the clouds with the up-to-date students.
+     */
+
+    private void renderClouds(){
+
+        for(TilePane cloud : clouds){
+            cloud.getChildren().clear();
+        }
+
+        for(int i=0; i<clouds.size(); i++){
+            clouds.get(i).setDisable(true);
+            for(Student student : game.getBoard().getCloud(i).getStudents()){
+                String color = student.color().toString().toLowerCase();
+                ImageView studentImage = new ImageView(new Image("/img/student_"+color+".png"));
+                studentImage.setFitWidth(20);
+                studentImage.setPreserveRatio(true);
+                clouds.get(i).getChildren().add(studentImage);
+            }
+        }
+    }
+
+    /**
+     * Renders the players' wallets with the up-to-date number of coins.
+     */
+
+    private void renderPlayersWallet(){
+        for (int i = 0; i < game.getPlayersNumber(); i++){
+            Player currentPlayer = game.getPlayerFromNickname(playersCoins.get(i).getNickname());
+            coins[i].setText(String.valueOf(currentPlayer.getCoinsWallet()));
+            coins[i].setDisable(true);
+        }
+    }
+
+    /**
+     * Renders the Character Cards' costs with the up-to-date costs.
+     */
+
+    private void renderCharacterCardCosts(){
+        characterCards.setDisable(true);
+        CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
+        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
+            costs.get(i).setText(String.valueOf(cards[i].getCost()));
+        }
+    }
+
+    /**
+     * Renders the students on the Character Cards (if present) with the up-to-date information.
+     */
+
+    private void renderStudentsOnCards(){
+
+        for(int i = 0; i < Constants.CHARACTERS_NUM; i++){
+            if(studentsOnTheCards[i]!=null) {
+                studentsOnTheCards[i].getChildren().clear();
+                CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
+                for(Student student : ((StudentsCard) cards[i]).getStudentsOnTheCard()){
+                    String color = student.color().toString().toLowerCase();
+                    ImageView studentImage = new ImageView(new Image("/img/student_"+color+".png"));
+                    studentImage.setFitWidth(11.5);
+                    studentImage.setStyle("-fx-effect: dropshadow(one-pass-box, rgb(255,255,255), 10, 0, 0, 0);");
+                    studentImage.setPreserveRatio(true);
+                    studentsOnTheCards[i].getChildren().add(studentImage);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Renders the up-to-date number of veto tiles on the {@link Healer}.
+     */
+
+    private void renderVetoTiles(){
+        Optional<CharacterCard> vetoCard =
+                Arrays.stream(((GameExpertMode) game).getCharacters()).filter(x -> x instanceof Healer).findFirst();
+        if(vetoCard.isPresent()){
+            numOfVetos.setText(String.valueOf(game.getBoard().getNumOfVetos()));
+        }
+    }
+
+    /* HISTORY METHODS */
+
+    /**
+     * Shows what happened on the Game Board thanks to a history text box.
+     *
+     * @param updateMessage the message to display.
+     */
 
     public void showUpdate(String updateMessage){
         Text message = new Text(updateMessage+"\n");
         history.getChildren().add(message);
     }
 
+    /* EVENT HANDLER METHODS */
 
-    // Events
+    /**
+     * Tries to play an Assistant Card when clicked by the player.
+     *
+     * @param e the event that triggered the method.
+     */
+
     public void onClickAssistantCard(Event e){
         Node node = (Node) e.getTarget();
         try{
@@ -547,6 +650,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cardImage.getStyleClass().set(0, "");
         }catch(NullPointerException e1){ System.out.println("entered null value");}
     }
+
+    /**
+     * Allows the movement of a student when clicked on the player's hall.
+     *
+     * @param e the event that triggered the method.
+     */
 
     public void onClickPlayerHall(Event e){
         Node node = (Node) e.getTarget();
@@ -586,11 +695,25 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /**
+     * Moves a student previously selected to the proper table when the dining hall is clicked (it doesn't matter if
+     * a player clicks on the wrong table: since it's the whole dining room that is clickable and not the single
+     * tables, the controller will do the work for the player and place the student correctly).
+     *
+     * @param e the event that triggered the method.
+     */
+
     public void onClickPlayerDiningRoom(Event e) {
         moveStudentToDiningRoom(studentToMoveColor);
         playerDiningRoom.setDisable(true);
         playerDiningRoom.getStyleClass().remove("clickable");
     }
+
+    /**
+     * Picks the students from a cloud when clicked (if possible).
+     *
+     * @param e the event that triggered the method.
+     */
 
     public void onClickCloud(Event e){
         Node node = (Node) e.getTarget();
@@ -603,16 +726,19 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             cloud.setDisable(true);
     }
 
-    //TODO: implement method
+    /**
+     * According to what happened before, moves the selected student onto the clicked island or selects the clicked
+     * island to do the effect of a {@link IntCard} / {@link StringIntCard} there.
+     *
+     * @param e the event that triggered the method.
+     */
+
     public void onClickIsland(Event e){
         Node node = (Node) e.getTarget();
         if(node.getParent()!=null){
             node = node.getParent();
         }
         int islandChosenId = -1;
-
-        // used for debugging
-        //System.out.println("Island chosen id: "+islandChosenId+ " prima prova");
 
         if (node.equals(island1)){
             islandChosenId = 1;
@@ -651,8 +777,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             islandChosenId = 12;
         }
 
-        //used for debugging
-        //System.out.println("Island chosen id: "+islandChosenId+ " seconda prova");
+        numIslands = game.getBoard().getIslands().getSize();
 
         if (lastCharacterCardPlayed != null) {
             if(lastCharacterCardPlayed instanceof StringIntCard)
@@ -668,27 +793,39 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         islands.forEach(island -> island.getStyleClass().remove("clickable"));
     }
 
+    /**
+     * Tries to play a Character Card when clicked. Based on the card chosen, it may cause a popup to appear.
+     *
+     * @param e the event that triggered the method.
+     */
+
     public void onClickCharacterCard(Event e){
         Node node = (Node) e.getTarget();
         int columnIndex = GridPane.getColumnIndex(node);
-        int characterCardID = (((GameExpertMode) game).getCharacters())[columnIndex].getId();
         lastCharacterCardPlayed = ((GameExpertMode) game).getCharacters()[columnIndex];
         if(lastCharacterCardPlayed instanceof StudentsCard &&
                 !(lastCharacterCardPlayed instanceof Jester)){
             StudentsPopupController spc = new StudentsPopupController();
             spc.setStudents(((StudentsCard) lastCharacterCardPlayed).getStudentsOnTheCard());
             studentToMoveColor = spc.display();
-            if(lastCharacterCardPlayed instanceof StringIntCard)
-                activateIslands();
+            if(studentToMoveColor != null) {
+                if (lastCharacterCardPlayed instanceof StringIntCard)
+                    activateIslands();
+                else
+                    playCharacterCardString(studentToMoveColor);
+            }
             else
-                playCharacterCardString(lastCharacterCardPlayed.getId(), studentToMoveColor);
+                lastCharacterCardPlayed = null;
         }
         else if(lastCharacterCardPlayed instanceof IntCard){
             activateIslands();
         }
         else if(lastCharacterCardPlayed instanceof StringCard){
             String colorChosen = new ColorPopupController().display();
-            playCharacterCardString(characterCardID, colorChosen);
+            if(colorChosen != null)
+                playCharacterCardString(colorChosen);
+            else
+                lastCharacterCardPlayed = null;
         }
         else if(lastCharacterCardPlayed instanceof ArrayListStringCard){
             ArrayList<String> parameter;
@@ -697,14 +834,21 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             else
                 parameter = new JesterPopupController(((StudentsCard) lastCharacterCardPlayed).getStudentsOnTheCard()).display();
             if(parameter != null)
-                playCharacterCardArrayListString(characterCardID, parameter);
+                playCharacterCardArrayListString(parameter);
+            else
+                lastCharacterCardPlayed = null;
         }
-        else playCharacterCard(characterCardID);
+        else playCharacterCard();
     }
 
-    // Activations from GUI class (askMessage result)
+    /* ACTIVATION METHODS */
+
+    /**
+     * Allows the player to click one of the cards of their Assistant Cards deck.
+     */
+
     public void activateAssistantCardChoice(){
-        showDeck();
+        renderDeck();
         showUpdate("Select the Assistant Card you want to play.");
         for(Node img : deck.getChildren()){
             img.getStyleClass().set(0,"clickable");
@@ -712,23 +856,29 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         deck.setDisable(false);
     }
 
+    /**
+     * Allows the player to click one of the islands currently present on the Game Board.
+     */
+
     public void activateIslands(){
-        //prima c'era GridPane
         for (Node island : islands){
             island.getStyleClass().add("clickable");
-          /*  island.getChildren().forEach( image -> {
-                if(image instanceof ImageView && ((ImageView) image).getImage().getUrl().toLowerCase().contains("island")){
-                    image.getStyleClass().add("clickable");
-                }
-            }); */
             island.setDisable(false);
         }
     }
+
+    /**
+     * Allows the player to click the dining room of their school.
+     */
 
     public void activatePlayerDiningRoom(){
         playerDiningRoom.getStyleClass().add("clickable");
         playerDiningRoom.setDisable(false);
     }
+
+    /**
+     * Allows the player to click a student into the hall of their school.
+     */
 
     public void activateMoveStudent() {
         playerHall.setDisable(false);
@@ -740,12 +890,20 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         });
     }
 
+    /**
+     * Allows the player to click one of the present clouds.
+     */
+
     public void activateCloudChoice(){
         for(Node cloud : clouds){
             cloud.getStyleClass().add("clickable");
             cloud.setDisable(false);
         }
     }
+
+    /**
+     * Allows the player to click one of the available Character Cards.
+     */
 
     public void activateCharacterCards(){
         for(Node img : characterCards.getChildren()){
@@ -755,20 +913,38 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         characterCards.setDisable(false);
     }
 
+    /* OBSERVER-NOTIFYING METHODS */
+
+    /**
+     * Notifies the controller of the chosen Assistant Card.
+     *
+     * @param cardId an {@code int} representing the weight of the card chosen (each card has a unique weight).
+     */
 
     private void playAssistantCard(int cardId) {
-        String cardName = assintantCards.get(cardId).getName();
+        String cardName = assistantCards.get(cardId).getName();
         notifyObserver(viewObserver -> viewObserver.onUpdateAssistantCard(cardName));
         if(game.getPlayerFromNickname(nickname).getLatestAssistantCardPlayed() != null)
             showUpdate("You have played the " + cardName + " Assistant Card!");
     }
 
+    /**
+     * Notifies the controller of the chosen cloud.
+     *
+     * @param cloudId an {@code int} representing the ID of the chosen cloud.
+     */
 
     private void chooseCloud(int cloudId){
         notifyObserver(viewObserver -> viewObserver.onUpdateCloudChoice(cloudId));
         if(game.getPlayerFromNickname(nickname).getSchool().getHall().getStudents().size() == game.getConstants().MAX_HALL_STUDENTS)
             showUpdate(nickname + " has chosen a cloud!");
     }
+
+    /**
+     * Notifies the controller of the color of the hall student the player wishes to move to the dining room.
+     *
+     * @param color a {@link String} representing the color of the student to move.
+     */
 
     private void moveStudentToDiningRoom(String color){
         notifyObserver(viewObserver -> viewObserver.onUpdateTableStudentMove(color));
@@ -778,6 +954,13 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         studentToMoveColor = null;
     }
 
+    /**
+     * Notifies the controller of the color of the hall student the player wishes to move to the chosen island.
+     *
+     * @param color a {@link String} representing the color of the student to move.
+     * @param islandId an {@code int} representing the ID of the chosen island.
+     */
+
     private void moveStudentToIsland(String color, int islandId){
         notifyObserver(viewObserver -> viewObserver.onUpdateIslandStudentMove(color, islandId));
         showUpdate(game.getCurrentPlayer().getNickname() + " has moved a " + color + " student to" +
@@ -785,6 +968,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         moveStudentPhase = false;
         studentToMoveColor = null;
     }
+
+    /**
+     * Notifies the controller of the number of steps the player wishes Mother Nature to move of. Since the
+     * player chooses the destination island rather than providing directly the amount of steps, the latter is
+     * calculated in this method and provided to the controller.
+     *
+     * @param islandChosenId an {@code int} representing the ID of the chosen island.
+     */
 
     private void moveMotherNature(int islandChosenId){
         int steps = islandChosenId - game.getBoard().getMotherNaturePos();
@@ -800,9 +991,14 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 islandChosenId + "!");
     }
 
-    private void playCharacterCard(int characterCard){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCard).getClass().getSimpleName();
-        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(characterCard));
+    /**
+     * Notifies the controller of the Character Card the player wishes to use. If this method is used, it means that
+     * the card has no parameter.
+     */
+
+    private void playCharacterCard(){
+        String cardName = lastCharacterCardPlayed.getClass().getSimpleName();
+        notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCard(lastCharacterCardPlayed.getId()));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
             showUpdate(game.getCurrentPlayer().getNickname() + " has played the " + cardName + "!");
@@ -810,8 +1006,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         lastCharacterCardPlayed = null;
     }
 
+    /**
+     * Notifies the controller of the Character Card the player wishes to use. If this method is used, it means that
+     * the card is a {@link IntCard}.
+     *
+     * @param islandChosenId an {@code int} representing the ID of the chosen island.
+     */
+
     private void playCharacterCardInt(int islandChosenId){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(lastCharacterCardPlayed.getId()).getClass().getSimpleName();
+        String cardName = lastCharacterCardPlayed.getClass().getSimpleName();
         notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardInt(lastCharacterCardPlayed.getId(), islandChosenId));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
@@ -820,8 +1023,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         lastCharacterCardPlayed = null;
     }
 
-    private void playCharacterCardString(int characterCardId, String chosenColor){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardId).getClass().getSimpleName();
+    /**
+     * Notifies the controller of the Character Card the player wishes to use. If this method is used, it means that
+     * the card is a {@link StringCard}.
+     *
+     * @param chosenColor a {@link String} representing the chosen color.
+     */
+
+    private void playCharacterCardString(String chosenColor){
+        String cardName = lastCharacterCardPlayed.getClass().getSimpleName();
         notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardString(lastCharacterCardPlayed.getId(), chosenColor));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
@@ -830,8 +1040,16 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         lastCharacterCardPlayed = null;
     }
 
+    /**
+     * Notifies the controller of the Character Card the player wishes to use. If this method is used, it means that
+     * the card is a {@link StringIntCard}.
+     *
+     * @param chosenColor a {@link String} representing the chosen color.
+     * @param islandChosenId an {@code int} representing the ID of the chosen island.
+     */
+
     private void playCharacterCardStringInt(String chosenColor, int islandChosenId){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(lastCharacterCardPlayed.getId()).getClass().getSimpleName();
+        String cardName = lastCharacterCardPlayed.getClass().getSimpleName();
         notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardStringInt(lastCharacterCardPlayed.getId(), chosenColor, islandChosenId));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
@@ -841,8 +1059,15 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         studentToMoveColor = null;
     }
 
-    private void playCharacterCardArrayListString(int characterCardId, ArrayList<String> parameter){
-        String cardName = ((GameExpertMode) game).getCharacterCardByID(characterCardId).getClass().getSimpleName();
+    /**
+     * Notifies the controller of the Character Card the player wishes to use. If this method is used, it means that
+     * the card is a {@link ArrayListStringCard}.
+     *
+     * @param parameter a list representing the chosen colors.
+     */
+
+    private void playCharacterCardArrayListString(ArrayList<String> parameter){
+        String cardName = lastCharacterCardPlayed.getClass().getSimpleName();
         notifyObserver(viewObserver -> viewObserver.onUpdateCharacterCardArrayListString(lastCharacterCardPlayed.getId(), parameter));
         if(game.getCurrentPlayer().getCharacterCardAlreadyPlayed()) {
             characterCards.setDisable(true);
@@ -850,6 +1075,12 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
         lastCharacterCardPlayed = null;
     }
+
+    /* INITIALIZING METHODS */
+
+    /**
+     * Properly initializes the islands to show.
+     */
 
     private void initializeIslands(){
 
@@ -893,38 +1124,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
-    private void setMotherNature(GridPane island) {
-
-        String imagePath = "/img/mother_nature.png";
-        ImageView motherNature = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
-        motherNature.setFitWidth(42);
-        motherNature.setPreserveRatio(true);
-        motherNature.setStyle("-fx-effect: dropshadow(one-pass-box, rgba(70,70,70,70), 10, 0, 0, 0);");
-        motherNature.setY(-40);
-        motherNature.setY(+15);
-        motherNature.getStyleClass().add("clickable");
-        island.add(motherNature,0,0);
-    }
-
-    private void setStudentsOnIsland(int i, int j, Island currentIsland, Color color) {
-        int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
-        studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
-        studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
-        studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
-    }
-
     /**
-     * Getter method used to return the {@code game}
-     *
-     * @return {@code game}
+     * Properly initializes the Character Cards to display.
      */
-    public Game getGame() {
-        return game;
-    }
 
-    /**
-     * Method used to initialize the character cards: it will show each character card with its cost
-     */
     private void initializeCharacterCards(){
         CharacterCard[] cards = ((GameExpertMode) game).getCharacters();
         for (int i = 0; i < Constants.CHARACTERS_NUM; i++) {
@@ -992,8 +1195,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     }
 
     /**
-     * Used to initialize the coin box: the gui will show each player with their coins
+     * Properly initializes the box where the amount of coins of each player will be shown.
      */
+
     private void initializeCoinsWallet() {
 
         playersCoins.add(0, game.getPlayerFromNickname(nickname));
@@ -1020,7 +1224,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             DropShadow coinEffect = new DropShadow();
             coinEffect.setBlurType(BlurType.ONE_PASS_BOX);
             coin.setEffect(coinEffect);
-            //coin.setY(2.0);
             coinPane.getChildren().add(coin);
             coin.setDisable(true);
 
@@ -1040,28 +1243,38 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         }
     }
 
+    /* ISLAND HELPERS */
+
     /**
-     * Used to set as invisible and not clickable the islands that are merged
+     * Sets as not visible and not clickable the islands that have been merged.
      */
+
     private void mergeIslands(){
-        switch (game.getBoard().getIslands().getSize()) {
-            case 11 -> disableIsland(island12);
-            case 10 -> disableIsland(island11);
-            case 9 -> disableIsland(island10);
-            case 8 -> disableIsland(island9);
-            case 7 -> disableIsland(island8);
-            case 6 -> disableIsland(island7);
-            case 5 -> disableIsland(island6);
-            case 4 -> disableIsland(island5);
-            case 3 -> disableIsland(island4);
-        }
+        do {
+            switch (numIslands) {
+                case 12 -> disableIsland(island12);
+                case 11 -> disableIsland(island11);
+                case 10 -> disableIsland(island10);
+                case 9 -> disableIsland(island9);
+                case 8 -> disableIsland(island8);
+                case 7 -> disableIsland(island7);
+                case 6 -> disableIsland(island6);
+                case 5 -> disableIsland(island5);
+                case 4 -> disableIsland(island4);
+                case 3 -> disableIsland(island3);
+                case 2 -> disableIsland(island2);
+                default -> throw new IllegalStateException("Unexpected value: " + numIslands);
+            }
+            numIslands--;
+        }while(numIslands > game.getBoard().getIslands().getSize());
     }
 
     /**
-     * Used to set a specific island as invisible to the user and not clickable
+     * Sets a specific island as not visible and not clickable by the user.
      *
-     * @param island to set invisible
+     * @param island the island to set invisible.
      */
+
     private void disableIsland(GridPane island) {
         island.setVisible(false);
         island.setDisable(true);
@@ -1071,6 +1284,41 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             node.setVisible(false);
             node.getStyleClass().remove("clickable");
         });
+    }
+
+    /**
+     * Helper: correctly displays Mother Nature onto the right island.
+     *
+     * @param island the island to put Mother Nature onto.
+     */
+
+    private void setMotherNature(GridPane island) {
+
+        String imagePath = "/img/mother_nature.png";
+        ImageView motherNature = new ImageView(new Image(String.valueOf(getClass().getResource(imagePath))));
+        motherNature.setFitWidth(42);
+        motherNature.setPreserveRatio(true);
+        motherNature.setStyle("-fx-effect: dropshadow(one-pass-box, rgba(70,70,70,70), 10, 0, 0, 0);");
+        motherNature.setY(-40);
+        motherNature.setY(+15);
+        motherNature.getStyleClass().add("clickable");
+        island.add(motherNature,0,0);
+    }
+
+    /**
+     * Helper: correctly displays the number of students onto the given island.
+     *
+     * @param i an {@code int} representing an iterator.
+     * @param j an {code int} representing an iterator.
+     * @param currentIsland the given island.
+     * @param color the considered color.
+     */
+
+    private void setStudentsOnIsland(int i, int j, Island currentIsland, Color color) {
+        int num_students = currentIsland.getNumOfStudentsOfColor(color.toString());
+        studentsOnIsland[i-1][j].setText(String.valueOf(num_students));
+        studentsOnIsland[i-1][j].setFill(Paint.valueOf("WHITE"));
+        studentsOnIsland[i-1][j].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
     }
 
 }

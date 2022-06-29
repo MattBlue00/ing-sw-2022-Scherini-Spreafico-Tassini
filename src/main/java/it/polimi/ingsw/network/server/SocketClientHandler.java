@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.client.SocketClient;
 import it.polimi.ingsw.network.message.Message;
 import it.polimi.ingsw.network.message.MessageType;
 import it.polimi.ingsw.view.VirtualView;
+import it.polimi.ingsw.network.client.Client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,22 +14,26 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * ClientHandler implementation that handles the communication
- * between a Client and the Server.
+ * ClientHandler implementation that handles the communication between a Client and the Server.
  */
+
 public class SocketClientHandler implements ClientHandler, Runnable{
 
     private final Socket client;
     private final SocketServer socketServer;
-
     private boolean connected;
-
     private final Object inputLock;
     private final Object outputLock;
-
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private VirtualView virtualView;
+
+    /**
+     * SocketClientHandler constructor.
+     *
+     * @param socketServer the socket of the {@link Server}.
+     * @param client the socket of the {@link Client}.
+     */
 
     public SocketClientHandler(SocketServer socketServer, Socket client) {
         this.socketServer = socketServer;
@@ -50,6 +55,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
      *
      * @param virtualView the {@link VirtualView} that has to be set.
      */
+
     public void setVirtualView(VirtualView virtualView) {
         this.virtualView = virtualView;
     }
@@ -59,6 +65,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
      *
      * @return the actual {@link VirtualView}.
      */
+
     public VirtualView getVirtualView() {
         return virtualView;
     }
@@ -68,13 +75,14 @@ public class SocketClientHandler implements ClientHandler, Runnable{
      *
      * @return the actual {@link SocketClient}.
      */
+
     @Override
     public Socket getSocketClient() { return client; }
 
     /**
-     * Starts the {@link SocketClientHandler}
-     * to handle the connection with the {@link SocketClient}
+     * Starts the {@link SocketClientHandler} to handle the connection with the {@link SocketClient}.
      */
+
     @Override
     public void run() {
         try {
@@ -93,6 +101,7 @@ public class SocketClientHandler implements ClientHandler, Runnable{
      *
      * @throws IOException if there are IOErrors.
      */
+
     public void handleClientConnection() throws IOException {
         Server.LOGGER.info("Client connected from " + client.getInetAddress());
         try{
@@ -127,16 +136,20 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
-     * Returns true if the {@link SocketClient} is connected.
+     * Returns a flag that indicates if the {@link SocketClient} is still connected.
+     *
+     * @return {@code true} if the client is still connected, {@code false} otherwise.
      */
+
     @Override
     public boolean isConnected() {
         return this.connected;
     }
 
     /**
-     * {@link SocketClientHandler} disconnect method.
+     * {@link SocketClientHandler} disconnection method.
      */
+
     @Override
     public void disconnect() {
         if (connected) {
@@ -154,10 +167,11 @@ public class SocketClientHandler implements ClientHandler, Runnable{
     }
 
     /**
-     * Sends a message to the associated {@link SocketClient}
+     * Sends a message to the associated {@link SocketClient}.
      *
      * @param message the message to be sent.
      */
+
     @Override
     public void sendMessage(Message message) {
         try {
@@ -171,6 +185,12 @@ public class SocketClientHandler implements ClientHandler, Runnable{
             disconnect();
         }
     }
+
+    /**
+     * Sends a message to the associated {@link SocketClient}, and quits the ended match.
+     *
+     * @param message the message to be sent.
+     */
 
     @Override
     public void sendMessageAndQuit(Message message) {

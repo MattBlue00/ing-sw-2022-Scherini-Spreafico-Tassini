@@ -35,11 +35,11 @@ public class CloudTest{
             e.printStackTrace();
         }
 
+        assert students != null;
         assertEquals(s1, students.get(0));
     }
 
     @Test
-    // throws EmptyCloudException
     public void testRemoveStudentFromEmptyCloud() {
 
         Student s1 = new Student(Color.PINK);
@@ -58,11 +58,12 @@ public class CloudTest{
             e.printStackTrace();
         }
 
+        assert students != null;
         assertEquals(s1, students.get(0));
         assertEquals(s2, students.get(1));
         assertEquals(s3, students.get(2));
 
-        assertThrows(EmptyCloudException.class,()->{cloud.removeStudents();});
+        assertThrows(EmptyCloudException.class, cloud::removeStudents);
     }
 
 

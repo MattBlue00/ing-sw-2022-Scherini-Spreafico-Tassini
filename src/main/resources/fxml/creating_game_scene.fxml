@@ -14,22 +14,25 @@
       <URL value="@../css/menu_style.css" />
    </stylesheets>
    <VBox maxWidth="400.0" minHeight="200.0" styleClass="form">
-      <children>
-         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0">
-            <children>
-                  <Label alignment="CENTER" layoutX="50.0" layoutY="36.0" prefHeight="23.0" prefWidth="300.0" styleClass="title" text="CREATE A NEW GAME">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="86.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="120.0" text="Game ID:" />
-                     <TextField fx:id="gameID" layoutX="217.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" />
-                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="86.0" layoutY="127.0" prefHeight="25.0" prefWidth="120.0" text="Number of players:" />
-                     <TextField fx:id="playerNumber" layoutX="217.0" layoutY="127.0" prefHeight="26.0" prefWidth="60.0" />
-                  <CheckBox fx:id="gameMode" layoutX="154.0" layoutY="179.0" mnemonicParsing="false" text="Expert Mode" />
-                  <Button fx:id="createGame" layoutX="146.0" layoutY="224.0" mnemonicParsing="false" styleClass="btn" text="CREATE" />
-            </children>
-         </AnchorPane>
-      </children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                  prefHeight="300.0" prefWidth="400.0">
+         <Label alignment="CENTER" layoutX="50.0" layoutY="36.0" prefHeight="23.0" prefWidth="300.0"
+                styleClass="title" text="CREATE A NEW GAME">
+            <font>
+               <Font size="16.0"/>
+            </font>
+         </Label>
+         <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="86.0" layoutY="80.0" maxHeight="-Infinity"
+                maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="120.0"
+                text="Game ID:"/>
+         <TextField fx:id="gameID" layoutX="217.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity"
+                    minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0"/>
+         <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="86.0" layoutY="127.0" prefHeight="25.0"
+                prefWidth="120.0" text="Number of players:"/>
+         <TextField fx:id="playerNumber" layoutX="217.0" layoutY="127.0" prefHeight="26.0" prefWidth="60.0"/>
+         <CheckBox fx:id="gameMode" layoutX="154.0" layoutY="179.0" mnemonicParsing="false" text="Expert Mode"/>
+         <Button fx:id="createGame" layoutX="146.0" layoutY="224.0" mnemonicParsing="false" styleClass="btn"
+                 text="CREATE"/>
+      </AnchorPane>
    </VBox>
 </VBox>

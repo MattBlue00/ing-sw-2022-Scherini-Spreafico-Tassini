@@ -6,8 +6,6 @@ import it.polimi.ingsw.exceptions.NonExistentColorException;
 import it.polimi.ingsw.utils.Constants;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DoublyLinkedListTest {

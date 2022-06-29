@@ -1,14 +1,16 @@
 package it.polimi.ingsw.network.message;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Abstract message class which must be extended by each message type.
- * Both server and clients will communicate using this generic type of message.
- * This avoids the usage of the "instance of" primitive.
+ * This abstract class defines everything that a message surfing the network should have. By doing so, the usage of
+ * the "instance of" primitive is avoided.
  */
+
 public abstract class Message implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 6589184250663958343L;
     private final String nickname;
     private final MessageType messageType;
@@ -17,27 +19,30 @@ public abstract class Message implements Serializable {
      * Default constructor.
      *
      * @param nickname client's nickname.
-     * @param messageType message type.
+     * @param messageType the message type.
      */
+
     public Message(String nickname, MessageType messageType){
         this.nickname = nickname;
         this.messageType = messageType;
     }
 
     /**
-     * This method returns the client's nickname.
+     * Returns the client's nickname.
      *
-     * @return {@code nickname}
+     * @return the client's nickname.
      */
+
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * This method returns the message type.
+     * Returns the message type.
      *
-     * @return {@code messageType}
+     * @return the message type.
      */
+
     public MessageType getMessageType() {
         return messageType;
     }

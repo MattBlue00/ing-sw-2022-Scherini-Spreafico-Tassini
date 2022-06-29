@@ -8,31 +8,37 @@ import java.net.Socket;
 /**
  * Interface to handle clients. Every type of connection must implement this interface.
  */
+
 public interface ClientHandler {
+
     /**
      * Returns the connection status.
      *
      * @return {@code true} if the client is still connected and reachable, {@code false} otherwise.
      */
+
     boolean isConnected();
 
     /**
      * Disconnects from the client.
      */
+
     void disconnect();
 
     /**
-     *  Sends a message to the client.
+     * Sends a message to the client.
      *
-     *  @param message the message to be sent.
+     * @param message the message to be sent.
      */
+
     void sendMessage(Message message);
 
     /**
-     *  Sends a message to the client and removes the clients and the game controller from the Server.
+     * Sends a message to the client and removes the clients and the game controller from the Server.
      *
-     *  @param message the message to be sent.
+     * @param message the message to be sent.
      */
+
     void sendMessageAndQuit(Message message);
 
     /**
@@ -47,6 +53,7 @@ public interface ClientHandler {
      *
      * @return {@link VirtualView}
      */
+
     VirtualView getVirtualView();
 
     /**
@@ -54,5 +61,6 @@ public interface ClientHandler {
      *
      * @return {@link Socket}
      */
+
     Socket getSocketClient();
 }
