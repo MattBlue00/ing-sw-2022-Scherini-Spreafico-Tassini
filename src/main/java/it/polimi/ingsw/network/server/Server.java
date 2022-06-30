@@ -259,8 +259,11 @@ public class Server{
             String nick = getNicknameFromClientHandler(clientHandler);
             if(nick != null){
                 int gameID = getGameIDFromNickname(nick);
-                if(gameControllerMap.get(gameID).getGameQueue().size() == 0)
-                    gameControllerMap.remove(gameID);
+                try {
+                    if (gameControllerMap.get(gameID).getGameQueue().size() == 0)
+                        gameControllerMap.remove(gameID);
+                }
+                catch(NullPointerException ignored){}
                 removeClient(nick);
             }
         }

@@ -502,6 +502,7 @@ public class GameController implements Serializable {
                         handleMotherNature(message);
                         motherNatureMoved = true;
                         game.islandConquerCheck(game.getBoard().getMotherNaturePos());
+                        winCheck();
                         if (!virtualViewMap.isEmpty()) {
                             LOGGER.info(game.getCurrentPlayer().getNickname() + " has moved Mother Nature.");
                             broadcastGameBoard();
@@ -739,7 +740,6 @@ public class GameController implements Serializable {
     public void handleMotherNature(Message receivedMessage)
             throws InvalidNumberOfStepsException, IslandNotFoundException {
         game.moveMotherNature(((MotherNatureStepsMessage) receivedMessage).getSteps());
-        winCheck();
         if (!virtualViewMap.isEmpty())
             broadcastUpdateMessage(game.getCurrentPlayer().getNickname() + " has moved Mother Nature to Island "
                     + game.getBoard().getMotherNaturePos() + "!");

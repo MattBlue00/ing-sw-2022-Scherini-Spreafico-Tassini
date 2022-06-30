@@ -91,6 +91,7 @@ public class GameControllerExpertMode extends GameController{
                         handleMotherNature(message);
                         setMotherNatureMoved(true);
                         getGame().islandConquerCheck(getGame().getBoard().getMotherNaturePos());
+                        winCheck();
                         if (!getVirtualViewMap().isEmpty()) {
                             LOGGER.info(getGame().getCurrentPlayer().getNickname() + " has moved Mother Nature.");
                             broadcastGameBoard();
