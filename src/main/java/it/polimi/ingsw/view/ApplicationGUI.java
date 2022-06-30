@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -114,6 +115,7 @@ public class ApplicationGUI extends Application {
 
     public void showAlert(String message){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -125,6 +127,7 @@ public class ApplicationGUI extends Application {
     public void quit(){
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
         alert.setTitle("Quit");
         alert.setHeaderText("You're about to close the app.");
         alert.setContentText("Are you sure?");

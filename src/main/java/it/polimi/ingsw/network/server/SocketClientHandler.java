@@ -8,6 +8,7 @@ import it.polimi.ingsw.network.message.MessageType;
 import it.polimi.ingsw.view.VirtualView;
 import it.polimi.ingsw.network.client.Client;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -127,7 +128,9 @@ public class SocketClientHandler implements ClientHandler, Runnable{
                     }
                 }
             }
-        }catch(IOException | ClassNotFoundException ex){
+        }
+        catch(EOFException ignored){}
+        catch(IOException | ClassNotFoundException ex){
             Server.LOGGER.severe("Invalid stream from client. \n" +
                     ex.getClass().getSimpleName() + ": " + ex.getMessage());
         } finally {
