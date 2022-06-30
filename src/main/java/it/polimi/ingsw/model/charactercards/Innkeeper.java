@@ -61,6 +61,11 @@ public class Innkeeper extends CharacterCard implements Serializable {
             // if this color's professor was already assigned, profCheck rules vary
             if (professorAssigned) {
                 dimBiggestTable = numOfStudents[playerWithProf];
+                if(dimBiggestTable == 0){
+                    players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(false);
+                    professorAssigned = false;
+                    playerWithProf = -1;
+                }
             }
 
             for (int i = 0; i < players.size(); i++) {

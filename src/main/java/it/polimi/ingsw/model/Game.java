@@ -265,6 +265,7 @@ public class Game implements Serializable {
                 if(dimBiggestTable == 0){
                     players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(false);
                     professorAssigned = false;
+                    playerWithProf = -1;
                 }
             }
 

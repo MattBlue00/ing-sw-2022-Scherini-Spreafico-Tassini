@@ -329,7 +329,7 @@
                   <Insets bottom="15.0" />
               </padding>
            </Label>
-           <ScrollPane prefHeight="299.0" prefWidth="132.0">
+           <ScrollPane fx:id="scrollPane" prefHeight="299.0" prefWidth="132.0">
                <VBox.margin>
                    <Insets left="15.0" />
                </VBox.margin>
