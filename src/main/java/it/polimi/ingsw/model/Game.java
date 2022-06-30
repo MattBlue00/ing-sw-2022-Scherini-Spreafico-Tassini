@@ -262,6 +262,10 @@ public class Game implements Serializable {
             // if this color's professor was already assigned, profCheck rules vary
             if (professorAssigned) {
                 dimBiggestTable = numOfStudents[playerWithProf];
+                if(dimBiggestTable == 0){
+                    players.get(playerWithProf).getSchool().getTable(color.toString()).setHasProfessor(false);
+                    professorAssigned = false;
+                }
             }
 
             for (int i = 0; i < players.size(); i++) {

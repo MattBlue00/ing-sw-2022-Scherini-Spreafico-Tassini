@@ -320,6 +320,10 @@ public class ClientController implements ViewObserver, Observer {
                 taskQueue.execute(view::quit);
                 taskQueue.shutdown();
                 break;
+            case ERROR_MESSAGE:
+                taskQueue.execute(() -> view.showGenericMessage("Something went wrong, please restart the app."));
+                taskQueue.execute(view::quit);
+                taskQueue.shutdown();
             default: //should never be reached
                 break;
         }
@@ -368,7 +372,7 @@ public class ClientController implements ViewObserver, Observer {
                 pinger.shutdownNow();
                 taskQueue.shutdownNow();
                 Thread.currentThread().interrupt();
-                System.exit(1);
+                System.exit(0);
             }
         }
         catch(IOException e){
