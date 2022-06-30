@@ -503,7 +503,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                         towerOnIsland[i-1].setStyle("-fx-effect: dropshadow(one-pass-box, rgba(80,80,80,80), 10, 0, 0, 0);");
                         towersNumberOnIsland[i-1].setText("       "+ currentIsland.getNumOfTowers());
                         towersNumberOnIsland[i-1].setFill(Paint.valueOf("WHITE"));
-                        towersNumberOnIsland[i-1].setTextAlignment(TextAlignment.RIGHT);
                         towersNumberOnIsland[i-1].setFont(Font.font(String.valueOf(Font.getDefault()), FontWeight.EXTRA_BOLD, 12.0));
                     }
 
