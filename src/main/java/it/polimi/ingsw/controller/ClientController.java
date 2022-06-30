@@ -324,6 +324,7 @@ public class ClientController implements ViewObserver, Observer {
                 taskQueue.execute(() -> view.showGenericMessage("Something went wrong, please restart the app."));
                 taskQueue.execute(view::quit);
                 taskQueue.shutdown();
+                break;
             default: //should never be reached
                 break;
         }

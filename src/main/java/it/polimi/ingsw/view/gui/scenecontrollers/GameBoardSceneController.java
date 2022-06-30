@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -44,6 +45,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private GridPane island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12;
     @FXML
     private TextFlow history;
+    @FXML
+    private ScrollPane scrollPane;
     @FXML
     private TilePane cloud1, cloud2, cloud3;
     @FXML
@@ -221,6 +224,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         initializeIslands();
 
         renderPlayerSchool();
+
+        scrollPane.setVvalue(1.0);
 
         if(game instanceof GameExpertMode) {
             initializeCharacterCards();

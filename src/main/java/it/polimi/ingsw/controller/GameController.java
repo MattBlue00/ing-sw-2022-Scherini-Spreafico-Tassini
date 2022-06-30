@@ -770,7 +770,7 @@ public class GameController implements Serializable {
     public void winCheck(){
         try {
             if(noTowersLeftCheck() || lessThanFourIslandsCheck() ||
-                    (game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber())) {
+                    (game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber()-1)) {
                 LOGGER.info(END_STATE + game.getCurrentPlayer().getNickname());
                 declareWinningPlayer();
                 quit();
@@ -788,7 +788,14 @@ public class GameController implements Serializable {
      */
 
     public boolean noTowersLeftCheck(){
-        return game.getCurrentPlayer().getSchool().getTowerRoom().getTowersLeft() == 0;
+        boolean flag = false;
+        for(Player player : game.getPlayers()){
+            if (player.getSchool().getTowerRoom().getTowersLeft() <= 0) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 
     /**

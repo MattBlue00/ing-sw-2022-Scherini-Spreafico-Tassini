@@ -149,7 +149,9 @@ public class GameExpertMode extends Game implements Serializable {
                 } catch (TryAgainException e) {
                     throw new RuntimeException(e);
                 }
-                card.setUpCard();
+                if(getCurrentPlayer().getSchool().getHall().getStudents().size() <=
+                    getConstants().MAX_HALL_STUDENTS - getConstants().PLAYER_MOVES)
+                    card.setUpCard();
                 done = true;
             }
         }

@@ -52,6 +52,7 @@ public class SocketClient extends Client{
             out.flush();
             out.reset();
         } catch (IOException e) {
+            notifyObservers(new ErrorMessage());
             disconnect();
         }
     }
@@ -64,14 +65,13 @@ public class SocketClient extends Client{
     public void readMessage() {
         readExecutionQueue.execute(() -> {
             while (!readExecutionQueue.isShutdown()) {
-                Message message;
                 try {
-                    message = (Message) in.readObject();
+                    Message message = (Message) in.readObject();
+                    notifyObservers(message);
                 } catch (IOException | ClassNotFoundException e) {
-                    message = new ErrorMessage();
+                    notifyObservers(new ErrorMessage());
                     disconnect();
                 }
-                notifyObservers(message);
             }
         });
     }
