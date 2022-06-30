@@ -398,6 +398,9 @@ public class GameController implements Serializable {
         broadcastGameBoard();
         broadcastPhaseUpdate(false);
         setGameState(GameState.IN_GAME);
+        for(Player player: game.getPlayers()){
+            System.out.println("Player "+player.getNickname()+" towers: "+player.getSchool().getTowerRoom().getTowersLeft());
+        }
         // For old tests
         if(!virtualViewMap.isEmpty()) {
             showDeck(virtualViewMap.get(game.getCurrentPlayer().getNickname()));
@@ -629,6 +632,9 @@ public class GameController implements Serializable {
            if(!virtualViewMap.isEmpty())
                virtualViewMap.get(receivedMessage.getNickname()).showGenericMessage("You can't play this assistant card!");
        }
+        for(Player player: game.getPlayers()){
+            System.out.println("Player "+player.getNickname()+" towers: "+player.getSchool().getTowerRoom().getTowersLeft());
+        }
     }
 
     /**
@@ -724,6 +730,9 @@ public class GameController implements Serializable {
             if (!virtualViewMap.isEmpty())
                 broadcastUpdateMessage(game.getCurrentPlayer().getNickname() + " has moved a " + color + " student to Island " + islandID + "!");
         }
+        for(Player player: game.getPlayers()){
+            System.out.println("Player "+player.getNickname()+" towers: "+player.getSchool().getTowerRoom().getTowersLeft());
+        }
     }
 
     /**
@@ -743,6 +752,9 @@ public class GameController implements Serializable {
         if (!virtualViewMap.isEmpty())
             broadcastUpdateMessage(game.getCurrentPlayer().getNickname() + " has moved Mother Nature to Island "
                     + game.getBoard().getMotherNaturePos() + "!");
+        for(Player player: game.getPlayers()){
+            System.out.println("Player "+player.getNickname()+" towers: "+player.getSchool().getTowerRoom().getTowersLeft());
+        }
     }
 
     /**
@@ -768,9 +780,12 @@ public class GameController implements Serializable {
      */
 
     public void winCheck(){
+        System.out.println("enter winCheck, checking if someone has won");
         try {
             if(noTowersLeftCheck() || lessThanFourIslandsCheck() ||
                     (game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber())) {
+                System.out.println("The game has ended for one of the following conditions: \nnoTowersLeftCheck: "+noTowersLeftCheck()+"\n" +
+                        " lessThan4Islands: "+lessThanFourIslandsCheck()+"\n elseCondition: "+(game.getRoundNumber() == 10 && currentPlayerIndex == game.getPlayersNumber()));
                 LOGGER.info(END_STATE + game.getCurrentPlayer().getNickname());
                 declareWinningPlayer();
                 quit();
@@ -788,7 +803,10 @@ public class GameController implements Serializable {
      */
 
     public boolean noTowersLeftCheck(){
-        return game.getCurrentPlayer().getSchool().getTowerRoom().getTowersLeft() == 0;
+        for(Player player: game.getPlayers()){
+            System.out.println("Player "+player.getNickname()+" towers: "+player.getSchool().getTowerRoom().getTowersLeft());
+        }
+        return game.getCurrentPlayer().getSchool().getTowerRoom().getTowersLeft()-1 == 0;
     }
 
     /**
@@ -818,6 +836,7 @@ public class GameController implements Serializable {
      */
 
     public void declareWinningPlayer() throws TieException{
+        System.out.println("Entered declareWinningPlayer");
         List<Player> players = game.getPlayers();
         Player winningPlayer = players.get(0);
         int minTowers = players.get(0).getSchool().getTowerRoom().getTowersLeft();
@@ -851,6 +870,7 @@ public class GameController implements Serializable {
                 }
             }
         }
+        System.out.println("Winning player is: "+winningPlayer.getNickname());
         broadcastGenericMessage(winningPlayer.getNickname() + " has won the game! Congratulations!");
     }
 

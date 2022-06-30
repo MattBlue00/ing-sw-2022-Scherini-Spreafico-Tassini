@@ -337,10 +337,10 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
         i = 0;
         String towerColor = game.getTowersColor().get(game.getPlayerFromNickname(nickname)).toString().toLowerCase();
         for(int towers = 0; towers < game.getPlayerFromNickname(nickname).getSchool().getTowerRoom().getTowersLeft(); towers++){
-            ImageView studentImage = new ImageView(new Image("/img/"+ towerColor.toLowerCase()+"_tower.png"));
-            studentImage.setFitWidth(30);
-            studentImage.setPreserveRatio(true);
-            playerTowerRoom.add(studentImage, j, i);
+            ImageView towerImage = new ImageView(new Image("/img/"+ towerColor.toLowerCase()+"_tower.png"));
+            towerImage.setFitWidth(30);
+            towerImage.setPreserveRatio(true);
+            playerTowerRoom.add(towerImage, j, i);
             if(j==1){
                 i++;
                 j = 0;
