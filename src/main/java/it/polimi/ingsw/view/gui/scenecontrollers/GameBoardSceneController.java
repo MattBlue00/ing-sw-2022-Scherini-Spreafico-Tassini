@@ -225,8 +225,6 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
         renderPlayerSchool();
 
-        scrollPane.setVvalue(1.0);
-
         if(game instanceof GameExpertMode) {
             initializeCharacterCards();
             initializeCoinsWallet();
@@ -632,6 +630,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     public void showUpdate(String updateMessage){
         Text message = new Text(updateMessage+"\n");
         history.getChildren().add(message);
+        scrollPane.setVvalue(1.0);
     }
 
     /* EVENT HANDLER METHODS */
