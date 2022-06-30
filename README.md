@@ -1,4 +1,4 @@
-# Prova Finale di Ingegneria del Software - AA 2019-2020
+# Prova Finale di Ingegneria del Software - AA 2021-2022
 ![Eriantys](src/main/resources/img/wallpaper.jpg)
 
 Implementazione del gioco da tavolo [Eriantys](http://www.craniocreations.it/prodotto/eriantys/).
