@@ -297,6 +297,7 @@ class GameControllerTest {
         gameController.prepareGame(message.getPlayerNumber());
 
         Player player = new Player(Wizard.YELLOW_WIZARD, user, gameController.getGame().getConstants());
+        gameController.getGame().addPlayer(player);
         gameController.getGame().setCurrentPlayer(player);
 
         gameController.getGame().getCurrentPlayer().getSchool().getTowerRoom().setTowersLeft(0);
