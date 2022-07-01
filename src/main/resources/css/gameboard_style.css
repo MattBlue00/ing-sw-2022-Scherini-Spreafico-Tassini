@@ -20,3 +20,11 @@
 .clickable:hover {
     -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
 }
+
+.clouds_tilePanes{
+    -fx-background-color: red;
+}
+
+.clouds_tilePanes2{
+    -fx-background-color: yellow;
+}

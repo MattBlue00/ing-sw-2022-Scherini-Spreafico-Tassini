@@ -321,8 +321,7 @@ public class GraphicalUserInterface extends ViewObservable implements View {
 
     @Override
     public void quit() {
-        Platform.exit();
-        System.exit(0);
+        Platform.runLater(() -> sceneController.changeRootPane(observers, "ending_scene.fxml"));
     }
 
 }
