@@ -30,7 +30,7 @@ I `jar` del server e della CLI si lanciano da terminale tramite il comando:
 java -jar nome_jar.jar
 ```
 I `jar` della GUI possono essere lanciati anche
-con un doppio click sull'icona del file, oltre che da terminale (nello stesso modo mostrato sopra). Si noti che, utilizzando macOS, il doppio click potrebbe non funzionare al primo tentativo, dato che non siamo sviluppatori certificati da Apple. Per risolvere il problema, basta avviare l'applicazione per la prima volta cliccando il tasto destro del mouse sopra l'icona dell'app e selezionando Apri.
+con un doppio click sull'icona del file, oltre che da terminale (nello stesso modo mostrato sopra). Si noti che, utilizzando macOS, il doppio click potrebbe non funzionare al primo tentativo, dato che non siamo sviluppatori certificati da Apple. Per risolvere il problema, è sufficiente avviare l'applicazione per la prima volta cliccando il tasto destro del mouse sopra l'icona dell'app e selezionando Apri.
 
 ## Documentazione
 
