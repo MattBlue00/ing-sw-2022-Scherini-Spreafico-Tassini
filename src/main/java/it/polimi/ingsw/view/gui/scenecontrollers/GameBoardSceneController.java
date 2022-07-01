@@ -48,9 +48,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     @FXML
     private ScrollPane scrollPane;
     @FXML
-    private TilePane cloud1, cloud2, cloud3;
-    @FXML
-    private AnchorPane extraCloud;
+    private AnchorPane cloud1, cloud2, cloud3;
+    //@FXML
+    //private AnchorPane extraCloud;
     @FXML
     private AnchorPane opposingSchool2Pane;
     @FXML
@@ -68,7 +68,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
     private Label characterCardsLabel;
     private Game game;
     private String nickname;
-    private final List<TilePane> clouds;
+    private final List<AnchorPane> clouds;
     private final List<List<GridPane>> opposingSchools;
     private final List<GridPane> opposingSchool1, opposingSchool2;
     private final List<Label> opposingNicknameLabels;
@@ -208,7 +208,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
         if (game.getPlayersNumber() == 3) {
             clouds.add(cloud3);
-            extraCloud.setVisible(true);
+            cloud3.setVisible(true);
             opposingSchool2.add(opposingHall2);
             opposingSchool2.add(opposingDiningRoom2);
             opposingSchool2.add(opposingProfTable2);
@@ -217,7 +217,7 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
             opposingSchool2Pane.setVisible(true);
             opposingNicknameLabels.add(opposingNickname2);
         } else {
-            extraCloud.setVisible(false);
+            cloud3.setVisible(false);
             opposingSchool2Pane.setVisible(false);
             opposingNickname2.setVisible(false);
         }
@@ -544,8 +544,9 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
 
     private void renderClouds(){
 
-        for(TilePane cloud : clouds){
-            cloud.getChildren().clear();
+        for(AnchorPane cloud : clouds){
+            TilePane students = (TilePane) cloud.getChildren().get(1);
+            students.getChildren().clear();
         }
 
         for(int i=0; i<clouds.size(); i++){
@@ -555,7 +556,8 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
                 ImageView studentImage = new ImageView(new Image("/img/student_"+color+".png"));
                 studentImage.setFitWidth(20);
                 studentImage.setPreserveRatio(true);
-                clouds.get(i).getChildren().add(studentImage);
+                TilePane students = (TilePane) clouds.get(i).getChildren().get(1);
+                students.getChildren().add(studentImage);
             }
         }
     }
@@ -719,14 +721,29 @@ public class GameBoardSceneController extends ViewObservable implements GenericS
      */
 
     public void onClickCloud(Event e){
+        boolean cloudFlag = false;
         Node node = (Node) e.getTarget();
-        if(node.equals(cloud1))
+        if(node.getParent()!=null){
+            node = node.getParent();
+        }
+
+        if(node.equals(cloud1)) {
+            cloudFlag = true;
             chooseCloud(0);
-        else if (node.equals(cloud2))
+        }
+        else if (node.equals(cloud2)) {
+            cloudFlag = true;
             chooseCloud(1);
-        else chooseCloud(2);
-        for(Node cloud : clouds)
-            cloud.setDisable(true);
+        }
+        else if (node.equals(cloud3)) {
+            cloudFlag = true;
+            chooseCloud(2);
+        }
+
+        if(cloudFlag) {
+            for (Node cloud : clouds)
+                cloud.setDisable(true);
+        }
     }
 
     /**
