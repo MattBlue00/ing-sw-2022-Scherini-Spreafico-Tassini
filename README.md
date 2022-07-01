@@ -23,12 +23,14 @@ Forniamo quattro file `jar` per lanciare l'applicazione:
 - [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/x86) per architetture x86
 - [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/arm-m1) per architetture ARM-M1
 
+Generare due `jar` distinti per la GUI in base all'architettura della macchina è una necessità nata da dei problemi noti di integrazione delle librerie grafiche di JavaFX per architetture diverse con il tool Maven.
+
 I `jar` del server e della CLI si lanciano da terminale tramite il comando:
 ```
 java -jar nome_jar.jar
 ```
 I `jar` della GUI possono essere lanciati anche
-con un doppio click sull'icona del file, oltre che da terminale (nello stesso modo mostrato sopra).
+con un doppio click sull'icona del file, oltre che da terminale (nello stesso modo mostrato sopra). Si noti che, utilizzando macOS, il doppio click potrebbe non funzionare al primo tentativo, dato che non siamo sviluppatori certificati da Apple. Per risolvere il problema, basta avviare l'applicazione per la prima volta cliccando il tasto destro del mouse sopra l'icona dell'app e selezionando Apri.
 
 ## Documentazione
 
