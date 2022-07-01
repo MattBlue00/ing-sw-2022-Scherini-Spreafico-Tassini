@@ -20,8 +20,8 @@ Questo progetto richiede Java e JRE di versione 17 o superiore per poter essere 
 Forniamo quattro file `jar` per lanciare l'applicazione:
 - [__Server__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/server/x86-arm-m1)
 - [__CLI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/cli/x86-arm-m1)
-- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/arm-m1) per architetture x86
-- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/x86) per architetture ARM-M1
+- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/x86) per architetture x86
+- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/arm-m1) per architetture ARM-M1
 
 I `jar` del server e della CLI si lanciano da terminale tramite il comando:
 ```
