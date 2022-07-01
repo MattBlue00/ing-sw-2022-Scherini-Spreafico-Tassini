@@ -318,7 +318,6 @@ public class GraphicalUserInterface extends ViewObservable implements View {
     /**
      * Closes the client's app.
      */
-
     @Override
     public void quit() {
         Platform.runLater(() -> sceneController.changeRootPane(observers, "ending_scene.fxml"));
