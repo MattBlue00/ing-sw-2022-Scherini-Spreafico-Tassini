@@ -3,7 +3,7 @@
 
 Implementazione del gioco da tavolo [Eriantys](http://www.craniocreations.it/prodotto/eriantys/).
 
-Il progetto consiste nell’implementazione di un sistema distribuito composto da un singolo server in grado di gestire più partite alla volta e multipli client (uno per giocatore) che possono partecipare ad una sola partita alla volta utilizzando il pattern MVC (Model-View-Controller).
+Il progetto consiste nell’implementazione, utilizzando il pattern MVC (Model-View-Controller), di un sistema distribuito composto da un singolo server in grado di gestire più partite alla volta e multipli client (uno per giocatore) che possono partecipare ad una sola partita alla volta.
 La rete è stata gestita con l'utilizzo delle socket.
 
 Interazione e gameplay: linea di comando (CLI) e interfaccia grafica (GUI).
@@ -15,13 +15,13 @@ Interazione e gameplay: linea di comando (CLI) e interfaccia grafica (GUI).
 
 ## Avvio dell'applicazione
 
-Questo progetto richiede una versione di Java 17 o superiore per essere eseguito correttamente.
+Questo progetto richiede Java e JRE di versione 17 o superiore per poter essere eseguito correttamente.
 
 Forniamo quattro file `jar` per lanciare l'applicazione:
-- [__Server__]()
-- [__CLI__]()
-- [__GUI__]() per architetture x86
-- [__GUI__]() per architetture ARM-M1
+- [__Server__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/server/x86-arm-m1)
+- [__CLI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/cli/x86-arm-m1)
+- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/arm-m1) per architetture x86
+- [__GUI__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/jar/gui/x86) per architetture ARM-M1
 
 I `jar` del server e della CLI si lanciano da terminale tramite il comando:
 ```
@@ -34,8 +34,10 @@ con un doppio click sull'icona del file, oltre che da terminale (nello stesso mo
 
 ### UML
 I seguenti diagrammi delle classi rappresentano rispettivamente il progetto iniziale sviluppato durante le prime settimane di laboratorio e il prodotto finale.
-- [UML iniziale](TODO)
-- [UML finale](TODO)
+- [__UML iniziale__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/blob/main/deliveries/uml/InitialUML.pdf)
+- [__UML finale__](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/blob/main/deliveries/uml/FinalUML.png)
+
+Ulteriori diagrammi delle classi più dettagliati, riguardanti il progetto finale, si possono consultare [qui](https://github.com/MattBlue00/ing-sw-2022-Scherini-Spreafico-Tassini/tree/main/deliveries/uml/detailed_uml).
 
 ### Librerie e Plugins
 | Libreria/Plugin | Descrizione                                                                              |
@@ -52,20 +54,20 @@ I seguenti diagrammi delle classi rappresentano rispettivamente il progetto iniz
 | __Controller__ | 100% (6/6)     | 81% (52/64)     | 53% (274/514) |
 
 Si noti che le classi che compongono il Controller contengono molti metodi utili per le View, e dunque tali metodi
-non sono stati testati. Questa è la ragione dietro le bassi percentuali della coverage del Controller. Inoltre, per 
+non sono stati testati. Questa è la ragione dietro le basse percentuali della coverage del Controller. Inoltre, per 
 evitare percentuali troppo falsate, è stata rimossa dal conto della coverage un'intera classe composta solo da metodi
 utili per le View.
 
 ## Funzionalità
 
 ### Funzionalità sviluppate
-- Regole Complete
+- Regole normali e variante per esperti
 - CLI
 - GUI
 - Socket
-- 2 FA (Funzionalità Avanzate):
-    - __12 Carte Personaggio:__ tutte le Carte Personaggio previste dall'edizione fisica del gioco sono state implementate nel software. 
-    - __Partite Multiple:__ il server può gestire più partite contemporaneamente.
+- 2 FA (Funzionalità avanzate):
+    - __12 carte personaggio:__ tutte le carte personaggio previste dall'edizione fisica del gioco sono state implementate nel software. 
+    - __Partite multiple:__ il server può gestire più partite contemporaneamente.
 
 ### Nota aggiuntiva
 
@@ -80,6 +82,6 @@ una Torre presa dalla vostra plancia Scuola. Se è il vostro avversario
 ad avere più influenza, allora sarà lui a costruire una Torre. Se la vostra
 influenza è pari, non viene piazzata alcuna Torre.
 
-Abbiamo assunto che l'isola potesse essere controllata eventualmente solo dal giocatore che sposta Madre Natura,
+Abbiamo assunto che l'isola potesse essere controllata solo dal giocatore che sposta Madre Natura,
 a patto che abbia l'influenza necessaria.
 
